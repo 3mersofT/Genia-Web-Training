@@ -8,6 +8,7 @@ import { getModuleBySlug, getAllModulesWithProgress, Module, Capsule } from '@/l
 import { useAuth } from '@/hooks/useAuth';
 import FeedbackButton from '@/components/feedback/FeedbackButton';
 import FeedbackStats from '@/components/feedback/FeedbackStats';
+import CertificateButton from '@/components/certificates/CertificateButton';
 
 export default function ModulePage() {
   const params = useParams();
@@ -115,7 +116,7 @@ export default function ModulePage() {
           
           <div className="flex items-center gap-4">
             <div className="flex-1 bg-gray-200 rounded-full h-2">
-              <div 
+              <div
                 className={`bg-gradient-to-r ${moduleData.color} h-2 rounded-full`}
                 style={{ width: `${moduleData.progress}%` }}
               />
@@ -124,6 +125,30 @@ export default function ModulePage() {
               {moduleData.progress}% complété
             </span>
           </div>
+
+          {/* Certificate section - only shown when module is completed */}
+          {moduleData.progress === 100 && user && (
+            <div className="mt-6 pt-6 border-t border-gray-200">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center">
+                    <CheckCircle className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-800">Module terminé !</h3>
+                    <p className="text-sm text-gray-600">Félicitations, vous pouvez maintenant obtenir votre certificat.</p>
+                  </div>
+                </div>
+                <CertificateButton
+                  moduleId={moduleData.slug}
+                  moduleTitle={moduleData.title}
+                  certificateType="module"
+                  variant="button"
+                  size="md"
+                />
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Liste des leçons */}
