@@ -1,7 +1,8 @@
 // hooks/useGENIAChat.ts
 
 import { useState, useCallback, useEffect } from 'react';
-import { useUser } from '@supabase/auth-helpers-react';
+import { createClient } from '@/lib/supabase/client';
+import type { User } from '@supabase/supabase-js';
 
 // ============================================
 // TYPES
@@ -53,7 +54,7 @@ interface UseGENIAChatOptions {
 // ============================================
 
 export function useGENIAChat(options: UseGENIAChatOptions = {}) {
-  const user = useUser();
+  const [user, setUser] = useState<User | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -71,7 +72,29 @@ export function useGENIAChat(options: UseGENIAChatOptions = {}) {
   });
   
   const [selectedModel, setSelectedModel] = useState<'auto' | 'magistral-medium' | 'mistral-medium-3' | 'mistral-small'>('auto');
-  
+
+  // ============================================
+  // GESTION DE L'AUTHENTIFICATION
+  // ============================================
+
+  useEffect(() => {
+    const supabase = createClient();
+
+    // Charger l'utilisateur actuel
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user);
+    });
+
+    // Écouter les changements d'état d'authentification
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
   // ============================================
   // CHARGEMENT DES QUOTAS
   // ============================================
