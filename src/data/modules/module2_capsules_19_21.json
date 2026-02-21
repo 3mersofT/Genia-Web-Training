@@ -1,0 +1,274 @@
+{
+  "module": {
+    "id": "module-2-techniques",
+    "title": "Techniques Essentielles",
+    "capsules": [
+      {
+        "id": "cap-2-19",
+        "moduleId": "module-2-techniques",
+        "order": 19,
+        "title": "Chain of Thought - Faites Réfléchir l'IA Tout Haut",
+        "duration": 5,
+        "sections": {
+          "hook": {
+            "text": "Une simple phrase peut augmenter la précision de l'IA de 40%. 'Réfléchis étape par étape' transforme des erreurs en solutions parfaites. Je vais vous révéler le secret du Chain of Thought, la technique qui rend l'IA brillante.",
+            "duration": 15
+          },
+          "concept": {
+            "content": "Le Chain of Thought (CoT) force l'IA à expliciter son raisonnement, transformant des réponses approximatives en analyses rigoureuses.\n\n**POURQUOI CoT FONCTIONNE**\n\n**Sans CoT : L'IA devine**\n• Saute aux conclusions\n• Rate les étapes intermédiaires\n• Erreurs de logique cachées\n• Précision : 50-60%\n\n**Avec CoT : L'IA raisonne**\n• Décompose le problème\n• Vérifie chaque étape\n• Logique explicite et vérifiable\n• Précision : 85-95%\n\n**LES 5 VARIANTES DE CoT**\n\n**1. BASIC CoT**\n\"Réfléchis étape par étape\"\n• Simple et efficace\n• +30% de précision immédiat\n\n**2. STRUCTURED CoT**\n\"Suis ces étapes :\n1. Comprendre le problème\n2. Identifier les données\n3. Appliquer la méthode\n4. Vérifier le résultat\"\n• Guide le raisonnement\n• +40% de précision\n\n**3. SELF-ASK CoT**\n\"Pose-toi des questions intermédiaires\"\n• Auto-questionnement\n• Découvre les angles morts\n• +35% de précision\n\n**4. LEAST-TO-MOST CoT**\n\"Commence par le plus simple,\nconstruis vers le complexe\"\n• Progression naturelle\n• Évite la surcharge\n• +45% sur problèmes complexes\n\n**5. TREE OF THOUGHT**\n\"Explore plusieurs chemins,\névalue et choisis le meilleur\"\n• Raisonnement parallèle\n• Compare les options\n• +50% sur décisions\n\n**QUAND UTILISER CoT**\n\n✅ **PARFAIT POUR :**\n• Problèmes mathématiques\n• Raisonnement logique\n• Analyse multi-étapes\n• Déductions complexes\n• Debug de code\n• Décisions stratégiques\n\n❌ **INUTILE POUR :**\n• Questions factuelles simples\n• Traductions directes\n• Formatting basique\n• Tâches créatives pures",
+            "visual": {
+              "type": "flowchart",
+              "description": "Diagramme comparatif montrant le processus de pensée sans CoT (linéaire, direct) vs avec CoT (étapes détaillées, vérifications)"
+            },
+            "duration": 90
+          },
+          "demo": {
+            "type": "comparative",
+            "title": "Résolution d'un problème mathématique",
+            "examples": [
+              {
+                "label": "Sans Chain of Thought",
+                "prompt": "Marie a 3 fois l'âge de Pierre. Dans 5 ans, elle aura 2 fois son âge. Quels sont leurs âges ?",
+                "response": "Marie a 15 ans et Pierre a 5 ans.",
+                "accuracy": "Réponse correcte mais sans justification"
+              },
+              {
+                "label": "Avec Chain of Thought",
+                "prompt": "Marie a 3 fois l'âge de Pierre. Dans 5 ans, elle aura 2 fois son âge. Quels sont leurs âges ? Réfléchis étape par étape.",
+                "response": "Je vais résoudre ce problème étape par étape.\n\n**Étape 1 : Définir les variables**\n- Soit P = l'âge actuel de Pierre\n- Soit M = l'âge actuel de Marie\n\n**Étape 2 : Traduire les informations en équations**\n- Marie a 3 fois l'âge de Pierre : M = 3P\n- Dans 5 ans : Marie aura M+5 ans, Pierre aura P+5 ans\n- Elle aura 2 fois son âge : M+5 = 2(P+5)\n\n**Étape 3 : Résoudre le système**\nM+5 = 2(P+5)\n3P+5 = 2P+10\nP = 5\n\nDonc Pierre a 5 ans.\nMarie a 3×5 = 15 ans.\n\n**Vérification :** Dans 5 ans, Pierre aura 10 ans et Marie 20 ans. 20 = 2×10 ✓",
+                "accuracy": "Réponse correcte avec raisonnement complet et vérifiable"
+              }
+            ],
+            "duration": 90
+          },
+          "exercise": {
+            "type": "create",
+            "title": "Créez vos variantes CoT",
+            "instruction": "Créez 3 prompts utilisant différentes variantes de Chain of Thought pour résoudre ce problème business : 'Une entreprise a 100K€ de budget marketing. Elle doit choisir entre : A) Campagne digitale (ROI estimé 3x, risque moyen), B) Événement physique (ROI 2x, risque faible), C) Influenceurs (ROI 5x, risque élevé). Que faire?'",
+            "starter": "Problème : [Budget marketing allocation]\n\n// Variante 1 : Basic CoT\n[Votre prompt]\n\n// Variante 2 : Structured CoT\n[Votre prompt]\n\n// Variante 3 : Tree of Thought\n[Votre prompt]",
+            "hints": [
+              "Basic CoT : Simple progression logique",
+              "Structured CoT : Framework détaillé avec sections",
+              "Tree of Thought : Explorer plusieurs chemins en parallèle",
+              "Montrez le raisonnement explicite dans chaque cas",
+              "Incluez des calculs et évaluations"
+            ],
+            "solution": "**Variante 1 : Basic CoT**\nAnalyse cette décision d'investissement marketing. Réfléchis étape par étape en considérant tous les facteurs importants avant de recommander la meilleure option.\n\n**Variante 2 : Structured CoT**\nAnalyse cette décision en suivant cette structure :\n1. Contexte et contraintes\n2. Analyse quantitative (ROI, risques)\n3. Analyse qualitative\n4. Scénarios (best/worst case)\n5. Recommandation finale\n\n**Variante 3 : Tree of Thought**\nExplore 3 stratégies différentes :\n- Branche A : Stratégie prudente\n- Branche B : Stratégie équilibrée\n- Branche C : Stratégie agressive\nPour chaque branche, développe la logique, évalue les résultats, puis compare et choisis.",
+            "validation": {
+              "criteria": [
+                "3 variantes de CoT distinctes utilisées",
+                "Raisonnement étape par étape visible",
+                "Calculs et évaluations explicites",
+                "Comparaison des options claire",
+                "Recommandation justifiée par le raisonnement"
+              ],
+              "feedbackCorrect": "Excellent ! Vous maîtrisez les différentes variantes de Chain of Thought. Chaque approche révèle le raisonnement et mène à une décision éclairée.",
+              "feedbackIncorrect": "Améliorez : 1) Rendez le raisonnement plus explicite étape par étape, 2) Différenciez mieux les 3 variantes, 3) Incluez des calculs visibles."
+            },
+            "duration": 120
+          },
+          "recap": {
+            "keyPoint": "🔑 Chain of Thought = +40% de précision. 'Réfléchis étape par étape' transforme l'approximation en rigueur. 5 variantes pour chaque situation.",
+            "duration": 15
+          }
+        },
+        "metadata": {
+          "difficulty": "intermediate",
+          "tags": ["chain-of-thought", "raisonnement", "précision", "logique"],
+          "estimatedTime": 5,
+          "prerequisites": ["cap-1-1"],
+          "learningOutcomes": [
+            "Comprendre le principe du Chain of Thought",
+            "Maîtriser les 5 variantes de CoT",
+            "Savoir quand utiliser CoT",
+            "Augmenter la précision de 40%"
+          ]
+        }
+      },
+      {
+        "id": "cap-2-20",
+        "moduleId": "module-2-techniques",
+        "order": 20,
+        "title": "Débugger en 3 Étapes - Trouvez et Corrigez Rapidement",
+        "duration": 5,
+        "sections": {
+          "hook": {
+            "text": "90% des prompts qui échouent ont les mêmes 5 problèmes. Je vais vous apprendre la méthode D.F.A (Détecter-Fixer-Améliorer) qui transforme n'importe quel prompt défaillant en machine de précision.",
+            "duration": 15
+          },
+          "concept": {
+            "content": "Le debugging de prompts est une compétence essentielle qui suit une méthodologie précise pour identifier et corriger les problèmes.\n\n**LES 5 PROBLÈMES FATALS**\n\n**1. AMBIGUÏTÉ (35% des échecs)**\n• Instructions floues\n• Multiple interprétations possibles\n• Manque de spécificité\n**Fix :** Clarifier avec exemples\n\n**2. CONTEXTE MANQUANT (25%)**\n• Information critique absente\n• Assumptions non explicitées\n• Background nécessaire omis\n**Fix :** Ajouter section [CONTEXTE]\n\n**3. FORMAT CHAOS (20%)**\n• Structure incohérente\n• Pas de délimiteurs clairs\n• Mélange d'instructions\n**Fix :** Restructurer avec hiérarchie\n\n**4. CONTRADICTION (10%)**\n• Instructions conflictuelles\n• Demandes impossibles\n• Logique brisée\n**Fix :** Réviser la cohérence\n\n**5. SURCHARGE (10%)**\n• Trop d'information d'un coup\n• Instructions enchevêtrées\n• Cognitive overload\n**Fix :** Découper en étapes\n\n**MÉTHODE D.F.A**\n\n**D - DÉTECTER**\n\n**Étape 1 : Analyser le symptôme**\n• Qu'est-ce qui ne fonctionne pas ?\n• Résultat obtenu vs attendu\n• Pattern d'erreur\n\n**Étape 2 : Isoler le problème**\n• Tester partie par partie\n• Simplifier au maximum\n• Identifier le point de rupture\n\n**Étape 3 : Diagnostiquer la cause**\n• Catégoriser (5 problèmes fatals)\n• Vérifier les hypothèses\n• Confirmer le diagnostic\n\n**F - FIXER**\n\n**Quick Fixes (< 1 min)**\n• Ajouter \"Étape par étape\"\n• Inclure un exemple\n• Clarifier le format\n• Préciser le contexte\n\n**Deep Fixes (< 5 min)**\n• Restructuration complète\n• Ajout de few-shot examples\n• Délimiteurs et sections\n• Élimination contradictions\n\n**A - AMÉLIORER**\n\n**Optimisation**\n• Tester variations\n• Mesurer amélioration\n• Itérer jusqu'à 90%+ succès\n\n**Documentation**\n• Noter ce qui marche\n• Créer template réutilisable\n• Partager les learnings",
+            "visual": {
+              "type": "diagnostic-flow",
+              "description": "Arbre de décision pour identifier et corriger les problèmes de prompts"
+            },
+            "duration": 90
+          },
+          "demo": {
+            "type": "transformation",
+            "title": "Debug d'un prompt défaillant",
+            "before": "Écris un article sur l'IA mais court et détaillé, formel mais accessible, technique mais pas trop, pour experts et débutants, avec et sans jargon.",
+            "after": "[PROMPT DÉBUGUÉ - MÉTHODE D.F.A]\n\n**DIAGNOSTIC :**\n❌ Contradictions multiples détectées\n- \"court ET détaillé\"\n- \"formel MAIS accessible\"\n- \"experts ET débutants\"\n- \"avec ET sans jargon\"\n\n**VERSION CORRIGÉE :**\n\n[CONTEXTE]\nArticle pour blog tech grand public sur l'IA générative.\nLectorat : Professionnels curieux mais non-experts.\n\n[TÂCHE]\nRédige un article de 800 mots sur l'IA générative.\n\n**Ton :** Professionnel accessible\n- Vocabulaire : niveau magazine économique\n- Éviter : jargon ML/DL sauf si expliqué\n- Inclure : analogies pour concepts complexes\n\n**Structure :**\n1. Accroche (100 mots)\n2. Explication (200 mots)\n3. Applications (300 mots)\n4. Enjeux (150 mots)\n5. Conclusion (50 mots)",
+            "explanation": "Le prompt original avait des contradictions impossibles à satisfaire. La méthode D.F.A a : 1) Détecté les contradictions, 2) Fixé en faisant des choix clairs, 3) Amélioré avec structure et contexte.",
+            "duration": 90
+          },
+          "exercise": {
+            "type": "debug",
+            "title": "Débuggez ces prompts",
+            "instruction": "Débuggez ces 3 prompts défaillants en utilisant la méthode D.F.A. Identifiez le problème, appliquez le fix, et montrez l'amélioration.",
+            "prompts": [
+              {
+                "id": 1,
+                "problematic": "Fais quelque chose de créatif avec les données",
+                "issue": "Ambiguïté totale",
+                "solution": "[CONTEXTE] Données de ventes Q4.\n[TÂCHE] Crée une visualisation narrative qui identifie 3 insights business.\n[FORMAT] Dashboard markdown avec graphiques ASCII."
+              },
+              {
+                "id": 2,
+                "problematic": "Analyse ce texte mais pas trop en détail sauf pour les parties importantes",
+                "issue": "Contradiction",
+                "solution": "[TÂCHE] Analyse ce texte :\n1. Vue d'ensemble (100 mots)\n2. 3 points clés (50 mots chacun)\n3. Zoom détaillé sur LA section la plus critique (150 mots)"
+              },
+              {
+                "id": 3,
+                "problematic": "email client urgent + rapport mensuel + analyse concurrence + todo list équipe",
+                "issue": "Surcharge",
+                "solution": "[PRIORITÉ 1] Email client urgent\n[Contexte et spécifications...]\n\n[À FAIRE APRÈS] Créer prompts séparés pour :\n- Rapport mensuel\n- Analyse concurrence\n- Todo list"
+              }
+            ],
+            "validation": {
+              "criteria": [
+                "Diagnostic correct du problème principal",
+                "Fix approprié et efficace appliqué",
+                "Amélioration mesurable démontrée",
+                "Méthode D.F.A suivie",
+                "Prompts corrigés immédiatement utilisables"
+              ],
+              "feedbackCorrect": "Excellent debugging ! Vous avez identifié les problèmes fatals et appliqué les fixes appropriés.",
+              "feedbackIncorrect": "Améliorez : 1) Identifiez plus précisément LE problème principal, 2) Appliquez un fix simple et direct."
+            },
+            "duration": 120
+          },
+          "recap": {
+            "keyPoint": "🔑 D.F.A = Détecter → Fixer → Améliorer. 5 problèmes fatals : Ambiguïté, Contexte manquant, Format chaos, Contradiction, Surcharge.",
+            "duration": 15
+          }
+        },
+        "metadata": {
+          "difficulty": "intermediate",
+          "tags": ["debugging", "diagnostic", "fix", "optimisation"],
+          "estimatedTime": 5,
+          "prerequisites": ["cap-1-1", "cap-2-19"],
+          "learningOutcomes": [
+            "Identifier les 5 problèmes fatals",
+            "Maîtriser la méthode D.F.A",
+            "Débugger rapidement tout prompt",
+            "Créer des prompts robustes"
+          ]
+        }
+      },
+      {
+        "id": "cap-2-21",
+        "moduleId": "module-2-techniques",
+        "order": 21,
+        "title": "Speed Optimization - 5 Itérations pour la Perfection",
+        "duration": 5,
+        "sections": {
+          "hook": {
+            "text": "5 itérations. C'est tout ce qu'il faut pour transformer n'importe quel prompt médiocre en machine de guerre. Je vais vous montrer le protocole exact que j'utilise pour optimiser un prompt en moins de 5 minutes.",
+            "duration": 15
+          },
+          "concept": {
+            "content": "L'optimisation rapide suit un protocole précis qui améliore systématiquement la performance à chaque itération.\n\n**LE PROTOCOLE 5-STEP OPTIMIZATION**\n\n**ITÉRATION 0 : BASELINE**\n• Prompt initial brut\n• Mesurer la performance de base\n• Identifier les faiblesses évidentes\n• Score typique : 40-50%\n\n**ITÉRATION 1 : CLARIFICATION**\n• Éliminer toute ambiguïté\n• Préciser les termes vagues\n• Ajouter contexte manquant\n• Amélioration : +15-20%\n\n**ITÉRATION 2 : STRUCTURE**\n• Ajouter sections et délimiteurs\n• Hiérarchiser l'information\n• Créer un flow logique\n• Amélioration : +10-15%\n\n**ITÉRATION 3 : EXEMPLES**\n• Ajouter 1-3 exemples pertinents\n• Montrer le format exact attendu\n• Illustrer les edge cases\n• Amélioration : +15-20%\n\n**ITÉRATION 4 : CONTRAINTES**\n• Définir les limites précises\n• Ajouter garde-fous\n• Spécifier ce qu'il ne faut PAS faire\n• Amélioration : +5-10%\n\n**ITÉRATION 5 : POLISH**\n• Chain of Thought si nécessaire\n• Optimisation du wording\n• Test de robustesse\n• Amélioration : +5%\n• Score final : 85-95%\n\n**MÉTRIQUES D'OPTIMISATION**\n\n**Mesurer le succès :**\n• **Précision** : Résultat correspond à l'attente ?\n• **Complétude** : Toutes les parties présentes ?\n• **Format** : Structure respectée ?\n• **Cohérence** : Résultats stables ?\n• **Utilisabilité** : Output directement exploitable ?\n\n**Règle 80/20 :**\n• 80% de l'amélioration vient des 3 premières itérations\n• Ne pas sur-optimiser\n• Stop quand score > 85%\n\n**TECHNIQUES D'ACCÉLÉRATION**\n\n**1. QUICK WINS**\n• Ajouter \"étape par étape\" (+10% instant)\n• Un exemple vaut 1000 mots\n• Format explicite = 50% des problèmes résolus\n\n**2. PATTERN RECOGNITION**\n• Identifier le type de tâche\n• Appliquer template approprié\n• Réutiliser optimisations passées\n\n**3. A/B TESTING RAPIDE**\n• Tester 2 versions simultanément\n• Comparer outputs\n• Merger les meilleures parties",
+            "visual": {
+              "type": "progress-chart",
+              "description": "Graphique montrant l'amélioration cumulative à chaque itération"
+            },
+            "duration": 90
+          },
+          "demo": {
+            "type": "step-by-step",
+            "title": "Optimisation en temps réel",
+            "iterations": [
+              {
+                "step": 0,
+                "prompt": "fais un résumé",
+                "score": 30,
+                "issues": "Aucun contexte, format indéfini, longueur inconnue"
+              },
+              {
+                "step": 1,
+                "prompt": "Fais un résumé du rapport de vente Q4 2024 pour présentation au comité de direction",
+                "score": 55,
+                "improvements": "Document spécifié, audience définie, purpose clair"
+              },
+              {
+                "step": 2,
+                "prompt": "[CONTEXTE] Rapport de vente Q4 2024\n[TÂCHE] Résumé exécutif (5 min lecture)\n[SECTIONS] 1. Performance 2. Succès 3. Challenges 4. Perspectives",
+                "score": 70,
+                "improvements": "Structure claire, contexte enrichi, contrainte temps"
+              },
+              {
+                "step": 3,
+                "prompt": "[Previous] + [EXEMPLE FORMAT]\n• CA Total : XX M€ (+X%)\n• Top succès : [Description] → Impact",
+                "score": 85,
+                "improvements": "Format exact montré, type d'info attendu"
+              },
+              {
+                "step": 4,
+                "prompt": "[Previous] + [CONTRAINTES]\n• 400-500 mots max\n• Style factuel\n• Chiffres avec comparaison\n• Focus stratégique",
+                "score": 93,
+                "improvements": "Limites explicites, focus clair"
+              },
+              {
+                "step": 5,
+                "prompt": "Tu es analyste senior. [Previous] + Termine par 'Décisions requises' (3 points)",
+                "score": 97,
+                "improvements": "Rôle expert, call-to-action"
+              }
+            ],
+            "totalTime": "3 min 20 sec",
+            "finalImprovement": "+223%",
+            "duration": 90
+          },
+          "exercise": {
+            "type": "optimize",
+            "title": "Optimisez ce prompt",
+            "instruction": "Optimisez ce prompt en 5 itérations maximum. Documentez chaque itération : changement appliqué, amélioration attendue, score estimé.",
+            "starter": "PROMPT INITIAL : \"aide moi avec mon projet\"",
+            "template": "ITÉRATION 0 - Baseline :\nScore : __/100\nProblèmes : \n\nITÉRATION 1 - [Focus] :\nChangements : \nScore : __/100\n\n[Continuez...]",
+            "solution": "**ITÉRATION 0** - Score: 25/100\nProblèmes: Aucune spécification, type d'aide non défini\n\n**ITÉRATION 1** - Clarification - Score: 50/100\n\"Aide-moi à structurer mon projet d'app mobile fitness pour ma startup. J'ai besoin d'un plan de développement sur 6 mois.\"\n\n**ITÉRATION 2** - Structure - Score: 70/100\n[CONTEXTE] App mobile fitness, équipe 3 personnes, budget 50K€\n[BESOIN] Plan structuré avec phases, milestones, ressources, risques\n\n**ITÉRATION 3** - Exemples - Score: 85/100\n[FORMAT ATTENDU]\n**PHASE 1 : Discovery (Mois 1)**\n• Objectifs : [Liste]\n• Budget : [X€]\n• Risques : [Mitigation]\n\n**ITÉRATION 4** - Contraintes - Score: 92/100\n[CONTRAINTES] Focus B2C français, React Native, Agile/Scrum\n\n**ITÉRATION 5** - Polish - Score: 98/100\nTu es Product Manager senior. [Previous] + Critical Path final",
+            "validation": {
+              "criteria": [
+                "5 itérations maximum respectées",
+                "Chaque itération apporte amélioration mesurable",
+                "Score 85+ atteint",
+                "Documentation claire des changements",
+                "Progression logique et systématique"
+              ],
+              "feedbackCorrect": "Parfait ! Optimisation méthodique et efficace. Vous avez atteint l'objectif en respectant le protocole.",
+              "feedbackIncorrect": "Améliorez : 1) Documentez mieux les changements, 2) Estimez les scores de façon réaliste, 3) Visez 85, pas la perfection."
+            },
+            "duration": 120
+          },
+          "recap": {
+            "keyPoint": "🔑 5 itérations = 30→85+ de score. Protocole : Clarification → Structure → Exemples → Contraintes → Polish. 80% des gains dans les 3 premières.",
+            "duration": 15
+          }
+        },
+        "metadata": {
+          "difficulty": "intermediate",
+          "tags": ["optimisation", "itération", "protocole", "speed"],
+          "estimatedTime": 5,
+          "prerequisites": ["cap-2-20"],
+          "learningOutcomes": [
+            "Maîtriser le protocole 5-step",
+            "Optimiser un prompt en 5 minutes",
+            "Atteindre 85%+ de performance",
+            "Appliquer la règle 80/20"
+          ]
+        }
+      }
+    ]
+  }
+}

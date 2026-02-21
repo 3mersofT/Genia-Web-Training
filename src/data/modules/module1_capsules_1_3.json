@@ -1,0 +1,199 @@
+{
+  "module": {
+    "id": "module-1-fundamentals",
+    "order": 1,
+    "title": "Découverte et Fondamentaux du Prompt Engineering",
+    "description": "Maîtrisez les bases essentielles pour communiquer efficacement avec l'IA",
+    "duration": 60,
+    "icon": "🎯",
+    "color": "#3B82F6",
+    "capsules": [
+      {
+        "id": "cap-1-1",
+        "moduleId": "module-1-fundamentals",
+        "order": 1,
+        "title": "Pourquoi le Prompt Engineering va changer votre vie",
+        "duration": 5,
+        "sections": {
+          "hook": {
+            "text": "Imaginez gagner 2 heures par jour grâce à l'IA. Ce n'est pas de la science-fiction, c'est ce que vous allez apprendre à faire dans les prochaines minutes. La plupart des utilisateurs d'IA n'exploitent qu'une fraction de son potentiel. Après cette capsule, vous ferez partie de ceux qui savent vraiment s'en servir.",
+            "duration": 15
+          },
+          "concept": {
+            "content": "Le prompt engineering est l'art de formuler des instructions précises pour obtenir exactement ce que vous voulez d'une IA générative. C'est la différence entre demander 'écris quelque chose' et obtenir un texte médiocre, versus structurer sa demande et obtenir un résultat professionnel.\n\n**Définition simple** : Un prompt, c'est votre message à l'IA. Un bon prompt, c'est un message structuré qui guide l'IA vers le résultat exact que vous voulez.\n\n**Impact concret sur votre quotidien** :\n• **Emails professionnels** : De 20 minutes de rédaction à 30 secondes\n• **Résumés de réunion** : 1h de notes transformées en synthèse structurée instantanément\n• **Brainstorming** : Des idées créatives illimitées à la demande\n• **Analyse de documents** : Comprendre 50 pages en 2 minutes\n• **Code et formules** : Solutions techniques sans être développeur\n\n**Le secret** : La qualité de la réponse dépend à 80% de la qualité de votre prompt. C'est une compétence qui s'apprend, et c'est exactement ce que nous allons faire ensemble.",
+            "code": null,
+            "duration": 90
+          },
+          "demo": {
+            "before": "Écris un email",
+            "after": "[RÔLE] Tu es assistant de direction dans une entreprise tech avec 10 ans d'expérience en communication professionnelle.\n\n[CONTEXTE] Nous avons envoyé une proposition commerciale à un client potentiel (entreprise de 500 personnes, secteur finance) il y a 2 semaines. Pas de réponse malgré leur intérêt initial lors de notre call.\n\n[TÂCHE] Rédige un email de relance professionnel qui :\n- Rappelle notre proposition sans être insistant\n- Montre notre compréhension de leurs enjeux\n- Propose une action concrète (call de 15 min)\n\n[FORMAT]\n- Maximum 150 mots\n- Ton professionnel mais chaleureux\n- Structure : Accroche > Rappel valeur > Call-to-action\n- Objet email inclus",
+            "explanation": "Regardez la différence ! Le prompt vague 'Écris un email' vous donnera un texte générique et inutilisable. Le prompt structuré produit exactement l'email dont vous avez besoin, avec le bon ton, la bonne longueur, et orienté résultat. C'est ça, le pouvoir du prompt engineering.",
+            "duration": 90
+          },
+          "exercise": {
+            "type": "transform",
+            "instruction": "Transformez ce prompt vague en prompt professionnel structuré. Utilisez la méthode RÔLE-CONTEXTE-TÂCHE-FORMAT que vous venez d'apprendre.",
+            "starter": "Fais-moi une présentation",
+            "solution": "[RÔLE] Tu es expert en pitch deck et en communication visuelle, spécialisé dans les présentations pour startups tech.\n\n[CONTEXTE] Startup de 2 ans, SaaS B2B dans la gestion RH, 15 employés, 500K€ ARR, cherchant une série A de 2M€. Présentation pour des VCs français, durée 10 minutes.\n\n[TÂCHE] Crée la structure détaillée d'une présentation investisseur avec :\n- Les slides essentiels et leur contenu clé\n- Les métriques importantes à mettre en avant\n- Le storytelling pour capter l'attention\n\n[FORMAT]\n- 10-12 slides maximum\n- Pour chaque slide : Titre + 3-4 points clés\n- Inclure les transitions entre slides\n- Conseils de design minimaliste",
+            "hints": [
+              "Commencez par définir QUI est l'IA - quel expert voulez-vous ?",
+              "Ajoutez le contexte spécifique - pour qui ? pourquoi ? quelle situation ?",
+              "Précisez exactement CE QUE vous voulez obtenir",
+              "N'oubliez pas le FORMAT - combien de slides ? quel niveau de détail ?"
+            ],
+            "validation": {
+              "checkPoints": [
+                "Présence d'un rôle défini",
+                "Contexte spécifique mentionné",
+                "Tâche claire et précise",
+                "Format de sortie explicite"
+              ],
+              "feedbackCorrect": "Excellent ! Votre prompt est maintenant professionnel et produira exactement la présentation dont vous avez besoin. Vous maîtrisez la structure de base !",
+              "feedbackIncorrect": "Pas mal, mais il manque certains éléments. Vérifiez que vous avez bien : un RÔLE (qui est l'IA), un CONTEXTE (situation spécifique), une TÂCHE (ce que vous voulez) et un FORMAT (comment le présenter)."
+            },
+            "duration": 120
+          },
+          "recap": {
+            "keyPoint": "🔑 Un bon prompt = 80% du résultat. Retenez la structure magique : RÔLE-CONTEXTE-TÂCHE-FORMAT. C'est votre nouvelle superpuissance.",
+            "duration": 15
+          }
+        },
+        "metadata": {
+          "difficulty": "beginner",
+          "tags": ["fondamentaux", "structure", "RCTF"],
+          "estimatedTime": 5,
+          "prerequisites": []
+        }
+      },
+      {
+        "id": "cap-1-2",
+        "moduleId": "module-1-fundamentals",
+        "order": 2,
+        "title": "Les 4 Piliers Magiques - CCFC",
+        "duration": 5,
+        "sections": {
+          "hook": {
+            "text": "CCFC - 4 lettres qui vont transformer votre façon d'utiliser l'IA. C'est la checklist mentale qu'utilisent tous les experts. Dans 5 minutes, elle sera gravée dans votre esprit.",
+            "duration": 15
+          },
+          "concept": {
+            "content": "Les 4 piliers CCFC sont votre boussole pour créer des prompts efficaces. Chaque pilier joue un rôle crucial dans la qualité du résultat.\n\n**🎯 CLARTÉ - Soyez précis comme un laser**\n• Instructions sans ambiguïté\n• Verbes d'action spécifiques (analyser, comparer, créer, synthétiser)\n• Évitez : 'fais quelque chose de bien'\n• Préférez : 'crée une analyse SWOT en 4 points'\n\n**📋 CONTEXTE - Donnez les bonnes infos**\n• Qui êtes-vous ? Qui est le destinataire ?\n• Quelle est la situation ?\n• Quels sont les enjeux ?\n• Exemple : 'Pour un rapport destiné au comité de direction d'une PME industrielle'\n\n**🚧 CONTRAINTES - Fixez les limites**\n• Longueur (100 mots, 5 paragraphes, 1 page)\n• Style (formel, conversationnel, technique)\n• Restrictions ('sans jargon', 'niveau débutant', 'avec exemples')\n• Ce qu'il NE faut PAS faire\n\n**📝 FORMAT - Définissez la structure**\n• Comment présenter l'information ?\n• Liste à puces, tableau, paragraphes, JSON ?\n• Ordre et organisation\n• Exemple : 'Format email avec objet, corps en 3 parties, signature'",
+            "code": "// Exemple de structure CCFC en action\nconst promptCCFC = {\n  clarte: \"Crée une analyse des risques\",\n  contexte: \"Projet de lancement d'app mobile, startup fintech, marché français\",\n  contraintes: \"Maximum 5 risques principaux, avec probabilité et impact\",\n  format: \"Tableau avec colonnes : Risque | Probabilité (H/M/L) | Impact (H/M/L) | Mitigation\"\n};",
+            "duration": 90
+          },
+          "demo": {
+            "before": "Fais un rapport sur les ventes",
+            "after": "[CLARTÉ] Analyse les performances de ventes du Q4 2024 et identifie les tendances clés.\n\n[CONTEXTE] Entreprise e-commerce, 50 employés, vente de produits électroniques B2C, marché français, données de ventes disponibles par catégorie, région et canal.\n\n[CONTRAINTES]\n- Focus sur les 3 catégories principales\n- Comparer avec Q4 2023\n- Maximum 500 mots\n- Niveau de détail : direction générale\n- Éviter le jargon technique\n\n[FORMAT]\n1. Résumé exécutif (3 bullets)\n2. Performance par catégorie (tableau)\n3. Analyse des tendances (3 paragraphes)\n4. 3 recommandations actions",
+            "explanation": "Voyez comme chaque pilier ajoute de la valeur : CLARTÉ dit quoi faire, CONTEXTE donne les infos nécessaires, CONTRAINTES cadre le travail, FORMAT structure le résultat. Ensemble, ils garantissent un résultat professionnel.",
+            "duration": 90
+          },
+          "exercise": {
+            "type": "quiz",
+            "instruction": "Identifiez quel pilier CCFC manque ou est mal défini dans ces prompts",
+            "questions": [
+              {
+                "prompt": "Analyse les données de vente du mois dernier et fais un rapport détaillé avec graphiques et recommandations",
+                "options": [
+                  "Clarté",
+                  "Contexte",
+                  "Contraintes",
+                  "Format"
+                ],
+                "correct": 1,
+                "explanation": "Il manque le CONTEXTE : quelle entreprise ? quel secteur ? quelles données spécifiques ?"
+              },
+              {
+                "prompt": "Tu es expert marketing. Pour ma startup SaaS B2B, crée une stratégie social media",
+                "options": [
+                  "Clarté", 
+                  "Contexte",
+                  "Contraintes et Format",
+                  "Rien ne manque"
+                ],
+                "correct": 2,
+                "explanation": "Il manque CONTRAINTES (budget ? durée ? ressources ?) et FORMAT (comment présenter la stratégie ?)"
+              }
+            ],
+            "hints": [
+              "Vérifiez chaque pilier un par un",
+              "CCFC = Clarté, Contexte, Contraintes, Format",
+              "Un prompt complet doit avoir les 4 piliers"
+            ],
+            "validation": {
+              "checkPoints": ["Identification correcte des piliers manquants"],
+              "feedbackCorrect": "Bravo ! Vous savez maintenant identifier ce qui rend un prompt incomplet. C'est le premier pas vers la maîtrise !",
+              "feedbackIncorrect": "Revoyez chaque pilier : CLARTÉ (quoi faire), CONTEXTE (situation), CONTRAINTES (limites), FORMAT (structure)."
+            },
+            "duration": 120
+          },
+          "recap": {
+            "keyPoint": "🔑 CCFC = Clarté + Contexte + Contraintes + Format. Votre checklist mentale pour ne plus jamais créer de prompts médiocres.",
+            "duration": 15
+          }
+        },
+        "metadata": {
+          "difficulty": "beginner",
+          "tags": ["fondamentaux", "CCFC", "piliers"],
+          "estimatedTime": 5,
+          "prerequisites": ["cap-1-1"]
+        }
+      },
+      {
+        "id": "cap-1-3",
+        "moduleId": "module-1-fundamentals",
+        "order": 3,
+        "title": "Anatomie d'un Prompt Parfait - La Structure RCTF",
+        "duration": 5,
+        "sections": {
+          "hook": {
+            "text": "Et si je vous disais qu'il existe une formule secrète utilisée par tous les experts en IA ? RCTF - 4 lettres qui garantissent des résultats professionnels à chaque fois. Prêt à la découvrir ?",
+            "duration": 15
+          },
+          "concept": {
+            "content": "La structure RCTF (Rôle-Contexte-Tâche-Format) est le squelette de tout prompt professionnel. C'est une méthode systématique qui élimine les approximations.\n\n**[RÔLE] - Qui est l'IA ?**\nDéfinir un rôle transforme l'IA en expert spécialisé.\n• 'Tu es consultant en stratégie McKinsey avec 15 ans d'expérience'\n• 'Tu es professeur de physique quantique vulgarisateur'\n• 'Tu es coach en développement personnel certifié ICF'\n\nPourquoi ça marche ? L'IA adapte son vocabulaire, son niveau d'expertise et sa perspective.\n\n**[CONTEXTE] - Quelle est la situation ?**\nLe contexte guide l'IA vers une réponse pertinente.\n• Qui est concerné ? (startup, PME, particulier)\n• Quel secteur ? (tech, santé, éducation)\n• Quels enjeux ? (croissance, crise, transformation)\n• Quelles ressources ? (budget, équipe, temps)\n\n**[TÂCHE] - Que doit faire l'IA ?**\nUne instruction claire et actionnable.\n• Verbe d'action précis\n• Objectif mesurable\n• Périmètre défini\n• Exemple : 'Analyse ces 3 options et recommande la meilleure selon 5 critères'\n\n**[FORMAT] - Comment présenter ?**\nLa structure de sortie désirée.\n• Type : liste, tableau, paragraphes, JSON\n• Longueur : mots, paragraphes, pages\n• Style : bullet points, narratif, technique\n• Organisation : sections, priorités, chronologie",
+            "code": "// Template RCTF réutilisable\nconst promptTemplate = `\n[RÔLE] Tu es {expertise} avec {experience} d'expérience en {domaine}.\n\n[CONTEXTE] \n{situation_description}\n{stakeholders}\n{constraints}\n\n[TÂCHE] {action_verb} :\n- {objective_1}\n- {objective_2}\n- {criteria}\n\n[FORMAT]\n{output_structure}\n{length}\n{style}\n`;",
+            "duration": 90
+          },
+          "demo": {
+            "before": "Aide-moi à améliorer mon site web",
+            "after": "[RÔLE] Tu es expert UX/UI et consultant en conversion web, spécialisé dans l'optimisation de sites e-commerce, avec 10 ans d'expérience dans l'augmentation des taux de conversion.\n\n[CONTEXTE] \n- Site e-commerce de vêtements éco-responsables\n- 2 ans d'existence, 1000 visiteurs/jour\n- Taux de conversion actuel : 0.8%\n- Budget limité (5000€)\n- Cible : femmes 25-40 ans, CSP+, sensibles à l'écologie\n\n[TÂCHE] Réalise un audit rapide et propose 5 améliorations prioritaires pour doubler le taux de conversion en 3 mois :\n- Identifie les friction points principaux\n- Propose des quick wins réalisables immédiatement\n- Estime l'impact de chaque amélioration\n- Priorise selon le ratio effort/impact\n\n[FORMAT]\nPour chaque amélioration :\n• Problème identifié (1 phrase)\n• Solution proposée (2-3 phrases)\n• Impact estimé : ⭐ à ⭐⭐⭐⭐⭐\n• Effort requis : 💪 à 💪💪💪\n• Priorité : URGENT / IMPORTANT / NICE TO HAVE\n\nTermine par un planning de mise en œuvre sur 3 mois.",
+            "explanation": "Regardez la transformation ! Le prompt vague devient une demande de consulting professionnelle. L'IA sait exactement qui elle doit être, comprend votre situation, sait ce qu'elle doit produire et comment le présenter. C'est la différence entre amateur et professionnel.",
+            "duration": 90
+          },
+          "exercise": {
+            "type": "create",
+            "instruction": "Créez votre premier prompt RCTF complet pour résoudre un problème de votre quotidien professionnel ou personnel.",
+            "starter": "// Utilisez ce template et remplissez chaque section\n[RÔLE] Tu es ...\n\n[CONTEXTE] ...\n\n[TÂCHE] ...\n\n[FORMAT] ...",
+            "solution": "[RÔLE] Tu es expert en productivité personnelle et coach en organisation, spécialisé dans la méthode GTD (Getting Things Done) et les techniques de time-blocking.\n\n[CONTEXTE] \n- Professionnel débordé : 50+ emails/jour, 5-6 réunions quotidiennes\n- Secteur : consulting, travail hybride (3j bureau / 2j télétravail)\n- Problème : journées qui débordent, tâches importantes toujours reportées\n- Objectif : reprendre le contrôle de mon temps\n- Contraintes : pas d'outils payants, max 30 min de setup\n\n[TÂCHE] Crée un système d'organisation personnalisé :\n- Analyse mes contraintes spécifiques\n- Propose une routine quotidienne optimisée\n- Définis des règles de priorisation claires\n- Suggère 3 techniques de protection du temps de travail profond\n- Inclus des méthodes pour gérer les interruptions\n\n[FORMAT]\n1. Diagnostic rapide (3 problèmes principaux)\n2. Système proposé :\n   - Routine matin (5 étapes)\n   - Organisation journée type\n   - Routine soir (3 étapes)\n3. 5 règles d'or à appliquer\n4. Plan de mise en place sur 1 semaine\n5. Métriques pour mesurer le succès",
+            "hints": [
+              "Pensez à un vrai problème que vous avez",
+              "Plus le contexte est précis, meilleure sera la solution",
+              "Le format doit faciliter la mise en action"
+            ],
+            "validation": {
+              "checkPoints": [
+                "Rôle avec expertise définie",
+                "Contexte avec détails spécifiques", 
+                "Tâche avec objectifs clairs",
+                "Format structuré et actionnable"
+              ],
+              "feedbackCorrect": "Parfait ! Vous maîtrisez la structure RCTF. Ce prompt produira des résultats professionnels et actionnables. Vous êtes prêt pour la suite !",
+              "feedbackIncorrect": "Bon début ! Assurez-vous que chaque section est complète : RÔLE (expertise précise), CONTEXTE (situation détaillée), TÂCHE (objectifs clairs), FORMAT (structure exacte)."
+            },
+            "duration": 120
+          },
+          "recap": {
+            "keyPoint": "🔑 RCTF = Rôle + Contexte + Tâche + Format. Cette structure garantit des résultats professionnels à chaque fois. C'est votre nouvelle arme secrète !",
+            "duration": 15
+          }
+        },
+        "metadata": {
+          "difficulty": "beginner",
+          "tags": ["structure", "RCTF", "méthodologie"],
+          "estimatedTime": 5,
+          "prerequisites": ["cap-1-1", "cap-1-2"]
+        }
+      }
+    ]
+  }
+}

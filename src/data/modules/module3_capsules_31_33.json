@@ -1,0 +1,499 @@
+{
+  "module": {
+    "id": "module-3-pratique",
+    "title": "Pratique et Maîtrise - Devenez Expert",
+    "capsules": [
+      {
+        "id": "cap-3-31",
+        "moduleId": "module-3-pratique",
+        "order": 31,
+        "title": "Assistant Email Pro - Plus Jamais de Syndrome de la Page Blanche",
+        "duration": 5,
+        "sections": {
+          "hook": {
+            "text": "Le CEO de Microsoft reçoit 300 emails par jour et répond à tous en 2h grâce à l'IA. Son secret ? Un système d'assistant email ultra-optimisé. Dans 5 minutes, vous aurez le même pouvoir. Fini les heures perdues à rédiger !",
+            "duration": 15
+          },
+          "concept": {
+            "content": "L'Assistant Email Pro est un système complet qui analyse, catégorise, génère et optimise vos communications email avec une précision chirurgicale.\n\n**ARCHITECTURE DU SYSTÈME**\n\n```\n[INBOX] → [ANALYSER] → [ROUTER] → [GENERATOR] → [OPTIMIZER] → [SEND]\n            ↓            ↓           ↓             ↓\n        Sentiment    Priorité    Template      Polish\n        Context      Catégorie   Persona       Check\n        Intent       Urgence     Tone          Track\n```\n\n**LES 5 COMPOSANTS CRITIQUES**\n\n**1. ANALYSEUR CONTEXTUEL**\n• Détection sentiment (positif/neutre/négatif)\n• Extraction intention (demande/plainte/info)\n• Identification urgence (critique/normal/faible)\n• Historique relation (nouveau/régulier/VIP)\n• Enjeux business (€€€, stratégique, routine)\n\n**2. ROUTEUR INTELLIGENT**\n• Template matching automatique\n• Sélection persona approprié\n• Choix ton et style\n• Niveau de détail requis\n• Escalation si nécessaire\n\n**3. GÉNÉRATEUR ADAPTATIF**\n• 12 templates pré-configurés\n• Variables contextuelles\n• Personnalisation dynamique\n• Multi-langues (5 langues)\n• Versions A/B automatiques\n\n**4. OPTIMISEUR FINAL**\n• Correction grammaticale\n• Ajustement longueur\n• Vérification ton\n• Insertion CTA\n• Preview testing\n\n**5. TRACKER PERFORMANCE**\n• Taux d'ouverture\n• Temps de réponse\n• Sentiment retour\n• Conversion rate\n• Learning loop\n\n**TEMPLATES MASTER COLLECTION**\n\n**PROSPECTION**\n• Cold outreach\n• Warm introduction\n• Follow-up séquence\n• Referral request\n\n**SERVICE CLIENT**\n• Résolution problème\n• Gestion plainte\n• Support technique\n• Fidélisation\n\n**MANAGEMENT**\n• Brief équipe\n• Feedback performance\n• Annonces importantes\n• Coordination projet\n\n**NÉGOCIATION**\n• Proposition initiale\n• Counter-offer\n• Closing deal\n• Terms clarification",
+            "visual": {
+              "type": "email-flow-system",
+              "description": "Système visuel montrant le flux d'un email depuis réception jusqu'à envoi optimisé"
+            },
+            "duration": 90
+          },
+          "demo": {
+            "type": "email-transformation",
+            "title": "3 Emails Complexes, 3 Solutions Parfaites",
+            "scenarios": [
+              {
+                "type": "Client Mécontent VIP",
+                "input": "Bonjour, Je suis TRÈS déçu de votre service. Après 5 ans de collaboration et plus de 500k€ d'achats, je reçois un produit défectueux et personne ne répond depuis 3 jours ! C'est inadmissible. Je songe sérieusement à changer de fournisseur. Cordialement, Jean Dupont, CEO TechCorp",
+                "analysis": {
+                  "sentiment": "Très négatif (-8/10)",
+                  "urgence": "Critique",
+                  "enjeu": "Client VIP, risque de perte 500k€/an",
+                  "action": "Escalation immédiate + Compensation"
+                },
+                "generated_response": "Cher Monsieur Dupont,\n\nJe suis sincèrement désolé pour cette expérience inacceptable qui ne reflète en rien la valeur que nous accordons à notre partenariat de 5 ans.\n\nActions immédiates :\n• J'ai personnellement pris en charge votre dossier\n• Un produit de remplacement part aujourd'hui en express (livraison demain 9h)\n• Notre directeur technique vous contacte dans l'heure pour un diagnostic complet\n\nCompensation proposée :\n• Avoir de 15% sur votre prochaine commande\n• Extension de garantie gratuite de 2 ans\n• Ligne directe prioritaire pour tous vos besoins futurs\n\nPuis-je vous appeler dans les 30 minutes pour m'assurer personnellement de la résolution complète ?\n\nVotre satisfaction reste notre priorité absolue.\n\nTrès cordialement,\n[Nom]\nDirecteur Service Client\n+33 6 XX XX XX XX (ligne directe)",
+                "metrics": "Taux de rétention : 94%, Satisfaction : 8.7/10"
+              },
+              {
+                "type": "Prospection B2B Stratégique",
+                "input": "Contexte : Prospect Fortune 500, première approche après connexion LinkedIn, secteur FinTech, budget estimé 2M€/an",
+                "analysis": {
+                  "approche": "Consultative",
+                  "ton": "Professionnel mais accessible",
+                  "objectif": "Obtenir un call découverte",
+                  "personnalisation": "Mentionner leur dernière levée de fonds"
+                },
+                "generated_response": "Bonjour [Prénom],\n\nFélicitations pour votre levée de série B de 50M€ ! J'ai suivi avec intérêt votre stratégie d'expansion européenne, notamment votre approche innovante du scoring crédit via IA.\n\nChez [Votre Société], nous avons aidé 3 FinTech du CAC40 à réduire leurs coûts d'infrastructure cloud de 47% tout en doublant leur capacité de traitement. Revolut notamment a pu scaler de 10M à 25M d'utilisateurs sans explosion des coûts.\n\nSeriez-vous disponible pour un échange de 20 minutes cette semaine ? J'aimerais comprendre vos défis actuels et partager 2-3 insights spécifiques à votre phase de croissance.\n\nDisponibilités proposées :\n• Mardi 14h-17h\n• Jeudi 9h-11h\n• Ou selon votre convenance\n\nPS : J'ai préparé un benchmark exclusif des infrastructures FinTech européennes que je serais ravi de partager.\n\nBien cordialement,\n[Signature]",
+                "metrics": "Taux de réponse : 67%, Taux de conversion call : 43%"
+              },
+              {
+                "type": "Coordination Équipe Urgente",
+                "input": "Besoin : Mobiliser l'équipe pour un projet urgent, deadline dans 48h, ressources limitées",
+                "analysis": {
+                  "ton": "Motivant mais réaliste",
+                  "structure": "Brief clair + Actions + Support",
+                  "psychologie": "Créer urgence sans panique"
+                },
+                "generated_response": "Objet : 🚀 Sprint 48h - Projet Phoenix - Tous sur le pont !\n\nÉquipe,\n\nNouvelle opportunité majeure : Le client GlobalTech nous donne 48h pour livrer le prototype. C'est serré, mais c'est exactement le genre de défi qu'on relève ensemble.\n\n**OBJECTIF CLAIR**\nLivrer un MVP fonctionnel vendredi 17h\nEnjeu : Contrat de 3 ans si succès\n\n**ORGANISATION SPRINT**\n• Alpha Team (Dev) : Features core - @Marie @Paul @Kim\n• Beta Team (Design) : UI critique - @Sophie @Alex\n• Support Team : Tests + Coordination - @Lucas @Emma\n\n**RESSOURCES DISPONIBLES**\n✔ Budget overtime approuvé\n✔ Repas livrés sur site\n✔ Jeudi remote possible pour focus max\n✔ Vendredi PM off pour tous après livraison\n\n**CHECKPOINTS**\n• Ce soir 18h : Standup 15min\n• Demain 9h : Progress review\n• Demain 18h : Integration\n• Vendredi 14h : Final test\n\n**MON ENGAGEMENT**\nJe bloque 100% de mon temps pour vous. Tout blocage = Slack direct.\nZéro réunion inutile. 100% focus.\n\nOn a déjà réussi des miracles ensemble. Let's do this! 💪\n\nQuestions ? Répondez ici ou Slack #projet-phoenix\n\n[Nom]\nPS : Pizza party vendredi soir pour célébrer ! 🍕",
+                "metrics": "Engagement équipe : 100%, Livraison on-time : 97%"
+              }
+            ],
+            "duration": 90
+          },
+          "exercise": {
+            "type": "email-system-builder",
+            "title": "Créez Votre Système Email Complet",
+            "instruction": "Construisez votre assistant email personnalisé avec 5 templates pour vos situations les plus fréquentes.",
+            "requirements": [
+              "Identifier vos 5 types d'emails récurrents",
+              "Créer un template optimisé pour chacun",
+              "Définir les variables et conditions",
+              "Inclure mécanisme de personnalisation",
+              "Ajouter tracking de performance"
+            ],
+            "framework": {
+              "step1": {
+                "title": "Audit Email",
+                "tasks": [
+                  "Analyser 50 derniers emails envoyés",
+                  "Identifier patterns récurrents",
+                  "Catégoriser par type et fréquence",
+                  "Noter temps moyen par type"
+                ]
+              },
+              "step2": {
+                "title": "Template Design",
+                "structure": "## Template : {{EMAIL_TYPE}}\n\n### Contexte Type\n- Fréquence : {{FREQUENCY}}\n- Destinataires : {{RECIPIENTS}}\n- Objectif : {{GOAL}}\n\n### Structure\n**Objet :** {{SUBJECT_FORMULA}}\n\n**Ouverture :**\n[SI {{KNOWN_CONTACT}}]\n  {{WARM_OPENING}}\n[SINON]\n  {{COLD_OPENING}}\n[FIN SI]\n\n**Corps Principal :**\n{{MAIN_MESSAGE}}\n\n**CTA :**\n{{CALL_TO_ACTION}}\n\n**Signature :**\n{{SIGNATURE_TYPE}}\n\n### Variables\n- {{VAR_1}}\n- {{VAR_2}}\n- {{VAR_3}}\n\n### Tracking\n- Open rate target : {{OPEN_TARGET}}%\n- Response rate target : {{RESPONSE_TARGET}}%\n- Metric : {{SUCCESS_METRIC}}"
+              },
+              "step3": {
+                "title": "Automation Setup",
+                "elements": [
+                  "Trigger conditions",
+                  "Template selection logic",
+                  "Auto-fill variables",
+                  "Review workflow",
+                  "Send optimization"
+                ]
+              }
+            },
+            "solution_example": {
+              "template1": {
+                "type": "Weekly Team Update",
+                "frequency": "Hebdomadaire",
+                "template": "Objet : 📊 Weekly Update - Semaine {{WEEK_NUMBER}} - {{KEY_HIGHLIGHT}}\n\nÉquipe,\n\n**Victoires de la semaine :**\n• {{WIN_1}}\n• {{WIN_2}}\n• {{WIN_3}}\n\n**Métriques clés :**\n• Revenue : {{REVENUE}} ({{REVENUE_DELTA}})\n• Users : {{USERS}} ({{USER_DELTA}})\n• NPS : {{NPS}}\n\n**Focus semaine prochaine :**\n1. {{PRIORITY_1}}\n2. {{PRIORITY_2}}\n3. {{PRIORITY_3}}\n\n**Besoin de support sur :**\n{{BLOCKERS}}\n\nQuestions ? Rdv 1:1 dispo sur Calendly.\n\nBon weekend ! 🚀",
+                "automation": "Trigger : Vendredi 16h\nData : Auto-pull from dashboard\nReview : 15 min final check\nSend : 16h30"
+              }
+            },
+            "validation": {
+              "checklist": [
+                "5 templates complets et distincts",
+                "Variables clairement définies",
+                "Logique conditionnelle présente",
+                "Mécanisme de tracking inclus",
+                "Système cohérent et scalable"
+              ],
+              "feedbackCorrect": "Système email excellent ! Vous allez gagner minimum 5h/semaine. Avec ce système, vous passez de 'rédacteur' à 'stratège de communication'. Impact estimé : productivité x3 !",
+              "feedbackIncorrect": "Enrichissez votre système : 1) Diversifiez plus les templates, 2) Ajoutez plus de personnalisation conditionnelle, 3) Définissez des KPIs précis, 4) Prévoyez l'évolution. Un bon système doit couvrir 80% de vos emails !"
+            },
+            "duration": 120
+          },
+          "recap": {
+            "keyPoint": "📧 Assistant Email = Zéro page blanche. Architecture : Analyser→Router→Générer→Optimiser→Tracker. 12 templates masters couvrent 95% des cas. Personnalisation + Automation = 5h gagnées/semaine. ROI : 300% en 30 jours.",
+            "duration": 15
+          }
+        },
+        "metadata": {
+          "difficulty": "advanced",
+          "tags": ["email", "communication", "automation", "templates", "productivité"],
+          "estimatedTime": 5,
+          "prerequisites": ["cap-3-30"],
+          "learningOutcomes": [
+            "Créer un système email complet",
+            "Maîtriser les templates email",
+            "Automatiser les réponses",
+            "Optimiser la communication professionnelle"
+          ]
+        }
+      },
+      {
+        "id": "cap-3-32",
+        "moduleId": "module-3-pratique",
+        "order": 32,
+        "title": "Créateur de Contenu - Blog, Social Media, Newsletter en Pilote Auto",
+        "duration": 5,
+        "sections": {
+          "hook": {
+            "text": "MrBeast génère 547 variations de contenu à partir d'une seule vidéo. Gary Vee transforme 1 keynote en 64 pieces de contenu. Dans 5 minutes, vous aurez votre propre machine à contenu qui transforme 1 idée en 30 publications.",
+            "duration": 15
+          },
+          "concept": {
+            "content": "Le Créateur de Contenu est un système de production qui transforme une idée en multiples formats optimisés pour chaque plateforme, maximisant reach et engagement.\n\n**LA PYRAMIDE DE CONTENU**\n\n```\n           [IDÉE CORE]\n                ↓\n        [PILLAR CONTENT]\n         /      |      \\\n    [BLOG]  [VIDEO]  [PODCAST]\n       ↓        ↓        ↓\n  [10 SOCIAL] [5 CLIPS] [3 ARTICLES]\n       ↓        ↓        ↓\n  [30 MICRO-CONTENUS TOTAL]\n```\n\n**SYSTÈME DE PRODUCTION 5 ÉTAPES**\n\n**1. IDEATION ENGINE**\n• Trend monitoring (Google Trends, Twitter)\n• Competitor analysis (BuzzSumo)\n• Audience questions (Answer The Public)\n• Keyword research (SEMrush)\n• Content gaps (Ahrefs)\nOutput : 50 idées/mois rankées par potentiel\n\n**2. CONTENT EXPANSION**\n• 1 idée → 5 angles différents\n• 1 angle → 3 formats (texte, visuel, vidéo)\n• 1 format → 5 longueurs (micro à long-form)\n• Total : 75 variations possibles\n\n**3. PLATFORM OPTIMIZATION**\n\n**LinkedIn (B2B Pro)**\n• Hook : Question ou stat choc\n• Format : 1300 chars max\n• Structure : Story → Insight → CTA\n• Best time : Mardi-Jeudi 8h-10h\n• Hashtags : 3-5 niche specific\n\n**Twitter/X (Viral Short)**\n• Thread : 5-10 tweets\n• Hook tweet : <100 chars\n• Visuals : Every 3rd tweet\n• Timing : 9h, 13h, 17h, 21h\n• Engagement : Reply to replies\n\n**Instagram (Visual Story)**\n• Carousel : 10 slides max\n• Caption : 2200 chars storytelling\n• Hashtags : 30 (10 big, 10 medium, 10 niche)\n• Stories : Behind the scenes\n• Reels : How-to en 30 sec\n\n**TikTok (Edutainment)**\n• Duration : 30-60 sec optimal\n• Hook : 3 secondes max\n• Structure : Problem → Solution → Result\n• Trending audio : Obligatoire\n• Caption : Question for comments\n\n**Blog (SEO Authority)**\n• Length : 2000-3000 mots\n• Structure : H2 every 300 mots\n• Images : Every 350 mots\n• Internal links : 3-5\n• External links : 2-3 authority\n\n**Newsletter (Direct Value)**\n• Subject : 30-50 chars, curiosity\n• Preview : Benefit clear\n• Length : 500-800 mots\n• Sections : 3-5 max\n• CTA : 1 primary, 2 secondary\n\n**4. CONTENT MULTIPLICATION**\n\n```\n1 Article Blog (2000 mots)\n    ↓\n├── 1 Newsletter (500 mots)\n├── 1 LinkedIn Article\n├── 5 LinkedIn Posts\n├── 10 Tweets/Thread\n├── 3 Instagram Carousels\n├── 5 Instagram Stories\n├── 3 TikToks/Reels\n├── 1 YouTube Script\n├── 1 Podcast Outline\n└── 10 Quote Cards\n= 40 pièces de contenu\n```\n\n**5. AUTOMATION WORKFLOW**\n• Content calendar (Notion/Airtable)\n• AI generation (ChatGPT/Claude)\n• Design automation (Canva Bulk)\n• Scheduling (Buffer/Hootsuite)\n• Analytics (Native + Google Analytics)\n• Optimization loop (A/B testing)",
+            "visual": {
+              "type": "content-multiplication-tree",
+              "description": "Arbre interactif montrant comment 1 idée devient 40 contenus"
+            },
+            "duration": 90
+          },
+          "demo": {
+            "type": "content-transformation",
+            "title": "1 Article → 30 Contenus en 15 Minutes",
+            "source": {
+              "type": "Article Blog",
+              "title": "5 Tendances IA qui Transforment le Business en 2024",
+              "words": 2000,
+              "sections": [
+                "IA Générative omniprésente",
+                "Automatisation des workflows",
+                "Personnalisation à l'échelle",
+                "Analytics prédictive",
+                "Éthique et régulation"
+              ]
+            },
+            "transformations": [
+              {
+                "platform": "LinkedIn",
+                "outputs": [
+                  {
+                    "type": "Post Hook",
+                    "content": "87% des entreprises utilisent l'IA sans le savoir.\n\nVoici les 5 tendances qui transforment silencieusement votre industrie...\n\n[Thread développé]"
+                  },
+                  {
+                    "type": "Carousel",
+                    "content": "Slide 1: Title hook\nSlides 2-6: 1 tendance/slide\nSlide 7: Stats clés\nSlide 8: Action steps\nSlide 9: Ressources\nSlide 10: CTA"
+                  }
+                ]
+              },
+              {
+                "platform": "Twitter/X",
+                "outputs": [
+                  {
+                    "type": "Thread",
+                    "content": "1/ L'IA transforme le business plus vite qu'Internet en 1995.\n\n5 tendances que vous ne pouvez pas ignorer 🧵\n\n2/ Tendance #1...\n[10 tweets total]"
+                  },
+                  {
+                    "type": "Quote Cards",
+                    "content": "5 citations visuelles avec stats chocs"
+                  }
+                ]
+              },
+              {
+                "platform": "Instagram",
+                "outputs": [
+                  {
+                    "type": "Reel Script",
+                    "content": "Hook: 'L'IA va tuer votre job... ou le transformer'\n0-5s: Problem\n5-15s: 5 tendances rapides\n15-25s: Solution\n25-30s: CTA follow"
+                  },
+                  {
+                    "type": "Stories Series",
+                    "content": "Story 1: Poll tendance préférée\nStory 2: Behind the scenes\nStory 3: Quick tip\nStory 4: Q&A\nStory 5: Swipe up article"
+                  }
+                ]
+              },
+              {
+                "platform": "Newsletter",
+                "outputs": [
+                  {
+                    "type": "Executive Summary",
+                    "content": "Subject: 🤖 Votre concurrent utilise déjà ces 5 IA\n\nTLDR + 3 key insights + 1 action immédiate\n\n500 mots max"
+                  }
+                ]
+              },
+              {
+                "platform": "YouTube",
+                "outputs": [
+                  {
+                    "type": "Short Script",
+                    "content": "0-3s: Hook question\n3-50s: 5 tendances speed run\n50-59s: Subscribe CTA"
+                  }
+                ]
+              }
+            ],
+            "metrics": {
+              "time_invested": "15 minutes",
+              "content_created": "30 pieces",
+              "estimated_reach": "50,000 impressions",
+              "engagement_rate": "+156%"
+            },
+            "duration": 90
+          },
+          "exercise": {
+            "type": "content-multiplier",
+            "title": "Créez Votre Machine à Contenu",
+            "instruction": "Prenez 1 idée de contenu et créez un plan pour la transformer en 20+ publications multi-plateformes.",
+            "starter_idea": "Choisissez votre sujet expert ou une tendance dans votre domaine",
+            "process": [
+              {
+                "step": "Idée Core",
+                "task": "Définir le message principal en 1 phrase",
+                "example": "Comment l'IA transforme [votre industrie]"
+              },
+              {
+                "step": "5 Angles",
+                "task": "Trouver 5 perspectives différentes",
+                "angles": [
+                  "Débutant : Les bases",
+                  "Expert : Techniques avancées",
+                  "Business : ROI et métriques",
+                  "Pratique : Tutorial step-by-step",
+                  "Futur : Prédictions et tendances"
+                ]
+              },
+              {
+                "step": "Format Matrix",
+                "task": "Créer matrice contenu x plateforme",
+                "matrix": {
+                  "headers": ["LinkedIn", "Twitter", "Instagram", "Blog", "Newsletter"],
+                  "rows": ["Texte long", "Texte court", "Visuel", "Vidéo", "Audio"]
+                }
+              },
+              {
+                "step": "Production Plan",
+                "task": "Séquencer la création",
+                "timeline": "Jour 1: Pillar content\nJour 2: Social adaptation\nJour 3: Visuals creation\nJour 4: Scheduling\nJour 5: Engagement"
+              }
+            ],
+            "deliverable": {
+              "title": "Mon Plan de Contenu : {{TOPIC}}",
+              "sections": [
+                "Idée principale et objectif",
+                "5 angles d'approche",
+                "20 formats de contenu spécifiques",
+                "Calendrier de publication 30 jours",
+                "KPIs et tracking"
+              ]
+            },
+            "validation": {
+              "criteria": [
+                "Cohérence du message core",
+                "Adaptation par plateforme",
+                "Variété des formats",
+                "Calendrier réaliste",
+                "Métriques définies"
+              ],
+              "feedbackCorrect": "Machine à contenu opérationnelle ! Vous venez de multiplier votre impact par 20x. Avec ce système, vous passez de créateur occasionnel à média professionnel. Lancez la production !",
+              "feedbackIncorrect": "Optimisez votre machine : 1) Clarifiez le message core, 2) Différenciez mieux par plateforme, 3) Ajoutez plus de formats visuels, 4) Définissez un calendrier précis. Le contenu, c'est la cohérence !"
+            },
+            "duration": 120
+          },
+          "recap": {
+            "keyPoint": "🚀 Créateur Contenu = Multiplication infinie. Pyramide : 1 idée→Pillar→Plateformes→30 micro-contenus. 5 étapes : Ideation→Expansion→Optimization→Multiplication→Automation. ROI : 1h création = 30 jours de contenu.",
+            "duration": 15
+          }
+        },
+        "metadata": {
+          "difficulty": "advanced",
+          "tags": ["contenu", "social-media", "marketing", "création", "multiplication"],
+          "estimatedTime": 5,
+          "prerequisites": ["cap-3-31"],
+          "learningOutcomes": [
+            "Créer un système de production de contenu",
+            "Multiplier 1 idée en 30 formats",
+            "Optimiser pour chaque plateforme",
+            "Automatiser la distribution"
+          ]
+        }
+      },
+      {
+        "id": "cap-3-33",
+        "moduleId": "module-3-pratique",
+        "order": 33,
+        "title": "Analyseur de Documents - Comprendre N'importe Quoi en 2 Minutes",
+        "duration": 5,
+        "sections": {
+          "hook": {
+            "text": "Warren Buffett lit 500 pages par jour. Avec l'IA, il pourrait analyser 5000 pages en 1 heure avec une compréhension de 98%. Dans 5 minutes, vous transformerez n'importe quel document en insights actionnables instantanément.",
+            "duration": 15
+          },
+          "concept": {
+            "content": "L'Analyseur de Documents est un système qui extrait, comprend, synthétise et actionne l'information de tout type de document avec une précision chirurgicale.\n\n**ARCHITECTURE D'ANALYSE**\n\n```\n[DOCUMENT] → [PARSER] → [ANALYZER] → [SYNTHESIZER] → [ACTIONIZER]\n                ↓           ↓             ↓              ↓\n            Structure    Insights     Key Points    Next Steps\n            Metadata     Patterns     Summary       Decisions\n            Context      Relations    Rapport       Tasks\n```\n\n**TYPES DE DOCUMENTS MAÎTRISÉS**\n\n**BUSINESS**\n• Rapports financiers (P&L, Balance, Cash Flow)\n• Présentations stratégiques (PPT, Keynote)\n• Contrats et documents légaux\n• Business plans et pitch decks\n• Études de marché et benchmarks\n\n**TECHNIQUE**\n• Documentation technique (API, SDK)\n• Code source et architectures\n• Brevets et white papers\n• Spécifications produit\n• Manuels et guides\n\n**ACADÉMIQUE**\n• Articles scientifiques\n• Thèses et mémoires\n• Livres et e-books\n• Cours et MOOCs\n• Notes et transcriptions\n\n**COMMUNICATION**\n• Emails et correspondances\n• Comptes-rendus de réunion\n• Propositions commerciales\n• Newsletters et bulletins\n• Posts et articles blog\n\n**LE PROCESSUS 7 PHASES**\n\n**1. EXTRACTION**\n• Text extraction (OCR si nécessaire)\n• Metadata parsing\n• Structure detection\n• Language identification\n• Format normalization\n\n**2. SEGMENTATION**\n• Chapitres/Sections\n• Paragraphes clés\n• Listes et tableaux\n• Graphiques et images\n• Citations et références\n\n**3. ANALYSE PROFONDE**\n• Thèmes principaux\n• Arguments et logique\n• Données et métriques\n• Assertions et claims\n• Ton et intention\n\n**4. PATTERN RECOGNITION**\n• Tendances identifiées\n• Anomalies détectées\n• Corrélations trouvées\n• Insights cachés\n• Opportunités révélées\n\n**5. SYNTHÈSE INTELLIGENTE**\n• Executive summary (1 page)\n• Key findings (5 bullets)\n• Critical numbers (KPIs)\n• Main conclusions\n• Recommandations\n\n**6. QUESTIONNEMENT CRITIQUE**\n• Assumptions à challenger\n• Data gaps identifiés\n• Risques potentiels\n• Questions ouvertes\n• Validations nécessaires\n\n**7. ACTION PLANNING**\n• Décisions à prendre\n• Actions immédiates\n• Investigations supplémentaires\n• Stakeholders à impliquer\n• Timeline proposée",
+            "visual": {
+              "type": "document-analysis-pipeline",
+              "description": "Pipeline visuel montrant la transformation d'un PDF de 100 pages en 1 page d'actions"
+            },
+            "duration": 90
+          },
+          "demo": {
+            "type": "live-analysis",
+            "title": "3 Documents Complexes Analysés en Direct",
+            "documents": [
+              {
+                "type": "Rapport Financier Q3",
+                "pages": 87,
+                "complexity": "High",
+                "input": "Rapport trimestriel avec données financières, graphiques, projections",
+                "analysis_prompt": "Tu es un analyste financier senior. Analyse ce rapport Q3 :\n\n1. EXTRACTION MÉTRIQUES\n- Revenue, EBITDA, Cash Flow\n- YoY et QoQ growth\n- Margins et ratios clés\n\n2. PERFORMANCE ANALYSIS\n- vs Objectifs\n- vs Marché\n- vs Concurrents\n\n3. RISK ASSESSMENT\n- Red flags financiers\n- Dépendances critiques\n- Scenarios pessimistes\n\n4. OPPORTUNITÉS\n- Growth drivers\n- Optimisations possibles\n- M&A potentiels\n\n5. ACTION ITEMS\n- Décisions urgentes\n- Investigations nécessaires\n- Communications requises",
+                "output": {
+                  "executive_summary": "Performance Q3 : Revenue +23% YoY à 47M€, EBITDA 18% (vs 15% Q2). Cash position solide 82M€.",
+                  "key_findings": [
+                    "🟢 Croissance organique supérieure au marché (+23% vs +12%)",
+                    "🟡 Marge sous pression (-2pts) due aux coûts matières",
+                    "🟢 Nouveau produit X : 35% du revenue (surperformance)",
+                    "🔴 Région APAC : -15% (conflit géopolitique)",
+                    "🟡 DSO augmente : 67 jours (vs 52 jours Q2)"
+                  ],
+                  "critical_numbers": {
+                    "revenue": "47M€ (+23%)",
+                    "ebitda": "8.5M€ (18%)",
+                    "cash": "82M€",
+                    "runway": "24 mois",
+                    "valuation_implied": "~400M€"
+                  },
+                  "actions": [
+                    "URGENT : Renégocier contrats fournisseurs (impact +3pts marge)",
+                    "Accélérer expansion Europe (compenser APAC)",
+                    "Lancer audit crédit clients (DSO critique)",
+                    "Préparer série B pour Q1 2025",
+                    "Recruter CFO senior (croissance nécessite structure)"
+                  ]
+                }
+              },
+              {
+                "type": "Contrat SaaS B2B",
+                "pages": 42,
+                "complexity": "Legal High",
+                "input": "Contrat entreprise avec clauses complexes, SLA, pénalités",
+                "analysis_prompt": "Tu es un juriste spécialisé tech. Analyse ce contrat SaaS :\n\n1. TERMES CRITIQUES\n- Durée et renouvellement\n- Pricing et évolutions\n- SLA et pénalités\n- IP et data ownership\n- Termination clauses\n\n2. RISQUES IDENTIFIÉS\n- Clauses défavorables\n- Obligations cachées\n- Pénalités potentielles\n- Lock-in mechanisms\n\n3. OPPORTUNITÉS\n- Négociations possibles\n- Options non exercées\n- Flexibilités prévues\n\n4. COMPARAISON MARCHÉ\n- vs Standards industrie\n- Points atypiques\n- Clauses manquantes\n\n5. RECOMMANDATIONS\n- Must-have changes\n- Nice-to-have\n- Deal breakers",
+                "output": {
+                  "deal_structure": "3 ans, 250k€/an, auto-renew, +5% annuel",
+                  "critical_terms": [
+                    "⚠️ Pénalité sortie : 6 mois de frais (75k€)",
+                    "✅ SLA 99.9% avec crédit service",
+                    "⚠️ Data ownership : Co-propriété (risque)",
+                    "✅ RGPD compliant avec DPA inclus",
+                    "🚫 Exclusivité sectorielle (bloquant)"
+                  ],
+                  "risks": [
+                    "HIGH : Clause exclusivité empêche solutions complémentaires",
+                    "MEDIUM : Augmentation prix non plafonnée après année 3",
+                    "LOW : Délai de paiement 30 jours (standard)",
+                    "HIGH : Pas de clause de sortie pour non-performance"
+                  ],
+                  "negotiation_points": [
+                    "Supprimer exclusivité ou limiter au segment",
+                    "Plafonner augmentation à 3% ou CPI",
+                    "Ajouter right to exit si SLA <99.5% sur 3 mois",
+                    "Clarifier data ownership : 100% client",
+                    "Réduire pénalité sortie à 3 mois"
+                  ],
+                  "decision": "NEGOTIATE - Bon produit mais termes à revoir. Score : 6/10"
+                }
+              },
+              {
+                "type": "Étude de Marché IA",
+                "pages": 156,
+                "complexity": "Strategic",
+                "input": "Analyse sectorielle IA avec trends, players, projections 2030",
+                "analysis_prompt": "Tu es un consultant stratégie McKinsey. Analyse cette étude marché IA :\n\n1. MARKET DYNAMICS\n- Taille et croissance\n- Segments et sous-segments\n- Drivers et freins\n- Disruptions potentielles\n\n2. COMPETITIVE LANDSCAPE\n- Leaders et challengers\n- Stratégies gagnantes\n- Moats et différenciateurs\n- M&A activity\n\n3. TRENDS & FUTURES\n- Technologies émergentes\n- Use cases breakthrough\n- Regulatory evolution\n- Investment flows\n\n4. OPPORTUNITIES\n- White spaces\n- Timing optimal\n- Investment required\n- ROI potential\n\n5. STRATEGIC MOVES\n- Build vs Buy vs Partner\n- Go-to-market\n- Resource allocation\n- Risk mitigation",
+                "output": {
+                  "market_size": "2024: $387B → 2030: $1,847B (CAGR 29.7%)",
+                  "key_insights": [
+                    "🚀 GenAI = 67% de la croissance future",
+                    "🎯 Verticalization : Solutions spécialisées > Généralistes",
+                    "💰 Consolidation : 450+ acquisitions prévues d'ici 2026",
+                    "🌏 Asie devient leader : 45% du marché en 2030",
+                    "⚖️ Régulation EU : AI Act reshape le marché"
+                  ],
+                  "opportunities": {
+                    "immediate": "AI pour PME : marché sous-servi, $45B potentiel",
+                    "medium_term": "AI verticale santé : régulation claire en 2025",
+                    "long_term": "AGI preparation : Infrastructure et talents"
+                  },
+                  "strategic_recommendations": [
+                    "AGIR MAINTENANT : Lancer MVP AI pour PME (6 mois to market)",
+                    "PRÉPARER : Recruter talents AI top 1% (guerre des talents)",
+                    "PARTNER : Alliance avec cloud provider pour scale",
+                    "ACQUÉRIR : Start-up AI verticale (valorisation encore raisonnable)",
+                    "PROTÉGER : IP et data moats critiques pour survie"
+                  ],
+                  "success_factors": "Speed to market (40%) > Technology (30%) > Funding (20%) > Team (10%)"
+                }
+              }
+            ],
+            "duration": 90
+          },
+          "exercise": {
+            "type": "document-analyzer",
+            "title": "Construisez Votre Analyseur Personnel",
+            "instruction": "Créez un système d'analyse pour le type de document que vous traitez le plus souvent.",
+            "steps": [
+              {
+                "phase": "Identification",
+                "questions": [
+                  "Quel type de document analysez-vous souvent ?",
+                  "Combien de temps passez-vous actuellement ?",
+                  "Quelles informations cherchez-vous ?",
+                  "Quelles décisions en découlent ?"
+                ]
+              },
+              {
+                "phase": "Structure Analyse",
+                "framework": "## Analyseur : {{DOCUMENT_TYPE}}\n\n### 1. EXTRACTION\nÉléments à extraire :\n- {{ELEMENT_1}}\n- {{ELEMENT_2}}\n- {{ELEMENT_3}}\n\n### 2. ANALYSE\nPoints d'analyse :\n- {{ANALYSIS_1}}\n- {{ANALYSIS_2}}\n- {{ANALYSIS_3}}\n\n### 3. SYNTHÈSE\nFormat de sortie :\n- Executive Summary ({{LENGTH}})\n- Key Points ({{NUMBER}})\n- Metrics ({{METRICS}})\n\n### 4. QUESTIONS\nQuestions critiques :\n- {{QUESTION_1}}\n- {{QUESTION_2}}\n- {{QUESTION_3}}\n\n### 5. ACTIONS\nDécisions types :\n- {{ACTION_1}}\n- {{ACTION_2}}\n- {{ACTION_3}}"
+              },
+              {
+                "phase": "Prompt Master",
+                "template": "Tu es {{EXPERT_ROLE}} avec {{YEARS}} ans d'expérience.\n\nAnalyse ce {{DOCUMENT_TYPE}} avec focus sur :\n\n1. EXTRACTION PRIORITAIRE\n{{EXTRACTION_PRIORITIES}}\n\n2. ANALYSE CRITIQUE\n{{ANALYSIS_FRAMEWORK}}\n\n3. SYNTHÈSE ACTIONNABLE\n{{OUTPUT_FORMAT}}\n\n4. RED FLAGS\n{{WARNING_SIGNS}}\n\n5. NEXT STEPS\n{{ACTION_FRAMEWORK}}\n\nFormat final : {{DELIVERABLE_FORMAT}}"
+              }
+            ],
+            "examples": {
+              "cv_analyzer": "Extraction: Skills, Experience, Red flags\nAnalyse: Fit score, Growth potential\nActions: Interview questions, Reference checks",
+              "competitor_analyzer": "Extraction: Products, Pricing, Strategy\nAnalyse: Strengths, Weaknesses, Moves\nActions: Counter-strategy, Differentiation",
+              "research_analyzer": "Extraction: Methodology, Findings, Limitations\nAnalyse: Validity, Applicability, Gaps\nActions: Implementation, Further research"
+            },
+            "validation": {
+              "criteria": [
+                "Spécificité au type de document",
+                "Exhaustivité de l'extraction",
+                "Pertinence de l'analyse",
+                "Clarté de la synthèse",
+                "Actions concrètes définies"
+              ],
+              "feedbackCorrect": "Analyseur excellent ! Vous venez de réduire 2h d'analyse à 2 minutes. Précision maintenue, temps divisé par 60. C'est votre superpouvoir d'analyse instantanée !",
+              "feedbackIncorrect": "Affinez votre analyseur : 1) Soyez plus spécifique sur les éléments à extraire, 2) Structurez mieux l'analyse, 3) Clarifiez le format de synthèse, 4) Définissez des actions plus concrètes."
+            },
+            "duration": 120
+          },
+          "recap": {
+            "keyPoint": "📄 Analyseur Documents = Compréhension instantanée. Process : Extract→Segment→Analyze→Synthesize→Question→Act. Tous formats maîtrisés. 100 pages → 1 page actions en 2 min. Précision 98%, Temps /60.",
+            "duration": 15
+          }
+        },
+        "metadata": {
+          "difficulty": "advanced",
+          "tags": ["analyse", "documents", "synthèse", "extraction", "intelligence"],
+          "estimatedTime": 5,
+          "prerequisites": ["cap-3-32"],
+          "learningOutcomes": [
+            "Analyser tout type de document",
+            "Extraire les insights critiques",
+            "Synthétiser en actions concrètes",
+            "Gagner 95% de temps d'analyse"
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,406 @@
+{
+  "module": {
+    "id": "module-3-pratique",
+    "title": "Pratique et Maîtrise - Devenez Expert",
+    "capsules": [
+      {
+        "id": "cap-3-25",
+        "moduleId": "module-3-pratique",
+        "order": 25,
+        "title": "Le Pouvoir du Chaînage - Divisez pour Mieux Régner",
+        "duration": 5,
+        "sections": {
+          "hook": {
+            "text": "Et si je vous disais qu'Amazon utilise 47 prompts chaînés pour générer une page produit parfaite ? Le chaînage transforme l'impossible en trivial. Dans 5 minutes, vous orchestrerez l'IA comme un chef d'orchestre dirige son ensemble.",
+            "duration": 15
+          },
+          "concept": {
+            "content": "Le chaînage de prompts décompose une tâche complexe en étapes simples et séquentielles, chaque output devenant l'input du suivant.\n\n**POURQUOI LE CHAÎNAGE EST RÉVOLUTIONNAIRE**\n\n**Sans Chaînage : Chaos**\n• Prompt géant impossible à débugger\n• Résultats imprévisibles\n• Qualité aléatoire\n• Impossible à maintenir\n• Taux d'erreur : 60-80%\n\n**Avec Chaînage : Maîtrise**\n• Étapes atomiques contrôlables\n• Résultats prévisibles\n• Qualité constante\n• Maintenance facile\n• Taux de succès : 95%+\n\n**LES 5 PATTERNS DE CHAÎNAGE**\n\n**1. SÉQUENTIEL (Linear Chain)**\nA → B → C → D\n• Chaque étape dépend de la précédente\n• Idéal pour : Workflows linéaires\n• Exemple : Recherche → Analyse → Synthèse → Rapport\n\n**2. PARALLÈLE (Parallel Chain)**\nA → [B, C, D] → E\n• Plusieurs branches simultanées\n• Idéal pour : Perspectives multiples\n• Exemple : 3 experts analysent → Synthèse commune\n\n**3. CONDITIONNEL (Branching Chain)**\nA → if X then B else C → D\n• Logique conditionnelle\n• Idéal pour : Décisions adaptatives\n• Exemple : Si positif → Amplifier, Si négatif → Corriger\n\n**4. ITÉRATIF (Loop Chain)**\nA → B → C → if not OK then A\n• Boucles d'amélioration\n• Idéal pour : Raffinement progressif\n• Exemple : Générer → Évaluer → Améliorer → Répéter\n\n**5. HIÉRARCHIQUE (Tree Chain)**\nA → [B1→[C1,C2], B2→[C3,C4]]\n• Structure arborescente\n• Idéal pour : Décomposition complexe\n• Exemple : Projet → Sous-projets → Tâches → Actions\n\n**ARCHITECTURE D'UN CHAÎNAGE**\n\n```\n[INPUT] → [PRÉPROCESSEUR] → [CHAÎNE PRINCIPALE] → [POSTPROCESSEUR] → [OUTPUT]\n                                    ↓\n                            [VALIDATEUR] ←→ [CORRECTEUR]\n```",
+            "visual": {
+              "type": "flow-diagram",
+              "description": "Diagramme animé montrant les 5 patterns avec flux de données colorés"
+            },
+            "duration": 90
+          },
+          "demo": {
+            "type": "live-chaining",
+            "title": "Création d'Article de Blog en 5 Étapes",
+            "chain": [
+              {
+                "step": 1,
+                "name": "Recherche",
+                "prompt": "Recherche les 5 tendances principales sur [SUJET] en 2024. Format : liste avec sources.",
+                "output": "1. Tendance A (source1)\n2. Tendance B (source2)..."
+              },
+              {
+                "step": 2,
+                "name": "Structure",
+                "prompt": "Basé sur ces tendances : [OUTPUT_1], crée une structure d'article captivante avec hook, 3 sections, conclusion.",
+                "output": "I. Hook percutant\nII. Section 1 : Tendance majeure\nIII. Section 2 : Impacts..."
+              },
+              {
+                "step": 3,
+                "name": "Rédaction",
+                "prompt": "Développe cette structure : [OUTPUT_2] en article de 800 mots, ton professionnel mais accessible.",
+                "output": "[Article complet rédigé]"
+              },
+              {
+                "step": 4,
+                "name": "Optimisation SEO",
+                "prompt": "Optimise cet article : [OUTPUT_3] pour le SEO. Ajoute : meta description, mots-clés, headers optimisés.",
+                "output": "[Article optimisé avec meta]"
+              },
+              {
+                "step": 5,
+                "name": "Validation",
+                "prompt": "Vérifie cet article : [OUTPUT_4]. Score sur : clarté, engagement, SEO, valeur. Si <8/10, suggère améliorations.",
+                "output": "Score : 9.2/10\n✅ Prêt à publier"
+              }
+            ],
+            "duration": 90
+          },
+          "exercise": {
+            "type": "chain-builder",
+            "title": "Construisez Votre Première Chaîne Pro",
+            "instruction": "Créez une chaîne de 4 prompts pour transformer un email client mécontent en opportunité de fidélisation.",
+            "scenario": "Email client : 'Votre produit ne fonctionne pas comme prévu. Très déçu après 3 achats. Je pense changer de fournisseur.'",
+            "template": {
+              "step1": {
+                "name": "Analyse Sentiment",
+                "hint": "Identifiez émotions, problèmes, historique"
+              },
+              "step2": {
+                "name": "Génération Solutions",
+                "hint": "Proposez 3 solutions basées sur l'analyse"
+              },
+              "step3": {
+                "name": "Rédaction Réponse",
+                "hint": "Email empathique avec solutions"
+              },
+              "step4": {
+                "name": "Ajout Incentive",
+                "hint": "Offre de fidélisation personnalisée"
+              }
+            },
+            "solution": {
+              "step1": "PROMPT : Analyse cet email client : '[EMAIL]'. Identifie : 1) Émotion principale, 2) Problème spécifique, 3) Historique relation (3 achats), 4) Risque de départ. Format : JSON structuré.",
+              "step2": "PROMPT : Basé sur cette analyse : [OUTPUT_1], génère 3 solutions personnalisées : 1) Solution immédiate au problème, 2) Compensation pour désagrément, 3) Prévention future. Priorise par impact.",
+              "step3": "PROMPT : Rédige un email de réponse empathique utilisant : Analyse [OUTPUT_1] et Solutions [OUTPUT_2]. Structure : 1) Reconnaissance et excuse, 2) Solution immédiate, 3) Actions concrètes, 4) Engagement futur. Ton : professionnel, chaleureux, sincère.",
+              "step4": "PROMPT : Enrichis cet email [OUTPUT_3] avec une offre de fidélisation adaptée au client fidèle (3 achats). Suggère : réduction exclusive OU upgrade gratuit OU service premium 3 mois. Intègre naturellement sans être commercial."
+            },
+            "validation": {
+              "checkpoints": [
+                "Chaîne logique et séquentielle",
+                "Chaque output alimente le suivant",
+                "Progression vers objectif clair",
+                "Prompts spécifiques et actionnables"
+              ],
+              "feedbackCorrect": "Excellent chaînage ! Vous transformez un client mécontent en ambassadeur. Cette approche structurée augmente la rétention client de 78% en moyenne.",
+              "feedbackIncorrect": "Améliorez : 1) Vérifiez que chaque output est utilisé dans l'étape suivante, 2) Soyez plus spécifique dans vos prompts, 3) Gardez l'objectif final en tête. Une chaîne est aussi forte que son maillon le plus faible !"
+            },
+            "duration": 120
+          },
+          "recap": {
+            "keyPoint": "⛓️ Chaînage = Complexité maîtrisée. 5 patterns : Séquentiel (A→B→C), Parallèle (A→[B,C]→D), Conditionnel (if/then), Itératif (loops), Hiérarchique (tree). Décomposez, contrôlez, orchestrez. 1 tâche impossible = 10 étapes simples.",
+            "duration": 15
+          }
+        },
+        "metadata": {
+          "difficulty": "advanced",
+          "tags": ["chaînage", "orchestration", "workflow", "automation"],
+          "estimatedTime": 5,
+          "prerequisites": ["cap-2-24"],
+          "learningOutcomes": [
+            "Maîtriser les 5 patterns de chaînage",
+            "Décomposer des tâches complexes",
+            "Orchestrer des workflows multi-étapes",
+            "Optimiser la qualité des outputs"
+          ]
+        }
+      },
+      {
+        "id": "cap-3-26",
+        "moduleId": "module-3-pratique",
+        "order": 26,
+        "title": "Pipeline de Création - Votre Usine à Contenu",
+        "duration": 5,
+        "sections": {
+          "hook": {
+            "text": "Netflix génère 10 000 variations de thumbnails par jour avec des pipelines IA. Spotify crée 30 millions de playlists personnalisées. Dans 5 minutes, vous construirez votre propre usine à contenu qui tourne 24/7.",
+            "duration": 15
+          },
+          "concept": {
+            "content": "Un pipeline de création est un système automatisé qui transforme des inputs bruts en outputs raffinés, à l'échelle industrielle.\n\n**ANATOMIE D'UN PIPELINE PRO**\n\n```\n[INPUTS]          [PROCESSING]         [OUTPUTS]\n   ↓                   ↓                  ↓\nSources   →   Enrichissement   →   Distribution\nData      →   Transformation   →   Formats\nContext   →   Validation       →   Channels\n```\n\n**LES 7 COMPOSANTS ESSENTIELS**\n\n**1. COLLECTEUR (Input Layer)**\n• Sources multiples : API, RSS, DB, fichiers\n• Normalisation des formats\n• Déduplication\n• Validation qualité\n\n**2. ENRICHISSEUR (Enhancement)**\n• Ajout de métadonnées\n• Recherche contexte\n• Fact-checking\n• Scoring pertinence\n\n**3. TRANSFORMATEUR (Processing)**\n• Conversion formats\n• Adaptation ton/style\n• Traduction/localisation\n• Personnalisation\n\n**4. GÉNÉRATEUR (Creation)**\n• Contenu principal\n• Variations A/B\n• Formats multiples\n• Versions segmentées\n\n**5. OPTIMISEUR (Optimization)**\n• SEO automatique\n• Lisibilité\n• Engagement\n• Performance\n\n**6. VALIDATEUR (Quality Control)**\n• Cohérence brand\n• Fact-checking\n• Conformité légale\n• Score qualité\n\n**7. DISTRIBUTEUR (Publishing)**\n• Multi-canal\n• Scheduling\n• Tracking\n• Feedback loop\n\n**ARCHITECTURES DE PIPELINE**\n\n**PIPELINE LINÉAIRE**\n```\nInput → Process → Output\n```\nSimple, rapide, idéal pour tâches uniques\n\n**PIPELINE BRANCHÉ**\n```\n       → Blog\nInput → → Social\n       → Email\n```\nUn input, multiples outputs\n\n**PIPELINE CONVERGENT**\n```\nRSS   →\nAPI   → Process → Output\nDB    →\n```\nMultiples inputs, un output unifié\n\n**PIPELINE ADAPTATIF**\n```\nInput → Analyse → Route → Process[A|B|C] → Output\n```\nTraitement conditionnel intelligent",
+            "visual": {
+              "type": "pipeline-animation",
+              "description": "Animation 3D d'un pipeline en action avec flux de données colorés traversant chaque étape"
+            },
+            "duration": 90
+          },
+          "demo": {
+            "type": "pipeline-construction",
+            "title": "Pipeline Newsletter Hebdo Automatisée",
+            "pipeline": {
+              "name": "WeeklyDigest Pro",
+              "frequency": "Hebdomadaire",
+              "stages": [
+                {
+                  "stage": "1. COLLECTE",
+                  "prompt": "Collecte les 20 articles les plus partagés cette semaine dans [DOMAINE]. Extrais : titre, résumé, source, engagement metrics.",
+                  "output": "Liste JSON : [{title, summary, source, shares}...]"
+                },
+                {
+                  "stage": "2. CURATION",
+                  "prompt": "Sélectionne les 5 meilleurs articles de [STAGE_1] selon : pertinence, nouveauté, impact. Explique chaque choix.",
+                  "output": "Top 5 avec justifications"
+                },
+                {
+                  "stage": "3. SYNTHÈSE",
+                  "prompt": "Pour chaque article de [STAGE_2], crée : 1) Résumé 3 lignes, 2) Key takeaway, 3) Action suggérée.",
+                  "output": "5 synthèses structurées"
+                },
+                {
+                  "stage": "4. RÉDACTION",
+                  "prompt": "Crée une newsletter avec : 1) Hook d'ouverture, 2) Les 5 synthèses [STAGE_3], 3) CTA final. Ton : professionnel mais accessible.",
+                  "output": "Newsletter complète HTML/Markdown"
+                },
+                {
+                  "stage": "5. PERSONNALISATION",
+                  "prompt": "Crée 3 variantes de [STAGE_4] pour : A) Débutants, B) Intermédiaires, C) Experts. Adapte complexité et profondeur.",
+                  "output": "3 versions segmentées"
+                },
+                {
+                  "stage": "6. OPTIMISATION",
+                  "prompt": "Pour chaque variante [STAGE_5] : 1) Subject line A/B (2 options), 2) Preview text, 3) Meta description.",
+                  "output": "Éléments marketing optimisés"
+                }
+              ],
+              "metrics": {
+                "time_saved": "4 heures/semaine",
+                "quality_score": "9.3/10",
+                "open_rate": "+47%",
+                "engagement": "+182%"
+              }
+            },
+            "duration": 90
+          },
+          "exercise": {
+            "type": "pipeline-designer",
+            "title": "Architectez Votre Pipeline de Contenu Social",
+            "instruction": "Concevez un pipeline complet pour générer 30 posts LinkedIn/mois à partir de votre blog. Incluez : collecte, adaptation, planification.",
+            "requirements": [
+              "Input : Articles de blog existants",
+              "Output : 30 posts LinkedIn optimisés",
+              "Contraintes : Ton professionnel, 1300 caractères max, hashtags pertinents",
+              "Bonus : Inclure images et horaires optimaux"
+            ],
+            "template": {
+              "stages": [
+                "Extraction contenu blog",
+                "Identification key insights",
+                "Transformation en posts",
+                "Optimisation engagement",
+                "Scheduling intelligent"
+              ]
+            },
+            "solution": {
+              "stage1": {
+                "name": "EXTRACTION",
+                "prompt": "Extrais de ces articles de blog : [ARTICLES] les 30 insights les plus intéressants. Pour chaque insight : citation clé, contexte, source article."
+              },
+              "stage2": {
+                "name": "ADAPTATION",
+                "prompt": "Transforme ces insights [STAGE_1] en 30 posts LinkedIn. Structure : Hook (1 ligne) + Développement (3-4 lignes) + Question engagement + 3 hashtags pertinents. Max 1300 caractères."
+              },
+              "stage3": {
+                "name": "ENRICHISSEMENT",
+                "prompt": "Pour chaque post [STAGE_2] : 1) Suggère une image (description pour génération), 2) Meilleur jour/heure de publication basé sur : [Mon audience], 3) CTA adapté."
+              },
+              "stage4": {
+                "name": "VALIDATION",
+                "prompt": "Évalue chaque post [STAGE_3] sur : Clarté (/10), Valeur (/10), Engagement potentiel (/10). Si score <24/30, propose amélioration."
+              },
+              "stage5": {
+                "name": "CALENDRIER",
+                "prompt": "Crée un calendrier éditorial mensuel avec les 30 posts [STAGE_4]. Distribue intelligemment selon : thèmes, jours optimaux, événements industry. Format : calendrier JSON."
+              }
+            },
+            "validation": {
+              "criteria": [
+                "Pipeline complet et logique",
+                "Transformation claire blog→social",
+                "Optimisation engagement incluse",
+                "Scalable et réutilisable"
+              ],
+              "feedbackCorrect": "Pipeline excellent ! Vous automatisez 20h de travail/mois. Cette approche peut générer 10x plus de contenu avec une qualité constante. Prêt à scaler !",
+              "feedbackIncorrect": "Améliorez : 1) Définissez mieux les transformations entre étapes, 2) Ajoutez validation qualité, 3) Pensez réutilisabilité. Un bon pipeline doit tourner sans vous !"
+            },
+            "duration": 120
+          },
+          "recap": {
+            "keyPoint": "🏭 Pipeline = Usine automatisée. 7 composants : Collecteur→Enrichisseur→Transformateur→Générateur→Optimiseur→Validateur→Distributeur. Architecture modulaire + Automation = Scalabilité infinie.",
+            "duration": 15
+          }
+        },
+        "metadata": {
+          "difficulty": "advanced",
+          "tags": ["pipeline", "automation", "content", "scalabilité"],
+          "estimatedTime": 5,
+          "prerequisites": ["cap-3-25"],
+          "learningOutcomes": [
+            "Concevoir des pipelines complets",
+            "Automatiser la création de contenu",
+            "Scaler la production",
+            "Optimiser les workflows"
+          ]
+        }
+      },
+      {
+        "id": "cap-3-27",
+        "moduleId": "module-3-pratique",
+        "order": 27,
+        "title": "Multi-Agents Simples - Une Équipe d'Experts à Votre Service",
+        "duration": 5,
+        "sections": {
+          "hook": {
+            "text": "OpenAI utilise 6 agents spécialisés pour GPT-5. Google en utilise 12 pour Gemini. Pourquoi un seul cerveau quand vous pouvez en avoir 10 ? Dans 5 minutes, vous orchestrerez votre propre équipe d'IA expertes.",
+            "duration": 15
+          },
+          "concept": {
+            "content": "Les systèmes multi-agents utilisent plusieurs IA spécialisées qui collaborent pour résoudre des problèmes complexes, chaque agent ayant une expertise unique.\n\n**POURQUOI MULTI-AGENTS > MONO-AGENT**\n\n**Mono-Agent : Généraliste limité**\n• Jack of all trades, master of none\n• Biais de perspective unique\n• Erreurs non détectées\n• Performance : 70%\n\n**Multi-Agents : Experts coordonnés**\n• Spécialisation profonde\n• Perspectives multiples\n• Validation croisée\n• Performance : 95%\n\n**ARCHITECTURES MULTI-AGENTS**\n\n**1. COMITÉ D'EXPERTS**\n```\n    [Problème]\n         ↓\n[Expert1] [Expert2] [Expert3]\n         ↓\n    [Synthétiseur]\n         ↓\n    [Solution]\n```\n\n**2. CHAÎNE DE SPÉCIALISTES**\n```\nAnalyste → Stratège → Créateur → Critique → Éditeur\n```\n\n**3. DÉBAT ADVERSARIAL**\n```\n[Avocat Pour] ←→ [Avocat Contre]\n            ↓\n         [Juge]\n            ↓\n      [Décision]\n```\n\n**4. HIÉRARCHIE MANAGÉRIALE**\n```\n      [Manager]\n          ↓\n    [Team Leads]\n          ↓\n    [Specialists]\n```\n\n**5. SWARM INTELLIGENCE**\n```\n[Agent1] ↔ [Agent2]\n    ↕         ↕\n[Agent3] ↔ [Agent4]\n    → [Émergence] ←\n```\n\n**LES 6 RÔLES ESSENTIELS**\n\n**1. RESEARCHER**\n• Collecte d'informations\n• Vérification des faits\n• Analyse de données\n• Veille stratégique\n\n**2. ANALYZER**\n• Déconstruction problèmes\n• Identification patterns\n• Évaluation risques\n• Métriques et KPIs\n\n**3. STRATEGIST**\n• Vision globale\n• Planning long-terme\n• Allocation ressources\n• Priorisation\n\n**4. CREATOR**\n• Génération solutions\n• Innovation\n• Prototypage\n• Expérimentation\n\n**5. CRITIC**\n• Évaluation qualité\n• Identification failles\n• Suggestions amélioration\n• Stress testing\n\n**6. SYNTHESIZER**\n• Intégration perspectives\n• Résolution conflits\n• Communication finale\n• Documentation",
+            "visual": {
+              "type": "agent-network",
+              "description": "Réseau animé d'agents interconnectés avec flux d'information et rôles visuels"
+            },
+            "duration": 90
+          },
+          "demo": {
+            "type": "multi-agent-simulation",
+            "title": "Lancement Produit avec 5 Agents",
+            "scenario": "Lancer un nouveau produit SaaS B2B",
+            "agents": [
+              {
+                "name": "Market Researcher",
+                "role": "Expert en analyse de marché, 15 ans d'expérience",
+                "prompt": "En tant qu'expert marché, analyse le potentiel du produit [PRODUIT]. Identifie : taille marché, concurrents, pricing optimal, segments cibles.",
+                "output": "Marché : $2.3B, croissance 23% CAGR. Top 3 concurrents : A, B, C. Prix suggéré : $99/mois. Cible : PME tech 50-200 employés."
+              },
+              {
+                "name": "Product Strategist",
+                "role": "Stratège produit Silicon Valley",
+                "prompt": "Basé sur l'analyse marché [AGENT_1], définis : positionnement unique, features différenciantes, roadmap 6 mois, go-to-market strategy.",
+                "output": "Positionnement : 'Simplicité enterprise'. Features clés : Auto-config, API native, Support 24/7. GTM : Product-led growth + Outbound."
+              },
+              {
+                "name": "Marketing Creator",
+                "role": "CMO créatif, spécialiste B2B SaaS",
+                "prompt": "Avec stratégie [AGENT_2], crée : messaging principal, 3 headlines, elevator pitch, content calendar launch.",
+                "output": "Message : 'Enterprise power, startup simplicity'. Headlines créées. Pitch 30s prêt. Calendar : 40 pieces content/mois."
+              },
+              {
+                "name": "Sales Optimizer",
+                "role": "VP Sales, closer elite",
+                "prompt": "Intégrant marketing [AGENT_3], développe : sales playbook, objection handling, pricing tiers, target accounts list.",
+                "output": "Playbook 20 pages. 15 objections mappées. 3 tiers : Starter/Pro/Enterprise. 100 comptes cibles identifiés."
+              },
+              {
+                "name": "Risk Assessor",
+                "role": "Chief Risk Officer, vision 360°",
+                "prompt": "Évalue plan complet [AGENTS_1-4]. Identifie : top 5 risques, mitigations, success metrics, red flags à monitorer.",
+                "output": "Risques : Saturation marché (30%), Churn (25%), Tech debt (20%). Mitigations définies. KPIs : MRR, CAC, LTV, NPS."
+              }
+            ],
+            "synthesis": "Plan de lancement complet validé. Score confiance : 87%. Go/No-Go : GO avec monitoring serré des KPIs.",
+            "duration": 90
+          },
+          "exercise": {
+            "type": "agent-team-builder",
+            "title": "Assemblez Votre Dream Team IA",
+            "instruction": "Créez une équipe de 4 agents pour résoudre : 'Comment augmenter la rétention client de 40% en 3 mois ?'",
+            "constraints": [
+              "Chaque agent a une expertise unique",
+              "Ils doivent collaborer séquentiellement",
+              "Output final : plan d'action concret",
+              "Budget : ressources limitées"
+            ],
+            "template": {
+              "agent1": {
+                "name": "[À définir]",
+                "expertise": "[Domaine spécifique]",
+                "mission": "[Ce qu'il doit analyser/créer]"
+              },
+              "agent2": {
+                "name": "[À définir]",
+                "expertise": "[Domaine spécifique]",
+                "mission": "[Utilise output agent1]"
+              },
+              "agent3": {
+                "name": "[À définir]",
+                "expertise": "[Domaine spécifique]",
+                "mission": "[Utilise outputs 1&2]"
+              },
+              "agent4": {
+                "name": "[À définir]",
+                "expertise": "[Domaine spécifique]",
+                "mission": "[Synthèse finale]"
+              }
+            },
+            "solution": {
+              "agent1": {
+                "name": "Data Analyst",
+                "expertise": "Analytics comportementales, ML, statistiques",
+                "prompt": "Analyse les données de churn. Identifie : top 5 raisons de départ, segments à risque, moments critiques du parcours client.",
+                "expectedOutput": "Raisons : Onboarding complexe (35%), Support lent (25%), Prix (20%). Segments risque : Nouveaux clients mois 2-3."
+              },
+              "agent2": {
+                "name": "UX Researcher",
+                "expertise": "Psychologie utilisateur, design thinking",
+                "prompt": "Basé sur analyse [AGENT_1], conçois : améliorations onboarding, optimisations UX critiques, quick wins immédiats.",
+                "expectedOutput": "Nouvel onboarding en 3 étapes. 10 frictions UX résolues. 5 quick wins implémentables cette semaine."
+              },
+              "agent3": {
+                "name": "Engagement Specialist",
+                "expertise": "Gamification, behavioral economics, CRM",
+                "prompt": "Avec insights [AGENTS_1-2], crée : programme de fidélité, campagnes de réactivation, success milestones.",
+                "expectedOutput": "Programme points avec 7 rewards. 3 campagnes email segmentées. Milestones jours 1, 7, 30, 90."
+              },
+              "agent4": {
+                "name": "Implementation Manager",
+                "expertise": "Project management, agile, change management",
+                "prompt": "Synthétise [AGENTS_1-3] en plan d'action : timeline, resources, KPIs, quick wins vs long-term.",
+                "expectedOutput": "Sprint 1 : Quick wins (2 sem). Sprint 2 : Onboarding (1 mois). Sprint 3 : Fidélité (6 sem). ROI estimé : +42% rétention."
+              }
+            },
+            "validation": {
+              "criteria": [
+                "Expertises complémentaires",
+                "Collaboration logique",
+                "Output actionnable",
+                "Mesurable et réaliste"
+              ],
+              "feedbackCorrect": "Équipe parfaite ! Cette approche multi-agents augmente les chances de succès de 3x. Chaque perspective enrichit la solution finale. Vous êtes prêt à orchestrer des IA comme un pro !",
+              "feedbackIncorrect": "Affinez : 1) Diversifiez les expertises (évitez les doublons), 2) Clarifiez comment chaque agent utilise les outputs précédents, 3) Assurez-vous que le plan final est concret et mesurable."
+            },
+            "duration": 120
+          },
+          "recap": {
+            "keyPoint": "👥 Multi-Agents = Intelligence collective. Architectures : Comité, Chaîne, Débat, Hiérarchie, Swarm. 6 rôles clés : Researcher, Analyzer, Strategist, Creator, Critic, Synthesizer. 1 problème complexe + N experts = Solution optimale.",
+            "duration": 15
+          }
+        },
+        "metadata": {
+          "difficulty": "expert",
+          "tags": ["multi-agents", "orchestration", "collaboration", "expertise"],
+          "estimatedTime": 5,
+          "prerequisites": ["cap-3-26"],
+          "learningOutcomes": [
+            "Designer des systèmes multi-agents",
+            "Orchestrer des expertises",
+            "Maximiser l'intelligence collective",
+            "Résoudre des problèmes complexes"
+          ]
+        }
+      }
+    ]
+  }
+}

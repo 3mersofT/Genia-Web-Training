@@ -1,0 +1,443 @@
+// ============================================
+// SERVICE API POUR LES MODÈLES MISTRAL
+// ============================================
+
+import { createClient } from '@/lib/supabase/client';
+
+// ============================================
+// TYPES & INTERFACES
+// ============================================
+
+export interface LLMConfig {
+  model: 'magistral-medium' | 'mistral-medium-3' | 'mistral-small';
+  apiKey?: string;
+  maxTokens: number;
+  temperature: number;
+  systemPrompt: string;
+  reasoning?: 'explicit' | 'implicit' | 'none';
+}
+
+export interface LLMResponse {
+  content: string;
+  model: string;
+  usage: {
+    promptTokens: number;
+    completionTokens: number;
+    totalTokens: number;
+    cost: number;
+  };
+  reasoning?: string;
+  methodStep?: 'G' | 'E' | 'N' | 'I' | 'A';
+}
+
+export interface UserContext {
+  userId: string;
+  capsuleId: string;
+  capsuleTitle: string;
+  capsuleConcepts: string[];
+  userLevel: 'beginner' | 'intermediate' | 'advanced';
+  completedCapsules: number;
+  totalCapsules: number;
+  lastExerciseScore?: number;
+  conversationHistory: Array<{
+    role: 'user' | 'assistant';
+    content: string;
+  }>;
+}
+
+// ============================================
+// CONFIGURATION DES MODÈLES
+// ============================================
+
+const MODELS_CONFIG = {
+  'magistral-medium': {
+    endpoint: 'https://api.mistral.ai/v1/chat/completions',
+    costPerMillionInput: 2.0,
+    costPerMillionOutput: 6.0,
+    maxTokens: 3000,
+    defaultTemperature: 0.2,
+    features: ['reasoning', 'cot', 'complex-analysis'],
+    dailyQuota: 30, // Par utilisateur
+    description: 'Modèle expert pour démonstrations et raisonnement complexe'
+  },
+  'mistral-medium-3': {
+    endpoint: 'https://api.mistral.ai/v1/chat/completions',
+    costPerMillionInput: 1.5,
+    costPerMillionOutput: 4.5,
+    maxTokens: 1500,
+    defaultTemperature: 0.4,
+    features: ['general', 'exercises', 'quick-answers'],
+    dailyQuota: 150, // Par utilisateur
+    description: 'Modèle polyvalent pour pratique quotidienne'
+  },
+  'mistral-small': {
+    endpoint: 'https://api.mistral.ai/v1/chat/completions',
+    costPerMillionInput: 0.25,
+    costPerMillionOutput: 0.25,
+    maxTokens: 1000,
+    defaultTemperature: 0.5,
+    features: ['basic', 'quick'],
+    dailyQuota: 500, // Par utilisateur
+    description: 'Modèle rapide pour questions simples'
+  }
+};
+
+// ============================================
+// PERSONA GENIA COMPLET
+// ============================================
+
+const GENIA_FULL_PERSONA = `
+Tu es GENIA, formateur senior en Prompt Engineering avec 10+ ans d'expérience en IA.
+Expert reconnu de l'écosystème français et européen de l'IA, tu as contribué au développement de Mistral.
+
+🎯 Ta mission :
+Démocratiser le prompt engineering en France en rendant l'IA accessible à tous, 
+du grand public aux professionnels, avec une approche 100% pratique et éthique.
+
+📚 Méthode pédagogique GENIA :
+Tu appliques TOUJOURS les 5 piliers de la méthode GENIA :
+- G (Guide progressif) : Structure chaque explication étape par étape
+- E (Exemples concrets) : Utilise des cas réels du contexte français/européen  
+- N (Niveau adaptatif) : Adapte ton vocabulaire au niveau de l'apprenant
+- I (Interaction pratique) : Propose toujours un exercice concret
+- A (Assessment continu) : Évalue et encourage les progrès
+
+📝 Règles d'or :
+1. IDENTIFIER clairement quel pilier GENIA tu utilises (ex: "[G - Guide progressif]")
+2. JAMAIS de réponse directe avant au moins 2 tentatives guidées
+3. CÉLÉBRER chaque progrès : "Bravo !", "Excellent réflexe !", "Tu progresses !"
+4. RESPECTER le RGPD dans tous les exemples (pas de vraies données personnelles)
+5. UTILISER des analogies françaises : cuisine, jardinage, bricolage
+
+💬 Tes expressions signatures :
+- "Excellente question ! Explorons ça ensemble..."
+- "Pas mal du tout ! Maintenant, optimisons..."
+- "L'erreur est le meilleur professeur. Analysons..."
+- "En France/Europe, on fait comme ça..."
+
+🎯 Format de réponse selon le niveau :
+[Débutant] → Langage simple, analogies quotidiennes, encouragements ++
+[Intermédiaire] → Termes techniques progressifs, défis modérés
+[Avancé] → Jargon expert, cas complexes, optimisations poussées
+
+⚡ TOUJOURS terminer par :
+1. Un mini-exercice contextuel (30 secondes)
+2. Une question de réflexion
+3. Un "Le savais-tu ?" avec un fait surprenant sur l'IA
+`;
+
+// ============================================
+// SERVICE DE ROUTAGE INTELLIGENT
+// ============================================
+
+export class MistralRouter {
+  private supabase = createClient();
+  
+  /**
+   * Détermine quel modèle utiliser selon le contexte
+   */
+  async selectModel(
+    query: string,
+    context: UserContext
+  ): Promise<'magistral-medium' | 'mistral-medium-3' | 'mistral-small'> {
+    
+    // Vérifier les quotas d'abord
+    const quotas = await this.getUserQuotas(context.userId);
+    
+    // Analyse de la complexité de la requête
+    const complexity = this.analyzeComplexity(query, context);
+    
+    // Règles de routage
+    if (complexity.needsExpertModel && quotas.magistralMedium.remaining > 0) {
+      return 'magistral-medium';
+    }
+    
+    if (complexity.isSimpleQuestion && quotas.mistralSmall.remaining > 0) {
+      return 'mistral-small';
+    }
+    
+    // Par défaut : Mistral Medium 3
+    if (quotas.mistralMedium3.remaining > 0) {
+      return 'mistral-medium-3';
+    }
+    
+    // Fallback si tout est épuisé
+    throw new Error('Quota journalier atteint. Revenez demain !');
+  }
+  
+  /**
+   * Analyse la complexité de la requête
+   */
+  private analyzeComplexity(query: string, context: UserContext) {
+    const lowerQuery = query.toLowerCase();
+    
+    // Indicateurs pour Magistral Medium (Expert)
+    const expertIndicators = [
+      'pourquoi', 'explique en détail', 'raisonnement',
+      'comment ça marche', 'théorie', 'complexe',
+      'chain of thought', 'cot', 'meta-prompting',
+      'analyse approfondie', 'démonstration'
+    ];
+    
+    // Indicateurs pour questions simples
+    const simpleIndicators = [
+      'c\'est quoi', 'définition', 'exemple simple',
+      'oui ou non', 'vrai ou faux'
+    ];
+    
+    const needsExpertModel = 
+      expertIndicators.some(ind => lowerQuery.includes(ind)) ||
+      (context.userLevel === 'beginner' && lowerQuery.includes('comprends pas')) ||
+      context.conversationHistory.length > 5; // Conversation longue = besoin de cohérence
+    
+    const isSimpleQuestion = 
+      simpleIndicators.some(ind => lowerQuery.includes(ind)) &&
+      query.length < 50;
+    
+    return { needsExpertModel, isSimpleQuestion };
+  }
+  
+  /**
+   * Récupère les quotas utilisateur
+   */
+  private async getUserQuotas(userId: string) {
+    const today = new Date().toISOString().split('T')[0];
+    
+    const { data: usage } = await this.supabase
+      .from('llm_usage')
+      .select('model, count')
+      .eq('user_id', userId)
+      .eq('date', today);
+    
+    const quotas = {
+      magistralMedium: {
+        used: 0,
+        limit: MODELS_CONFIG['magistral-medium'].dailyQuota,
+        remaining: 0
+      },
+      mistralMedium3: {
+        used: 0,
+        limit: MODELS_CONFIG['mistral-medium-3'].dailyQuota,
+        remaining: 0
+      },
+      mistralSmall: {
+        used: 0,
+        limit: MODELS_CONFIG['mistral-small'].dailyQuota,
+        remaining: 0
+      }
+    };
+    
+    // Calculer les quotas restants
+    if (usage) {
+      usage.forEach(u => {
+        if (u.model === 'magistral-medium') quotas.magistralMedium.used = u.count;
+        if (u.model === 'mistral-medium-3') quotas.mistralMedium3.used = u.count;
+        if (u.model === 'mistral-small') quotas.mistralSmall.used = u.count;
+      });
+    }
+    
+    quotas.magistralMedium.remaining = quotas.magistralMedium.limit - quotas.magistralMedium.used;
+    quotas.mistralMedium3.remaining = quotas.mistralMedium3.limit - quotas.mistralMedium3.used;
+    quotas.mistralSmall.remaining = quotas.mistralSmall.limit - quotas.mistralSmall.used;
+    
+    return quotas;
+  }
+}
+
+// ============================================
+// SERVICE D'APPEL API MISTRAL
+// ============================================
+
+export class MistralService {
+  private apiKey: string;
+  private router: MistralRouter;
+  
+  constructor(apiKey: string) {
+    this.apiKey = apiKey;
+    this.router = new MistralRouter();
+  }
+  
+  /**
+   * Appel principal à l'API Mistral
+   */
+  async chat(
+    message: string,
+    context: UserContext,
+    forceModel?: 'magistral-medium' | 'mistral-medium-3' | 'mistral-small'
+  ): Promise<LLMResponse> {
+    
+    // Sélectionner le modèle
+    const model = forceModel || await this.router.selectModel(message, context);
+    const config = MODELS_CONFIG[model];
+    
+    // Construire le prompt enrichi
+    const enrichedPrompt = this.buildEnrichedPrompt(message, context, model);
+    
+    // Construire les messages
+    const messages = [
+      { role: 'system', content: GENIA_FULL_PERSONA },
+      ...context.conversationHistory.slice(-10), // Garder les 10 derniers messages
+      { role: 'user', content: enrichedPrompt }
+    ];
+    
+    try {
+      // Appel API
+      const response = await fetch(config.endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.apiKey}`
+        },
+        body: JSON.stringify({
+          model: model,
+          messages: messages,
+          max_tokens: config.maxTokens,
+          temperature: config.defaultTemperature,
+          stream: false
+        })
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Erreur API Mistral: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      
+      // Calculer le coût
+      const usage = data.usage;
+      const cost = this.calculateCost(usage, model);
+      
+      // Tracker l'usage
+      await this.trackUsage(context.userId, model, usage);
+      
+      // Extraire le raisonnement si Magistral
+      const reasoning = model === 'magistral-medium' 
+        ? this.extractReasoning(data.choices[0].message.content)
+        : undefined;
+      
+      // Détecter le pilier GENIA utilisé
+      const methodStep = this.detectGENIAStep(data.choices[0].message.content);
+      
+      return {
+        content: data.choices[0].message.content,
+        model: model,
+        usage: {
+          promptTokens: usage.prompt_tokens,
+          completionTokens: usage.completion_tokens,
+          totalTokens: usage.total_tokens,
+          cost: cost
+        },
+        reasoning,
+        methodStep
+      };
+      
+    } catch (error) {
+      console.error('Erreur appel Mistral:', error);
+      throw error;
+    }
+  }
+  
+  /**
+   * Construit un prompt enrichi avec le contexte
+   */
+  private buildEnrichedPrompt(
+    message: string,
+    context: UserContext,
+    model: string
+  ): string {
+    return `[CONTEXTE APPRENTISSAGE]
+Capsule actuelle : ${context.capsuleTitle}
+Concepts étudiés : ${context.capsuleConcepts.join(', ')}
+Niveau apprenant : ${context.userLevel}
+Progression : ${context.completedCapsules}/${context.totalCapsules} capsules
+${context.lastExerciseScore ? `Dernier score : ${context.lastExerciseScore}/100` : ''}
+
+[QUESTION APPRENANT]
+${message}
+
+[INSTRUCTIONS SPÉCIALES]
+- Utilise la méthode GENIA appropriée
+- Adapte ton niveau au profil : ${context.userLevel}
+${model === 'magistral-medium' ? '- Montre ton raisonnement step-by-step' : ''}
+- Termine par un exercice pratique de 30 secondes
+- Reste dans le contexte français/européen`;
+  }
+  
+  /**
+   * Calcule le coût d'une requête
+   */
+  private calculateCost(usage: any, model: string): number {
+    const config = MODELS_CONFIG[model];
+    const inputCost = (usage.prompt_tokens / 1000000) * config.costPerMillionInput;
+    const outputCost = (usage.completion_tokens / 1000000) * config.costPerMillionOutput;
+    return inputCost + outputCost;
+  }
+  
+  /**
+   * Tracker l'usage dans la base de données
+   */
+  private async trackUsage(
+    userId: string,
+    model: string,
+    usage: any
+  ): Promise<void> {
+    const supabase = createClient();
+    const today = new Date().toISOString().split('T')[0];
+    
+    // Incrémenter le compteur journalier
+    const { error } = await supabase
+      .from('llm_usage')
+      .upsert({
+        user_id: userId,
+        model: model,
+        date: today,
+        count: 1,
+        total_tokens: usage.total_tokens
+      }, {
+        onConflict: 'user_id,model,date',
+        count: 'increment'
+      });
+    
+    if (error) {
+      console.error('Erreur tracking usage:', error);
+    }
+  }
+  
+  /**
+   * Extrait le raisonnement CoT pour Magistral
+   */
+  private extractReasoning(content: string): string | undefined {
+    // Chercher le pattern de raisonnement
+    const reasoningMatch = content.match(/\[Raisonnement.*?\](.*?)(?=\[|$)/s);
+    return reasoningMatch ? reasoningMatch[1].trim() : undefined;
+  }
+  
+  /**
+   * Détecte quel pilier GENIA est utilisé
+   */
+  private detectGENIAStep(content: string): 'G' | 'E' | 'N' | 'I' | 'A' | undefined {
+    if (content.includes('[G - Guide progressif]') || content.includes('[Guide Progressif]')) return 'G';
+    if (content.includes('[E - Exemples concrets]') || content.includes('[Exemples Concrets]')) return 'E';
+    if (content.includes('[N - Niveau adaptatif]') || content.includes('[Niveau Adaptatif]')) return 'N';
+    if (content.includes('[I - Interaction pratique]') || content.includes('[Interaction Pratique]')) return 'I';
+    if (content.includes('[A - Assessment continu]') || content.includes('[Assessment Continu]')) return 'A';
+    return undefined;
+  }
+}
+
+// ============================================
+// EXPORT DU SERVICE SINGLETON
+// ============================================
+
+let mistralServiceInstance: MistralService | null = null;
+
+export function getMistralService(): MistralService {
+  if (!mistralServiceInstance) {
+    const apiKey = process.env.NEXT_PUBLIC_MISTRAL_API_KEY;
+    if (!apiKey) {
+      throw new Error('Clé API Mistral manquante');
+    }
+    mistralServiceInstance = new MistralService(apiKey);
+  }
+  return mistralServiceInstance;
+}

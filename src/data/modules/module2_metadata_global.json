@@ -1,0 +1,366 @@
+{
+  "module": {
+    "id": "module-2-techniques",
+    "title": "Techniques Essentielles",
+    "description": "Maîtrisez les techniques avancées de prompt engineering pour transformer vos résultats de 60% à 95%+ de précision",
+    "version": "1.0.0",
+    "lastUpdated": "2025-01-09",
+    "author": "Formation E-Learning Prompt Engineering",
+    "totalDuration": 60,
+    "totalCapsules": 12,
+    "difficulty": "intermediate-advanced",
+    "order": 2,
+    "prerequisites": ["module-1-fondamentaux"],
+    "targetAudience": "Professionnels ayant maîtrisé les fondamentaux",
+    "globalObjectives": [
+      "Maîtriser les techniques few-shot pour 95%+ de précision",
+      "Optimiser et débugger tout prompt en moins de 5 minutes",
+      "Créer des prompts sûrs, éthiques et sans biais",
+      "Détecter et prévenir les hallucinations de l'IA"
+    ]
+  },
+  "sections": [
+    {
+      "id": "section-2-1",
+      "title": "Zero-Shot vs Few-Shot",
+      "capsules": ["cap-2-13", "cap-2-14", "cap-2-15"],
+      "duration": 15,
+      "description": "Multipliez par 10 la précision avec les bonnes techniques d'exemples"
+    },
+    {
+      "id": "section-2-2",
+      "title": "Délimiteurs et Structure",
+      "capsules": ["cap-2-16", "cap-2-17", "cap-2-18"],
+      "duration": 15,
+      "description": "Organisez et parsez l'information comme un expert"
+    },
+    {
+      "id": "section-2-3",
+      "title": "Optimisation Avancée",
+      "capsules": ["cap-2-19", "cap-2-20", "cap-2-21"],
+      "duration": 15,
+      "description": "Chain of Thought, debugging et optimisation rapide"
+    },
+    {
+      "id": "section-2-4",
+      "title": "Sécurité et Éthique",
+      "capsules": ["cap-2-22", "cap-2-23", "cap-2-24"],
+      "duration": 15,
+      "description": "Créez des IA fiables, sûres et éthiques"
+    }
+  ],
+  "capsules": [
+    {
+      "id": "cap-2-13",
+      "order": 13,
+      "title": "Le Secret du Few-Shot - Multipliez par 10 la Précision",
+      "duration": 5,
+      "difficulty": "intermediate",
+      "tags": ["few-shot", "exemples", "précision", "patterns"],
+      "learningOutcomes": [
+        "Comprendre zero-shot vs few-shot",
+        "Savoir quand utiliser chaque approche",
+        "Créer des exemples efficaces",
+        "Atteindre 90%+ de précision"
+      ],
+      "keyPoint": "Few-shot = 90%+ de précision. 2-3 bons exemples transforment l'approximation en excellence.",
+      "prerequisites": ["cap-1-1"],
+      "status": "completed"
+    },
+    {
+      "id": "cap-2-14",
+      "order": 14,
+      "title": "Créer des Exemples qui Enseignent - L'Art du Few-Shot",
+      "duration": 5,
+      "difficulty": "intermediate",
+      "tags": ["exemples", "few-shot", "patterns", "qualité"],
+      "learningOutcomes": [
+        "Maîtriser le framework T.E.A.C.H",
+        "Créer des exemples représentatifs",
+        "Éviter les pièges courants",
+        "Optimiser le nombre d'exemples"
+      ],
+      "keyPoint": "T.E.A.C.H = Exemples parfaits. La qualité prime sur la quantité. 3 excellents > 10 moyens.",
+      "prerequisites": ["cap-2-13"],
+      "status": "completed"
+    },
+    {
+      "id": "cap-2-15",
+      "order": 15,
+      "title": "Cas Pratique : Extraction de Données Pro",
+      "duration": 5,
+      "difficulty": "advanced",
+      "tags": ["extraction", "few-shot", "cas pratique", "production"],
+      "learningOutcomes": [
+        "Extraire des données structurées de texte libre",
+        "Atteindre 98% de précision",
+        "Créer un système production-ready",
+        "Gérer les edge cases"
+      ],
+      "keyPoint": "Zero-shot = 60% précision. Few-shot optimisé = 98% précision. S.M.A.R.T extraction is the way.",
+      "prerequisites": ["cap-2-13", "cap-2-14"],
+      "status": "completed"
+    },
+    {
+      "id": "cap-2-16",
+      "order": 16,
+      "title": "Délimiteurs : Vos Meilleurs Amis - Organisez Comme un Pro",
+      "duration": 5,
+      "difficulty": "intermediate",
+      "tags": ["délimiteurs", "structure", "organisation", "parsing"],
+      "learningOutcomes": [
+        "Maîtriser les 7 systèmes de délimitation",
+        "Créer des structures hiérarchiques claires",
+        "Parser efficacement l'information",
+        "Éviter les confusions de l'IA"
+      ],
+      "keyPoint": "Délimiteurs = Clarté absolue. ### pour sections, ``` pour code, [TAG] pour données. Structure visible = IA précise.",
+      "prerequisites": ["cap-1-1"],
+      "status": "completed"
+    },
+    {
+      "id": "cap-2-17",
+      "order": 17,
+      "title": "Parser l'Information - Extraction Chirurgicale",
+      "duration": 5,
+      "difficulty": "intermediate",
+      "tags": ["parsing", "extraction", "structure", "données"],
+      "learningOutcomes": [
+        "Maîtriser la méthode P.A.R.S.E",
+        "Extraire précisément l'information voulue",
+        "Transformer du texte libre en données structurées",
+        "Créer des parsers robustes"
+      ],
+      "keyPoint": "P.A.R.S.E = Extraction précise. Pattern → Anchor → Region → Structure → Extract. Du chaos à l'ordre.",
+      "prerequisites": ["cap-2-16"],
+      "status": "completed"
+    },
+    {
+      "id": "cap-2-18",
+      "order": 18,
+      "title": "JSON : Le Format Magique - Structurez pour Automatiser",
+      "duration": 5,
+      "difficulty": "intermediate",
+      "tags": ["JSON", "structure", "automatisation", "format"],
+      "learningOutcomes": [
+        "Maîtriser les 6 patterns JSON essentiels",
+        "Créer des structures réutilisables",
+        "Automatiser le traitement des données",
+        "Interfacer avec n'importe quel système"
+      ],
+      "keyPoint": "JSON = Automatisation. Structure universelle qui parle à tous les systèmes. De l'idée à l'API en 2 prompts.",
+      "prerequisites": ["cap-2-17"],
+      "status": "completed"
+    },
+    {
+      "id": "cap-2-19",
+      "order": 19,
+      "title": "Chain of Thought - Faites Réfléchir l'IA Tout Haut",
+      "duration": 5,
+      "difficulty": "intermediate",
+      "tags": ["chain-of-thought", "raisonnement", "précision", "logique"],
+      "learningOutcomes": [
+        "Comprendre le principe du Chain of Thought",
+        "Maîtriser les 5 variantes de CoT",
+        "Savoir quand utiliser CoT",
+        "Augmenter la précision de 40%"
+      ],
+      "keyPoint": "Chain of Thought = +40% de précision. 'Réfléchis étape par étape' transforme l'approximation en rigueur.",
+      "prerequisites": ["cap-1-1"],
+      "status": "completed"
+    },
+    {
+      "id": "cap-2-20",
+      "order": 20,
+      "title": "Débugger en 3 Étapes - Trouvez et Corrigez Rapidement",
+      "duration": 5,
+      "difficulty": "intermediate",
+      "tags": ["debugging", "diagnostic", "fix", "optimisation"],
+      "learningOutcomes": [
+        "Identifier les 5 problèmes fatals",
+        "Maîtriser la méthode D.F.A",
+        "Débugger rapidement tout prompt",
+        "Créer des prompts robustes"
+      ],
+      "keyPoint": "D.F.A = Détecter → Fixer → Améliorer. 5 problèmes fatals : Ambiguïté, Contexte manquant, Format chaos, Contradiction, Surcharge.",
+      "prerequisites": ["cap-1-1", "cap-2-19"],
+      "status": "completed"
+    },
+    {
+      "id": "cap-2-21",
+      "order": 21,
+      "title": "Speed Optimization - 5 Itérations pour la Perfection",
+      "duration": 5,
+      "difficulty": "intermediate",
+      "tags": ["optimisation", "itération", "protocole", "speed"],
+      "learningOutcomes": [
+        "Maîtriser le protocole 5-step",
+        "Optimiser un prompt en 5 minutes",
+        "Atteindre 85%+ de performance",
+        "Appliquer la règle 80/20"
+      ],
+      "keyPoint": "5 itérations = 30→85+ de score. Protocole : Clarification → Structure → Exemples → Contraintes → Polish.",
+      "prerequisites": ["cap-2-20"],
+      "status": "completed"
+    },
+    {
+      "id": "cap-2-22",
+      "order": 22,
+      "title": "Détecter les Hallucinations - L'IA Invente ? Détectez-le !",
+      "duration": 5,
+      "difficulty": "advanced",
+      "tags": ["hallucinations", "vérification", "fiabilité", "éthique"],
+      "learningOutcomes": [
+        "Identifier les 4 types d'hallucinations",
+        "Détecter les signaux d'alerte",
+        "Implémenter des garde-fous anti-hallucination",
+        "Créer des prompts fiables"
+      ],
+      "keyPoint": "Hallucinations = Faits inventés avec confiance. Red flags : Trop précis, sources vagues. Prévention : Garde-fous.",
+      "prerequisites": ["cap-1-1"],
+      "status": "completed"
+    },
+    {
+      "id": "cap-2-23",
+      "order": 23,
+      "title": "Garde-fous Essentiels - Protégez-vous et Protégez les Autres",
+      "duration": 5,
+      "difficulty": "advanced",
+      "tags": ["sécurité", "éthique", "garde-fous", "RGPD", "protection"],
+      "learningOutcomes": [
+        "Identifier les 7 catégories de risques",
+        "Implémenter des garde-fous efficaces",
+        "Protéger légalement vos prompts",
+        "Assurer la sécurité des utilisateurs"
+      ],
+      "keyPoint": "Garde-fous = Protection vitale. 7 catégories de risques. Intégrez TOUJOURS des protections AVANT de publier.",
+      "prerequisites": ["cap-2-22"],
+      "status": "completed"
+    },
+    {
+      "id": "cap-2-24",
+      "order": 24,
+      "title": "Biais : Les Reconnaître et les Éviter - Pour une IA Juste",
+      "duration": 5,
+      "difficulty": "advanced",
+      "tags": ["biais", "éthique", "inclusion", "équité", "discrimination"],
+      "learningOutcomes": [
+        "Identifier les 4 types de biais",
+        "Détecter les biais cachés",
+        "Corriger avec inclusion",
+        "Promouvoir l'équité dans l'IA"
+      ],
+      "keyPoint": "Biais = Injustices amplifiées. 4 types : Démographiques, Cognitifs, Contextuels, Techniques. Solution : Inclusion active.",
+      "prerequisites": ["cap-2-23"],
+      "status": "completed"
+    }
+  ],
+  "statistics": {
+    "totalDuration": 60,
+    "averageDurationPerCapsule": 5,
+    "difficultyDistribution": {
+      "intermediate": 8,
+      "advanced": 4
+    },
+    "totalLearningOutcomes": 48,
+    "totalTags": 45,
+    "uniqueTags": [
+      "few-shot", "exemples", "précision", "patterns", "qualité",
+      "extraction", "cas pratique", "production", "délimiteurs",
+      "structure", "organisation", "parsing", "données", "JSON",
+      "automatisation", "format", "chain-of-thought", "raisonnement",
+      "logique", "debugging", "diagnostic", "fix", "optimisation",
+      "itération", "protocole", "speed", "hallucinations",
+      "vérification", "fiabilité", "éthique", "sécurité",
+      "garde-fous", "RGPD", "protection", "biais", "inclusion",
+      "équité", "discrimination"
+    ],
+    "completionRate": "100%",
+    "sectionsBreakdown": {
+      "section-2-1": {
+        "title": "Zero-Shot vs Few-Shot",
+        "capsules": 3,
+        "duration": 15,
+        "focusArea": "Exemples et patterns"
+      },
+      "section-2-2": {
+        "title": "Délimiteurs et Structure",
+        "capsules": 3,
+        "duration": 15,
+        "focusArea": "Organisation et parsing"
+      },
+      "section-2-3": {
+        "title": "Optimisation Avancée",
+        "capsules": 3,
+        "duration": 15,
+        "focusArea": "Performance et debugging"
+      },
+      "section-2-4": {
+        "title": "Sécurité et Éthique",
+        "capsules": 3,
+        "duration": 15,
+        "focusArea": "Fiabilité et responsabilité"
+      }
+    }
+  },
+  "assessmentCriteria": {
+    "minimumScore": 80,
+    "passingCriteria": [
+      "Maîtriser au moins 2 techniques few-shot",
+      "Savoir débugger un prompt en moins de 5 minutes",
+      "Identifier et corriger au moins 3 types de biais",
+      "Implémenter des garde-fous de sécurité basiques"
+    ],
+    "evaluationMethods": [
+      "Exercices pratiques par capsule",
+      "Projet intégrateur de fin de module",
+      "Auto-évaluation continue",
+      "Peer review des prompts créés"
+    ]
+  },
+  "resources": {
+    "templates": [
+      "Few-shot extraction template",
+      "JSON parser template",
+      "Chain of Thought variations",
+      "Debug checklist",
+      "Security guardrails template",
+      "Bias detection framework"
+    ],
+    "tools": [
+      "Prompt optimizer",
+      "Hallucination detector",
+      "Bias checker",
+      "Structure validator"
+    ],
+    "references": [
+      "OpenAI Few-shot learning guide",
+      "Anthropic Chain of Thought documentation",
+      "RGPD compliance for AI",
+      "AI Ethics guidelines"
+    ]
+  },
+  "nextModule": {
+    "id": "module-3-pratique",
+    "title": "Pratique et Maîtrise",
+    "teaser": "Passez au niveau expert avec le chaînage de prompts, les templates avancés et l'automatisation",
+    "prerequisites": ["module-2-techniques"]
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "created": "2025-01-09",
+    "lastModified": "2025-01-09",
+    "author": "E-Learning Prompt Engineering Team",
+    "license": "Proprietary - Educational Use",
+    "language": "fr-FR",
+    "targetPlatform": "Web/Mobile",
+    "estimatedCompletionTime": "2-3 hours with practice",
+    "updateFrequency": "Monthly",
+    "qualityAssurance": {
+      "reviewed": true,
+      "testedWithAudience": true,
+      "accessibilityCompliant": true,
+      "mobileOptimized": true
+    }
+  }
+}

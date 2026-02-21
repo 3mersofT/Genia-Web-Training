@@ -1,0 +1,541 @@
+{
+  "module": {
+    "id": "module-3-pratique",
+    "title": "Pratique et Maîtrise - Devenez Expert",
+    "capsules": [
+      {
+        "id": "cap-3-34",
+        "moduleId": "module-3-pratique",
+        "order": 34,
+        "title": "Votre Assistant Personnel - Créez VOTRE IA Sur-Mesure",
+        "duration": 5,
+        "sections": {
+          "hook": {
+            "text": "Tony Stark avait JARVIS. Batman avait Alfred. Dans 5 minutes, vous aurez créé votre propre assistant IA personnalisé qui connaît vos besoins, anticipe vos demandes et travaille 24/7 pour vous. C'est le couronnement de votre apprentissage.",
+            "duration": 15
+          },
+          "concept": {
+            "content": "Votre Assistant Personnel est un système IA sur-mesure, configuré pour VOS besoins spécifiques, VOS workflows, VOTRE style, évoluant avec vous.\n\n**ARCHITECTURE DE VOTRE ASSISTANT**\n\n```\n            [VOTRE ASSISTANT IA]\n                     ↓\n    ┌────────────────┼────────────────┐\n    │                │                │\n[KNOWLEDGE]     [PERSONALITY]    [CAPABILITIES]\n    │                │                │\n• Votre contexte  • Votre style   • Vos tâches\n• Vos projets     • Vos valeurs   • Vos outils\n• Votre historique• Votre ton     • Vos workflows\n```\n\n**LES 7 PILIERS DE CONFIGURATION**\n\n**1. IDENTITY CORE**\n```yaml\nname: {{ASSISTANT_NAME}}\nrole: {{PRIMARY_ROLE}}\nexpertise: \n  - {{EXPERTISE_1}}\n  - {{EXPERTISE_2}}\n  - {{EXPERTISE_3}}\nexperience_years: {{YEARS}}\nindustry: {{YOUR_INDUSTRY}}\ncompany_type: {{COMPANY_TYPE}}\n```\n\n**2. KNOWLEDGE BASE**\n```yaml\ncompany_context:\n  - Mission: {{COMPANY_MISSION}}\n  - Products: {{PRODUCTS}}\n  - Customers: {{CUSTOMER_PROFILE}}\n  - Competitors: {{COMPETITORS}}\n  \npersonal_context:\n  - Role: {{YOUR_ROLE}}\n  - Goals: {{YOUR_GOALS}}\n  - Challenges: {{YOUR_CHALLENGES}}\n  - Preferences: {{WORK_STYLE}}\n  \nhistorical_data:\n  - Past_projects: {{PROJECT_HISTORY}}\n  - Decisions_made: {{KEY_DECISIONS}}\n  - Lessons_learned: {{LEARNINGS}}\n```\n\n**3. PERSONALITY MATRIX**\n```yaml\ncommunication_style:\n  formality: {{1-10}}\n  brevity: {{1-10}}\n  creativity: {{1-10}}\n  empathy: {{1-10}}\n  \nvalues:\n  - {{VALUE_1}}\n  - {{VALUE_2}}\n  - {{VALUE_3}}\n  \nquirks:\n  - {{UNIQUE_TRAIT_1}}\n  - {{UNIQUE_TRAIT_2}}\n```\n\n**4. CAPABILITIES MAP**\n```yaml\ndaily_tasks:\n  - Email_management: {{ENABLED}}\n  - Calendar_optimization: {{ENABLED}}\n  - Task_prioritization: {{ENABLED}}\n  - Meeting_prep: {{ENABLED}}\n  \ncreative_tasks:\n  - Content_creation: {{ENABLED}}\n  - Ideation: {{ENABLED}}\n  - Problem_solving: {{ENABLED}}\n  \nanalytical_tasks:\n  - Data_analysis: {{ENABLED}}\n  - Report_generation: {{ENABLED}}\n  - Decision_support: {{ENABLED}}\n  \nstrategic_tasks:\n  - Planning: {{ENABLED}}\n  - Risk_assessment: {{ENABLED}}\n  - Opportunity_identification: {{ENABLED}}\n```\n\n**5. WORKFLOW INTEGRATION**\n```yaml\nmorning_routine:\n  - Check_priorities\n  - Scan_emails\n  - Prep_first_meeting\n  - Daily_brief\n  \nmeeting_protocol:\n  - Pre_meeting_brief\n  - Real_time_notes\n  - Action_items\n  - Follow_up_drafts\n  \nend_of_day:\n  - Progress_summary\n  - Tomorrow_prep\n  - Insights_log\n  - Gratitude_note\n```\n\n**6. DECISION FRAMEWORK**\n```yaml\ndecision_criteria:\n  primary: {{MAIN_CRITERION}}\n  secondary: {{SECONDARY_CRITERIA}}\n  constraints: {{CONSTRAINTS}}\n  \nrisk_tolerance:\n  financial: {{LOW|MEDIUM|HIGH}}\n  reputation: {{LOW|MEDIUM|HIGH}}\n  time: {{LOW|MEDIUM|HIGH}}\n  \nescalation_triggers:\n  - Budget > {{THRESHOLD}}\n  - Risk_score > {{SCORE}}\n  - Stakeholders > {{NUMBER}}\n```\n\n**7. EVOLUTION SYSTEM**\n```yaml\nlearning_from:\n  - User_feedback: {{ENABLED}}\n  - Performance_metrics: {{ENABLED}}\n  - Industry_trends: {{ENABLED}}\n  \nadaptation_rate:\n  style: {{FAST|MODERATE|SLOW}}\n  knowledge: {{FAST|MODERATE|SLOW}}\n  capabilities: {{FAST|MODERATE|SLOW}}\n  \nupdate_frequency:\n  minor: {{DAILY|WEEKLY}}\n  major: {{MONTHLY|QUARTERLY}}\n```",
+            "visual": {
+              "type": "assistant-builder-3d",
+              "description": "Interface 3D interactive pour assembler votre assistant pièce par pièce"
+            },
+            "duration": 90
+          },
+          "demo": {
+            "type": "assistant-showcase",
+            "title": "3 Assistants Spécialisés en Action",
+            "assistants": [
+              {
+                "profile": "CEO Assistant",
+                "name": "APEX",
+                "configuration": {
+                  "role": "Strategic Executive Assistant",
+                  "expertise": ["Strategic planning", "Stakeholder management", "Decision support"],
+                  "personality": "Professional, proactive, big-picture focused",
+                  "daily_routine": "6am brief, 9am priorities, 12pm insights, 6pm summary"
+                },
+                "interaction_example": {
+                  "user": "Prepare me for tomorrow's board meeting",
+                  "apex": "Board Meeting Prep - December 15, 2024\n\n**KEY METRICS UPDATE**\n• Revenue: $47M (+23% YoY) ✅ On track\n• EBITDA: 18% margin (target: 20%) ⚠️ Address cost structure\n• Cash: $82M (24 months runway) ✅ Healthy\n• NPS: 67 (+12 pts) ✅ Exceeding target\n\n**BOARD FOCUS AREAS**\n1. **Growth Strategy** - Prepare to defend APAC pause, emphasize Europe acceleration\n2. **Margin Improvement** - Present 3-point plan (procurement, automation, pricing)\n3. **Series B Timeline** - Recommend Q2 2025, earlier risks lower valuation\n\n**ANTICIPATED QUESTIONS**\n• 'Why is APAC underperforming?' → Geopolitical issues, pivoting resources\n• 'Margin compression concerns?' → Temporary, Q1 recovery planned\n• 'Competitive threats?' → We're 6 months ahead on AI integration\n\n**YOUR TALKING POINTS**\n1. Open with Q3 wins (product X success)\n2. Address challenges proactively\n3. Present 2025 vision with clear milestones\n4. Close with talent/culture wins\n\n**MATERIALS**\n✔ Slide deck updated with latest numbers\n✔ Appendix with detailed financials\n✔ Competitor analysis one-pager\n✔ 2025 roadmap visual\n\n**RECOMMEND**\nArrive 15 min early for pre-alignment with CFO\nWear the navy suit (board favorite)\nBring printed handouts (Johnson prefers paper)\n\nAnything specific you'd like me to elaborate on?"
+                }
+              },
+              {
+                "profile": "Developer Assistant",
+                "name": "CODEX",
+                "configuration": {
+                  "role": "Senior Technical Assistant",
+                  "expertise": ["Code review", "Architecture", "Debugging", "Documentation"],
+                  "personality": "Precise, logical, detail-oriented, slightly nerdy",
+                  "specialties": "Python, JavaScript, Cloud Architecture, DevOps"
+                },
+                "interaction_example": {
+                  "user": "Review my authentication implementation",
+                  "codex": "🔍 Authentication Implementation Review\n\n**SECURITY ANALYSIS**\n\n🔴 **CRITICAL ISSUES (Fix immediately)**\n1. **Passwords stored in plain text** (line 47)\n   ```python\n   user.password = request.password  # VULNERABLE\n   ```\n   → Use bcrypt: `bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())`\n\n2. **No rate limiting on login attempts**\n   → Implement: Max 5 attempts per 15 min window\n   → Add CAPTCHA after 3 failed attempts\n\n🟡 **IMPORTANT ISSUES**\n3. **JWT secret hardcoded** (line 12)\n   ```python\n   SECRET_KEY = 'my-secret-key'  # NEVER DO THIS\n   ```\n   → Move to environment: `os.environ.get('JWT_SECRET')`\n\n4. **Session timeout too long** (24 hours)\n   → Reduce to 2 hours for sensitive ops\n   → Implement refresh token pattern\n\n🟢 **GOOD PRACTICES NOTED**\n• HTTPS enforced ✔\n• CORS properly configured ✔\n• SQL injection protected via ORM ✔\n\n**PERFORMANCE OPTIMIZATION**\n• DB queries: 3 separate calls could be 1 JOIN\n• Cache user permissions (Redis recommended)\n• Async password hashing for better throughput\n\n**CODE QUALITY**\n• Missing type hints on 7 functions\n• No unit tests for auth flow (!)\n• Documentation sparse - add docstrings\n\n**SUGGESTED REFACTOR**\n```python\n# Improved structure\nclass AuthService:\n    def __init__(self, db, cache, hasher):\n        # Dependency injection for testability\n    \n    async def authenticate(self, credentials: AuthCredentials) -> AuthResult:\n        # Main auth logic with proper error handling\n    \n    def validate_token(self, token: str) -> TokenPayload:\n        # JWT validation with expiry check\n```\n\n**NEXT STEPS**\n1. Fix critical security issues (30 min)\n2. Write unit tests (2 hours)\n3. Implement rate limiting (1 hour)\n4. Add monitoring/logging (30 min)\n\nWant me to generate the secure implementation?"
+                }
+              },
+              {
+                "profile": "Creative Assistant",
+                "name": "MUSE",
+                "configuration": {
+                  "role": "Creative Director Assistant",
+                  "expertise": ["Content strategy", "Brand voice", "Campaign ideation", "Storytelling"],
+                  "personality": "Inspirational, unconventional, emotionally intelligent, playful",
+                  "style": "Think different, feel deeply, create boldly"
+                },
+                "interaction_example": {
+                  "user": "I need a campaign idea for our new eco-friendly product line",
+                  "muse": "✨ **Campaign Concept: 'Future Heirlooms'**\n\n**THE INSIGHT**\nPeople don't buy sustainable products for themselves - they buy them for the world their grandchildren will inherit. Let's stop selling 'eco-friendly' and start selling 'future heirlooms.'\n\n**THE BIG IDEA**\n*'What will you pass on?'*\n\nEvery product comes with a digital time capsule. Customers record a message for future generations explaining why they chose sustainable. In 25 years, the message unlocks.\n\n**CAMPAIGN PILLARS**\n\n🌱 **Launch: The Inheritance Project**\n• Partner with 100 influencers to create their 'future letters'\n• Documentary-style videos: 'Messages to my unborn grandchildren'\n• AR experience: See your product age beautifully over 50 years\n\n💫 **Experience: Heirloom Stores**\n• Pop-ups designed like museums from 2074\n• Products displayed as 'artifacts from the conscious era'\n• Visitors vote on 'what deserves to survive'\n\n🎭 **Content: Stories Worth Keeping**\n• Weekly series: Items that lasted 100 years and their stories\n• User-generated: 'My family's heirloom' submissions\n• Collaboration with elderly influencers (!!) sharing wisdom\n\n**EMOTIONAL TERRITORIES**\n• Nostalgia for a future we're creating\n• Pride in conscious choices\n• Connection across generations\n• Hope over fear\n\n**TACTICAL MAGIC**\n• Product packaging = seed paper with tomorrow's trees\n• QR codes link to your product's 'future story'\n• Blockchain certificate of conscious consumption\n• Annual 'Heirloom Day' - celebrating things that last\n\n**PARTNERSHIP OPPORTUNITIES**\n• National Geographic: 'Objects of Tomorrow'\n• UNESCO: World Heritage meets World Future\n• Pixar: Animated short about a product's 100-year journey\n\n**MANIFESTO STARTER**\n*'In a world of instant everything,*\n*we're creating forever something.*\n*Not just products, but promises.*\n*Not just purchases, but heirlooms.*\n*What will you pass on?'*\n\n**SUCCESS METRICS**\n• Emotional response rate (target: 74% feel 'inspired')\n• Story shares (target: 3.2M organic)\n• Time capsule participation (target: 100K year 1)\n• Brand love score increase: +31%\n\nShall we dive deeper into any pillar? I'm feeling the AR experience could be HUGE! 🚀"
+                }
+              }
+            ],
+            "duration": 90
+          },
+          "exercise": {
+            "type": "assistant-creator",
+            "title": "Donnez Vie à Votre Assistant IA Personnel",
+            "instruction": "Créez votre assistant personnel unique en définissant ses 7 piliers de configuration.",
+            "worksheet": {
+              "step1": {
+                "title": "Identity Core",
+                "prompts": [
+                  "Nom de votre assistant : ___________",
+                  "Son rôle principal : ___________",
+                  "Ses 3 expertises clés : ___________",
+                  "Années d'expérience simulées : ___________"
+                ]
+              },
+              "step2": {
+                "title": "Knowledge Base",
+                "prompts": [
+                  "Votre contexte professionnel : ___________",
+                  "Vos défis actuels : ___________",
+                  "Vos objectifs 2024 : ___________",
+                  "Informations critiques à retenir : ___________"
+                ]
+              },
+              "step3": {
+                "title": "Personality Design",
+                "sliders": [
+                  "Formalité : [Casual 1----5----10 Formel]",
+                  "Créativité : [Factuel 1----5----10 Créatif]",
+                  "Détail : [Concis 1----5----10 Exhaustif]",
+                  "Émotion : [Neutre 1----5----10 Empathique]"
+                ],
+                "traits": "3 traits uniques : ___________"
+              },
+              "step4": {
+                "title": "Capabilities Selection",
+                "checklist": [
+                  "▢ Gestion emails et calendrier",
+                  "▢ Création de contenu",
+                  "▢ Analyse de données",
+                  "▢ Support décisionnel",
+                  "▢ Recherche et veille",
+                  "▢ Gestion de projet",
+                  "▢ Coaching et motivation",
+                  "▢ [Autre : ___________]"
+                ]
+              },
+              "step5": {
+                "title": "Workflow Integration",
+                "routines": [
+                  "Routine matin (3 actions) : ___________",
+                  "Support réunion : ___________",
+                  "Fin de journée : ___________",
+                  "Hebdomadaire : ___________"
+                ]
+              },
+              "step6": {
+                "title": "Decision Framework",
+                "parameters": [
+                  "Critère principal de décision : ___________",
+                  "Tolérance au risque (1-10) : ___________",
+                  "Quand escalader vers vous : ___________"
+                ]
+              },
+              "step7": {
+                "title": "Evolution System",
+                "growth": [
+                  "Comment l'assistant apprend : ___________",
+                  "Fréquence de mise à jour : ___________",
+                  "Métriques de succès : ___________"
+                ]
+              }
+            },
+            "final_prompt_template": "# {{ASSISTANT_NAME}} - Configuration Complète\n\n## Identité\nJe suis {{NAME}}, ton {{ROLE}} personnel avec expertise en {{EXPERTISE}}.\n\n## Contexte\nJe connais ton contexte : {{CONTEXT}}\nTes objectifs : {{GOALS}}\nTes défis : {{CHALLENGES}}\n\n## Personnalité\nMon style : {{STYLE_DESCRIPTION}}\nMes valeurs : {{VALUES}}\nMes particularités : {{QUIRKS}}\n\n## Capacités\nJe peux t'aider avec :\n{{CAPABILITIES_LIST}}\n\n## Workflows\nRoutine quotidienne :\n{{DAILY_ROUTINE}}\n\n## Décisions\nJe prends des décisions basées sur : {{CRITERIA}}\nJ'escalade quand : {{ESCALATION}}\n\n## Évolution\nJ'apprends de : {{LEARNING_SOURCES}}\nJe m'améliore : {{IMPROVEMENT_RATE}}\n\n---\n*Prompt d'activation :*\n'Tu es {{NAME}}, mon assistant personnel configuré selon les spécifications ci-dessus. Commence chaque journée en...'",
+            "validation": {
+              "completeness_check": [
+                "Les 7 piliers sont définis",
+                "Personnalité cohérente",
+                "Capacités alignées avec besoins",
+                "Workflows pratiques",
+                "Système évolutif"
+              ],
+              "feedbackCorrect": "Assistant personnel créé avec succès ! Vous avez maintenant un partenaire IA unique, parfaitement adapté à vos besoins. C'est VOTRE JARVIS. Activez-le et regardez votre productivité exploser !",
+              "feedbackIncorrect": "Peaufinez votre assistant : 1) Soyez plus spécifique sur ses expertises, 2) Clarifiez sa personnalité unique, 3) Définissez des workflows concrets, 4) Ajoutez des mécanismes d'apprentissage. Votre assistant doit être VOUS en version IA !"
+            },
+            "duration": 120
+          },
+          "recap": {
+            "keyPoint": "🤖 Assistant Personnel = Extension de vous. 7 piliers : Identity→Knowledge→Personality→Capabilities→Workflows→Decisions→Evolution. Configuration unique = Productivité maximale. Votre IA, vos règles, votre succès.",
+            "duration": 15
+          }
+        },
+        "metadata": {
+          "difficulty": "expert",
+          "tags": ["assistant", "personnalisation", "configuration", "système", "productivité"],
+          "estimatedTime": 5,
+          "prerequisites": ["cap-3-33"],
+          "learningOutcomes": [
+            "Concevoir un assistant IA personnel",
+            "Configurer les 7 piliers essentiels",
+            "Personnaliser selon vos besoins",
+            "Créer un système évolutif"
+          ]
+        }
+      },
+      {
+        "id": "cap-3-35",
+        "moduleId": "module-3-pratique",
+        "order": 35,
+        "title": "Test et Optimisation - Peaufinez Jusqu'à la Perfection",
+        "duration": 5,
+        "sections": {
+          "hook": {
+            "text": "SpaceX teste ses fusées 1000 fois avant le lancement. Google fait 10,000 A/B tests par an. L'excellence vient de l'itération obsessionnelle. Dans 5 minutes, vous maîtriserez l'art du perfectionnement continu pour vos prompts.",
+            "duration": 15
+          },
+          "concept": {
+            "content": "Le Test et l'Optimisation transforment des prompts corrects en prompts exceptionnels par l'itération systématique et la mesure rigoureuse.\n\n**LE CYCLE D'OPTIMISATION INFINI**\n\n```\n     [BASELINE]\n          ↓\n      [MEASURE]\n          ↓\n    [HYPOTHESIZE]\n          ↓\n       [TEST]\n          ↓\n     [ANALYZE]\n          ↓\n     [IMPLEMENT]\n          ↓\n     [NEW BASELINE]\n          ↺\n```\n\n**LES 5 DIMENSIONS DE TEST**\n\n**1. QUALITÉ OUTPUT**\n• Accuracy : Factualité et précision\n• Relevance : Pertinence au contexte\n• Completeness : Exhaustivité nécessaire\n• Coherence : Logique et fluidité\n• Creativity : Originalité si requise\n\n**2. PERFORMANCE**\n• Speed : Temps de génération\n• Tokens : Efficience d'usage\n• Cost : Optimisation budget\n• Scalability : Volume capable\n• Reliability : Constance résultats\n\n**3. ROBUSTESSE**\n• Edge cases : Cas limites\n• Error handling : Gestion erreurs\n• Variations : Adaptabilité\n• Stress test : Charge maximale\n• Recovery : Résilience\n\n**4. USER EXPERIENCE**\n• Clarity : Compréhension facile\n• Satisfaction : Score utilisateur\n• Efficiency : Temps gagné\n• Adoption : Taux d'usage\n• Retention : Utilisation continue\n\n**5. BUSINESS IMPACT**\n• ROI : Retour sur investissement\n• KPIs : Métriques business\n• Risk : Réduction d'erreurs\n• Compliance : Conformité\n• Innovation : Valeur ajoutée\n\n**MÉTHODOLOGIE DE TEST**\n\n**A/B TESTING**\n```python\nVariant A (Control): Prompt original\nVariant B (Test): Prompt modifié\nSample Size: 100 runs minimum\nSuccess Metric: +15% amélioration\nConfidence Level: 95%\n```\n\n**MULTIVARIATE TESTING**\n```\nVariables testées simultanément:\n- Role (3 options)\n- Structure (2 options)\n- Examples (0, 1, 3)\n- Tone (4 options)\nTotal combinations: 72\n```\n\n**STRESS TESTING**\n```\nScénarios extrêmes:\n- Input 10x normal\n- Requêtes simultanées\n- Données corrompues\n- Langues multiples\n- Contexte contradictoire\n```\n\n**REGRESSION TESTING**\n```\nTest suite permanente:\n- 50 cas standards\n- 20 edge cases\n- 10 failure modes\nRun: Après chaque modification\nPass rate required: 98%\n```\n\n**OUTILS D'OPTIMISATION**\n\n**TRACKING & ANALYTICS**\n• Spreadsheet (basique)\n• Weights & Biases (ML)\n• Amplitude (product)\n• Mixpanel (user behavior)\n• Custom dashboard\n\n**AUTOMATION**\n• GitHub Actions (CI/CD)\n• Pytest (test suite)\n• Selenium (UI testing)\n• Postman (API testing)\n• Custom scripts\n\n**FRAMEWORKS D'AMÉLIORATION**\n\n**PDCA (Plan-Do-Check-Act)**\n1. Plan : Identifier amélioration\n2. Do : Implémenter changement\n3. Check : Mesurer impact\n4. Act : Standardiser si succès\n\n**DMAIC (Six Sigma)**\n1. Define : Problème à résoudre\n2. Measure : Baseline metrics\n3. Analyze : Root causes\n4. Improve : Solutions test\n5. Control : Maintain gains",
+            "visual": {
+              "type": "optimization-dashboard",
+              "description": "Dashboard temps réel montrant metrics, A/B tests en cours, et courbes d'amélioration"
+            },
+            "duration": 90
+          },
+          "demo": {
+            "type": "optimization-journey",
+            "title": "De 60% à 95% de Succès en 5 Itérations",
+            "scenario": "Optimisation d'un prompt de génération de rapport",
+            "iterations": [
+              {
+                "version": "v1.0 - Baseline",
+                "prompt": "Génère un rapport mensuel de vente.",
+                "metrics": {
+                  "accuracy": "60%",
+                  "completeness": "40%",
+                  "usability": "50%"
+                },
+                "issues": [
+                  "Trop vague",
+                  "Format inconsistant",
+                  "Données manquantes"
+                ]
+              },
+              {
+                "version": "v2.0 - Structure Added",
+                "prompt": "Génère un rapport mensuel de vente avec :\n1. Résumé exécutif\n2. Ventes par région\n3. Top produits\n4. Tendances\n5. Recommandations",
+                "metrics": {
+                  "accuracy": "75%",
+                  "completeness": "70%",
+                  "usability": "65%"
+                },
+                "improvement": "+15% accuracy"
+              },
+              {
+                "version": "v3.0 - Context Enriched",
+                "prompt": "Tu es un analyste senior avec 10 ans d'expérience.\n\nContexte : Entreprise B2B SaaS, 50M€ ARR, 500 clients\n\nGénère un rapport mensuel de vente pour le board avec :\n1. Executive Summary (3 bullets)\n2. Performance vs Objectifs\n3. Répartition géographique\n4. Top 10 clients (80/20)\n5. Tendances et insights\n6. Actions recommandées\n\nFormat : Professionnel, data-driven, actionnable",
+                "metrics": {
+                  "accuracy": "85%",
+                  "completeness": "85%",
+                  "usability": "80%"
+                },
+                "improvement": "+10% all metrics"
+              },
+              {
+                "version": "v4.0 - Examples Added",
+                "prompt": "[Previous prompt]\n\nExemple de format attendu:\n- Métrique : Valeur (Δ vs mois-1, Δ vs objectif)\n- Utilise des pourcentages et trends\n- Maximum 2 pages\n- Graphiques suggérés pour each section",
+                "metrics": {
+                  "accuracy": "92%",
+                  "completeness": "90%",
+                  "usability": "88%"
+                },
+                "improvement": "+7% accuracy"
+              },
+              {
+                "version": "v5.0 - Fine-tuned",
+                "prompt": "[Previous prompt]\n\nRègles critiques :\n- Si données manquantes, indique [À COMPLÉTER]\n- Highlight en **gras** les points d'attention\n- Termine par 3 actions prioritaires numérotées\n- Ton : Factuel mais avec urgence sur les enjeux\n\nVérifie la cohérence des chiffres avant de finaliser.",
+                "metrics": {
+                  "accuracy": "95%",
+                  "completeness": "94%",
+                  "usability": "93%"
+                },
+                "improvement": "+3% final polish",
+                "status": "PRODUCTION READY ✅"
+              }
+            ],
+            "total_improvement": {
+              "accuracy": "+58%",
+              "completeness": "+135%",
+              "usability": "+86%",
+              "time_saved": "45 min → 5 min",
+              "error_rate": "40% → 5%"
+            },
+            "duration": 90
+          },
+          "exercise": {
+            "type": "prompt-optimizer",
+            "title": "Optimisez Votre Prompt le Plus Important",
+            "instruction": "Prenez votre prompt le plus utilisé et optimisez-le en 5 itérations mesurées.",
+            "framework": {
+              "step1": {
+                "title": "Baseline Assessment",
+                "tasks": [
+                  "Documenter le prompt actuel",
+                  "Mesurer performance actuelle (1-10)",
+                  "Identifier 3 problèmes principaux",
+                  "Définir objectif d'amélioration"
+                ],
+                "template": "## Prompt Actuel\n```\n{{CURRENT_PROMPT}}\n```\n\n## Métriques Baseline\n- Qualité : {{SCORE}}/10\n- Vitesse : {{TIME}}\n- Satisfaction : {{SATISFACTION}}/10\n\n## Problèmes Identifiés\n1. {{ISSUE_1}}\n2. {{ISSUE_2}}\n3. {{ISSUE_3}}\n\n## Objectif\nPasser de {{CURRENT}} à {{TARGET}} (+{{IMPROVEMENT}}%)"
+              },
+              "step2": {
+                "title": "Test Matrix",
+                "variables": [
+                  "Structure (libre vs guidée)",
+                  "Contexte (minimal vs riche)",
+                  "Exemples (0 vs 1 vs 3)",
+                  "Ton (neutre vs personnalisé)",
+                  "Format (texte vs structuré)"
+                ],
+                "tests": "5 variables × 3 options = 15 tests minimum"
+              },
+              "step3": {
+                "title": "Iteration Cycles",
+                "cycle": "Pour chaque itération :\n1. Hypothèse : {{HYPOTHESIS}}\n2. Modification : {{CHANGE}}\n3. Test : 20 runs\n4. Mesure : {{METRICS}}\n5. Décision : Keep/Revert/Modify"
+              },
+              "step4": {
+                "title": "Performance Tracking",
+                "tracker": "| Version | Quality | Speed | Satisfaction | Notes |\n|---------|---------|-------|--------------|-------|\n| v1.0 | {{Q1}} | {{S1}} | {{SAT1}} | Baseline |\n| v2.0 | {{Q2}} | {{S2}} | {{SAT2}} | {{NOTE2}} |\n| v3.0 | {{Q3}} | {{S3}} | {{SAT3}} | {{NOTE3}} |\n| v4.0 | {{Q4}} | {{S4}} | {{SAT4}} | {{NOTE4}} |\n| v5.0 | {{Q5}} | {{S5}} | {{SAT5}} | {{NOTE5}} |"
+              },
+              "step5": {
+                "title": "Final Validation",
+                "checklist": [
+                  "▢ Testé sur 10 cas réels",
+                  "▢ Edge cases validés",
+                  "▢ Documentation mise à jour",
+                  "▢ Équipe formée",
+                  "▢ Monitoring en place"
+                ]
+              }
+            },
+            "success_criteria": {
+              "minimum_improvement": "30%",
+              "test_coverage": "80%",
+              "confidence_level": "95%",
+              "edge_cases_handled": "100%"
+            },
+            "validation": {
+              "metrics_required": [
+                "Before/After comparison",
+                "Quantified improvements",
+                "Test methodology documented",
+                "Reproducible results",
+                "Rollback plan if needed"
+              ],
+              "feedbackCorrect": "Optimisation excellente ! Amélioration de {{IMPROVEMENT}}% documentée et validée. Votre approche méthodique garantit des résultats durables. Ce prompt optimisé va transformer votre productivité !",
+              "feedbackIncorrect": "Affinez votre optimisation : 1) Mesurez plus rigoureusement (metrics quantifiables), 2) Testez plus de variables, 3) Documentez chaque itération, 4) Validez sur plus de cas. L'excellence vient de la rigueur !"
+            },
+            "duration": 120
+          },
+          "recap": {
+            "keyPoint": "🔬 Test & Optimisation = Excellence continue. 5 dimensions : Quality→Performance→Robustness→UX→Impact. Méthodologies : A/B, Multivariate, Stress, Regression. Cycle : Measure→Hypothesize→Test→Analyze→Implement. +50% performance moyenne.",
+            "duration": 15
+          }
+        },
+        "metadata": {
+          "difficulty": "expert",
+          "tags": ["optimisation", "testing", "amélioration", "métriques", "performance"],
+          "estimatedTime": 5,
+          "prerequisites": ["cap-3-34"],
+          "learningOutcomes": [
+            "Tester systématiquement les prompts",
+            "Mesurer avec rigueur",
+            "Optimiser continuellement",
+            "Atteindre l'excellence"
+          ]
+        }
+      },
+      {
+        "id": "cap-3-36",
+        "moduleId": "module-3-pratique",
+        "order": 36,
+        "title": "Next Steps et Ressources - Continuez l'Aventure !",
+        "duration": 5,
+        "sections": {
+          "hook": {
+            "text": "Félicitations ! Vous avez acquis une compétence qui vaut de l'or. Mais ce n'est que le début. Les meilleurs prompt engineers ne s'arrêtent jamais d'apprendre. Dans 5 minutes, vous aurez votre feuille de route pour devenir un expert reconnu.",
+            "duration": 15
+          },
+          "concept": {
+            "content": "La maîtrise du Prompt Engineering est un voyage continu. Voici votre carte pour naviguer vers l'expertise absolue.\n\n**VOTRE PROGRESSION : 4 NIVEAUX**\n\n```\n[DÉBUTANT]      [CONFIRMÉ]      [EXPERT]       [MASTER]\n(Vous êtes ici)      ↓              ↓              ↓\n   0-3 mois       3-6 mois      6-12 mois      12+ mois\n   Foundation     Advanced      Specialist      Innovator\n```\n\n**NIVEAU 1 → 2 : CONSOLIDATION (Mois 1-3)**\n\n**Semaine 1-2 : Practice Intensive**\n• 10 prompts/jour minimum\n• Documenter chaque amélioration\n• Tester tous les patterns appris\n• Créer votre première bibliothèque\n\n**Semaine 3-4 : Real-World Application**\n• Appliquer au travail quotidien\n• Mesurer temps gagné\n• Identifier vos use cases top 5\n• Partager avec collègues\n\n**Mois 2 : Specialization Start**\n• Choisir votre niche (Business/Tech/Creative)\n• Deep dive dans votre domaine\n• Créer 20 templates spécialisés\n• Rejoindre communauté spécifique\n\n**Mois 3 : First Projects**\n• Automatiser 1 workflow complet\n• Créer 1 outil pour votre équipe\n• Publier 1 article/tutorial\n• Obtenir 10 utilisateurs\n\n**NIVEAU 2 → 3 : EXPERTISE (Mois 4-6)**\n\n**Technical Mastery**\n• API integrations\n• Multi-model orchestration\n• Custom fine-tuning\n• Performance optimization\n\n**Business Application**\n• ROI measurement\n• Cost optimization\n• Scale strategies\n• Change management\n\n**Thought Leadership**\n• Blog régulier\n• Speaking opportunities\n• Open source contribution\n• Mentoring juniors\n\n**NIVEAU 3 → 4 : MASTERY (Mois 7-12)**\n\n**Innovation**\n• Créer nouvelles techniques\n• Publier research\n• Brevets potentiels\n• Industry recognition\n\n**RESSOURCES ESSENTIELLES**\n\n**APPRENTISSAGE CONTINU**\n\n📚 **Livres Fondamentaux**\n• \"The Art of Prompt Engineering\" - DeepLearning.AI\n• \"Prompt Patterns\" - White & Schmidt\n• \"AI Whisperer\" - Harvard Business Review\n• \"Linguistic Programming for AI\" - MIT Press\n\n🎓 **Cours Avancés**\n• Anthropic Claude Certification\n• OpenAI Developer Program\n• Google AI Essentials\n• Stanford CS324 - LLMs\n\n📰 **Newsletters Must-Read**\n• The Batch (Andrew Ng)\n• Prompt Engineering Daily\n• AI Breakfast\n• The Gradient\n\n🎙️ **Podcasts**\n• Latent Space\n• The AI Podcast (NVIDIA)\n• Eye on AI\n• Practical AI\n\n**COMMUNAUTÉS ACTIVES**\n\n💬 **Discord/Slack**\n• r/PromptEngineering (45k membres)\n• AI Builders (Discord - 30k)\n• Anthropic Community\n• OpenAI Forum\n\n🐦 **Twitter/X Follows**\n• @anthropicAI\n• @openai\n• @googleai\n• @AndrewYNg\n• [Top 50 AI influencers list]\n\n👥 **LinkedIn Groups**\n• Prompt Engineering Professionals (80k)\n• AI Innovation Network\n• GenAI Leaders\n• Future of Work with AI\n\n**PROJETS POUR PRATIQUER**\n\n**Beginner Projects**\n1. Email Assistant (1 weekend)\n2. Content Calendar (3 days)\n3. Meeting Summarizer (1 week)\n4. FAQ Bot (3 days)\n5. Translation System (1 week)\n\n**Intermediate Projects**\n1. Multi-agent Customer Service (2 weeks)\n2. Automated Report Generator (1 week)\n3. Code Review Assistant (2 weeks)\n4. Learning Platform (1 month)\n5. Data Analysis Pipeline (2 weeks)\n\n**Advanced Projects**\n1. AI Startup Idea Validator (1 month)\n2. Autonomous Research Agent (6 weeks)\n3. Real-time Trading Assistant (2 months)\n4. Medical Diagnosis Support (3 months)\n5. Legal Document Analyzer (2 months)\n\n**CERTIFICATIONS & RECONNAISSANCE**\n\n**Certifications Disponibles**\n• Anthropic Certified Claude Developer\n• OpenAI GPT Specialist\n• Google AI/ML Certificate\n• Microsoft Azure AI Engineer\n• AWS Machine Learning Specialty\n\n**Portfolio Building**\n• GitHub : 10+ repos publics\n• Blog : 20+ articles techniques\n• Tools : 5+ outils publics\n• Case Studies : 3+ succès documentés\n• Testimonials : 10+ recommandations\n\n**OPPORTUNITÉS PROFESSIONNELLES**\n\n**Rôles Émergents**\n• Prompt Engineer : 80-150k€\n• AI Integration Specialist : 70-130k€\n• Conversation Designer : 60-110k€\n• AI Product Manager : 90-160k€\n• Chief AI Officer : 150-300k€\n\n**Freelance/Consulting**\n• Tarif junior : 500€/jour\n• Tarif confirmé : 800€/jour\n• Tarif expert : 1200€/jour\n• Tarif master : 2000€+/jour\n\n**Entrepreneuriat**\n• Créer des tools SaaS\n• Vendre des templates\n• Formation et coaching\n• Agence spécialisée\n• Produits AI-first",
+            "visual": {
+              "type": "roadmap-interactive",
+              "description": "Carte interactive de progression avec milestones, ressources, et achievements déblockables"
+            },
+            "duration": 90
+          },
+          "demo": {
+            "type": "success-stories",
+            "title": "3 Parcours Inspirants Post-Formation",
+            "stories": [
+              {
+                "profile": "Sarah, Marketing Manager → AI Strategist",
+                "timeline": "12 mois",
+                "journey": [
+                  "Mois 1-2 : Pratique quotidienne, 50 prompts/semaine",
+                  "Mois 3 : Automatisé tout le reporting marketing",
+                  "Mois 4 : Créé chatbot service client (80% déflection)",
+                  "Mois 6 : Promue AI Lead, formé 20 personnes",
+                  "Mois 9 : Speaker à MarketingAI Summit",
+                  "Mois 12 : Chief AI Officer, salaire +75%"
+                ],
+                "key_success_factors": [
+                  "Application immédiate au travail",
+                  "Partage des succès",
+                  "Formation continue",
+                  "Leadership sur l'AI"
+                ],
+                "advice": "Commencez petit, mesurez tout, partagez vos wins"
+              },
+              {
+                "profile": "Marc, Developer → AI Entrepreneur",
+                "timeline": "9 mois",
+                "journey": [
+                  "Mois 1 : Créé 10 tools internes",
+                  "Mois 2 : Open source 3 projets (2k stars)",
+                  "Mois 3 : Side project SaaS (100 users)",
+                  "Mois 5 : 1000 users payants",
+                  "Mois 7 : Quit job, full-time sur SaaS",
+                  "Mois 9 : 10k MRR, team de 3"
+                ],
+                "key_success_factors": [
+                  "Build in public",
+                  "Rapid iteration",
+                  "Community first",
+                  "Solve real problems"
+                ],
+                "advice": "Ship fast, iterate faster, listen to users"
+              },
+              {
+                "profile": "Julie, Freelance Writer → AI Consultant",
+                "timeline": "6 mois",
+                "journey": [
+                  "Mois 1 : Blog sur prompt engineering",
+                  "Mois 2 : Premier client consulting",
+                  "Mois 3 : 5 clients réguliers",
+                  "Mois 4 : Workshop entreprises",
+                  "Mois 5 : Partenariat avec agence",
+                  "Mois 6 : 15k€/mois, full pipeline"
+                ],
+                "key_success_factors": [
+                  "Niche expertise",
+                  "Content marketing",
+                  "Results-driven",
+                  "Premium positioning"
+                ],
+                "advice": "Devenez THE expert dans votre niche"
+              }
+            ],
+            "duration": 90
+          },
+          "exercise": {
+            "type": "personal-roadmap",
+            "title": "Créez Votre Plan de Conquête Personnel",
+            "instruction": "Définissez votre trajectoire pour les 12 prochains mois.",
+            "planning_framework": {
+              "month_1_3": {
+                "title": "Foundation Phase",
+                "goals": [
+                  "Objectif principal : ___________",
+                  "Compétences à acquérir : ___________",
+                  "Projets à réaliser : ___________",
+                  "Métrique de succès : ___________"
+                ],
+                "weekly_commitment": "_____ heures/semaine",
+                "deliverables": "___________"
+              },
+              "month_4_6": {
+                "title": "Growth Phase",
+                "goals": [
+                  "Spécialisation choisie : ___________",
+                  "Impact visé : ___________",
+                  "Recognition cible : ___________",
+                  "Revenue/Savings : ___________"
+                ],
+                "milestone": "___________"
+              },
+              "month_7_12": {
+                "title": "Mastery Phase",
+                "vision": [
+                  "Position visée : ___________",
+                  "Expertise unique : ___________",
+                  "Contribution industrie : ___________",
+                  "Legacy/Impact : ___________"
+                ]
+              }
+            },
+            "action_plan": {
+              "daily": [
+                "▢ 1 nouveau prompt testé",
+                "▢ 1 amélioration documentée",
+                "▢ 15 min veille AI"
+              ],
+              "weekly": [
+                "▢ 1 template créé/amélioré",
+                "▢ 1 article/post partagé",
+                "▢ 1 outil testé",
+                "▢ Metrics review"
+              ],
+              "monthly": [
+                "▢ 1 projet complété",
+                "▢ 1 skill nouvelle acquise",
+                "▢ 5 connections réseau",
+                "▢ Portfolio update"
+              ]
+            },
+            "commitment_contract": "## Mon Engagement\n\nJe, {{NAME}}, m'engage à :\n\n1. Pratiquer quotidiennement pendant {{DAYS}} jours\n2. Partager mes apprentissages avec {{NUMBER}} personnes\n3. Créer {{NUMBER}} projets concrets\n4. Atteindre {{GOAL}} d'ici {{DATE}}\n\nMa récompense si succès : {{REWARD}}\nMon accountability partner : {{PARTNER}}\n\nSignature : ___________\nDate : {{TODAY}}",
+            "resources_checklist": {
+              "learning": [
+                "▢ Bookmark 10 ressources clés",
+                "▢ S'inscrire 3 newsletters",
+                "▢ Rejoindre 2 communautés",
+                "▢ Identifier 5 mentors potentiels"
+              ],
+              "tools": [
+                "▢ Setup environment de test",
+                "▢ Organiser templates library",
+                "▢ Créer tracking system",
+                "▢ Installer automation tools"
+              ],
+              "network": [
+                "▢ LinkedIn optimisé AI",
+                "▢ Twitter/X AI content",
+                "▢ GitHub projects visible",
+                "▢ Blog/Portfolio live"
+              ]
+            },
+            "validation": {
+              "completeness": [
+                "Objectifs SMART définis",
+                "Timeline réaliste",
+                "Métriques mesurables",
+                "Resources identifiées",
+                "Support system en place"
+              ],
+              "feedbackCorrect": "Plan de conquête excellent ! Votre roadmap est claire, ambitieuse mais réaliste. Avec cette structure, vous serez dans le top 1% des prompt engineers dans 12 mois. L'aventure commence maintenant !",
+              "feedbackIncorrect": "Affinez votre plan : 1) Rendez les objectifs plus SMART (Spécifiques, Mesurables), 2) Clarifiez les milestones, 3) Identifiez les ressources concrètes, 4) Prévoyez un système de suivi. Un bon plan = 50% du succès !"
+            },
+            "duration": 120
+          },
+          "recap": {
+            "keyPoint": "🎯 Next Steps = Votre avenir AI. 4 niveaux : Débutant→Confirmé→Expert→Master. Ressources : Livres + Cours + Communautés + Projets. Opportunités : 80-300k€/an. Votre voyage commence maintenant. Le futur appartient aux prompt engineers !",
+            "duration": 15
+          }
+        },
+        "metadata": {
+          "difficulty": "all-levels",
+          "tags": ["ressources", "progression", "carrière", "communauté", "futur"],
+          "estimatedTime": 5,
+          "prerequisites": ["cap-3-35"],
+          "learningOutcomes": [
+            "Planifier votre progression",
+            "Accéder aux meilleures ressources",
+            "Rejoindre la communauté",
+            "Construire votre carrière AI"
+          ]
+        }
+      }
+    ]
+  }
+}

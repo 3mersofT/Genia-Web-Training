@@ -1,0 +1,231 @@
+{
+  "capsules": [
+    {
+      "id": "cap-1-4",
+      "moduleId": "module-1-fundamentals",
+      "order": 4,
+      "title": "De Vague à Précis - L'Art du Prompt Makeover",
+      "duration": 5,
+      "sections": {
+        "hook": {
+          "text": "La majorité des prompts sont trop vagues. Résultat ? Déception garantie. Dans 5 minutes, vous saurez transformer n'importe quel prompt brouillon en instruction professionnelle qui produit exactement ce que vous voulez.",
+          "duration": 15
+        },
+        "concept": {
+          "content": "Transformer un prompt vague en prompt précis, c'est comme passer d'une esquisse au crayon à un plan d'architecte. Voici la méthode systématique RCTF en action.\n\n**Les signaux d'un prompt vague :**\n• Verbes génériques : 'fais', 'écris', 'aide-moi'\n• Absence de contexte : pas de 'qui', 'pourquoi', 'pour qui'\n• Format flou : 'quelque chose de bien'\n• Pas de limites : longueur, style, niveau non définis\n\n**La méthode de transformation RCTF :**\n\n**Étape 1 : Identifier le besoin réel**\nQue voulez-vous vraiment ? Pas 'un texte', mais 'un email de relance commercial qui convertit'.\n\n**Étape 2 : Ajouter le Rôle**\nQui serait l'expert idéal pour cette tâche ?\n• Expert métier + années d'expérience\n• Spécialisation pertinente\n• Traits de personnalité utiles\n\n**Étape 3 : Enrichir le Contexte**\nQuelles informations l'expert aurait besoin ?\n• Situation actuelle\n• Historique pertinent\n• Contraintes existantes\n• Objectif final\n\n**Étape 4 : Préciser la Tâche**\nQue doit faire exactement l'IA ?\n• Verbe d'action spécifique\n• Étapes si nécessaire\n• Critères de succès\n\n**Étape 5 : Structurer le Format**\nComment voulez-vous le résultat ?\n• Type de document\n• Organisation des infos\n• Longueur et style",
+          "code": "// Transformation systématique\nfunction transformPrompt(vaguePrompt) {\n  return {\n    avant: vaguePrompt,\n    analyse: identifyWeaknesses(vaguePrompt),\n    transformation: {\n      role: addExpertRole(),\n      contexte: addSpecificContext(),\n      tache: clarifyObjective(),\n      format: defineStructure()\n    },\n    apres: buildFinalPrompt()\n  };\n}",
+          "duration": 90
+        },
+        "demo": {
+          "before": "Aide-moi avec mon CV",
+          "after": "[RÔLE] Tu es consultant en recrutement spécialisé dans le secteur tech, avec 15 ans d'expérience. Tu as reviewé plus de 10,000 CV et tu connais parfaitement les systèmes ATS (Applicant Tracking Systems) et ce que recherchent les recruteurs tech en 2024.\n\n[CONTEXTE]\n- Développeur Full-Stack JavaScript\n- 3 ans d'expérience (2 postes : startup + scale-up)\n- Cible : postes Senior Developer dans des scale-ups série B+\n- Marché : France, remote possible\n- Points forts : React, Node.js, architecture microservices\n- Point faible : pas de diplôme informatique (reconversion)\n\n[TÂCHE] Optimise mon CV pour :\n1. Passer les filtres ATS (mots-clés optimisés)\n2. Capter l'attention en 6 secondes (test du recruteur)\n3. Mettre en avant mes réalisations mesurables\n4. Compenser le manque de diplôme par l'expérience\n5. Montrer ma progression rapide\n\n[FORMAT]\n- 1 page maximum (A4)\n- Structure : Header pro > Résumé 3 lignes > Expériences (format CAR : Context-Action-Result) > Compétences techniques (groupées) > Formation > Projets personnels\n- Style : bullets points avec verbes d'action\n- Inclure : métriques concrètes, technologies utilisées\n- Police : lisible pour ATS (Arial, Calibri)",
+          "explanation": "Transformation complète ! Le prompt vague devient une demande de service professionnel. Chaque élément ajouté augmente la qualité du résultat. L'IA sait maintenant exactement quoi faire, comment, et pourquoi. C'est la différence entre obtenir un CV générique et un CV qui décroche des entretiens.",
+          "duration": 90
+        },
+        "exercise": {
+          "type": "transform",
+          "instruction": "Transformez ces 3 prompts vagues en versions professionnelles. Appliquez la méthode RCTF complète.",
+          "starter": "Prompt 1: 'Écris un article sur le télétravail'\nPrompt 2: 'Donne-moi des idées de business'\nPrompt 3: 'Comment être plus productif ?'",
+          "solution": "**Prompt 1 transformé:**\n[RÔLE] Tu es journaliste spécialisé en transformation du travail et management moderne, contributeur régulier pour Harvard Business Review.\n\n[CONTEXTE] Article pour magazine RH, lectorat : DRH et managers de grandes entreprises françaises, post-COVID, alors que beaucoup d'entreprises font du 'return to office'.\n\n[TÂCHE] Rédige un article équilibré sur l'évolution du télétravail en 2024 : bilan après 4 ans, ce qui fonctionne vraiment, les écueils à éviter, les modèles hybrides gagnants.\n\n[FORMAT] 800 mots, structure : accroche forte > 3 parties avec sous-titres > conclusion actionnable. Ton : professionnel mais accessible. Inclure 2 études récentes et 1 cas d'entreprise.\n\n**Prompt 2 transformé:**\n[RÔLE] Tu es consultant en stratégie et entrepreneur serial, spécialisé dans les business models innovants et les marchés émergents.\n\n[CONTEXTE] Entrepreneur débutant, budget 10K€, basé en France, recherche opportunité B2C ou B2B2C, secteur agnostique mais intérêt pour tech/digital, solo founder pour commencer.\n\n[TÂCHE] Propose 5 idées de business adaptées à mon profil, avec analyse de faisabilité, potentiel de marché, et premiers pas concrets.\n\n[FORMAT] Pour chaque idée : Concept (2 lignes) | Marché cible | Investment initial | Difficulté (1-5) | Potentiel année 1 | 3 actions pour tester en 1 semaine.\n\n**Prompt 3 transformé:**\n[RÔLE] Tu es coach en performance et expert en neurosciences appliquées à la productivité, certifié en méthodes agiles.\n\n[CONTEXTE] Manager avec 8 collaborateurs, secteur conseil, 60h/semaine actuellement, réunions constantes, difficulté à faire du deep work, fatigue chronique.\n\n[TÂCHE] Conçois un plan de transformation de ma productivité en 30 jours, basé sur la science, adapté à mes contraintes.\n\n[FORMAT] Plan en 4 semaines progressives : Semaine 1 (quick wins) > S2 (nouvelles habitudes) > S3 (optimisation système) > S4 (automatisation). Pour chaque semaine : 3 actions, temps requis, résultat attendu.",
+          "hints": [
+            "N'oubliez aucun des 4 éléments RCTF",
+            "Plus c'est spécifique, mieux c'est",
+            "Le format doit être actionnable"
+          ],
+          "validation": {
+            "checkPoints": [
+              "Chaque prompt a un rôle expert",
+              "Contexte détaillé et spécifique",
+              "Tâche avec objectifs clairs",
+              "Format structuré facilitant l'action"
+            ],
+            "feedbackCorrect": "Excellent travail ! Vos transformations sont professionnelles et produiront des résultats de qualité. Vous maîtrisez l'art du prompt makeover !",
+            "feedbackIncorrect": "Bonne tentative ! Vérifiez que chaque transformation contient bien les 4 éléments RCTF complets. Plus vous êtes spécifique, meilleurs seront les résultats."
+          },
+          "duration": 120
+        },
+        "recap": {
+          "keyPoint": "🔑 Vague = Déception. Précis = Satisfaction. La méthode RCTF transforme systématiquement vos prompts brouillons en instructions professionnelles.",
+          "duration": 15
+        }
+      },
+      "metadata": {
+        "difficulty": "beginner",
+        "tags": ["transformation", "méthode", "pratique"],
+        "estimatedTime": 5,
+        "prerequisites": ["cap-1-3"]
+      }
+    },
+    {
+      "id": "cap-1-5",
+      "moduleId": "module-1-fundamentals",
+      "order": 5,
+      "title": "CV Killer - Cas Pratique Complet",
+      "duration": 5,
+      "sections": {
+        "hook": {
+          "text": "Un CV optimisé avec l'IA peut multiplier par 5 vos chances de décrocher un entretien. Je vais vous montrer exactement comment faire, avec un exemple réel qui a permis à quelqu'un de passer de 0 à 8 entretiens en 2 semaines.",
+          "duration": 15
+        },
+        "concept": {
+          "content": "Optimiser un CV avec l'IA nécessite une approche stratégique qui combine compréhension des ATS (systèmes de tri automatique) et psychologie du recruteur.\n\n**Comprendre le challenge du CV moderne :**\n• 6 secondes : temps moyen de lecture par un recruteur\n• Jusqu'à 75% des CV peuvent être rejetés par les ATS avant d'atteindre un humain\n• Mots-clés critiques : match avec l'offre d'emploi\n• Format : lisibilité machine ET humaine\n\n**La stratégie gagnante en 3 phases :**\n\n**Phase 1 : Extraction des requirements**\nAnalyser l'offre d'emploi pour identifier :\n• Compétences techniques requises\n• Soft skills mentionnées\n• Mots-clés récurrents\n• Niveau d'expérience réel (au-delà du titre)\n\n**Phase 2 : Optimisation ATS**\n• Utiliser les mêmes mots-clés que l'offre\n• Format simple, pas de colonnes complexes\n• Headers standards (Experience, Education, Skills)\n• Pas d'images, logos ou graphiques\n\n**Phase 3 : Impact humain**\n• Première ligne = votre value proposition\n• Réalisations quantifiées (augmenté X de Y%)\n• Verbes d'action puissants\n• Progression visible de carrière\n\n**Le secret : Le prompt doit inclure l'offre d'emploi cible**\nC'est ce qui fait la différence entre un CV générique et un CV qui matche parfaitement.",
+          "code": "// Structure optimale pour prompt CV\nconst cvOptimizationPrompt = {\n  jobPosting: \"[Coller ici l'offre d'emploi complète]\",\n  currentCV: \"[Votre CV actuel ou liste d'expériences]\",\n  targetRole: \"[Titre exact du poste visé]\",\n  keywords: extractKeywords(jobPosting),\n  optimization: {\n    ats: true,\n    readability: \"6-second-test\",\n    quantification: \"all-achievements\",\n    length: \"1-page-max\"\n  }\n};",
+          "duration": 90
+        },
+        "demo": {
+          "before": "Je suis développeur, aide-moi à améliorer mon CV",
+          "after": "[RÔLE] Tu es expert en recrutement tech et consultant CV, spécialisé dans l'optimisation pour les ATS. Tu as aidé +500 développeurs à décrocher leur job de rêve. Tu connais parfaitement ce que recherchent les recruteurs tech en 2024.\n\n[CONTEXTE]\nJOB CIBLÉ : Senior Frontend Developer chez [Scale-up Fintech]\nOFFRE : \"Nous recherchons un Senior Frontend Developer passionné pour rejoindre notre équipe produit. Stack : React 18, TypeScript, Next.js, GraphQL. Vous travaillerez sur notre plateforme utilisée par 2M+ utilisateurs. Requis : 5+ ans d'expérience, maîtrise React et TypeScript, expérience en optimisation de performance. Nice to have : fintech, tests automatisés, CI/CD.\"\n\nMON PROFIL :\n- 4 ans d'expérience (proche des 5 requis)\n- Expert React/TypeScript\n- Pas d'expérience fintech mais e-commerce (transférable)\n- Contributions open source sur des libs React\n\n[TÂCHE]\n1. Analyse l'offre et extrait les 10 mots-clés prioritaires\n2. Restructure mon CV pour matcher à 80%+ avec l'offre\n3. Transforme mes expériences en réalisations quantifiées\n4. Crée un résumé professionnel de 3 lignes qui accroche\n5. Optimise pour ATS tout en restant engageant pour un humain\n6. Compense mes 4 ans vs 5 requis par mes points forts\n\n[FORMAT]\nStructure optimisée :\n📌 HEADER : Nom | Titre ciblé | Contact | LinkedIn | GitHub\n\n💫 RÉSUMÉ PRO : 3 lignes maximum, incluant :\n- Expertise principale + années\n- Réalisation phare quantifiée\n- Ce que j'apporte à CE poste spécifique\n\n💼 EXPÉRIENCE : Format CAR (Context-Action-Result)\nPour chaque poste :\n• Titre | Entreprise | Dates\n• Context : défi/situation (1 ligne)\n• Actions : ce que j'ai fait (2-3 bullets)\n• Results : impact mesurable (1-2 bullets)\n• Tech stack : [liste des technologies]\n\n🛠 COMPÉTENCES TECHNIQUES\n- Core : [les 5 de l'offre que je maîtrise]\n- Additional : [autres pertinentes]\n- En développement : [celles que j'apprends]\n\n🎯 RÉALISATIONS CLÉS\n- 3 achievements qui prouvent ma séniorité\n\n📚 FORMATION & CERTIFICATIONS\n\nLongueur : 1 page strictement\nMots-clés à inclure absolument : [les 10 de l'offre]\nTon : professionnel, factuel, orienté résultats",
+          "explanation": "Voyez la différence ! Ce prompt produit un CV sur-mesure qui : 1) Passe les ATS grâce aux bons mots-clés, 2) Accroche le recruteur avec des réalisations quantifiées, 3) Compense les faiblesses par les forces. C'est exactement comme ça qu'on passe de CV ignoré à CV qui génère des entretiens.",
+          "duration": 90
+        },
+        "exercise": {
+          "type": "create",
+          "instruction": "Créez un prompt pour optimiser VOTRE CV pour un poste qui vous intéresse. Incluez une vraie offre d'emploi ou créez-en une réaliste.",
+          "starter": "[RÔLE] Tu es expert en recrutement [votre secteur]...\n\n[CONTEXTE]\nJOB CIBLÉ : [Titre du poste]\nOFFRE : \"[Description du poste ou points clés]...\"\nMON PROFIL : [Vos points forts et faiblesses par rapport au poste]\n\n[TÂCHE] ...\n\n[FORMAT] ...",
+          "solution": "[RÔLE] Tu es expert en recrutement marketing digital et personal branding, spécialisé dans les profils growth marketing pour startups tech. Tu as reviewé +1000 CV de marketeurs et tu sais exactement ce qui fait la différence.\n\n[CONTEXTE]\nJOB CIBLÉ : Head of Growth - Startup SaaS B2B (Serie A)\nOFFRE : \"Nous cherchons notre Head of Growth pour scaler notre acquisition de 10x en 18 mois. Vous serez responsable de toute la stratégie d'acquisition, de la data à l'exécution. Stack : HubSpot, Segment, Amplitude. Requis : 5+ ans en growth B2B SaaS, track record prouvé de scaling, data-driven, leadership d'équipe. Bonus : expérience série A/B, Product-Led Growth, international.\"\n\nMON PROFIL :\n- 6 ans d'expérience growth (parfait)\n- 3 startups B2B SaaS scalées de 0 à 2M ARR\n- Data-driven (SQL, Python basics, Amplitude expert)\n- Jamais managé d'équipe de plus de 3 personnes (point faible)\n- Certifié Reforge Growth Series\n\n[TÂCHE]\n1. Analyse l'offre et identifie les 3 must-have vs nice-to-have\n2. Structure mon CV pour mettre en avant mon track record de scaling\n3. Transforme mes expériences en case studies mini (problème → solution → résultat)\n4. Compense le manque d'expérience management par du leadership transverse\n5. Crée un 'Growth Metrics Snapshot' pour prouver mon côté data-driven\n6. Intègre subtilement que je connais leur stack tech\n\n[FORMAT]\n🚀 GROWTH SNAPSHOT (en haut, unique et accrocheur)\n- Total ARR generated: $X\n- Average growth rate achieved: X%\n- Channels mastered: X\n- Teams scaled: X → Y\n\n👤 RÉSUMÉ EXÉCUTIF\n3 lignes : Qui je suis + Plus grande réussite + Vision du growth\n\n📈 GROWTH TRACK RECORD\n[Format unique : mini case studies]\nPour chaque entreprise :\n🎯 Challenge : [situation initiale + objectif]\n⚡ Strategy : [approche unique que j'ai développée]\n📊 Results : \n   - Metric 1: X → Y en Z mois\n   - Metric 2: augmentation de X%\n   - Business impact: [ARR, valuation, etc.]\n🛠 Stack : [outils utilisés]\n\n🧠 GROWTH EXPERTISE\n- Acquisition : [canaux maîtrisés avec proof points]\n- Activation : [méthodes avec taux de conversion]\n- Retention : [strategies avec impact sur churn]\n- Data : [outils et méthodologies]\n\n🏆 SIGNATURE ACHIEVEMENTS\n- 3 wins qui prouvent que je peux faire leur job\n\n📚 GROWTH EDUCATION\n- Formations pertinentes (Reforge, etc.)\n\nDesign : Clean, data-focused, facile à scanner\nLongueur : 1.5 pages max (ok pour senior)\nMots-clés prioritaires de l'offre intégrés naturellement",
+          "hints": [
+            "Incluez de vraies informations ou créez un profil réaliste",
+            "L'offre d'emploi doit être spécifique",
+            "Pensez à vos forces ET faiblesses"
+          ],
+          "validation": {
+            "checkPoints": [
+              "Rôle expert en recrutement du secteur",
+              "Offre d'emploi spécifique incluse",
+              "Profil personnel avec forces/faiblesses",
+              "Tâche détaillée d'optimisation",
+              "Format structuré et unique"
+            ],
+            "feedbackCorrect": "Parfait ! Ce prompt produira un CV vraiment optimisé pour le poste visé. Vous avez compris comment adapter précisément un CV à une offre. C'est exactement comme ça qu'on décroche des entretiens !",
+            "feedbackIncorrect": "Bon début ! Assurez-vous d'inclure : l'offre d'emploi spécifique, votre profil réel, et un format de CV qui vous démarque. Plus c'est personnalisé, plus c'est efficace."
+          },
+          "duration": 120
+        },
+        "recap": {
+          "keyPoint": "🔑 Un CV optimisé avec le bon prompt = 5x plus d'entretiens. Le secret : inclure l'offre d'emploi cible et quantifier toutes vos réalisations.",
+          "duration": 15
+        }
+      },
+      "metadata": {
+        "difficulty": "intermediate",
+        "tags": ["CV", "carrière", "cas pratique", "ATS"],
+        "estimatedTime": 5,
+        "prerequisites": ["cap-1-4"]
+      }
+    },
+    {
+      "id": "cap-1-6",
+      "moduleId": "module-1-fundamentals",
+      "order": 6,
+      "title": "Présentation Impact - Du Brouillon au Pitch Deck Pro",
+      "duration": 5,
+      "sections": {
+        "hook": {
+          "text": "Steve Jobs passait des semaines sur ses présentations. Vous ? Vous allez créer un pitch deck professionnel en 5 minutes grâce à l'IA. Prêt à impressionner votre audience ?",
+          "duration": 15
+        },
+        "concept": {
+          "content": "Une présentation efficace suit une structure narrative qui capte l'attention, maintient l'intérêt et pousse à l'action. L'IA peut vous aider à créer cette structure parfaite.\n\n**Les 3 types de présentations et leurs structures :**\n\n**1. Pitch Investisseur (10 slides)**\n• Problème → Solution → Marché → Business Model\n• Traction → Équipe → Roadmap → Financials → Ask\n• Règle : 1 idée par slide, 30 secondes par slide\n\n**2. Présentation Commerciale (7-12 slides)**\n• Hook → Problème client → Votre solution\n• Bénéfices → Preuves → Différenciation\n• Pricing → Next steps\n• Focus : bénéfices client, pas features\n\n**3. Présentation Interne/Projet (5-15 slides)**\n• Contexte → Objectifs → Analyse\n• Recommandations → Plan d'action\n• Ressources → Timeline → KPIs\n• Clé : data-driven et actionnable\n\n**Le Framework STAR pour structurer :**\n• **S**ituation : Contexte et enjeux\n• **T**ask : Objectifs et défis\n• **A**ction : Solutions et stratégies\n• **R**esult : Bénéfices et impacts\n\n**Les règles d'or du slide design :**\n• Règle 6-6-6 : Max 6 bullets, 6 mots/bullet, 6 slides de texte\n• 1 message = 1 slide\n• Plus de visuels que de texte\n• Contraste fort pour lisibilité",
+          "code": "// Template pour générer une présentation\nconst presentationFramework = {\n  type: 'investor_pitch', // ou 'sales', 'internal'\n  audience: {\n    level: 'C-level',\n    knowledge: 'basic',\n    interests: ['ROI', 'scalability'],\n    objections: ['competition', 'execution']\n  },\n  narrative: {\n    hook: 'surprising_stat',\n    flow: 'problem_solution',\n    emotion: 'urgency',\n    cta: 'clear_next_step'\n  },\n  constraints: {\n    slides: 10,\n    time: '10_minutes',\n    style: 'minimal_text'\n  }\n};",
+          "duration": 90
+        },
+        "demo": {
+          "before": "J'ai besoin d'une présentation pour demain",
+          "after": "[RÔLE] Tu es expert en storytelling et pitch deck, spécialisé dans les présentations qui convertissent. Tu as créé des decks pour des levées de fonds de 500M€+ et des deals commerciaux majeurs. Tu maîtrises le design minimaliste et l'art de la persuasion visuelle.\n\n[CONTEXTE]\n- Type : Présentation commerciale B2B\n- Audience : Comité de direction d'une entreprise industrielle (200M€ CA)\n- Objectif : Vendre notre solution SaaS de maintenance prédictive\n- Durée : 20 minutes présentation + 10 minutes Q&A\n- Enjeu : Contrat potentiel de 500K€/an\n- Notre position : Challenger face au leader du marché\n- Points forts : ROI prouvé 300%, intégration facile\n- Point faible : Société jeune (2 ans)\n\n[TÂCHE]\n1. Crée la structure narrative optimale pour convaincre\n2. Développe le contenu de chaque slide (titre + points clés)\n3. Suggère les visuels/data à inclure\n4. Anticipe les 5 objections probables et prépare les réponses\n5. Crée un slide 'Wow' qui restera dans les mémoires\n6. Définis les transitions entre slides pour fluidité\n\n[FORMAT]\n📊 STRUCTURE (12 slides max) :\n\nSlide 1 - HOOK (30 sec)\n• Titre : [Phrase d'accroche puissante]\n• Contenu : [Stat choc ou question provocante]\n• Visuel : [Description]\n• Note speaker : [Ce que je dis]\n\nSlide 2 - LE COÛT DU STATU QUO (45 sec)\n• Points clés : [3 maximum]\n• Data point : [Chiffre de leur industrie]\n• Transition : [Phrase de liaison]\n\nSlide 3 - NOTRE VISION (30 sec)\n• [Continue pour chaque slide...]\n\n[Format pour chaque slide :]\n- Titre : Court et impactant (max 6 mots)\n- Bullets : 3 max, 6 mots chacun\n- Visuel suggéré : [Description précise]\n- Talking points : [Ce que je développe oralement]\n- Durée : [Temps alloué]\n- Transition : [Comment j'enchaîne]\n\n🎯 SLIDE WOW (slide 7 ou 8) :\n[Concept unique qui marque les esprits]\n\n❓ OBJECTION HANDLING :\nPour chaque objection anticipée :\n• Objection : [Formulation probable]\n• Réponse : [Structure Feel-Felt-Found]\n• Slide de backup : [Si nécessaire]\n\n✅ CLOSING (slide 12) :\n• CTA clair : [Action spécifique]\n• Next steps : [3 étapes concrètes]\n• Timeline : [Visualisation du déploiement]",
+          "explanation": "Cette approche transforme 'j'ai besoin d'une présentation' en blueprint complet pour un pitch qui convertit. Chaque slide a un objectif, chaque transition est pensée, chaque objection est anticipée. C'est la différence entre une présentation oubliable et une présentation qui génère des signatures.",
+          "duration": 90
+        },
+        "exercise": {
+          "type": "create",
+          "instruction": "Créez un prompt pour générer une présentation professionnelle pour un contexte réel de votre choix (investor pitch, sales deck, présentation interne).",
+          "starter": "[RÔLE] Tu es expert en [type de présentation]...\n\n[CONTEXTE]\n- Type : [Investor/Sales/Internal/Conference]\n- Audience : [Qui exactement ?]\n- Objectif : [Que voulez-vous obtenir ?]\n- Durée : [Temps disponible]\n- Enjeux : [Qu'est-ce qui se joue ?]\n\n[TÂCHE] ...\n\n[FORMAT] ...",
+          "solution": "[RÔLE] Tu es expert en pitch deck et storytelling pour startups tech. Tu as aidé 50+ startups à lever des fonds (total 200M€+). Tu connais parfaitement ce que recherchent les VCs européens en 2024 et tu maîtrises l'art du 'narrative arc' qui captive les investisseurs.\n\n[CONTEXTE]\n- Type : Investor Pitch - Seed Round\n- Audience : VCs early-stage français (partners niveau, pas analysts)\n- Objectif : Lever 2M€ en seed\n- Durée : 15 minutes pitch + 15 minutes Q&A\n- Startup : Marketplace B2B dans la construction, 6 mois, 50K€ MRR\n- Enjeux : Premier round institutionnel, 3 VCs en compétition\n- Points forts : Croissance 40% MoM, fondateurs ex-BCG/Uber\n- Challenge : Marché perçu comme 'old economy'\n\n[TÂCHE]\n1. Crée LE narrative arc qui transforme 'construction' en 'sexy tech opportunity'\n2. Structure les 12 slides parfaits (ni plus ni moins)\n3. Pour chaque slide, définis le message UNIQUE et les proof points\n4. Identifie les 3 'moments magiques' qui feront la différence\n5. Anticipe les questions pièges des VCs et prépare les réponses\n6. Crée le fameux 'slide 0' (teaser avant de commencer)\n\n[FORMAT]\n🚀 NARRATIVE ARC GLOBAL :\n[Histoire en 3 actes : Setup → Conflict → Resolution]\n\n📱 SLIDE 0 - LE TEASER (avant même de commencer)\n• Question ou stat qui intrigue\n• Objectif : Créer l'attente\n\n📊 LES 12 SLIDES MAGIQUES :\n\nSlide 1 - TITLE SLIDE\n• Nom + Tagline mémorable (max 5 mots)\n• Visuel : [Logo + image évocatrice]\n\nSlide 2 - THE PROBLEM (1 min)\n• Le problème en 1 phrase simple\n• 3 pain points spécifiques\n• Coût du problème (en €)\n• Visuel : Photo réelle du problème\n• ⚡ Moment magique #1 : [Insight contre-intuitif]\n\nSlide 3 - THE SOLUTION (45 sec)\n• Notre solution en 1 phrase\n• 3 key features (pas plus)\n• Pourquoi maintenant ?\n• Visuel : Product screenshot/demo GIF\n\nSlide 4 - MARKET OPPORTUNITY (1 min)\n• TAM-SAM-SOM visualisé\n• Growth rate du marché\n• Timing (pourquoi maintenant?)\n• Visuel : Graph ascendant\n\nSlide 5 - BUSINESS MODEL (45 sec)\n• Comment on fait de l'argent\n• Pricing strategy\n• Unit economics\n• Visuel : Simple flowchart\n\nSlide 6 - TRACTION (1.5 min)\n• MRR growth chart (hockey stick)\n• Clients logos (même petits)\n• Key metrics (3 max)\n• ⚡ Moment magique #2 : [Métrique impressionnante]\n\nSlide 7 - GO-TO-MARKET (1 min)\n• Canaux d'acquisition\n• CAC vs LTV\n• Stratégie de scale\n• Visuel : Funnel ou flywheel\n\nSlide 8 - COMPETITION (45 sec)\n• Positioning map (2 axes)\n• Notre unfair advantage\n• Pourquoi on gagne\n• Visuel : Quadrant avec nous en haut à droite\n\nSlide 9 - TEAM (1 min)\n• Photos + 1 ligne bio\n• Pourquoi NOUS pour CE problème\n• Advisors clés\n• ⚡ Moment magique #3 : [Légitimité unique]\n\nSlide 10 - FINANCIALS (45 sec)\n• Projections 3 ans (réalistes)\n• Burn rate actuel\n• Path to profitability\n• Visuel : Simple graph\n\nSlide 11 - THE ASK (30 sec)\n• Montant : 2M€\n• Utilisation des fonds (3 postes max)\n• Milestones à 18 mois\n• Visuel : Timeline\n\nSlide 12 - THE VISION (30 sec)\n• Où on sera dans 5 ans\n• Impact statement\n• Call to action\n• Visuel : Image inspirante\n\n❓ QUESTIONS PIÈGES ANTICIPÉES :\n1. 'Les corporates de la construction sont lents à adopter'\n   → Réponse : [Data sur early adopters + stratégie land & expand]\n\n2. 'Quelle est votre barrière à l'entrée ?'\n   → Réponse : [Network effects + data moat]\n\n3. 'Si Procore/Autodesk copie ?'\n   → Réponse : [Speed + focus + différenciation]\n\n💫 BACKUP SLIDES (avoir sous la main) :\n- Deep dive unit economics\n- Détail pipeline commercial\n- Roadmap produit\n- Case studies clients",
+          "hints": [
+            "Choisissez un contexte que vous connaissez",
+            "Soyez spécifique sur l'audience et l'enjeu",
+            "Pensez au narrative flow global"
+          ],
+          "validation": {
+            "checkPoints": [
+              "Rôle expert en présentation défini",
+              "Contexte avec audience et enjeu clairs",
+              "Structure narrative cohérente",
+              "Format slide par slide détaillé",
+              "Anticipation des objections"
+            ],
+            "feedbackCorrect": "Excellent ! Ce prompt produira une présentation professionnelle et convaincante. Vous avez compris comment structurer une présentation qui capte l'attention et pousse à l'action.",
+            "feedbackIncorrect": "Bonne base ! Assurez-vous de définir : le type exact de présentation, l'audience précise, la structure narrative, et le format détaillé de chaque slide."
+          },
+          "duration": 120
+        },
+        "recap": {
+          "keyPoint": "🔑 Une présentation qui convertit = Narrative + Structure + Visuels. Avec le bon prompt, créez des pitch decks professionnels en minutes, pas en jours.",
+          "duration": 15
+        }
+      },
+      "metadata": {
+        "difficulty": "intermediate",
+        "tags": ["présentation", "pitch", "storytelling", "business"],
+        "estimatedTime": 5,
+        "prerequisites": ["cap-1-4"]
+      }
+    },
+    {
+      "id": "cap-1-7",
+      "moduleId": "module-1-fundamentals",
+      "order": 7,
+      "title": "Productivité x10 - Votre Coach Personnel IA",
+      "duration": 5,
+      "sections": {
+        "hook": {
+          "text": "Les PDG des plus grandes entreprises ont des coachs personnels à 50K€/an. Vous allez avoir mieux : un coach IA disponible 24/7 qui connaît toutes les méthodes de productivité du monde. Prêt à transformer votre quotidien ?",
+          "duration": 15
+        },
+        "concept": {
+          "content": "Transformer l'IA en coach de productivité personnel nécessite de combiner plusieurs approches : analyse de votre situation, méthodes éprouvées, et personnalisation extrême.\n\n**Les 5 piliers de la productivité optimisée :**\n\n**1. DIAGNOSTIC - Comprendre vos blocages**\n• Analyse du temps (où partent vos heures ?)\n• Identification des 'voleurs de temps'\n• Patterns d'énergie (pic de performance)\n• Contraintes non négociables\n\n**2. PRIORISATION - Focus sur l'essentiel**\n• Matrice Eisenhower (Urgent/Important)\n• Principe de Pareto (20/80)\n• Méthode MoSCoW (Must/Should/Could/Won't)\n• OKRs personnels\n\n**3. SYSTÈMES - Automatiser les décisions**\n• Time blocking (calendrier en blocs)\n• Batching (grouper les tâches similaires)\n• Routines (matin/soir non négociables)\n• Templates pour tâches récurrentes\n\n**4. EXÉCUTION - Techniques de focus**\n• Pomodoro adapté (25-5 ou 50-10)\n• Deep Work (blocs de 90 minutes)\n• Méthode 2-minute rule\n• Technique de l'engagement minimal\n\n**5. OPTIMISATION - Amélioration continue**\n• Review hebdomadaire\n• Métriques de suivi (3 KPIs max)\n• Ajustements basés sur data\n• Élimination progressive du superflu\n\n**Le secret : Un prompt qui comprend VOTRE contexte unique**\nPas de solution générique, mais un système sur-mesure.",
+          "code": "// Framework personnalisation productivité\nconst productivityCoach = {\n  profile: {\n    role: 'Manager avec 8 reports',\n    challenges: ['Réunions constantes', 'Pas de deep work'],\n    goals: ['Stratégie', 'Coaching équipe', 'Innovation'],\n    constraints: ['Famille', 'Sport 3x/semaine'],\n    energy: 'Matin optimal, après-midi meetings'\n  },\n  methods: {\n    preferred: ['Time blocking', 'Pomodoro'],\n    failed: ['To-do lists trop longues'],\n    open_to: ['Automation', 'Délégation']\n  },\n  metrics: {\n    current: 'Heures travaillées: 60/semaine',\n    target: 'Impact maintenu à 45h/semaine',\n    measure: ['Deep work hours', 'Strategic initiatives', 'Team NPS']\n  }\n};",
+          "duration": 90
+        },
+        "demo": {
+          "before": "Comment être plus productif ?",
+          "after": "[RÔLE] Tu es coach en performance et productivité, spécialisé dans les executives surmenés. Tu combines neurosciences, méthodes agiles et philosophie stoïcienne. Tu as coaché +200 dirigeants pour réduire leur temps de travail de 30% tout en augmentant leur impact.\n\n[CONTEXTE]\nMON PROFIL :\n- Directeur Marketing, scale-up 100 personnes\n- Équipe de 12 personnes (3 managers, 9 contributeurs)\n- Actuellement : 55-60h/semaine, épuisé le vendredi\n- Journée type : 6-8 réunions, emails constants, peu de stratégie\n\nMES CHALLENGES :\n• Sollicitations constantes (Slack, email, 'tu as 2 minutes?')\n• Pas de temps pour réflexion stratégique\n• Tout semble urgent\n• Culpabilité quand je dis non\n• Weekend pollué par le travail\n\nMES OBJECTIFS :\n• Passer à 45h/semaine max\n• 2 blocs de 2h de deep work par semaine\n• Développer la vision marketing 2025\n• Mieux développer mon équipe\n• Protéger mes soirées famille\n\nCE QUI A DÉJÀ ÉCHOUÉ :\n• To-do lists (deviennent infinies)\n• Se lever à 5h (pas tenable)\n• 'No meeting Friday' (ignoré par tous)\n\n[TÂCHE]\n1. Diagnostic : Identifie mes 3 problèmes racines (pas les symptômes)\n2. Design un système de productivité personnalisé et réaliste\n3. Crée un plan de transition sur 4 semaines (progressif)\n4. Définis des règles simples et des garde-fous\n5. Propose des scripts pour les situations difficiles (dire non, protéger son temps)\n6. Inclus des quick wins pour motivation immédiate\n\n[FORMAT]\n🔍 DIAGNOSTIC (Vérités difficiles)\n• Problème racine #1 : [Cause profonde + Impact]\n• Problème racine #2 : [Cause profonde + Impact]\n• Problème racine #3 : [Cause profonde + Impact]\n• Ce qui doit changer fondamentalement : [Mindset shift requis]\n\n🎯 SYSTÈME PERSONNALISÉ 'FOCUS45'\n\n📅 NOUVELLE ARCHITECTURE DE SEMAINE\nLundi : [Thème + Structure]\n• 8h-10h : [Bloc protégé pour...]\n• 10h-12h : [Type d'activités]\n• 14h-17h : [Type d'activités]\n• 17h-18h : [Routine de fin]\n\n[Continuer pour chaque jour avec thématiques]\n\n🛡️ LES 7 RÈGLES NON NÉGOCIABLES\n1. [Règle + Pourquoi c'est critique]\n2. [Règle + Comment l'implémenter]\n[...jusqu'à 7]\n\n⚡ QUICK WINS SEMAINE 1 (Résultats immédiats)\n• Action 1 : [Quoi + Comment + Impact attendu]\n• Action 2 : [15 min/jour max]\n• Action 3 : [Délégation facile]\n\n📈 PLAN DE TRANSITION 4 SEMAINES\n\nSEMAINE 1 : Foundation (3 changements max)\n- Lundi : [Action spécifique]\n- Mardi-Jeudi : [Pratique à installer]\n- Vendredi : [Review et ajustement]\n- Métrique : [Comment mesurer le succès]\n\nSEMAINE 2 : Systems (Automatisation)\n- [Construction des routines]\n- [Mise en place des blocs]\n\nSEMAINE 3 : Protection (Garde-fous)\n- [Communication des nouvelles règles]\n- [Scripts et templates]\n\nSEMAINE 4 : Optimization\n- [Affinage basé sur data]\n- [Élimination du superflu]\n\n💬 SCRIPTS POUR SITUATIONS DIFFICILES\n\nScript 'Protéger le Deep Work' :\n\"J'ai un bloc de travail stratégique jusqu'à [heure]. Je serai disponible pour discuter de [sujet] à [moment]. Si c'est vraiment urgent (= impact business immédiat), appelle-moi.\"\n\nScript 'Dire Non avec Grâce' :\n\"J'apprécie que tu penses à moi pour [projet]. Pour maintenir la qualité sur [priorités actuelles], je ne peux pas m'engager maintenant. Alternatives : [personne/timing/approche différente].\"\n\nScript 'Gérer les Interruptions' :\n\"Je suis en focus time jusqu'à [heure]. Envoie-moi un message avec le contexte et je reviens vers toi à [moment]. Si c'est critique, utilise le code 'RED FLAG'.\"\n\n📊 MÉTRIQUES DE SUCCÈS\n• Hours worked : 60 → 45 (-25%)\n• Deep work blocks : 0 → 2x2h/semaine\n• Energy Friday evening : 3/10 → 7/10\n• Strategic initiatives launched : Mesure mensuelle\n• Team autonomy score : Sondage mensuel\n\n⚠️ PIÈGES À ÉVITER\n• Vouloir tout changer d'un coup\n• Être trop rigide (80% de respect suffit)\n• Ne pas communiquer les changements\n• Abandonner après une mauvaise semaine",
+          "explanation": "Ce prompt transforme une question vague en plan d'action personnalisé et réaliste. Regardez : diagnostic précis, système sur-mesure, transition progressive, scripts pratiques. C'est exactement ce que ferait un coach à 50K€/an, mais disponible instantanément.",
+          "duration": 90
+        },
+        "exercise": {
+          "type": "create",
+          "instruction": "Créez un prompt pour obtenir un plan de productivité personnalisé basé sur VOS vrais défis et contraintes.",
+          "starter": "[RÔLE] Tu es coach en productivité spécialisé...\n\n[CONTEXTE]\nMON PROFIL :\n- [Votre rôle/situation]\n- [Votre charge actuelle]\n- [Vos responsabilités]\n\nMES CHALLENGES :\n• [Défi #1]\n• [Défi #2]\n• [Défi #3]\n\nMES OBJECTIFS :\n• [Ce que vous voulez accomplir]\n• [Le changement souhaité]\n\n[TÂCHE] ...\n\n[FORMAT] ...",
+          "solution": "[RÔLE] Tu es coach en productivité et expert en neuro-optimisation, spécialisé dans les créatifs et entrepreneurs. Tu combines les dernières recherches en neurosciences avec les méthodes de productivité éprouvées. Tu as aidé +300 entrepreneurs à doubler leur output tout en travaillant moins.\n\n[CONTEXTE]\nMON PROFIL :\n- Freelance designer UX/UI + formateur\n- 4-5 clients en parallèle + 2 formations/mois\n- Travail depuis chez moi, horaires flexibles\n- Tendance à procrastiner sur l'admin et la prospection\n\nMES CHALLENGES :\n• Switching constant entre projets (perte de focus)\n• Créativité en dents de scie (blocages fréquents)\n• Admin/facturation toujours en retard\n• Difficulté à dire non = surcharge\n• Pas de frontière vie pro/perso\n\nMES OBJECTIFS :\n• Structurer mes journées sans tuer la créativité\n• Batching efficace des tâches similaires\n• Système admin qui tourne tout seul\n• Garder 20% du temps pour projets perso\n• Weekends 100% déconnectés\n\nCE QUI MARCHE DÉJÀ :\n• Musique pour focus (lo-fi beats)\n• Travail en café 2x/semaine\n• Deadline externes = motivation\n\n[TÂCHE]\n1. Analyse mon profil créatif et identifie mes patterns optimaux\n2. Crée un système qui respecte mes pics créatifs\n3. Design une semaine type avec flexibilité intégrée\n4. Propose des rituels créatifs pour débloquer\n5. Automatise l'admin au maximum\n6. Définis des boundaries claires pro/perso\n\n[FORMAT]\n🧠 PROFIL PRODUCTIVITÉ\n• Type : [Identifier mon archétype]\n• Pics énergie : [Moments optimaux]\n• Durée focus optimal : [X minutes]\n• Environnement idéal : [Conditions]\n\n📐 ARCHITECTURE SEMAINE CRÉATIVE\n\nZONES TEMPS :\n• CRÉATION PURE : [Quand + Durée]\n• EXÉCUTION : [Quand + Durée]\n• ADMIN : [Quand + Durée]\n• BUFFER : [Flexibilité intégrée]\n\nLundi - Jour de [Thème]\n• 9h-12h : [Activité principale]\n• 14h-16h : [Activité secondaire]\n• 16h-17h : [Admin/Buffer]\n\n[Continuer pour chaque jour]\n\n🎨 RITUELS CRÉATIFS\n• Ritual démarrage (5 min) : [Description]\n• Déblocage créatif : [3 techniques]\n• Transition projets : [Méthode]\n• Clôture journée : [Routine]\n\n🤖 AUTOMATISATION ADMIN\n• Facturation : [Outil + Process]\n• Time tracking : [Solution]\n• Templates : [Liste à créer]\n• Délégation possible : [Quoi + À qui]\n\n🚧 BOUNDARIES PRO/PERSO\n• Horaires non négociables : [Définir]\n• Espace de travail : [Organisation]\n• Communication clients : [Règles]\n• Weekend protection : [Système]\n\n📊 TRACKING SIMPLE\n• 3 métriques seulement :\n  - Heures deep work/semaine\n  - Projets perso avancés (O/N)\n  - Satisfaction créative (/10)\n\n⚡ SEMAINE 1 - QUICK WINS\n- Implémenter time blocking basique\n- 1 ritual créatif matin\n- 1h admin fixe/jour\n- Tester 1 outil automation",
+          "hints": [
+            "Soyez brutalement honnête sur vos défis",
+            "Incluez ce qui a déjà échoué",
+            "Définissez des objectifs mesurables"
+          ],
+          "validation": {
+            "checkPoints": [
+              "Contexte personnel détaillé",
+              "Challenges spécifiques identifiés",
+              "Objectifs clairs et mesurables",
+              "Demande de plan progressif",
+              "Format actionnable"
+            ],
+            "feedbackCorrect": "Parfait ! Ce prompt produira un plan de productivité vraiment personnalisé et applicable. Vous allez pouvoir transformer votre façon de travailler !",
+            "feedbackIncorrect": "Bonne base ! Ajoutez plus de détails sur votre situation actuelle, vos vraies contraintes, et ce qui a déjà échoué. Plus c'est personnalisé, plus ce sera efficace."
+          },
+          "duration": 120
+        },
+        "recap": {
+          "keyPoint": "🔑 Productivité = Système personnalisé, pas méthode générique. Un bon prompt transforme l'IA en coach personnel qui comprend VOS défis uniques.",
+          "duration": 15
+        }
+      },
+      "metadata": {
+        "difficulty": "beginner",
+        "tags": ["productivité", "coaching", "organisation", "performance"],
+        "estimatedTime": 5,
+        "prerequisites": ["cap-1-4"]
+      }
+    }
+  ]
+}

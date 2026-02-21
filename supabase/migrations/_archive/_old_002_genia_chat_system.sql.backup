@@ -1,0 +1,186 @@
+-- ========================================
+-- MIGRATION POUR LE SYSTÈME DE CHAT GENIA
+-- ========================================
+
+-- Table pour tracker l'usage des LLMs
+CREATE TABLE IF NOT EXISTS llm_usage (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID REFERENCES users(id) ON DELETE CASCADE NOT NULL,
+    model TEXT NOT NULL,
+    date DATE NOT NULL,
+    count INT DEFAULT 1 NOT NULL,
+    total_tokens INT DEFAULT 0 NOT NULL,
+    total_cost DECIMAL(10, 6) DEFAULT 0,
+    created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+    UNIQUE(user_id, model, date)
+);
+
+-- Table pour stocker les conversations
+CREATE TABLE IF NOT EXISTS chat_conversations (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID REFERENCES users(id) ON DELETE CASCADE NOT NULL,
+    capsule_id UUID REFERENCES capsules(id),
+    started_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+    ended_at TIMESTAMPTZ,
+    message_count INT DEFAULT 0 NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
+);
+
+-- Table pour stocker les messages
+CREATE TABLE IF NOT EXISTS chat_messages (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    conversation_id UUID REFERENCES chat_conversations(id) ON DELETE CASCADE NOT NULL,
+    role TEXT NOT NULL CHECK (role IN ('user', 'assistant', 'system')),
+    content TEXT NOT NULL,
+    model TEXT,
+    method_step TEXT CHECK (method_step IN ('G', 'E', 'N', 'I', 'A') OR method_step IS NULL),
+    tokens_used INT,
+    reasoning TEXT,
+    created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
+);
+
+-- Table pour les exercices générés
+CREATE TABLE IF NOT EXISTS generated_exercises (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID REFERENCES users(id) ON DELETE CASCADE NOT NULL,
+    capsule_id UUID REFERENCES capsules(id),
+    exercise_prompt TEXT NOT NULL,
+    user_response TEXT,
+    feedback TEXT,
+    score INT,
+    attempts INT DEFAULT 0 NOT NULL,
+    completed BOOLEAN DEFAULT FALSE NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
+);
+
+-- Indexes pour performance
+CREATE INDEX idx_llm_usage_user_date ON llm_usage(user_id, date);
+CREATE INDEX idx_chat_conversations_user ON chat_conversations(user_id);
+CREATE INDEX idx_chat_messages_conversation ON chat_messages(conversation_id);
+CREATE INDEX idx_generated_exercises_user ON generated_exercises(user_id);
+
+-- RLS Policies
+ALTER TABLE llm_usage ENABLE ROW LEVEL SECURITY;
+ALTER TABLE chat_conversations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE chat_messages ENABLE ROW LEVEL SECURITY;
+ALTER TABLE generated_exercises ENABLE ROW LEVEL SECURITY;
+
+-- Policies pour les utilisateurs
+CREATE POLICY "Users can view own LLM usage" ON llm_usage
+    FOR SELECT USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can view own conversations" ON chat_conversations
+    FOR ALL USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can view own messages" ON chat_messages
+    FOR ALL USING (
+        EXISTS (
+            SELECT 1 FROM chat_conversations 
+            WHERE id = chat_messages.conversation_id 
+            AND user_id = auth.uid()
+        )
+    );
+
+CREATE POLICY "Users can manage own exercises" ON generated_exercises
+    FOR ALL USING (auth.uid() = user_id);
+
+-- Function pour calculer le coût total par utilisateur
+CREATE OR REPLACE FUNCTION get_user_llm_costs(p_user_id UUID, p_period TEXT DEFAULT 'month')
+RETURNS TABLE(
+    model TEXT,
+    total_count BIGINT,
+    total_tokens BIGINT,
+    total_cost NUMERIC,
+    period_start DATE,
+    period_end DATE
+) AS $$
+BEGIN
+    IF p_period = 'day' THEN
+        RETURN QUERY
+        SELECT 
+            u.model,
+            SUM(u.count)::BIGINT as total_count,
+            SUM(u.total_tokens)::BIGINT as total_tokens,
+            SUM(u.total_cost) as total_cost,
+            CURRENT_DATE as period_start,
+            CURRENT_DATE as period_end
+        FROM llm_usage u
+        WHERE u.user_id = p_user_id
+        AND u.date = CURRENT_DATE
+        GROUP BY u.model;
+    ELSIF p_period = 'week' THEN
+        RETURN QUERY
+        SELECT 
+            u.model,
+            SUM(u.count)::BIGINT as total_count,
+            SUM(u.total_tokens)::BIGINT as total_tokens,
+            SUM(u.total_cost) as total_cost,
+            date_trunc('week', CURRENT_DATE)::DATE as period_start,
+            (date_trunc('week', CURRENT_DATE) + INTERVAL '6 days')::DATE as period_end
+        FROM llm_usage u
+        WHERE u.user_id = p_user_id
+        AND u.date >= date_trunc('week', CURRENT_DATE)
+        AND u.date <= date_trunc('week', CURRENT_DATE) + INTERVAL '6 days'
+        GROUP BY u.model;
+    ELSE -- month (default)
+        RETURN QUERY
+        SELECT 
+            u.model,
+            SUM(u.count)::BIGINT as total_count,
+            SUM(u.total_tokens)::BIGINT as total_tokens,
+            SUM(u.total_cost) as total_cost,
+            date_trunc('month', CURRENT_DATE)::DATE as period_start,
+            (date_trunc('month', CURRENT_DATE) + INTERVAL '1 month - 1 day')::DATE as period_end
+        FROM llm_usage u
+        WHERE u.user_id = p_user_id
+        AND u.date >= date_trunc('month', CURRENT_DATE)
+        AND u.date < date_trunc('month', CURRENT_DATE) + INTERVAL '1 month'
+        GROUP BY u.model;
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Function pour obtenir les quotas restants
+CREATE OR REPLACE FUNCTION get_user_quotas(p_user_id UUID)
+RETURNS TABLE(
+    model TEXT,
+    used_today INT,
+    daily_limit INT,
+    remaining INT
+) AS $$
+BEGIN
+    RETURN QUERY
+    WITH model_limits AS (
+        SELECT 'magistral-medium' as model, 30 as daily_limit
+        UNION ALL
+        SELECT 'mistral-medium-3', 150
+        UNION ALL
+        SELECT 'mistral-small', 500
+    ),
+    today_usage AS (
+        SELECT 
+            u.model,
+            u.count as used_today
+        FROM llm_usage u
+        WHERE u.user_id = p_user_id
+        AND u.date = CURRENT_DATE
+    )
+    SELECT 
+        ml.model,
+        COALESCE(tu.used_today, 0)::INT as used_today,
+        ml.daily_limit,
+        (ml.daily_limit - COALESCE(tu.used_today, 0))::INT as remaining
+    FROM model_limits ml
+    LEFT JOIN today_usage tu ON ml.model = tu.model
+    ORDER BY ml.model;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Trigger pour mettre à jour updated_at
+CREATE TRIGGER update_llm_usage_updated_at BEFORE UPDATE ON llm_usage
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_generated_exercises_updated_at BEFORE UPDATE ON generated_exercises
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();

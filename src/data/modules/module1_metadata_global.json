@@ -1,0 +1,378 @@
+{
+  "module": {
+    "id": "module-1-fundamentals",
+    "version": "1.0.0",
+    "created": "2024-01-15",
+    "lastUpdated": "2024-01-15",
+    "status": "production",
+    "language": "fr-FR",
+    
+    "metadata": {
+      "title": "Découverte et Fondamentaux du Prompt Engineering",
+      "shortTitle": "Fondamentaux",
+      "description": "Maîtrisez les bases essentielles pour communiquer efficacement avec l'IA générative. Ce module pose les fondations de votre expertise en prompt engineering.",
+      "objectives": [
+        "Comprendre ce qu'est le prompt engineering et son impact",
+        "Maîtriser la structure RCTF pour créer des prompts professionnels",
+        "Apprendre à transformer des prompts vagues en instructions précises",
+        "Créer et utiliser des personas pour obtenir des réponses expertes",
+        "Choisir le format optimal pour chaque type de réponse",
+        "Développer des templates réutilisables pour automatiser les tâches"
+      ],
+      "learningOutcomes": [
+        "Réduire de 70% le temps de création de prompts",
+        "Obtenir 85% de satisfaction dès le premier essai",
+        "Créer 5+ templates personnels réutilisables",
+        "Automatiser 3+ tâches quotidiennes",
+        "Transformer l'IA en expert sur-mesure pour vos besoins"
+      ],
+      "targetAudience": [
+        "Professionnels souhaitant optimiser leur productivité",
+        "Managers et dirigeants cherchant à gagner du temps",
+        "Créateurs de contenu et marketeurs",
+        "Développeurs et professionnels tech",
+        "Toute personne utilisant ChatGPT ou Claude au quotidien"
+      ],
+      "prerequisites": [
+        "Aucune connaissance technique requise",
+        "Accès à ChatGPT ou Claude (version gratuite suffisante)",
+        "Motivation pour pratiquer les exercices"
+      ],
+      "difficulty": "beginner-intermediate",
+      "estimatedDuration": 60,
+      "paceRecommendation": "2-3 capsules par jour pendant 5 jours"
+    },
+    
+    "structure": {
+      "totalCapsules": 12,
+      "sections": [
+        {
+          "id": "section-1-1",
+          "title": "Introduction au Prompt Engineering",
+          "capsules": ["cap-1-1", "cap-1-2", "cap-1-3"],
+          "duration": 15,
+          "theme": "Découverte des concepts fondamentaux"
+        },
+        {
+          "id": "section-1-2",
+          "title": "Transformation de Prompts",
+          "capsules": ["cap-1-4", "cap-1-5", "cap-1-6", "cap-1-7"],
+          "duration": 20,
+          "theme": "De vague à précis - Cas pratiques"
+        },
+        {
+          "id": "section-1-3",
+          "title": "Maîtrise des Personas",
+          "capsules": ["cap-1-8", "cap-1-9", "cap-1-10"],
+          "duration": 15,
+          "theme": "Créer et utiliser des experts virtuels"
+        },
+        {
+          "id": "section-1-4",
+          "title": "Formats et Templates",
+          "capsules": ["cap-1-11", "cap-1-12"],
+          "duration": 10,
+          "theme": "Structurer et automatiser"
+        }
+      ]
+    },
+    
+    "capsulesSummary": [
+      {
+        "id": "cap-1-1",
+        "order": 1,
+        "title": "Pourquoi le Prompt Engineering va changer votre vie",
+        "keyTakeaway": "Un bon prompt = 80% du résultat. RÔLE-CONTEXTE-TÂCHE-FORMAT",
+        "exerciseType": "transform",
+        "difficulty": "beginner"
+      },
+      {
+        "id": "cap-1-2",
+        "order": 2,
+        "title": "Les 4 Piliers Magiques - CCFC",
+        "keyTakeaway": "CCFC = Clarté + Contexte + Contraintes + Format",
+        "exerciseType": "quiz",
+        "difficulty": "beginner"
+      },
+      {
+        "id": "cap-1-3",
+        "order": 3,
+        "title": "Anatomie d'un Prompt Parfait - La Structure RCTF",
+        "keyTakeaway": "RCTF = Rôle + Contexte + Tâche + Format",
+        "exerciseType": "create",
+        "difficulty": "beginner"
+      },
+      {
+        "id": "cap-1-4",
+        "order": 4,
+        "title": "De Vague à Précis - L'Art du Prompt Makeover",
+        "keyTakeaway": "Vague = Déception. Précis = Satisfaction",
+        "exerciseType": "transform",
+        "difficulty": "beginner"
+      },
+      {
+        "id": "cap-1-5",
+        "order": 5,
+        "title": "CV Killer - Cas Pratique Complet",
+        "keyTakeaway": "CV optimisé = 5x plus d'entretiens",
+        "exerciseType": "create",
+        "difficulty": "intermediate"
+      },
+      {
+        "id": "cap-1-6",
+        "order": 6,
+        "title": "Présentation Impact - Du Brouillon au Pitch Deck Pro",
+        "keyTakeaway": "Narrative + Structure + Visuels = Conversion",
+        "exerciseType": "create",
+        "difficulty": "intermediate"
+      },
+      {
+        "id": "cap-1-7",
+        "order": 7,
+        "title": "Productivité x10 - Votre Coach Personnel IA",
+        "keyTakeaway": "Système personnalisé > méthode générique",
+        "exerciseType": "create",
+        "difficulty": "beginner"
+      },
+      {
+        "id": "cap-1-8",
+        "order": 8,
+        "title": "Le Pouvoir des Personas - Transformer l'IA en Expert",
+        "keyTakeaway": "Persona défini = Expertise sur-mesure",
+        "exerciseType": "create",
+        "difficulty": "intermediate"
+      },
+      {
+        "id": "cap-1-9",
+        "order": 9,
+        "title": "Créer le Persona Parfait - Votre Expert Sur-Mesure",
+        "keyTakeaway": "ACTEUR = méthode complète pour personas vivants",
+        "exerciseType": "create",
+        "difficulty": "intermediate"
+      },
+      {
+        "id": "cap-1-10",
+        "order": 10,
+        "title": "Best Practices Personas - Erreurs à Éviter",
+        "keyTakeaway": "Évitez Superman, adoptez Vétéran bataille",
+        "exerciseType": "quiz",
+        "difficulty": "intermediate"
+      },
+      {
+        "id": "cap-1-11",
+        "order": 11,
+        "title": "Formats qui Fonctionnent - La Présentation Fait Tout",
+        "keyTakeaway": "Format = Impact x10",
+        "exerciseType": "transform",
+        "difficulty": "intermediate"
+      },
+      {
+        "id": "cap-1-12",
+        "order": 12,
+        "title": "Votre Premier Template - Automatisez Votre Succès",
+        "keyTakeaway": "30 min investies = 100 heures gagnées",
+        "exerciseType": "create",
+        "difficulty": "intermediate"
+      }
+    ],
+    
+    "pedagogicalApproach": {
+      "methodology": "Microlearning actif",
+      "structure": "Hook → Concept → Demo → Exercise → Recap",
+      "exerciseTypes": [
+        {
+          "type": "transform",
+          "description": "Transformer un prompt vague en version professionnelle",
+          "count": 3
+        },
+        {
+          "type": "create",
+          "description": "Créer un prompt/persona/template from scratch",
+          "count": 7
+        },
+        {
+          "type": "quiz",
+          "description": "Questions à choix multiples pour vérifier la compréhension",
+          "count": 2
+        }
+      ],
+      "interactivity": "Haute - exercice dans chaque capsule",
+      "feedbackStrategy": "Immédiat avec corrections détaillées"
+    },
+    
+    "assessmentCriteria": {
+      "completionRequirements": {
+        "minCapsulesToComplete": 10,
+        "minExercisesSuccess": 8,
+        "estimatedTimeToComplete": "3-5 heures"
+      },
+      "skillsEvaluated": [
+        "Structure RCTF",
+        "Méthode CCFC",
+        "Transformation de prompts",
+        "Création de personas",
+        "Choix de formats",
+        "Développement de templates"
+      ],
+      "certificateEligibility": {
+        "completion": 100,
+        "exerciseSuccess": 80,
+        "finalProject": false
+      }
+    },
+    
+    "resources": {
+      "included": [
+        "15 templates prêts à l'emploi",
+        "Bibliothèque de 10 personas testés",
+        "Guide PDF récapitulatif",
+        "Checklist CCFC et RCTF"
+      ],
+      "tools": [
+        {
+          "name": "ChatGPT",
+          "required": false,
+          "version": "3.5 ou supérieur",
+          "cost": "Gratuit"
+        },
+        {
+          "name": "Claude",
+          "required": false,
+          "version": "Toute version",
+          "cost": "Gratuit"
+        }
+      ],
+      "additionalMaterials": [
+        "Accès communauté Discord",
+        "Updates régulières des templates",
+        "Webinaires mensuels Q&A"
+      ]
+    },
+    
+    "technicalRequirements": {
+      "platform": {
+        "responsive": true,
+        "mobileOptimized": true,
+        "offlineMode": "partial",
+        "browserSupport": ["Chrome", "Firefox", "Safari", "Edge"]
+      },
+      "tracking": {
+        "progressSaved": true,
+        "analyticsEnabled": true,
+        "certificateGeneration": true
+      },
+      "accessibility": {
+        "wcagCompliance": "AA",
+        "subtitles": true,
+        "screenReaderCompatible": true,
+        "keyboardNavigation": true
+      }
+    },
+    
+    "businessMetrics": {
+      "pricing": {
+        "model": "freemium",
+        "freeVersion": "Module 1 complet",
+        "premiumFeatures": [
+          "Coaching personnalisé",
+          "Templates avancés",
+          "Certification officielle"
+        ]
+      },
+      "expectedOutcomes": {
+        "completionRate": 75,
+        "satisfactionScore": 4.5,
+        "npsTarget": 60,
+        "timeToValue": "Dès la première capsule"
+      },
+      "roi": {
+        "timeSavedPerWeek": "10 heures",
+        "productivityIncrease": "40%",
+        "taskAutomation": "30%"
+      }
+    },
+    
+    "contentManagement": {
+      "files": [
+        {
+          "filename": "module1-capsules-1-3.json",
+          "capsules": ["cap-1-1", "cap-1-2", "cap-1-3"],
+          "size": "45KB",
+          "checksum": "SHA256"
+        },
+        {
+          "filename": "module1-capsules-4-7.json",
+          "capsules": ["cap-1-4", "cap-1-5", "cap-1-6", "cap-1-7"],
+          "size": "62KB",
+          "checksum": "SHA256"
+        },
+        {
+          "filename": "module1-capsules-8-12.json",
+          "capsules": ["cap-1-8", "cap-1-9", "cap-1-10", "cap-1-11", "cap-1-12"],
+          "size": "78KB",
+          "checksum": "SHA256"
+        }
+      ],
+      "versionControl": {
+        "system": "git",
+        "repository": "elearning-prompt-engineering",
+        "branch": "main"
+      },
+      "updateSchedule": "Mensuel avec feedback utilisateurs"
+    },
+    
+    "supportAndMaintenance": {
+      "support": {
+        "channels": ["Discord", "Email", "FAQ"],
+        "responseTime": "24h",
+        "languages": ["Français"]
+      },
+      "maintenance": {
+        "schedule": "Hebdomadaire",
+        "updates": "Automatiques",
+        "backups": "Quotidien"
+      }
+    },
+    
+    "nextSteps": {
+      "afterCompletion": [
+        "Module 2: Techniques Essentielles",
+        "Module 3: Pratique et Maîtrise",
+        "Projets guidés avancés"
+      ],
+      "certificationPath": "Certificat Fondamentaux → Avancé → Expert",
+      "communityIntegration": "Accès au groupe Discord exclusif"
+    }
+  },
+  
+  "analytics": {
+    "trackingPoints": [
+      "Capsule started",
+      "Exercise attempted",
+      "Exercise completed",
+      "Capsule completed",
+      "Module completed"
+    ],
+    "metricsToCollect": [
+      "Time per capsule",
+      "Exercise success rate",
+      "Retry attempts",
+      "User feedback scores",
+      "Drop-off points"
+    ],
+    "reportingDashboard": {
+      "adminMetrics": [
+        "Active users",
+        "Completion rates",
+        "Average time to complete",
+        "Exercise performance"
+      ],
+      "userMetrics": [
+        "Personal progress",
+        "Skills acquired",
+        "Time invested",
+        "Achievements unlocked"
+      ]
+    }
+  }
+}

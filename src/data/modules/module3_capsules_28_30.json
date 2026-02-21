@@ -1,0 +1,421 @@
+{
+  "module": {
+    "id": "module-3-pratique",
+    "title": "Pratique et Maîtrise - Devenez Expert",
+    "capsules": [
+      {
+        "id": "cap-3-28",
+        "moduleId": "module-3-pratique",
+        "order": 28,
+        "title": "Template Universel - Le Couteau Suisse du Prompt",
+        "duration": 5,
+        "sections": {
+          "hook": {
+            "text": "Un template utilisé 10 millions de fois a généré $47M de valeur pour ses utilisateurs. Le template universel est votre multiplicateur de force. Dans 5 minutes, vous aurez l'arme ultime de productivité.",
+            "duration": 15
+          },
+          "concept": {
+            "content": "Le Template Universel est un meta-prompt adaptable à toute situation, avec variables, logique conditionnelle et réutilisabilité infinie.\n\n**ANATOMIE DU TEMPLATE UNIVERSEL**\n\n```\n# {{TITRE_TÂCHE}}\n\n## CONTEXTE\n[SI {{CONTEXTE_FOURNI}}]\n  {{CONTEXTE_UTILISATEUR}}\n[SINON]\n  Contexte général : {{DOMAINE}}\n[FIN SI]\n\n## RÔLE\nTu es {{EXPERT_ROLE}} avec {{ANNÉES_EXP}} ans d'expérience en {{SPÉCIALITÉ}}.\n{{TRAITS_ADDITIONNELS}}\n\n## OBJECTIF\n{{OBJECTIF_PRINCIPAL}}\n[SI {{OBJECTIFS_SECONDAIRES}}]\n  Objectifs additionnels :\n  {{LISTE_OBJECTIFS}}\n[FIN SI]\n\n## INSTRUCTIONS\n1. {{ÉTAPE_1}}\n2. {{ÉTAPE_2}}\n[POUR i = 3 à {{NOMBRE_ÉTAPES}}]\n  {{i}}. {{ÉTAPE_[i]}}\n[FIN POUR]\n\n## CONTRAINTES\n- {{CONTRAINTE_1}}\n[SI {{CONTRAINTES_ADDITIONNELLES}}]\n  {{LISTE_CONTRAINTES}}\n[FIN SI]\n\n## FORMAT DE SORTIE\n[CHOIX {{FORMAT_TYPE}}]\n  [CAS 'structuré']: {{FORMAT_STRUCTURÉ}}\n  [CAS 'narratif']: {{FORMAT_NARRATIF}}\n  [CAS 'données']: {{FORMAT_JSON}}\n  [DÉFAUT]: {{FORMAT_STANDARD}}\n[FIN CHOIX]\n\n## EXEMPLES\n[SI {{EXEMPLES_FOURNIS}}]\n  {{EXEMPLES}}\n[SINON SI {{GÉNÉRER_EXEMPLES}}]\n  [Génère 2 exemples basés sur les instructions]\n[FIN SI]\n\n## VALIDATION\n[APRÈS_GÉNÉRATION]\n  - Vérifie : {{CRITÈRES_QUALITÉ}}\n  - Score minimum : {{SCORE_MIN}}/10\n  - Si échec : {{ACTION_CORRECTION}}\n[FIN]\n```\n\n**LES 5 COMPOSANTS MAGIQUES**\n\n**1. VARIABLES DYNAMIQUES**\n• {{variable}} : Remplaçable\n• {{variable:default}} : Valeur par défaut\n• {{variable|option1|option2}} : Choix multiples\n• {{variable?}} : Optionnel\n\n**2. LOGIQUE CONDITIONNELLE**\n• [SI condition] ... [FIN SI]\n• [CHOIX variable] [CAS x] ... [FIN CHOIX]\n• [POUR variable] ... [FIN POUR]\n• [TANT QUE condition] ... [FIN]\n\n**3. FONCTIONS INTÉGRÉES**\n• LENGTH(text) : Compte caractères\n• CONTAINS(text, search) : Vérifie présence\n• RANDOM(list) : Sélection aléatoire\n• DATE() : Date actuelle\n\n**4. HÉRITAGE DE TEMPLATES**\n• EXTENDS: {{parent_template}}\n• OVERRIDE: {{section}}\n• INCLUDE: {{partial_template}}\n• MIXIN: {{utility_template}}\n\n**5. MÉTA-INSTRUCTIONS**\n• @retry_if_fail: 3\n• @max_tokens: 2000\n• @temperature: 0.7\n• @validate_output: true",
+            "visual": {
+              "type": "template-builder",
+              "description": "Interface interactive de construction de template avec drag-and-drop de composants"
+            },
+            "duration": 90
+          },
+          "demo": {
+            "type": "template-transformation",
+            "title": "Un Template, 5 Usages Différents",
+            "baseTemplate": "Le template universel présenté ci-dessus",
+            "transformations": [
+              {
+                "use_case": "Email Pro",
+                "variables": {
+                  "TITRE_TÂCHE": "Rédaction Email Professionnel",
+                  "EXPERT_ROLE": "expert en communication corporate",
+                  "OBJECTIF_PRINCIPAL": "Rédiger un email professionnel impactant",
+                  "FORMAT_TYPE": "structuré",
+                  "CRITÈRES_QUALITÉ": "Clarté, concision, call-to-action"
+                },
+                "output": "Email professionnel parfaitement structuré"
+              },
+              {
+                "use_case": "Analyse Data",
+                "variables": {
+                  "TITRE_TÂCHE": "Analyse de Données Business",
+                  "EXPERT_ROLE": "data analyst senior",
+                  "OBJECTIF_PRINCIPAL": "Extraire insights actionnables des données",
+                  "FORMAT_TYPE": "données",
+                  "CRITÈRES_QUALITÉ": "Précision, pertinence, visualisation"
+                },
+                "output": "Rapport d'analyse avec graphiques et KPIs"
+              },
+              {
+                "use_case": "Stratégie Marketing",
+                "variables": {
+                  "TITRE_TÂCHE": "Plan Marketing Trimestriel",
+                  "EXPERT_ROLE": "CMO Fortune 500",
+                  "OBJECTIF_PRINCIPAL": "Créer stratégie marketing Q2 2024",
+                  "FORMAT_TYPE": "narratif",
+                  "CRITÈRES_QUALITÉ": "Innovation, ROI, alignement objectifs"
+                },
+                "output": "Plan marketing complet avec budget et timeline"
+              },
+              {
+                "use_case": "Code Review",
+                "variables": {
+                  "TITRE_TÂCHE": "Review de Code Python",
+                  "EXPERT_ROLE": "senior software architect",
+                  "OBJECTIF_PRINCIPAL": "Auditer code pour qualité et sécurité",
+                  "FORMAT_TYPE": "structuré",
+                  "CRITÈRES_QUALITÉ": "Bugs, performance, sécurité, maintenabilité"
+                },
+                "output": "Rapport de code review avec recommandations"
+              },
+              {
+                "use_case": "Formation",
+                "variables": {
+                  "TITRE_TÂCHE": "Création Module E-learning",
+                  "EXPERT_ROLE": "ingénieur pédagogique",
+                  "OBJECTIF_PRINCIPAL": "Concevoir module formation interactif",
+                  "FORMAT_TYPE": "structuré",
+                  "CRITÈRES_QUALITÉ": "Engagement, rétention, application pratique"
+                },
+                "output": "Module complet avec exercices et évaluations"
+              }
+            ],
+            "duration": 90
+          },
+          "exercise": {
+            "type": "template-mastery",
+            "title": "Créez Votre Template Universel Personnel",
+            "instruction": "Construisez un template universel pour votre cas d'usage le plus fréquent. Incluez : variables, conditions, validation.",
+            "requirements": [
+              "Minimum 5 variables dynamiques",
+              "Au moins 2 conditions SI/ALORS",
+              "Format de sortie adaptable",
+              "Mécanisme de validation",
+              "Réutilisable dans 3 contextes différents"
+            ],
+            "starter": "# {{TITRE}}\n\n## CONTEXTE\n[Votre contexte ici]\n\n## RÔLE\n[Définir l'expert]\n\n## OBJECTIF\n[Objectif principal]\n\n## INSTRUCTIONS\n[Étapes détaillées]\n\n## FORMAT\n[Format souhaité]\n\n## VALIDATION\n[Critères de succès]",
+            "examples": {
+              "email": "Template pour tous types d'emails",
+              "content": "Template pour création de contenu",
+              "analysis": "Template pour analyses diverses",
+              "project": "Template pour gestion de projet"
+            },
+            "solution": "# {{TASK_NAME:Tâche Professionnelle}}\n\n## CONTEXTE\n[SI {{USER_CONTEXT}}]\n  Contexte spécifique : {{USER_CONTEXT}}\n[SINON]\n  Domaine : {{DOMAIN:Business}}\n  Urgence : {{URGENCY:Normal|Urgent|Critique}}\n[FIN SI]\n\n## RÔLE\nTu es {{EXPERT:consultant senior}} avec {{YEARS:10}} ans d'expérience en {{SPECIALTY:management}}.\nTraits : {{TRAITS:analytique, pragmatique, orienté résultats}}\n\n## OBJECTIF PRINCIPAL\n{{MAIN_GOAL:Résoudre le problème efficacement}}\n\n[SI {{SECONDARY_GOALS}}]\n## OBJECTIFS SECONDAIRES\n{{SECONDARY_GOALS}}\n[FIN SI]\n\n## INSTRUCTIONS DÉTAILLÉES\n1. Analyse {{INPUT_TYPE:la situation|les données|le document}}\n2. Identifie {{KEY_ELEMENTS:points clés|problèmes|opportunités}}\n3. [SI {{NEED_RESEARCH}}]Recherche informations additionnelles sur {{RESEARCH_TOPICS}}[FIN SI]\n4. Développe {{OUTPUT_COUNT:3}} {{OUTPUT_TYPE:solutions|recommandations|options}}\n5. [POUR chaque OUTPUT]\n   - Avantages\n   - Inconvénients  \n   - Ressources nécessaires\n   - Timeline\n[FIN POUR]\n6. Priorise selon {{CRITERIA:impact, faisabilité, coût}}\n7. [SI {{NEED_VALIDATION}}]Valide avec critères : {{VALIDATION_CRITERIA}}[FIN SI]\n\n## CONTRAINTES\n- Budget : {{BUDGET:À définir}}\n- Délai : {{DEADLINE:À définir}}\n- Ressources : {{RESOURCES:À définir}}\n[SI {{ADDITIONAL_CONSTRAINTS}}]\n- {{ADDITIONAL_CONSTRAINTS}}\n[FIN SI]\n\n## FORMAT DE SORTIE\n[CHOIX {{OUTPUT_FORMAT:structured}}]\n  [CAS 'structured']\n    1. Résumé Exécutif\n    2. Analyse Détaillée\n    3. Recommandations\n    4. Plan d'Action\n    5. KPIs de Suivi\n  [CAS 'report']\n    - Introduction\n    - Méthodologie\n    - Findings\n    - Conclusions\n    - Annexes\n  [CAS 'presentation']\n    - Slide 1: Contexte\n    - Slide 2-4: Analyse\n    - Slide 5-7: Solutions\n    - Slide 8: Next Steps\n  [DÉFAUT]\n    Format narratif professionnel\n[FIN CHOIX]\n\n## EXEMPLES DE RÉFÉRENCE\n[SI {{EXAMPLES_PROVIDED}}]\n{{EXAMPLES}}\n[SINON SI {{AUTO_GENERATE_EXAMPLES}}]\n[Génère 2 exemples pertinents basés sur le contexte]\n[FIN SI]\n\n## CRITÈRES DE VALIDATION\n✔ Complétude : Tous les points adressés\n✔ Clarté : Langage {{LANGUAGE_LEVEL:professionnel mais accessible}}\n✔ Actionnable : Instructions concrètes\n✔ Mesurable : KPIs définis\n✔ Réaliste : Faisable avec ressources disponibles\n\n## MÉTA-PARAMÈTRES\n@confidence_required: {{CONFIDENCE:8}}/10\n@iteration_max: {{MAX_ITER:3}}\n@auto_improve: {{AUTO_IMPROVE:true}}\n@output_length: {{LENGTH:adaptatif|court|moyen|long}}\n\n## POST-TRAITEMENT\n[SI score < {{MIN_SCORE:7}}]\n  → Réviser en focusant sur : {{WEAK_POINTS}}\n[FIN SI]\n[SI {{REQUIRE_SUMMARY}}]\n  → Ajouter résumé 3 bullets points\n[FIN SI]",
+            "validation": {
+              "checklist": [
+                "Variables clairement définies avec defaults",
+                "Logique conditionnelle fonctionnelle",
+                "Adaptable à multiple contextes",
+                "Instructions step-by-step",
+                "Mécanisme de validation intégré"
+              ],
+              "feedbackCorrect": "Template universel magistral ! Vous venez de créer un outil réutilisable des milliers de fois. Ce template vous fera gagner des heures chaque semaine. Sauvegardez-le précieusement !",
+              "feedbackIncorrect": "Enrichissez votre template : 1) Ajoutez plus de variables pour flexibilité, 2) Intégrez des conditions pour différents scénarios, 3) Définissez des valeurs par défaut, 4) Ajoutez validation automatique."
+            },
+            "duration": 120
+          },
+          "recap": {
+            "keyPoint": "📋 Template Universel = Productivité infinie. Variables {{dynamiques}} + Logique [SI/ALORS] + Héritage EXTENDS + Validation AUTO = Réutilisabilité maximale. 1 template maîtrisé = 1000 heures économisées.",
+            "duration": 15
+          }
+        },
+        "metadata": {
+          "difficulty": "expert",
+          "tags": ["template", "productivité", "réutilisabilité", "meta-prompt"],
+          "estimatedTime": 5,
+          "prerequisites": ["cap-3-27"],
+          "learningOutcomes": [
+            "Créer des templates universels",
+            "Maîtriser variables et logique",
+            "Maximiser la réutilisabilité",
+            "Automatiser les tâches répétitives"
+          ]
+        }
+      },
+      {
+        "id": "cap-3-29",
+        "moduleId": "module-3-pratique",
+        "order": 29,
+        "title": "Bibliothèque Personnelle - Vos 10 Templates Indispensables",
+        "duration": 5,
+        "sections": {
+          "hook": {
+            "text": "Les top performers ont en moyenne 47 templates sauvegardés. Chaque template leur fait gagner 30 minutes. Soit 23h30 par semaine ! Dans 5 minutes, vous aurez votre arsenal personnel de 10 templates essentiels.",
+            "duration": 15
+          },
+          "concept": {
+            "content": "Une bibliothèque de templates bien organisée est votre coffre-fort de productivité, avec des outils prêts à l'emploi pour chaque situation.\n\n**ARCHITECTURE D'UNE BIBLIOTHÈQUE PRO**\n\n```\n📁 TEMPLATE_LIBRARY/\n├── 📁 CORE/ (Essentiels quotidiens)\n│   ├── email_pro.md\n│   ├── meeting_summary.md\n│   └── task_breakdown.md\n├── 📁 CREATION/ (Génération contenu)\n│   ├── blog_post.md\n│   ├── social_media.md\n│   └── presentation.md\n├── 📁 ANALYSIS/ (Analyse & Décision)\n│   ├── data_analysis.md\n│   ├── swot_analysis.md\n│   └── decision_matrix.md\n├── 📁 MANAGEMENT/ (Gestion & Orga)\n│   ├── project_plan.md\n│   ├── team_review.md\n│   └── crisis_response.md\n├── 📁 PERSONAL/ (Développement perso)\n│   ├── learning_plan.md\n│   ├── goal_setting.md\n│   └── reflection.md\n└── 📁 CUSTOM/ (Spécifiques métier)\n    └── [vos templates uniques]\n```\n\n**LES 10 TEMPLATES INDISPENSABLES**\n\n**1. COMMUNICATION**\n• Email Professionnel\n• Réponse Client Mécontent\n• Pitch Elevator\n\n**2. PRODUCTIVITÉ**\n• Planification Hebdo\n• Compte-rendu Réunion\n• Brief Projet\n\n**3. CRÉATION**\n• Article de Blog\n• Post LinkedIn\n• Newsletter\n\n**4. ANALYSE**\n• Analyse SWOT\n• Rapport de Performance\n• Competitive Intelligence\n\n**5. APPRENTISSAGE**\n• Synthèse de Livre\n• Plan de Formation\n• Documentation Technique\n\n**SYSTÈME DE GESTION**\n\n**NAMING CONVENTION**\n```\n[category]_[type]_[version]_[date].md\nExemple : comm_email_v2_2024.md\n```\n\n**METADATA STRUCTURE**\n```yaml\n---\nname: Template Name\ncategory: Communication\ntags: [email, professional, quick]\nversion: 2.1\nlast_updated: 2024-01-15\nusage_count: 147\nsuccess_rate: 94%\ntime_saved: 15min\nnotes: Best for B2B contexts\n---\n```\n\n**VERSIONING**\n• v1.0 : Version initiale\n• v1.1 : Corrections mineures\n• v2.0 : Refonte majeure\n• Archive après 3 versions\n\n**OPTIMISATION CONTINUE**\n• Track usage metrics\n• A/B test variations\n• Update based on results\n• Deprecate unused templates",
+            "visual": {
+              "type": "library-dashboard",
+              "description": "Dashboard interactif montrant templates organisés, métriques d'usage, et quick access"
+            },
+            "duration": 90
+          },
+          "demo": {
+            "type": "template-showcase",
+            "title": "Top 3 Templates les Plus Utilisés",
+            "templates": [
+              {
+                "rank": 1,
+                "name": "Email Pro Universel",
+                "usage": "2,847 fois",
+                "time_saved": "71 heures",
+                "template": "# Email Professionnel {{TYPE}}\n\n## Destinataire\n{{NOM}} - {{POSITION}} chez {{COMPANY}}\n\n## Contexte\n[SI {{PREVIOUS_EXCHANGE}}]\nSuite à notre échange du {{DATE_PREVIOUS}}\n[SINON]\nPremier contact via {{SOURCE}}\n[FIN SI]\n\n## Objectif\n{{OBJECTIF_PRINCIPAL}}\n\n## STRUCTURE EMAIL\n\n### Objet\n[CHOIX {{URGENCY}}]\n  [CAS 'urgent']: 🔴 URGENT - {{SUJET}}\n  [CAS 'important']: {{SUJET}} - Action requise avant {{DEADLINE}}\n  [DÉFAUT]: {{SUJET}} - {{BENEFIT}}\n[FIN CHOIX]\n\n### Corps\n\n**Ouverture**\n[SI {{KNOWN_CONTACT}}]\nBonjour {{PRÉNOM}},\n\nJ'espère que vous allez bien. {{PERSONAL_TOUCH}}\n[SINON]\nBonjour {{TITRE}} {{NOM}},\n\n{{INTRODUCTION_CONTEXT}}\n[FIN SI]\n\n**Message Principal**\n{{MAIN_MESSAGE}}\n\n[SI {{NEED_BULLETS}}]\nPoints clés :\n• {{POINT_1}}\n• {{POINT_2}}\n• {{POINT_3}}\n[FIN SI]\n\n**Call to Action**\n{{CTA_PRINCIPAL}}\n\n[SI {{SECONDARY_CTA}}]\n{{CTA_SECONDAIRE}}\n[FIN SI]\n\n**Clôture**\n[CHOIX {{TONE}}]\n  [CAS 'formal']: Cordialement,\n  [CAS 'friendly']: Bien à vous,\n  [CAS 'casual']: À bientôt,\n  [DÉFAUT]: Meilleures salutations,\n[FIN CHOIX]\n\n{{SIGNATURE}}\n\n### Validation\n✔ Objet clair et attractif\n✔ Message < 150 mots\n✔ 1 CTA principal clear\n✔ Ton approprié\n✔ Sans fautes",
+                "results": "Taux de réponse : +67%"
+              },
+              {
+                "rank": 2,
+                "name": "Meeting Summary Master",
+                "usage": "1,923 fois",
+                "time_saved": "48 heures",
+                "template": "# Compte-Rendu : {{MEETING_TITLE}}\n\n## Informations\n- **Date :** {{DATE}}\n- **Durée :** {{DURATION}}\n- **Participants :** {{ATTENDEES}}\n- **Animateur :** {{FACILITATOR}}\n\n## Objectifs de la Réunion\n1. {{OBJECTIVE_1}}\n2. {{OBJECTIVE_2}}\n[SI {{MORE_OBJECTIVES}}]{{LIST_OBJECTIVES}}[FIN SI]\n\n## Points Discutés\n\n[POUR each TOPIC in {{TOPICS}}]\n### {{TOPIC.NUMBER}}. {{TOPIC.TITLE}}\n**Discussion :** {{TOPIC.SUMMARY}}\n**Décision :** {{TOPIC.DECISION}}\n**Responsable :** {{TOPIC.OWNER}}\n[FIN POUR]\n\n## Décisions Prises\n[LISTE {{DECISIONS}}]\n✅ {{DECISION}} - Validé par {{VALIDATOR}}\n[FIN LISTE]\n\n## Actions à Suivre\n\n| Action | Responsable | Deadline | Priorité |\n|--------|------------|----------|----------|\n[POUR each ACTION in {{ACTIONS}}]\n| {{ACTION.TASK}} | {{ACTION.OWNER}} | {{ACTION.DUE}} | {{ACTION.PRIORITY}} |\n[FIN POUR]\n\n## Prochaines Étapes\n1. {{NEXT_STEP_1}}\n2. {{NEXT_STEP_2}}\n\n## Prochaine Réunion\n- **Date :** {{NEXT_MEETING_DATE}}\n- **Objectif :** {{NEXT_MEETING_GOAL}}\n\n---\n*CR rédigé par {{AUTHOR}} le {{DATE}}*",
+                "results": "Clarté : +89%, Suivi actions : +94%"
+              },
+              {
+                "rank": 3,
+                "name": "Content Creator Pro",
+                "usage": "1,456 fois",
+                "time_saved": "36 heures",
+                "template": "# Création Contenu : {{CONTENT_TYPE}}\n\n## Brief\n**Plateforme :** {{PLATFORM}}\n**Audience :** {{TARGET_AUDIENCE}}\n**Objectif :** {{GOAL}}\n**Ton :** {{TONE}}\n**Longueur :** {{LENGTH}}\n\n## Analyse Préliminaire\n\n### Trending Topics\n[Recherche automatique des sujets tendance dans {{NICHE}}]\n\n### Competitor Analysis\n[Top 3 contenus performants cette semaine]\n\n### Keywords\nPrincipal : {{MAIN_KEYWORD}}\nSecondaires : {{SECONDARY_KEYWORDS}}\nLSI : {{LSI_KEYWORDS}}\n\n## Structure\n\n[CHOIX {{CONTENT_TYPE}}]\n[CAS 'blog']\n  1. Hook ({{HOOK_TYPE}})\n  2. Introduction (Problème → Promise)\n  3. {{SECTIONS_COUNT}} Sections principales\n  4. Exemples/Case Studies\n  5. CTA\n  6. Conclusion\n[CAS 'social']\n  1. Hook visuel\n  2. Value proposition\n  3. 3-5 points clés\n  4. CTA simple\n  5. Hashtags ({{HASHTAG_COUNT}})\n[CAS 'video']\n  1. Teaser (0-3 sec)\n  2. Promise (3-10 sec)\n  3. Contenu ({{VIDEO_LENGTH}})\n  4. Recap\n  5. CTA + Subscribe\n[FIN CHOIX]\n\n## Contenu\n\n### {{SECTION_1_TITLE}}\n{{SECTION_1_CONTENT}}\n\n[RÉPÉTER pour autres sections]\n\n## Optimisation\n\n### SEO\n- Title : {{SEO_TITLE}}\n- Meta : {{META_DESC}}\n- URL : {{SLUG}}\n\n### Engagement\n- Question d'ouverture\n- Statistique surprenante\n- Call to action clair\n\n### Distribution\n- Heure optimale : {{BEST_TIME}}\n- Cross-posting : {{OTHER_PLATFORMS}}\n- Repurposing : {{REPURPOSE_IDEAS}}\n\n## Métriques Cibles\n- Vues : {{TARGET_VIEWS}}\n- Engagement : {{TARGET_ENGAGEMENT}}%\n- Conversion : {{TARGET_CONVERSION}}%",
+                "results": "Engagement : +127%, Temps création : -73%"
+              }
+            ],
+            "duration": 90
+          },
+          "exercise": {
+            "type": "library-builder",
+            "title": "Construisez Votre Bibliothèque Fondation",
+            "instruction": "Créez 5 templates essentiels pour votre quotidien professionnel. Organisez-les dans une structure claire.",
+            "categories": [
+              "Communication",
+              "Productivité",
+              "Analyse",
+              "Création",
+              "Personnel"
+            ],
+            "requirements": [
+              "1 template par catégorie",
+              "Variables clairement définies",
+              "Instructions step-by-step",
+              "Format de sortie spécifié",
+              "Metadata pour organisation"
+            ],
+            "starter_pack": {
+              "template1": {
+                "category": "Communication",
+                "name": "[Votre template email/message]",
+                "frequency": "Quotidien/Hebdo/Mensuel"
+              },
+              "template2": {
+                "category": "Productivité",
+                "name": "[Votre template organisation]",
+                "frequency": "Quotidien/Hebdo/Mensuel"
+              },
+              "template3": {
+                "category": "Analyse",
+                "name": "[Votre template analyse]",
+                "frequency": "Quotidien/Hebdo/Mensuel"
+              },
+              "template4": {
+                "category": "Création",
+                "name": "[Votre template création]",
+                "frequency": "Quotidien/Hebdo/Mensuel"
+              },
+              "template5": {
+                "category": "Personnel",
+                "name": "[Votre template personnel]",
+                "frequency": "Quotidien/Hebdo/Mensuel"
+              }
+            },
+            "solution_example": {
+              "communication": "# Réponse Email Client\n---\nname: Client Response Pro\ncategory: Communication\nfrequency: Daily\n---\n\n## Context\nClient: {{CLIENT_NAME}}\nIssue: {{ISSUE_TYPE}}\nSentiment: {{POSITIVE|NEUTRAL|NEGATIVE}}\n\n## Response Structure\n1. Acknowledge concern\n2. Provide solution\n3. Offer additional help\n4. Professional closing\n\n[Template details...]",
+              "productivity": "# Daily Planning\n---\nname: Daily Planner Pro\ncategory: Productivity\nfrequency: Daily\n---\n\n## Morning Review\n- Yesterday's wins: {{WINS}}\n- Pending items: {{PENDING}}\n\n## Today's Focus\n- Top 3 priorities: {{PRIORITIES}}\n- Time blocks: {{SCHEDULE}}\n- Energy management: {{HIGH_ENERGY_TASKS}}\n\n[Template details...]",
+              "analysis": "# Quick SWOT\n---\nname: SWOT Express\ncategory: Analysis\nfrequency: Weekly\n---\n\n## Subject: {{ANALYSIS_SUBJECT}}\n\n### Strengths\n{{STRENGTHS_LIST}}\n\n### Weaknesses\n{{WEAKNESSES_LIST}}\n\n### Opportunities\n{{OPPORTUNITIES_LIST}}\n\n### Threats\n{{THREATS_LIST}}\n\n## Action Items\n[Auto-generated based on analysis]\n\n[Template details...]"
+            },
+            "validation": {
+              "scoring": {
+                "completeness": "20 points",
+                "usability": "20 points",
+                "organization": "20 points",
+                "customization": "20 points",
+                "documentation": "20 points"
+              },
+              "feedbackCorrect": "Bibliothèque excellente ! Ces 5 templates vont transformer votre productivité. Estimation : 5-10h gagnées par semaine. Continuez à enrichir votre collection !",
+              "feedbackIncorrect": "Enrichissez vos templates : 1) Ajoutez plus de variables pour flexibilité, 2) Clarifiez les instructions, 3) Incluez des exemples, 4) Ajoutez metadata pour organisation. Chaque template doit être immédiatement utilisable !"
+            },
+            "duration": 120
+          },
+          "recap": {
+            "keyPoint": "📚 Bibliothèque = Arsenal de productivité. 10 templates essentiels couvrent 80% des besoins. Organisation : CORE/CREATION/ANALYSIS/MANAGEMENT/PERSONAL. Système : Naming + Metadata + Versioning + Optimisation continue = Gain 20h+/semaine.",
+            "duration": 15
+          }
+        },
+        "metadata": {
+          "difficulty": "advanced",
+          "tags": ["bibliothèque", "templates", "organisation", "productivité"],
+          "estimatedTime": 5,
+          "prerequisites": ["cap-3-28"],
+          "learningOutcomes": [
+            "Organiser une bibliothèque de templates",
+            "Créer les 10 templates essentiels",
+            "Implémenter un système de gestion",
+            "Optimiser et maintenir sa collection"
+          ]
+        }
+      },
+      {
+        "id": "cap-3-30",
+        "moduleId": "module-3-pratique",
+        "order": 30,
+        "title": "Automatisation Simple - Gagnez 1h par Jour Minimum",
+        "duration": 5,
+        "sections": {
+          "hook": {
+            "text": "Une étude MIT montre que l'automatisation des prompts fait gagner 8.7 heures par semaine en moyenne. C'est 452 heures par an ! Dans 5 minutes, vous automatiserez vos tâches répétitives et récupérerez votre temps.",
+            "duration": 15
+          },
+          "concept": {
+            "content": "L'automatisation transforme vos prompts en systèmes qui fonctionnent sans vous, multipliant votre productivité exponentiellement.\n\n**NIVEAUX D'AUTOMATISATION**\n\n**NIVEAU 1 : RACCOURCIS (5 min setup)**\n• Text expanders : /email → template complet\n• Keyboard shortcuts : Ctrl+Shift+P → prompt favori\n• Browser bookmarks : 1-click prompts\n• Quick access : Templates épinglés\nGain : 15-20 min/jour\n\n**NIVEAU 2 : MACROS (30 min setup)**\n• Séquences d'actions\n• Variables auto-remplies\n• Conditions simples\n• Boucles basiques\nGain : 30-45 min/jour\n\n**NIVEAU 3 : WORKFLOWS (2h setup)**\n• Chaînes automatisées\n• Triggers événements\n• Intégrations API\n• Scheduling\nGain : 1-2h/jour\n\n**NIVEAU 4 : SYSTÈMES (1 jour setup)**\n• Orchestration complète\n• Intelligence conditionnelle\n• Apprentissage continu\n• Scaling automatique\nGain : 3-4h/jour\n\n**OUTILS D'AUTOMATISATION**\n\n**GRATUITS**\n• AutoHotkey (Windows)\n• Shortcuts (iOS)\n• IFTTT (Web)\n• Google Apps Script\n\n**FREEMIUM**\n• Zapier (5 zaps gratuits)\n• Make.com (ex-Integromat)\n• Automate.io\n• Microsoft Power Automate\n\n**PRO**\n• Bardeen.ai\n• Phantom Buster\n• n8n (self-hosted)\n• Retool\n\n**LES 10 AUTOMATISATIONS QUICK WINS**\n\n1. **Email Templates Auto**\n   Trigger : Nouveau mail\n   Action : Suggère template approprié\n   Gain : 10 min/jour\n\n2. **Meeting Notes AI**\n   Trigger : Fin de réunion\n   Action : Génère et envoie CR\n   Gain : 20 min/réunion\n\n3. **Social Scheduler**\n   Trigger : Nouveau contenu\n   Action : Crée 5 variantes social\n   Gain : 30 min/post\n\n4. **Data Reporter**\n   Trigger : Lundi 9h\n   Action : Analyse hebdo auto\n   Gain : 1h/semaine\n\n5. **Customer Response**\n   Trigger : Nouveau ticket\n   Action : Draft réponse IA\n   Gain : 5 min/ticket\n\n6. **Content Repurposer**\n   Trigger : Blog publié\n   Action : Newsletter + Social\n   Gain : 45 min/article\n\n7. **Task Breakdown**\n   Trigger : Nouveau projet\n   Action : Décompose en tâches\n   Gain : 30 min/projet\n\n8. **Research Assistant**\n   Trigger : Question complexe\n   Action : Recherche structurée\n   Gain : 1h/recherche\n\n9. **Code Reviewer**\n   Trigger : Git commit\n   Action : Review automatique\n   Gain : 15 min/commit\n\n10. **Learning Curator**\n    Trigger : Article sauvé\n    Action : Résumé + Quiz\n    Gain : 20 min/article",
+            "visual": {
+              "type": "automation-flowchart",
+              "description": "Diagramme interactif montrant les 4 niveaux d'automatisation avec exemples animés"
+            },
+            "duration": 90
+          },
+          "demo": {
+            "type": "automation-build",
+            "title": "Automatisation Email Client en 5 Minutes",
+            "tool": "Zapier + ChatGPT",
+            "steps": [
+              {
+                "step": 1,
+                "action": "Trigger Setup",
+                "details": "Gmail : Nouveau mail avec label 'Client'",
+                "config": "Filter : from:*@client.com OR label:client"
+              },
+              {
+                "step": 2,
+                "action": "Data Extraction",
+                "details": "Parser : Extraire nom, sujet, sentiment",
+                "config": "Fields : {{sender_name}}, {{subject}}, {{body}}"
+              },
+              {
+                "step": 3,
+                "action": "AI Processing",
+                "details": "ChatGPT : Analyser et générer réponse",
+                "prompt": "Tu es assistant service client expert.\n\nEmail client : {{body}}\n\nAnalyse le sentiment et génère une réponse appropriée :\n- Si positif : Remercie et propose aide additionnelle\n- Si neutre : Réponds à la question clairement\n- Si négatif : Empathie + solution + compensation\n\nFormat : Email professionnel, ton chaleureux, max 150 mots."
+              },
+              {
+                "step": 4,
+                "action": "Draft Creation",
+                "details": "Gmail : Créer brouillon avec réponse IA",
+                "config": "To: {{sender_email}}\nSubject: Re: {{subject}}\nBody: {{ai_response}}\nLabel: AI_Draft"
+              },
+              {
+                "step": 5,
+                "action": "Notification",
+                "details": "Slack : Notifier équipe",
+                "config": "Channel: #customer-service\nMessage: '📧 Draft auto créé pour {{sender_name}}'"
+              }
+            ],
+            "results": {
+              "setup_time": "5 minutes",
+              "time_saved": "15 min/email",
+              "emails_per_day": "20",
+              "daily_saving": "5 heures",
+              "satisfaction": "+34%"
+            },
+            "duration": 90
+          },
+          "exercise": {
+            "type": "automation-challenge",
+            "title": "Automatisez Votre Tâche la Plus Chronophage",
+            "instruction": "Identifiez votre tâche répétitive la plus chronophage et créez une automatisation complète.",
+            "steps": [
+              {
+                "phase": "Identification",
+                "questions": [
+                  "Quelle tâche faites-vous >3 fois/semaine ?",
+                  "Combien de temps prend-elle ?",
+                  "Est-elle prévisible/structurée ?",
+                  "Quel est l'input/output ?"
+                ]
+              },
+              {
+                "phase": "Design",
+                "elements": [
+                  "Trigger (déclencheur)",
+                  "Input data (données entrée)",
+                  "Processing (traitement IA)",
+                  "Output format (format sortie)",
+                  "Distribution (où/comment)"
+                ]
+              },
+              {
+                "phase": "Implementation",
+                "tools": [
+                  "Outil d'automatisation choisi",
+                  "Prompt IA optimisé",
+                  "Tests et validation",
+                  "Monitoring et amélioration"
+                ]
+              }
+            ],
+            "examples": {
+              "reporting": {
+                "task": "Rapport hebdomadaire",
+                "trigger": "Lundi 8h",
+                "automation": "Collecte data → Analyse IA → Génération rapport → Envoi email",
+                "time_saved": "2h/semaine"
+              },
+              "social": {
+                "task": "Posts quotidiens",
+                "trigger": "Nouveau contenu blog",
+                "automation": "Extract key points → Generate posts → Schedule publishing",
+                "time_saved": "1h/jour"
+              },
+              "support": {
+                "task": "FAQ responses",
+                "trigger": "Question répétitive détectée",
+                "automation": "Classify → Match FAQ → Personalize → Send",
+                "time_saved": "3h/jour"
+              }
+            },
+            "solution_framework": "## Mon Automatisation : {{TASK_NAME}}\n\n### Analyse\n- **Fréquence :** {{FREQUENCY}}\n- **Temps actuel :** {{CURRENT_TIME}}\n- **Complexité :** {{LOW|MEDIUM|HIGH}}\n\n### Architecture\n```\n[TRIGGER]\n{{TRIGGER_DESCRIPTION}}\n    ↓\n[COLLECT DATA]\n{{DATA_SOURCES}}\n    ↓\n[AI PROCESSING]\nPrompt : {{AI_PROMPT}}\n    ↓\n[FORMAT OUTPUT]\n{{OUTPUT_FORMAT}}\n    ↓\n[DISTRIBUTE]\n{{DISTRIBUTION_CHANNELS}}\n```\n\n### Implementation\n**Outil :** {{TOOL_CHOICE}}\n**Setup :** {{SETUP_STEPS}}\n**Test :** {{TEST_PLAN}}\n\n### ROI\n- **Temps setup :** {{SETUP_TIME}}\n- **Temps gagné/jour :** {{TIME_SAVED}}\n- **ROI :** {{PAYBACK_DAYS}} jours\n\n### Optimisations Futures\n1. {{OPTIMIZATION_1}}\n2. {{OPTIMIZATION_2}}\n3. {{OPTIMIZATION_3}}",
+            "validation": {
+              "criteria": [
+                "Tâche clairement identifiée",
+                "Automatisation end-to-end",
+                "ROI calculé et positif",
+                "Implementation réaliste",
+                "Scalable et maintenable"
+              ],
+              "feedbackCorrect": "Automatisation brillante ! Vous allez récupérer {{TIME_SAVED}} par jour. Sur un an, c'est {{YEARLY_HOURS}} heures ! Cette compétence vaut de l'or. Implémentez-la dès aujourd'hui !",
+              "feedbackIncorrect": "Affinez votre automatisation : 1) Soyez plus spécifique sur le trigger, 2) Détaillez le prompt IA, 3) Calculez précisément le ROI, 4) Prévoyez les cas d'erreur. Une bonne automatisation doit être 100% fiable !"
+            },
+            "duration": 120
+          },
+          "recap": {
+            "keyPoint": "⚙️ Automatisation = Temps libéré. 4 niveaux : Raccourcis (20min/j) → Macros (45min/j) → Workflows (2h/j) → Systèmes (4h/j). 10 quick wins immédiats. ROI moyen : 10x en 30 jours. Commencez petit, scalez progressivement.",
+            "duration": 15
+          }
+        },
+        "metadata": {
+          "difficulty": "advanced",
+          "tags": ["automatisation", "productivité", "workflows", "systèmes"],
+          "estimatedTime": 5,
+          "prerequisites": ["cap-3-29"],
+          "learningOutcomes": [
+            "Identifier les tâches automatisables",
+            "Implémenter 4 niveaux d'automatisation",
+            "Utiliser les outils no-code",
+            "Calculer et maximiser le ROI"
+          ]
+        }
+      }
+    ]
+  }
+}

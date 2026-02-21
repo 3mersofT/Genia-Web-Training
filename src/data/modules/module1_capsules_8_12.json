@@ -1,0 +1,332 @@
+{
+  "capsules": [
+    {
+      "id": "cap-1-8",
+      "moduleId": "module-1-fundamentals",
+      "order": 8,
+      "title": "Le Pouvoir des Personas - Transformer l'IA en Expert",
+      "duration": 5,
+      "sections": {
+        "hook": {
+          "text": "Et si je vous disais que vous pouvez transformer l'IA en n'importe quel expert mondial en 10 secondes ? PDG, médecin, artiste, coach... L'IA peut endosser n'importe quel rôle. Mais la plupart des utilisateurs ne savent pas comment exploiter ce super-pouvoir. Après ces 5 minutes, vous ferez partie de ceux qui maîtrisent cette technique.",
+          "duration": 15
+        },
+        "concept": {
+          "content": "Les personas transforment radicalement la qualité des réponses de l'IA en lui donnant une identité, une expertise et une perspective spécifiques.\n\n**Pourquoi les personas sont magiques :**\nQuand vous définissez un rôle, l'IA :\n• **Adapte son vocabulaire** : Un médecin parle différemment d'un marketeur\n• **Change sa perspective** : Un CFO voit les chiffres, un designer voit l'expérience\n• **Ajuste son niveau** : Un prof vulgarise, un expert approfondit\n• **Adopte le bon ton** : Un coach motive, un analyste reste factuel\n\n**Les 5 dimensions d'un persona puissant :**\n\n**1. EXPERTISE PROFESSIONNELLE**\n• Domaine de compétence principal\n• Années d'expérience (précises !)\n• Spécialisations uniques\n• Réalisations notables\n\n**2. TRAITS DE PERSONNALITÉ**\n• Style de communication\n• Approche méthodologique\n• Valeurs professionnelles\n• Quirks distinctifs\n\n**3. CONTEXTE OPÉRATIONNEL**\n• Type d'organisation\n• Secteur d'activité\n• Niveau hiérarchique\n• Ressources disponibles\n\n**4. OBJECTIFS ET MOTIVATIONS**\n• Ce qui drive le persona\n• KPIs personnels\n• Vision du succès\n• Red flags à éviter\n\n**5. CONTRAINTES ET LIMITES**\n• Ce que le persona ne peut pas faire\n• Règles à respecter\n• Budget/temps/ressources\n• Considérations éthiques\n\n**Le secret : La cohérence**\nUn persona doit être cohérent du début à la fin. Si c'est un expert finance, il ne doit pas soudain parler comme un artiste.",
+          "code": "// Template de persona professionnel\nconst personaTemplate = {\n  identity: {\n    role: \"Directeur Marketing Digital\",\n    experience: \"12 ans dont 5 en SaaS B2B\",\n    company: \"Scale-up fintech (200 employés)\",\n    specialties: [\"Growth hacking\", \"Product-led growth\", \"Marketing automation\"]\n  },\n  personality: {\n    style: \"Data-driven mais créatif\",\n    approach: \"Test & learn rapide\",\n    values: [\"ROI\", \"Innovation\", \"Customer-centricity\"],\n    communication: \"Direct, exemples concrets, métriques\"\n  },\n  constraints: {\n    budget: \"500K€/an\",\n    team: \"8 personnes\",\n    tools: \"HubSpot, Amplitude, Figma\",\n    kpis: [\"CAC < 500€\", \"LTV/CAC > 3\", \"MQL: 500/mois\"]\n  },\n  knowledge: {\n    frameworks: [\"AARRR\", \"Jobs-to-be-done\", \"PLG\"],\n    references: [\"Reforge\", \"GrowthHackers\", \"SaaStr\"],\n    antipatterns: \"Vanity metrics, spray and pray, feature-focused\"\n  }\n};",
+          "duration": 90
+        },
+        "demo": {
+          "before": "Donne-moi des conseils marketing",
+          "after": "[PERSONA]\nTu es Sarah Chen, CMO avec 15 ans d'expérience en growth marketing pour startups tech (Series A à IPO). Tu as fait scaler Dropbox de 100K à 10M users comme Head of Growth. Aujourd'hui, tu es CMO chez une fintech B2B (300 employés, 50M€ ARR).\n\nTu es obsédée par les métriques et le product-market fit. Ton approche : 'Growth = Produit x Distribution x Monétisation'. Tu privilégies toujours l'expérimentation rapide (100+ tests/trimestre) et les quick wins scalables.\n\nTon style : direct, basé sur des cas réels, avec des frameworks actionnables. Tu cites toujours des exemples concrets et des benchmarks industrie. Tu détestes le marketing 'fluff' et les vanity metrics.\n\n[CONTEXTE]\nJe dirige une startup SaaS early-stage (10 employés, 200K€ ARR, 50 clients) dans le secteur RH. Nous avons un bon produit mais notre croissance stagne à +5%/mois. Budget marketing : 10K€/mois. Équipe : moi + 1 junior.\n\n[TÂCHE]\nDonne-moi un plan d'action marketing ultra-concret pour passer à +20% de croissance mensuelle en 90 jours, en tenant compte de mes contraintes.\n\n[FORMAT]\nStructure en 3 phases de 30 jours avec :\n• Objectif mesurable par phase\n• 3 actions prioritaires (effort vs impact)\n• Métriques à tracker\n• Budget allocation\n• Quick wins semaine 1",
+          "explanation": "Voyez la transformation ! Le prompt générique donnera des conseils marketing basiques et théoriques. Avec le persona de Sarah Chen, vous obtenez l'expertise d'une CMO qui a vraiment fait scaler des startups. Elle parle métriques, donne des frameworks testés, et propose un plan adapté à VOTRE situation. C'est la différence entre googler 'conseils marketing' et avoir une session de mentoring avec un expert.",
+          "duration": 90
+        },
+        "exercise": {
+          "type": "create",
+          "instruction": "Créez 3 personas différents pour résoudre le même problème : 'Comment améliorer la productivité d'une équipe de 10 personnes ?'. Observez comment chaque persona apporte une solution unique.",
+          "starter": "// PERSONA 1 : [À compléter]\nTu es...\n\n// PERSONA 2 : [À compléter]\nTu es...\n\n// PERSONA 3 : [À compléter]\nTu es...\n\n[CONTEXTE COMMUN]\nÉquipe de 10 développeurs, full remote, problèmes : réunions excessives, communication asynchrone chaotique, burnout croissant.\n\n[TÂCHE]\nPropose 5 actions concrètes pour améliorer la productivité.",
+          "solution": "// PERSONA 1 : LE COACH AGILE\nTu es Marcus Johnson, Scrum Master certifié SAFe avec 10 ans d'expérience dans la transformation agile d'équipes tech. Tu as coaché plus de 50 équipes chez Spotify, Atlassian et ING. Ta philosophie : 'Les individus et interactions plutôt que les processus et outils'. Tu es expert en facilitation, team building et psychological safety.\n\n// SOLUTION COACH AGILE :\n1. **Daily standup asynchrone** via Loom (max 2 min/personne)\n2. **No-meeting Wednesday** : Deep work garanti\n3. **Retrospectives bi-hebdomadaires** avec action items\n4. **Pair programming rotatif** : 2h/semaine\n5. **Team health check** mensuel (outil Spotify)\n\n// PERSONA 2 : LA PSYCHOLOGUE DU TRAVAIL\nTu es Dr. Marie Dubois, psychologue organisationnelle spécialisée en bien-être au travail et prévention du burnout. 15 ans d'intervention en entreprises tech. Approche evidence-based, centrée sur la santé mentale et l'équilibre vie pro/perso. Tu as publié 3 livres sur le burnout en tech.\n\n// SOLUTION PSYCHOLOGUE :\n1. **Audit charge mentale** individuel (questionnaire MBI)\n2. **Boundaries strictes** : Pas de messages après 18h\n3. **Mental health days** : 1/mois sans justification\n4. **Buddy system** : Support émotionnel en binôme\n5. **Ateliers gestion stress** : Méditation, cohérence cardiaque\n\n// PERSONA 3 : LE CTO PRAGMATIQUE\nTu es Alex Kim, CTO avec 20 ans d'expérience, dont 8 ans en remote-first companies. Tu as scalé des équipes de 5 à 200 devs chez GitLab et Automattic. Ta devise : 'Automatiser tout ce qui peut l'être, documenter le reste'. Focus sur les systèmes et processus scalables.\n\n// SOLUTION CTO :\n1. **Automatisation CI/CD** : -50% meetings de sync\n2. **Documentation as code** : Tout dans le repo\n3. **Async par défaut** : Meetings only pour décisions critiques\n4. **Time zones overlap** : 4h communes obligatoires\n5. **Metrics dashboard** : Velocity, cycle time, DORA metrics",
+          "hints": [
+            "Pensez à 3 approches très différentes (humaine, technique, organisationnelle)",
+            "Chaque persona doit avoir une expertise unique et une philosophie claire",
+            "Les solutions doivent refléter la personnalité et l'expertise du persona",
+            "Soyez spécifique sur le background (entreprises, années, réalisations)"
+          ],
+          "validation": {
+            "checkPoints": [
+              "3 personas avec identités distinctes et détaillées",
+              "Expertise cohérente pour chaque persona",
+              "Solutions reflétant l'approche unique de chaque expert",
+              "Background crédible et spécifique",
+              "Philosophies/valeurs différentes mais pertinentes"
+            ],
+            "feedbackCorrect": "Excellent ! Vos personas sont distincts, crédibles et apportent chacun une perspective unique. Vous avez compris comment l'expertise influence la solution. C'est exactement comme ça qu'on tire le meilleur de l'IA !",
+            "feedbackIncorrect": "Bonne tentative ! Assurez-vous que : 1) Chaque persona a une identité vraiment unique, 2) L'expertise est spécifique (années, entreprises), 3) Les solutions reflètent vraiment l'approche de chaque expert. Plus de détails = plus de crédibilité."
+          },
+          "duration": 120
+        },
+        "recap": {
+          "keyPoint": "🔑 Un persona bien défini = Une expertise sur-mesure. 5 dimensions (Expertise, Personnalité, Contexte, Objectifs, Contraintes) pour des résultats d'expert. Le rôle transforme tout.",
+          "duration": 15
+        }
+      },
+      "metadata": {
+        "difficulty": "intermediate",
+        "tags": ["personas", "rôles", "expertise", "personnalisation"],
+        "estimatedTime": 5,
+        "prerequisites": ["cap-1-1", "cap-1-2", "cap-1-3"]
+      }
+    },
+    {
+      "id": "cap-1-9",
+      "moduleId": "module-1-fundamentals",
+      "order": 9,
+      "title": "Créer le Persona Parfait - Votre Expert Sur-Mesure",
+      "duration": 5,
+      "sections": {
+        "hook": {
+          "text": "Imaginez avoir Steve Jobs, Marie Curie et Warren Buffett comme consultants personnels. Avec les bonnes techniques, l'IA peut canaliser leur expertise. Je vais vous montrer comment construire des personas si réalistes que vous oublierez que c'est une IA.",
+          "duration": 15
+        },
+        "concept": {
+          "content": "Créer un persona parfait, c'est comme sculpter : on part d'un bloc brut et on affine jusqu'à obtenir exactement l'expert dont on a besoin.\n\n**La Méthode ACTEUR pour des personas vivants :**\n\n**A - ANCRAGE PROFESSIONNEL**\n• Titre exact et organisation type\n• Parcours académique pertinent\n• Expériences marquantes (avec dates/entreprises)\n• Réalisations mesurables\n• Échecs formateurs (authentique !)\n\n**C - CARACTÈRE ET COMMUNICATION**\n• Traits dominants (3-5 maximum)\n• Style de communication préféré\n• Tics de langage ou expressions favorites\n• Niveau de formalité\n• Humour ou sérieux ?\n\n**T - THÉORIES ET MÉTHODOLOGIES**\n• Frameworks favoris\n• Écoles de pensée suivies\n• Auteurs/mentors de référence\n• Philosophie professionnelle\n• Ce qu'ils rejettent absolument\n\n**E - ENVIRONNEMENT ET CONTRAINTES**\n• Secteur d'activité actuel\n• Taille et culture d'entreprise\n• Ressources disponibles\n• Pressions/défis quotidiens\n• Stakeholders à gérer\n\n**U - UTILITÉ SPÉCIFIQUE**\n• Pour quoi ce persona est expert\n• Ce qu'il fait mieux que quiconque\n• Ses angles morts (important !)\n• Quand l'utiliser/ne pas l'utiliser\n\n**R - RÈGLES ET GARDE-FOUS**\n• Limites éthiques\n• Ce qu'il ne fera jamais\n• Niveau de risque accepté\n• Conformité/régulations\n\n**Les 3 niveaux de détail :**\n• **Basique** (50 mots) : Pour tâches simples\n• **Avancé** (150 mots) : Pour conseil expert\n• **Immersif** (300+ mots) : Pour simulation complète",
+          "code": "// Générateur de persona avec variables\nfunction createPersona(config) {\n  const persona = {\n    // Niveau 1 : Identité Core\n    base: `Tu es ${config.name}, ${config.title} avec ${config.years} ans d'expérience en ${config.domain}.`,\n    \n    // Niveau 2 : Expertise Étendue\n    expertise: `\n      Spécialités : ${config.specialties.join(', ')}\n      Entreprises : ${config.companies.join(' → ')}\n      Réalisations : ${config.achievements.join(' | ')}\n      Certifications : ${config.certifications.join(', ')}\n    `,\n    \n    // Niveau 3 : Personnalité Profonde\n    personality: `\n      Style : ${config.communicationStyle}\n      Approche : ${config.methodology}\n      Philosophie : \"${config.motto}\"\n      Références : ${config.influences.join(', ')}\n      Pet peeves : ${config.dislikes.join(', ')}\n    `,\n    \n    // Niveau 4 : Contexte Opérationnel\n    context: `\n      Actuellement : ${config.currentRole} chez ${config.currentCompany}\n      Défis : ${config.challenges.join(', ')}\n      KPIs : ${config.metrics.join(' | ')}\n      Outils : ${config.tools.join(', ')}\n    `\n  };\n  \n  return combinePersonaLevels(persona, config.detailLevel);\n}",
+          "duration": 90
+        },
+        "demo": {
+          "before": "Tu es un expert en vente. Aide-moi à closer un deal.",
+          "after": "[PERSONA IMMERSIF]\nTu es Victoria Sterling, Senior Enterprise Sales Executive chez Salesforce, spécialisée dans les deals complexes multi-millions avec les Fortune 500. 18 ans d'expérience, dont 8 chez Oracle, 5 chez SAP, et 5 chez Salesforce.\n\n**Track record exceptionnel :**\n• 147% de quota chaque année depuis 10 ans\n• Plus gros deal closé : $47M sur 5 ans (Walmart, transformation digitale)\n• Spécialiste des 'impossible deals' - 73% win rate sur comptes dormants\n• Certifiée MEDDIC, Challenger Sale, et SPIN Selling\n• Speaker régulière au Dreamforce et SaaStr\n\n**Philosophie de vente unique :**\nTu pratiques le 'Value Engineering' - tu ne vends jamais un produit mais une transformation business mesurable. Ton mantra : 'No champion, no deal'. Tu es obsédée par le ROI prouvé et les success metrics. Tu utilises la méthode '3-Why Framework' : Why now? Why us? Why this solution?\n\n**Style et approche :**\nTu es directe mais empathique. Tu poses des questions difficiles ('What happens if you do nothing?'). Tu parles le langage C-level : EBITDA, market cap, competitive advantage. Tu n'hésites pas à dire 'Nous ne sommes pas le bon fit' si c'est vrai. Red flags : vendeurs qui parlent features au lieu de business outcomes.\n\n**Contexte actuel :**\nTu gères un territoire de $50M ARR, 12 entreprises accounts, avec 3 Solution Engineers. Q4, sous pression pour atteindre $15M new business. Tu navigues des cycles de vente de 6-18 mois avec 8-15 stakeholders par deal.\n\n[SITUATION]\nJe dois closer un deal SaaS B2B de 500K€/an avec une banque. 6 mois de discussion, champion interne enthousiaste mais CFO sceptique. Comité de décision dans 2 semaines. Concurrent principal : solution interne.\n\n[MISSION]\nGuide-moi pour transformer ce deal 'à risque' en signature. J'ai besoin de ta stratégie complète pour les 2 prochaines semaines.",
+          "explanation": "La différence est monumentale ! Le persona basique donne des conseils génériques de vente. Victoria Sterling apporte 18 ans d'expérience spécifique en enterprise sales, avec des méthodes éprouvées, un track record vérifiable, et une approche unique. Elle pense et parle comme une vraie top performer. C'est comme avoir un mentor de classe mondiale.",
+          "duration": 90
+        },
+        "exercise": {
+          "type": "create",
+          "instruction": "Créez un persona ultra-détaillé pour votre domaine d'expertise. Utilisez la méthode ACTEUR complète. Le persona doit être si réaliste qu'un expert du domaine y croirait.",
+          "starter": "// Mon Persona Expert (méthode ACTEUR)\n\n[A - ANCRAGE PROFESSIONNEL]\n• Nom : \n• Titre actuel : \n• Parcours : \n• Réalisations clés : \n• Échec formateur : \n\n[C - CARACTÈRE ET COMMUNICATION]\n• Traits dominants : \n• Style : \n• Expressions favorites : \n• Niveau formalité : \n\n[T - THÉORIES ET MÉTHODOLOGIES]\n• Frameworks : \n• École de pensée : \n• Références : \n• Philosophie : \n• Rejette : \n\n[E - ENVIRONNEMENT ET CONTRAINTES]\n• Secteur : \n• Organisation : \n• Ressources : \n• Défis : \n• Stakeholders : \n\n[U - UTILITÉ SPÉCIFIQUE]\n• Expert pour : \n• Unique car : \n• Angles morts : \n• Quand l'utiliser : \n\n[R - RÈGLES ET GARDE-FOUS]\n• Limites éthiques : \n• Ne fera jamais : \n• Niveau de risque : \n• Conformité : ",
+          "solution": "[Exemple : Persona Data Scientist]\n\n[A - ANCRAGE PROFESSIONNEL]\n• Nom : Dr. Kenji Yamamoto\n• Titre actuel : Principal Data Scientist, Netflix\n• Parcours : PhD MIT (Computer Science), ex-Google Brain (5 ans), ex-DeepMind (3 ans)\n• Réalisations clés : \n  - Créé l'algo de recommandation qui a augmenté le watch time de 23%\n  - 12 publications dans NeurIPS/ICML\n  - Patent sur 'Adaptive Neural Collaborative Filtering'\n• Échec formateur : Projet de prédiction churn à -2M$ chez Spotify (overfit massif)\n\n[C - CARACTÈRE ET COMMUNICATION]\n• Traits dominants : Rigoureux, sceptique constructif, pédagogue\n• Style : Commence toujours par 'Let's look at the data', visualisations obsessionnelles\n• Expressions favorites : 'Correlation is not causation', 'Show me the p-value'\n• Niveau formalité : Casual avec pairs, formel avec business stakeholders\n\n[T - THÉORIES ET MÉTHODOLOGIES]\n• Frameworks : CRISP-DM, Bayesian inference, A/B testing rigoureux\n• École de pensée : Empirisme radical - 'In God we trust, all others bring data'\n• Références : Andrew Ng, Yann LeCun, livres de Hastie/Tibshirani\n• Philosophie : 'Simple models first, complexity only if justified'\n• Rejette : ML sans business value, black box sans interpretabilité\n\n[E - ENVIRONNEMENT ET CONTRAINTES]\n• Secteur : Streaming/Entertainment, 230M users\n• Organisation : Équipe de 45 DS/MLE, budget cloud $2M/mois\n• Ressources : Clusters GPU A100, 50PB data, stack moderne (Spark, TensorFlow, Kubeflow)\n• Défis : Real-time inference at scale, privacy regulations (GDPR/CCPA)\n• Stakeholders : Product VPs, Engineering, Legal, Content team\n\n[U - UTILITÉ SPÉCIFIQUE]\n• Expert pour : Recommender systems, causal inference, experimentation at scale\n• Unique car : Combine rigueur académique et pragmatisme business\n• Angles morts : Peut sur-compliquer, parfois trop prudent sur innovation\n• Quand l'utiliser : Projets ML critiques, design d'expériences, debug de modèles\n\n[R - RÈGLES ET GARDE-FOUS]\n• Limites éthiques : Pas de dark patterns, transparence sur les biais\n• Ne fera jamais : Deployer sans A/B test, ignorer la statistical significance\n• Niveau de risque : Conservateur sur production, experimental sur research\n• Conformité : GDPR strict, fairness metrics obligatoires, model cards",
+          "hints": [
+            "Soyez ultra-spécifique (noms d'entreprises, projets réels, chiffres)",
+            "Incluez des échecs - ça rend le persona authentique",
+            "Définissez ce que le persona ne fera PAS (très important)",
+            "Ajoutez des expressions ou tics de langage caractéristiques",
+            "Le persona doit avoir des opinions tranchées sur son domaine"
+          ],
+          "validation": {
+            "checkPoints": [
+              "Nom et parcours crédibles et détaillés",
+              "Réalisations mesurables et vérifiables",
+              "Philosophie professionnelle claire",
+              "Contraintes et environnement réalistes",
+              "Garde-fous et limites bien définis",
+              "Utilité spécifique et angles morts identifiés"
+            ],
+            "feedbackCorrect": "Parfait ! Votre persona est vivant, crédible et opérationnel. Avec ce niveau de détail, l'IA peut vraiment incarner cet expert. Vous maîtrisez l'art de créer des personas professionnels !",
+            "feedbackIncorrect": "Bon début ! Pour améliorer : 1) Ajoutez plus de détails spécifiques (entreprises, projets), 2) Incluez des réalisations chiffrées, 3) Définissez mieux les limites et contraintes. Un persona crédible a aussi des faiblesses."
+          },
+          "duration": 120
+        },
+        "recap": {
+          "keyPoint": "🔑 ACTEUR = Ancrage + Caractère + Théories + Environnement + Utilité + Règles. Plus votre persona est détaillé et cohérent, plus l'IA devient un véritable expert.",
+          "duration": 15
+        }
+      },
+      "metadata": {
+        "difficulty": "intermediate",
+        "tags": ["personas", "création", "ACTEUR", "expertise"],
+        "estimatedTime": 5,
+        "prerequisites": ["cap-1-8"]
+      }
+    },
+    {
+      "id": "cap-1-10",
+      "moduleId": "module-1-fundamentals",
+      "order": 10,
+      "title": "Best Practices Personas - Erreurs à Éviter, Succès à Copier",
+      "duration": 5,
+      "sections": {
+        "hook": {
+          "text": "La majorité des personas échouent pour les mêmes 5 raisons. Je vais vous montrer les pièges mortels et surtout, vous donner ma bibliothèque secrète de 10 personas testés et approuvés qui fonctionnent à tous les coups.",
+          "duration": 15
+        },
+        "concept": {
+          "content": "Maîtriser les personas, c'est éviter les pièges classiques et appliquer les patterns qui fonctionnent systématiquement.\n\n**❌ LES 7 PÉCHÉS CAPITAUX DES PERSONAS**\n\n**1. LE PERSONA SCHIZOPHRÈNE**\n• Erreur : Mélanger des expertises incompatibles\n• Exemple : 'Expert comptable créatif et artiste'\n• Solution : Cohérence absolue dans l'expertise\n\n**2. LE PERSONA SUPERMAN**\n• Erreur : Aucune limite ni faiblesse\n• Exemple : 'Expert en tout, 50 ans d'expérience en tout'\n• Solution : Définir clairement les angles morts\n\n**3. LE PERSONA FLOU**\n• Erreur : Descriptions vagues et génériques\n• Exemple : 'Expert en business avec beaucoup d'expérience'\n• Solution : Détails spécifiques (entreprises, dates, projets)\n\n**4. LE PERSONA ANACHRONIQUE**\n• Erreur : Références obsolètes ou futuristes\n• Exemple : 'Expert TikTok depuis 20 ans'\n• Solution : Cohérence temporelle vérifiée\n\n**5. LE PERSONA ROBOT**\n• Erreur : Aucune personnalité, pure fonction\n• Exemple : Que des compétences, zéro humanité\n• Solution : Ajouter traits, préférences, style\n\n**6. LE PERSONA INCOHÉRENT**\n• Erreur : Junior avec responsabilités senior\n• Exemple : 'Stagiaire qui manage 50 personnes'\n• Solution : Alignement niveau/responsabilités\n\n**7. LE PERSONA INUTILE**\n• Erreur : Expertise non pertinente pour la tâche\n• Exemple : Botaniste pour stratégie digitale\n• Solution : Match expertise/besoin\n\n**✅ LES 5 PATTERNS GAGNANTS**\n\n**1. PATTERN 'VÉTÉRAN BATAILLE'**\n• Longue expérience + Échecs formateurs\n• 'J'ai vu ce qui marche ET ce qui échoue'\n\n**2. PATTERN 'INNOVATEUR PRAGMATIQUE'**\n• Vision avant-gardiste + Contraintes réelles\n• 'Je pousse les limites mais je livre'\n\n**3. PATTERN 'EXPERT PÉDAGOGUE'**\n• Expertise profonde + Don pour expliquer\n• 'Je maîtrise et je transmets'\n\n**4. PATTERN 'OPÉRATIONNEL TERRAIN'**\n• Hands-on + Résultats mesurables\n• 'Less talk, more action'\n\n**5. PATTERN 'STRATÈGE SYSTÉMIQUE'**\n• Vue hélicoptère + Connexions invisibles\n• 'Je vois le big picture'",
+          "code": "// Validateur de persona\nconst personaValidator = {\n  checkCoherence: (persona) => {\n    const issues = [];\n    \n    // Check 1: Expérience vs Âge implicite\n    if (persona.includes('30 ans d\\'expérience') && \n        persona.includes('millennial')) {\n      issues.push('Incohérence temporelle');\n    }\n    \n    // Check 2: Expertise vs Domaine\n    const expertiseMatch = checkExpertiseRelevance(\n      persona.expertise,\n      persona.taskDomain\n    );\n    if (expertiseMatch < 0.7) {\n      issues.push('Expertise non alignée');\n    }\n    \n    // Check 3: Niveau vs Responsabilités\n    if (persona.level === 'junior' && \n        persona.manages > 10) {\n      issues.push('Niveau/responsabilités incohérent');\n    }\n    \n    // Check 4: Présence de limites\n    if (!persona.includes('limitations') && \n        !persona.includes('not an expert in')) {\n      issues.push('Persona trop parfait - ajouter des limites');\n    }\n    \n    return {\n      isValid: issues.length === 0,\n      issues: issues,\n      score: (10 - issues.length) / 10\n    };\n  }\n};",
+          "duration": 90
+        },
+        "demo": {
+          "before": "Tu es un expert polyvalent en business, technologie, marketing, finance et management avec 40 ans d'expérience dans tous les domaines. Tu n'as jamais échoué et tu sais tout sur tout.",
+          "after": "Tu es Thomas Bauer, Directeur de Transformation Digitale avec 15 ans d'expérience spécifique en retail et e-commerce (Carrefour 5 ans, Amazon 4 ans, actuellement CDO chez Decathlon).\n\n**Expertise pointue:**\n• Spécialiste transformation omnicanal et supply chain digitale\n• Expert en change management pour organisations 1000+ personnes  \n• Certifié SAFe, Scrum at Scale, et AWS Solutions Architect\n• Track record: 3 transformations réussies, +40% efficacité opérationnelle\n\n**Mais aussi des limites claires:**\n• Pas expert en pur B2B ou SaaS (mon expertise = retail/consumer)\n• Connaissance limitée des marchés Asie-Pacifique\n• Plus stratège qu'opérationnel sur le code (je manage, je ne code plus)\n\n**Style unique:**\n• Approche 'Test & Learn' - pilotes avant full rollout\n• Obsédé par l'adoption utilisateur, pas juste la tech\n• Méthode des '3C': Customer, Collaboration, Continuous improvement\n• Expression favorite: 'La tech sans adoption = échec garanti'\n\n**Échec formateur:**\nProjet IoT chez Carrefour (2019) : -3M€, arrêté après 6 mois. Leçon apprise: 'Technology push' sans valeur client claire = désastre. Maintenant je commence TOUJOURS par le problème client.",
+          "explanation": "Le 'avant' est un persona impossible : personne n'est expert en tout. Le 'après' est crédible : expertise spécifique (retail/e-commerce), parcours vérifiable, forces ET faiblesses, échecs qui l'ont fait grandir. C'est un vrai professionnel, pas un superhéros.",
+          "duration": 90
+        },
+        "exercise": {
+          "type": "quiz",
+          "instruction": "Identifiez les problèmes dans ces personas et proposez les corrections",
+          "questions": [
+            {
+              "prompt": "Tu es un stagiaire en marketing digital avec 15 ans d'expérience en growth hacking, tu as fait scaler Uber et Airbnb, et tu manages une équipe de 25 growth hackers seniors.",
+              "options": [
+                "Persona parfait, rien à changer",
+                "Incohérence niveau/expérience + responsabilités irréalistes",
+                "Manque juste un peu de détails",
+                "Trop d'expérience pour le rôle"
+              ],
+              "correct": 1,
+              "explanation": "Un stagiaire ne peut pas avoir 15 ans d'expérience ni manager 25 seniors. Correction : Soit 'Head of Growth' avec cette expérience, soit 'Stagiaire' avec 6 mois et passion pour le growth.",
+              "correction": "Tu es Alexandre Martin, VP Growth avec 15 ans d'expérience (early employee Uber France, Head of Growth Airbnb EMEA). Tu diriges maintenant une équipe de 25 growth experts dans une scale-up fintech Series B."
+            },
+            {
+              "prompt": "Tu es expert en IA.",
+              "options": [
+                "Parfait car simple et clair",
+                "Manque de contexte sur le type d'entreprise",
+                "Trop vague : quel type d'IA ? quelle expérience ? quel niveau ?",
+                "Juste besoin d'ajouter les années d'expérience"
+              ],
+              "correct": 2,
+              "explanation": "Trop générique ! 'Expert IA' ne dit rien. Correction nécessaire : spécialisation, expérience, domaine d'application, niveau réel.",
+              "correction": "Tu es Dr. Sarah Mitchell, Senior Machine Learning Engineer spécialisée en NLP et Large Language Models, 8 ans d'expérience (PhD Stanford, 3 ans Google Research, actuellement Lead ML chez Anthropic). Expertise : fine-tuning LLMs, RLHF, prompt engineering avancé."
+            },
+            {
+              "prompt": "Tu es un mélange unique d'artiste créatif, comptable rigoureux, développeur full-stack et coach de vie spirituel avec une approche quantique de la résolution de problèmes.",
+              "options": [
+                "Persona original et polyvalent",
+                "Manque juste d'expérience définie",
+                "Schizophrène : expertises incompatibles et incohérentes",
+                "Trop créatif pour être crédible"
+              ],
+              "correct": 2,
+              "explanation": "Persona schizophrène typique ! On ne peut pas être expert dans des domaines aussi opposés. Choisir UNE expertise principale avec éventuellement des compétences complémentaires cohérentes.",
+              "correction": "Tu es Marc Rodriguez, Directeur Créatif avec background unique en data analytics, 12 ans d'expérience. Parcours : École d'art + Master Data Science. Spécialité : créativité data-driven, A/B testing créatif, design basé sur les insights utilisateur. Actuellement CCO chez Spotify."
+            }
+          ],
+          "hints": [
+            "Cherchez les incohérences logiques",
+            "Vérifiez niveau vs responsabilités",
+            "Un expert crédible a UN domaine principal",
+            "Les limites rendent le persona réaliste"
+          ],
+          "validation": {
+            "checkPoints": [
+              "Identification correcte des problèmes",
+              "Compréhension des incohérences",
+              "Propositions de corrections pertinentes"
+            ],
+            "feedbackCorrect": "Excellent ! Vous savez détecter les personas problématiques et les corriger. Vous ne tomberez plus dans ces pièges !",
+            "feedbackIncorrect": "Relisez les 7 péchés capitaux. Les problèmes principaux : incohérence niveau/expérience, expertise trop vague, ou mélange incompatible."
+          },
+          "duration": 120
+        },
+        "recap": {
+          "keyPoint": "🔑 Évitez : Superman, Schizophrène, Robot. Adoptez : Vétéran bataille, Expert pédagogue, Stratège systémique. Un bon persona est spécifique, cohérent et a des limites.",
+          "duration": 15
+        }
+      },
+      "metadata": {
+        "difficulty": "intermediate",
+        "tags": ["personas", "best practices", "erreurs", "patterns"],
+        "estimatedTime": 5,
+        "prerequisites": ["cap-1-8", "cap-1-9"]
+      }
+    },
+    {
+      "id": "cap-1-11",
+      "moduleId": "module-1-fundamentals",
+      "order": 11,
+      "title": "Formats qui Fonctionnent - La Présentation Fait Tout",
+      "duration": 5,
+      "sections": {
+        "hook": {
+          "text": "Le même contenu présenté différemment peut passer de illisible à brillant. Un pourcentage significatif de l'impact d'une réponse IA vient du format. Je vais vous montrer les 10 formats qui transforment l'information en action.",
+          "duration": 15
+        },
+        "concept": {
+          "content": "Le format de sortie est aussi important que le contenu. C'est la différence entre des données brutes et une information actionnable.\n\n**LES 10 FORMATS ESSENTIELS**\n\n**1. LISTE HIÉRARCHISÉE**\n• Usage : Priorisation, étapes, recommandations\n• Structure : Numérotation + sous-points + indentation\n• Force : Clarté de progression\n```\n1. Action prioritaire\n   a. Sous-tâche 1\n   b. Sous-tâche 2\n2. Action secondaire\n```\n\n**2. TABLEAU COMPARATIF**\n• Usage : Choix entre options, analyse multi-critères\n• Structure : Colonnes (options) x Lignes (critères)\n• Force : Vision synthétique\n```\n| Critère | Option A | Option B | Option C |\n|---------|----------|----------|----------|\n| Coût    | €€       | €€€      | €        |\n| Délai   | 2 mois   | 1 mois   | 3 mois   |\n```\n\n**3. FORMAT TEMPOREL/TIMELINE**\n• Usage : Planning, roadmap, historique\n• Structure : Chronologique avec jalons\n• Force : Vision temporelle claire\n```\nT0 → T+2 semaines → T+1 mois → T+3 mois\n```\n\n**4. MATRICE 2X2**\n• Usage : Analyse stratégique, priorisation\n• Structure : 2 axes formant 4 quadrants\n• Force : Catégorisation visuelle\n```\n       Urgent | Pas Urgent\nImport.   A   |     B\nPas Imp.  C   |     D\n```\n\n**5. JSON STRUCTURÉ**\n• Usage : Données pour API, config, automation\n• Structure : Clés-valeurs imbriquées\n• Force : Parsable programmatiquement\n\n**6. MARKDOWN ENRICHI**\n• Usage : Documentation, articles, guides\n• Structure : Headers + **bold** + `code` + liens\n• Force : Lisible et convertible\n\n**7. SCRIPT/DIALOGUE**\n• Usage : Conversations, pitchs, présentations\n• Structure : Interlocuteur: \"Réplique\"\n• Force : Naturel et engageant\n\n**8. CHECKLIST ACTIONNABLE**\n• Usage : Processus, validation, to-do\n• Structure : ☐ Cases à cocher + actions\n• Force : Trackable et satisfaisant\n\n**9. PYRAMIDE INVERSÉE**\n• Usage : Rapports, emails exécutifs, news\n• Structure : Conclusion → Points clés → Détails\n• Force : Info cruciale en premier\n\n**10. FRAMEWORK CUSTOM**\n• Usage : Analyse spécifique récurrente\n• Structure : Template personnalisé réutilisable\n• Force : Standardisation",
+          "code": "// Sélecteur de format intelligent\nconst formatSelector = {\n  analyze: (taskType, audience, constraints) => {\n    const formatMatrix = {\n      comparison: {\n        executive: 'TABLE',\n        technical: 'JSON',\n        general: 'PROS_CONS_LIST'\n      },\n      planning: {\n        executive: 'TIMELINE_MILESTONES',\n        technical: 'GANTT_ASCII',\n        general: 'NUMBERED_STEPS'\n      },\n      analysis: {\n        executive: 'MATRIX_2X2',\n        technical: 'DATA_STRUCTURE',\n        general: 'BULLET_POINTS'\n      },\n      documentation: {\n        executive: 'EXECUTIVE_SUMMARY',\n        technical: 'MARKDOWN_TECHNICAL',\n        general: 'STRUCTURED_SECTIONS'\n      }\n    };\n    \n    return {\n      recommended: formatMatrix[taskType]?.[audience],\n      alternatives: getAlternativeFormats(taskType),\n      template: generateTemplate(formatMatrix[taskType]?.[audience])\n    };\n  }\n};",
+          "duration": 90
+        },
+        "demo": {
+          "before": "Analyse ces 3 solutions CRM pour mon entreprise : Salesforce, HubSpot, et Pipedrive. Dis-moi laquelle choisir.",
+          "after": "[FORMAT : TABLEAU DÉCISIONNEL MULTICRITÈRES]\n\n## 📊 ANALYSE COMPARATIVE CRM - RECOMMANDATION EXÉCUTIVE\n\n### ⚡ DÉCISION RAPIDE\n**🏆 Recommandation : HubSpot** pour votre contexte PME en croissance\n\n### 📈 ANALYSE DÉTAILLÉE\n\n| Critères (Pondération) | Salesforce | HubSpot | Pipedrive |\n|------------------------|------------|---------|------------|\n| **💰 Coût Total (25%)** | ❌ €€€€ | ✅ €€ | ✅ €€ |\n| • Licence/user/mois | 125€ | 45€ | 35€ |\n| • Coût implémentation | 15-50K€ | 2-5K€ | 500-2K€ |\n| • TCO 3 ans (10 users) | ~65K€ | ~20K€ | ~15K€ |\n| | | | |\n| **⚙️ Fonctionnalités (20%)** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ |\n| • Sales automation | Excellent | Très bon | Bon |\n| • Marketing intégré | Add-on cher | ✅ Natif | ❌ Limité |\n| • Service client | Add-on | ✅ Inclus | Basique |\n| • Analytics | Advanced | Bon | Basique |\n| | | | |\n| **🚀 Facilité Adoption (30%)** | ❌ Complexe | ✅ Intuitif | ✅ Simple |\n| • Courbe apprentissage | 3-6 mois | 2-4 sem | 1-2 sem |\n| • UI/UX | Datée | Moderne | Moderne |\n| • Onboarding | Consultant | Self-service | Self-service |\n| | | | |\n| **📈 Scalabilité (15%)** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐ |\n| • Limite users | Illimité | Illimité | Illimité |\n| • Customisation | Infinie | Bonne | Limitée |\n| • API/Intégrations | 3000+ | 1000+ | 300+ |\n| | | | |\n| **🛟 Support (10%)** | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ |\n| • Disponibilité | 24/5 | 24/7 | Business hours |\n| • Langues | Multi | Multi | English mainly |\n| • Ressources | Immense | Excellente | Bonne |\n\n### 🎯 SCORING FINAL (sur 100)\n```\nHubSpot:    ███████████████████░░ 82/100 ← GAGNANT\nSalesforce: ██████████████░░░░░░ 71/100\nPipedrive:  ████████████░░░░░░░░ 63/100\n```\n\n### ✅ PLAN D'ACTION RECOMMANDÉ\n\n**Semaine 1-2 : Validation**\n☐ Essai gratuit HubSpot (14 jours)\n☐ POC avec 3 commerciaux pilotes\n☐ Import 100 contacts test\n\n**Semaine 3-4 : Décision**\n☐ Feedback équipe pilote\n☐ Négociation tarif annuel (-20% possible)\n☐ Validation IT/Sécurité\n\n**Mois 2 : Déploiement**\n☐ Formation équipe complète\n☐ Migration données (prévoir 3 jours)\n☐ Go-live progressif par équipe\n\n### ⚠️ POINTS D'ATTENTION\n• HubSpot: Vérifier RGPD compliance pour marché EU\n• Budget formation: Prévoir 2K€ additionnels\n• Backup plan: Pipedrive si budget très contraint",
+          "explanation": "Voyez la différence ! Le format tableau avec scoring, icônes visuels, et plan d'action transforme une analyse complexe en décision claire. Un décideur peut scanner en 30 secondes et avoir tous les éléments. Le format fait passer l'info de 'mur de texte' à 'outil de décision'.",
+          "duration": 90
+        },
+        "exercise": {
+          "type": "transform",
+          "instruction": "Transformez cette information brute en 3 formats différents pour 3 audiences : CEO, équipe technique, client. Observez l'impact du format.",
+          "starter": "Information brute : \n'Notre projet de refonte du site e-commerce a pris 2 mois de retard. Causes : changements de specs clients (40%), bugs techniques (30%), manque de ressources (30%). Impact : lancement repoussé à Q2, surcoût de 150K€, 3 features reportées. Actions : taskforce dédiée, freeze des specs, 2 devs en renfort.'",
+          "solution": "**FORMAT 1 : CEO (Pyramide Inversée Executive)**\n\n**⚠️ ALERTE PROJET : Action Required**\n\n**DÉCISION NÉCESSAIRE:** Validation budget additionnel 150K€ pour sauver le lancement Q2.\n\n**IMPACT BUSINESS:**\n• Retard : 2 mois (Q1 → Q2 2024)\n• Surcoût : 150K€\n• Risque : -500K€ de CA si on rate la saison\n\n**CAUSES (par ordre d'impact):**\n1. Changements specs client (40%) → RÉSOLU : Specs gelées\n2. Bugs techniques (30%) → EN COURS : 2 devs seniors ajoutés  \n3. Sous-effectif (30%) → EN COURS : Taskforce créée\n\n**VOTRE DÉCISION:**\n□ Approuver budget + ressources → Livraison 15 avril\n□ Réduire scope → Livraison 1er mars mais -3 features\n□ Reporter à Q3 → Économie mais perte saison haute\n\n---\n\n**FORMAT 2 : ÉQUIPE TECH (Tableau Kanban Technique)**\n\n```markdown\n## 🚨 WAR ROOM - Site Refonte Status\n\n| 🔴 BLOCKERS | 🟡 IN PROGRESS | ✅ RESOLVED |\n|-------------|----------------|-------------|\n| • Payment gateway integration failing (P0) | • Fixing checkout flow bugs (2 devs) | • Specs freeze ✔ |\n| • Performance: 8s load time (target: 2s) | • Refactoring product catalog | • Dev env stabilized ✔ |\n| • Mobile CSS breaks on Safari | • Unit tests coverage (42%→80%) | • CI/CD pipeline ✔ |\n\n### 📊 TECH METRICS\n- Bug count: 47 P0-P1 (was 134)\n- Test coverage: 42% (target 80%)\n- Performance score: 34/100 (target 90)\n- Sprint velocity: 23pts (need 45pts)\n\n### 🎯 SPRINT FOCUS (Next 2 weeks)\n1. FIX: Payment integration (John + Marie)\n2. FIX: Performance optimization (Tom)\n3. FIX: Mobile responsive (Sarah)\n4. DEFER: Admin panel v2 (→ post-launch)\n\n### 🆘 NEED FROM TEAM\n- Weekend war room 10-11 Feb?\n- Who can take Safari debugging?\n- Code review capacity needed\n```\n\n---\n\n**FORMAT 3 : CLIENT (Timeline Visuelle Rassurante)**\n\n**📅 Mise à Jour Projet : Nouveau Planning Optimisé**\n\nCher Client,\n\nSuite à notre volonté commune de perfection, voici le planning ajusté :\n\n**✨ CE QUI EST PRÊT:**\n```\n[████████████████░░░░] 65% Complete\n```\n✅ Design validé et adoré par vos équipes\n✅ 70% des fonctionnalités déjà développées\n✅ Compatibilité mobile parfaite\n\n**📍 NOUVEAU TIMELINE:**\n```\nFévrier          Mars            Avril\n│────────────────│────────────────│──────🎯\n│              │              │      │\n│   Dev Final  │  Tests & QA  │  LAUNCH!\n│              │              │      │\n▼              ▼              ▼      ▼\n5 Fév         5 Mars        1 Avr  15 Avr\n(Aujourd'hui) (Beta privée) (Soft) (Public)\n```\n\n**🎁 BONUS POUR LA PATIENCE:**\n• Feature supplémentaire offerte : Wishlist avancée\n• Support premium 6 mois inclus (valeur 10K€)\n• Formation équipe étendue à 3 jours\n\n**PROCHAINES ÉTAPES:**\n• 12 Fév : Demo des nouvelles fonctionnalités\n• 5 Mars : Accès beta pour vos tests\n• 15 Avril : 🚀 Go-live avec événement de lancement\n\nVotre satisfaction est notre priorité absolue.",
+          "hints": [
+            "CEO = Décision rapide, impact business, options claires",
+            "Tech = Détails techniques, métriques, qui fait quoi",
+            "Client = Positif, timeline claire, compensation",
+            "Le même contenu, 3 histoires différentes",
+            "Format visuel améliore la compréhension"
+          ],
+          "validation": {
+            "checkPoints": [
+              "3 formats distincts et adaptés",
+              "CEO : Focus sur décision et impact business",
+              "Tech : Détails opérationnels et métriques",
+              "Client : Ton positif et rassurant",
+              "Utilisation d'éléments visuels appropriés"
+            ],
+            "feedbackCorrect": "Excellent ! Vous maîtrisez l'art du format adaptatif. Même information, 3 impacts totalement différents. C'est ça le pouvoir du format !",
+            "feedbackIncorrect": "Bonne tentative ! Pensez à : 1) CEO veut décisions pas détails, 2) Tech veut précision et actions, 3) Client veut être rassuré. Adaptez ton et niveau de détail."
+          },
+          "duration": 120
+        },
+        "recap": {
+          "keyPoint": "🔑 Format = Impact. Tableau pour comparer, Timeline pour planifier, Pyramide pour décider. Choisir le bon format multiplie par 10 la clarté de votre message.",
+          "duration": 15
+        }
+      },
+      "metadata": {
+        "difficulty": "intermediate",
+        "tags": ["formats", "présentation", "structuration", "visualisation"],
+        "estimatedTime": 5,
+        "prerequisites": ["cap-1-3"]
+      }
+    },
+    {
+      "id": "cap-1-12",
+      "moduleId": "module-1-fundamentals",
+      "order": 12,
+      "title": "Votre Premier Template - Automatisez Votre Succès",
+      "duration": 5,
+      "sections": {
+        "hook": {
+          "text": "Un template bien conçu = 100 heures gagnées par an. Je vais vous apprendre à créer des templates réutilisables qui transforment n'importe quelle tâche répétitive en processus automatique. Prêt à ne plus jamais partir de zéro ?",
+          "duration": 15
+        },
+        "concept": {
+          "content": "Un template n'est pas juste un modèle, c'est un système intelligent qui s'adapte à vos besoins tout en gardant une structure optimale.\n\n**ANATOMIE D'UN TEMPLATE PROFESSIONNEL**\n\n**1. STRUCTURE MODULAIRE**\n• Sections indépendantes et réutilisables\n• Variables clairement identifiées {{variable}}\n• Conditionnels pour adaptation [SI...ALORS]\n• Parties optionnelles [OPTIONNEL]\n\n**2. SYSTÈME DE VARIABLES**\n```\n{{company_name}} : Nom de l'entreprise\n{{industry}} : Secteur d'activité\n{{problem}} : Problème à résoudre\n{{budget_range}} : Fourchette budgétaire\n{{timeline}} : Délai de réalisation\n```\n\n**3. LOGIQUE CONDITIONNELLE**\n• SI budget < 10K€ ALORS solution_simple\n• SI urgence = haute ALORS process_accéléré\n• SI client = B2B ALORS ton_formel SINON ton_casual\n\n**4. GARDE-FOUS INTÉGRÉS**\n• Validations automatiques\n• Alertes sur incohérences\n• Limites et contraintes pré-définies\n• Escalade si cas edge\n\n**5. META-INSTRUCTIONS**\nInstructions pour l'IA sur comment utiliser le template :\n• Niveau de détail requis\n• Ton et style à adopter\n• Éléments à toujours inclure\n• Red flags à détecter\n\n**LES 5 TEMPLATES INDISPENSABLES**\n\n**1. EMAIL PROFESSIONNEL**\nPour : Prospection, suivi, relance, proposition\n\n**2. ANALYSE DE PROBLÈME**\nPour : Diagnostic, audit, recommandations\n\n**3. PLAN D'ACTION**\nPour : Projet, stratégie, transformation\n\n**4. RAPPORT DE SYNTHÈSE**\nPour : Réunion, analyse, veille\n\n**5. PROPOSITION COMMERCIALE**\nPour : Devis, pitch, réponse appel d'offres\n\n**LA MÉTHODE V.A.R.I.A.B.L.E**\n• **V**ariables identifiées\n• **A**daptabilité maximale\n• **R**éutilisabilité garantie\n• **I**nstructions claires\n• **A**utomatisation possible\n• **B**ase de connaissances\n• **L**ogique conditionnelle\n• **E**volution continue",
+          "code": "// Template Engine Avancé\nclass TemplateEngine {\n  constructor(template) {\n    this.template = template;\n    this.variables = this.extractVariables(template);\n    this.conditions = this.extractConditions(template);\n  }\n  \n  // Remplacer les variables\n  fill(data) {\n    let output = this.template;\n    \n    // Remplacer variables simples\n    for (let [key, value] of Object.entries(data)) {\n      output = output.replace(\n        new RegExp(`{{${key}}}`, 'g'), \n        value\n      );\n    }\n    \n    // Appliquer conditions\n    output = this.applyConditions(output, data);\n    \n    // Retirer sections optionnelles vides\n    output = this.cleanOptional(output, data);\n    \n    return output;\n  }\n  \n  // Validation des données\n  validate(data) {\n    const missing = [];\n    const invalid = [];\n    \n    this.variables.forEach(v => {\n      if (!data[v.name]) missing.push(v.name);\n      if (!v.validator(data[v.name])) invalid.push(v.name);\n    });\n    \n    return {\n      isValid: missing.length === 0 && invalid.length === 0,\n      missing,\n      invalid\n    };\n  }\n}",
+          "duration": 90
+        },
+        "demo": {
+          "before": "Écris un email de prospection",
+          "after": "[TEMPLATE EMAIL PROSPECTION B2B - V2.3]\n\n## META-INSTRUCTIONS POUR L'IA\n- Ton : Professionnel mais humain, pas trop commercial\n- Longueur : 150 mots maximum\n- Focus : Valeur pour le prospect, pas features produit\n- Personnalisation : Toujours mentionner élément spécifique entreprise\n- CTA : Un seul, simple et non-engageant\n\n## TEMPLATE STRUCTURE\n\n**Objet : {{pain_point}} chez {{company_name}} - {{value_prop_short}}**\n\nBonjour {{first_name}},\n\n[ACCROCHE PERSONNALISÉE]\nJ'ai vu que {{company_name}} {{recent_achievement_or_news}}. Félicitations ! \n[OU SI INFO NÉGATIVE]\nJ'ai remarqué que {{company_name}} fait face à {{specific_challenge}}.\n\n[TRANSITION VALEUR]\n{{transition_naturelle}} En travaillant avec {{similar_company_1}} et {{similar_company_2}} dans le {{industry}}, nous avons découvert que {{key_insight}}.\n\n[PROPOSITION DE VALEUR]\nNous avons aidé ces entreprises à :\n• {{benefit_1_quantified}} (ex: réduire X de Y%)\n• {{benefit_2_quantified}} \n• {{benefit_3_quantified}}\n\n[CTA NON-INVASIF]\n[SI haute_priorité]\nAvez-vous 15 minutes cette semaine pour discuter de comment nous pourrions {{specific_value_for_them}} ?\n[SINON]\nSeriez-vous intéressé par {{ressource_valuable}} que nous avons créé sur {{leur_problème}} ?\n\n[SIGNATURE]\nÀ votre disposition,\n{{sender_name}}\n{{sender_title}} | {{sender_company}}\n{{optional_ps}}\n\n## EXEMPLE REMPLI\n\n**Objet : Coûts d'acquisition clients chez TechCorp - Division par 3 possible**\n\nBonjour Marie,\n\nJ'ai vu que TechCorp vient de lever 15M€ en Série A. Félicitations !\n\nCette croissance rapide s'accompagne souvent d'une explosion des coûts d'acquisition. En travaillant avec Doctolib et Qonto dans la fintech, nous avons découvert que 67% du budget marketing était gaspillé sur des canaux non-rentables.\n\nNous avons aidé ces entreprises à :\n• Réduire leur CAC de 68% en 6 mois\n• Augmenter la LTV de 45%\n• Automatiser 80% du nurturing\n\nAvez-vous 15 minutes jeudi ou vendredi pour discuter de comment nous pourrions optimiser votre funnel d'acquisition ?\n\nÀ votre disposition,\nThomas Martin\nHead of Growth | GrowthLab\n\nPS : J'ai préparé une analyse gratuite de vos principaux concurrents si ça peut vous aider.\n\n## VARIABLES À FOURNIR\n```json\n{\n  \"required\": [\n    \"company_name\",\n    \"first_name\",\n    \"industry\",\n    \"pain_point\",\n    \"value_prop_short\",\n    \"sender_name\",\n    \"sender_title\",\n    \"sender_company\"\n  ],\n  \"optional\": [\n    \"recent_achievement_or_news\",\n    \"specific_challenge\",\n    \"similar_company_1\",\n    \"similar_company_2\",\n    \"key_insight\",\n    \"benefits_quantified\",\n    \"optional_ps\"\n  ],\n  \"conditional\": [\n    \"priority_level\",\n    \"relationship_stage\",\n    \"company_size\"\n  ]\n}\n```",
+          "explanation": "Regardez la transformation ! D'une demande vague à un système complet réutilisable. Ce template peut générer des centaines d'emails personnalisés en gardant une structure optimale. Les variables permettent la personnalisation, les conditions adaptent le message, les méta-instructions garantissent la qualité. C'est la différence entre refaire à chaque fois et avoir un système.",
+          "duration": 90
+        },
+        "exercise": {
+          "type": "create",
+          "instruction": "Créez votre propre template professionnel pour une tâche que vous faites régulièrement. Incluez : structure, variables, conditions, et au moins un exemple rempli.",
+          "starter": "## MON TEMPLATE : {{nom_du_template}}\n\n### META-INSTRUCTIONS\n- Objectif : \n- Ton : \n- Longueur : \n- Contraintes : \n\n### STRUCTURE\n[Construire ici avec sections et {{variables}}]\n\n### SYSTÈME DE VARIABLES\n- Required : \n- Optional : \n- Conditional : \n\n### LOGIQUE CONDITIONNELLE\n[SI... ALORS...]\n\n### EXEMPLE REMPLI\n[Un cas concret]",
+          "solution": "## MON TEMPLATE : RAPPORT DE RÉUNION ACTIONNABLE\n\n### META-INSTRUCTIONS\n- Objectif : Synthétiser réunion en décisions et actions claires\n- Ton : Factuel, précis, orienté action\n- Longueur : 1 page maximum (400 mots)\n- Contraintes : Toujours inclure qui/quoi/quand, pas d'ambiguïté\n- Format : Markdown pour partage facile\n\n### STRUCTURE\n\n# 📊 RÉUNION : {{meeting_title}}\n**Date :** {{date}} | **Durée :** {{duration}} | **Type :** {{meeting_type}}\n\n## 👥 PARTICIPANTS\n{{attendees_list}}\n[OPTIONNEL : Excusés : {{excused_list}}]\n\n## 🎯 OBJECTIF\n{{meeting_objective}}\n\n## ✅ DÉCISIONS PRISES ({{decisions_count}})\n[POUR CHAQUE décision]\n{{decision_number}}. **{{decision_title}}**\n   - Décision : {{decision_detail}}\n   - Rationnel : {{why_decided}}\n   - Impact : {{expected_impact}}\n   - Vote : {{vote_result}} [SI vote]\n\n## 📋 ACTIONS À SUIVRE ({{actions_count}})\n| Action | Responsable | Deadline | Priorité |\n|--------|-------------|----------|----------|\n[POUR CHAQUE action]\n| {{action_description}} | @{{owner}} | {{due_date}} | {{priority_emoji}} |\n\n## 💡 POINTS CLÉS DISCUTÉS\n[MAXIMUM 3 points]\n• {{key_point_1}}\n• {{key_point_2}}\n[SI existe] • {{key_point_3}}\n\n## ⚠️ RISQUES/BLOCAGES IDENTIFIÉS\n[SI risques_exist = true]\n| Risque | Impact | Mitigation | Owner |\n|--------|--------|------------|--------|\n| {{risk}} | {{impact_level}} | {{mitigation}} | @{{risk_owner}} |\n[SINON]\n✅ Aucun risque majeur identifié\n\n## 📅 PROCHAINE RÉUNION\n[SI followup_needed = true]\n**Date :** {{next_meeting_date}}\n**Objectif :** {{next_meeting_goal}}\n**À préparer :** {{prep_needed}}\n[SINON]\nPas de suivi prévu - Actions suivies par écrit\n\n---\n*Rapport généré le {{report_date}} par {{report_author}}*\n*Questions/Corrections : {{contact_email}}*\n\n### SYSTÈME DE VARIABLES\n\n**Required:**\n```json\n{\n  \"meeting_title\": \"string\",\n  \"date\": \"DD/MM/YYYY\",\n  \"duration\": \"Xh Xmin\",\n  \"meeting_type\": \"[Stratégique|Opérationnel|Projet|Crise]\",\n  \"attendees_list\": \"array\",\n  \"meeting_objective\": \"string\",\n  \"decisions\": \"array<{title, detail, why, impact}>\",\n  \"actions\": \"array<{description, owner, due_date, priority}>\",\n  \"key_points\": \"array[1-3]\",\n  \"report_author\": \"string\"\n}\n```\n\n**Optional:**\n```json\n{\n  \"excused_list\": \"array\",\n  \"risks\": \"array<{risk, impact, mitigation, owner}>\",\n  \"next_meeting\": \"{date, goal, prep}\",\n  \"vote_results\": \"string\",\n  \"contact_email\": \"email\"\n}\n```\n\n**Conditional:**\n- SI meeting_type = \"Crise\" ALORS section \"Actions Immédiates\" en premier\n- SI decisions_count = 0 ALORS ajouter note \"Réunion d'information\"\n- SI duration > 2h ALORS suggérer split future meetings\n- SI actions > 10 ALORS grouper par projet/theme\n\n### LOGIQUE CONDITIONNELLE\n\n```\nSI meeting_type = \"Crise\" ALORS {\n  Ajouter section \"🚨 ACTIONS CRITIQUES SOUS 24H\" en haut\n  priority_emoji = \"🔴\" pour toutes actions\n  Forcer next_meeting dans 48h max\n}\n\nSI attendees_count > 8 ALORS {\n  Suggérer : \"⚠️ Réunion large - Considérer groupes de travail\"\n}\n\nSI actions_without_owner > 0 ALORS {\n  ERREUR : \"Toute action doit avoir un responsable\"\n}\n```\n\n### EXEMPLE REMPLI\n\n# 📊 RÉUNION : Lancement Produit V2.0\n**Date :** 15/01/2024 | **Durée :** 1h 30min | **Type :** Projet\n\n## 👥 PARTICIPANTS\nMarie (PM), Thomas (Dev Lead), Sarah (Marketing), Alex (Sales), Lisa (Design)\n\n## 🎯 OBJECTIF\nValider le go-to-market strategy et aligner les équipes sur le lancement Q2\n\n## ✅ DÉCISIONS PRISES (3)\n1. **Date de lancement**\n   - Décision : 15 avril 2024 (soft launch), 1er mai (public)\n   - Rationnel : Éviter vacances Pâques, maximiser impact PR\n   - Impact : 2 semaines de buffer pour corrections\n\n2. **Pricing strategy**\n   - Décision : Freemium avec tier à 49€/mois\n   - Rationnel : Analyse concurrence montre sweet spot à 45-55€\n   - Impact : Prévision 30% conversion free→paid en 6 mois\n\n3. **Beta testers**\n   - Décision : 100 clients VIP invités dès février\n   - Rationnel : Feedback early adopters critique\n   - Impact : 2 mois de real-world testing\n\n## 📋 ACTIONS À SUIVRE (5)\n| Action | Responsable | Deadline | Priorité |\n|--------|-------------|----------|----------|\n| Créer landing page beta | @Lisa | 25/01 | 🔴 |\n| Préparer email sequence | @Sarah | 30/01 | 🟡 |\n| Finaliser API documentation | @Thomas | 01/02 | 🔴 |\n| Identifier 100 beta testers | @Alex | 01/02 | 🟡 |\n| Setup monitoring dashboard | @Thomas | 05/02 | 🟢 |\n\n## 💡 POINTS CLÉS DISCUTÉS\n• Migration des users V1→V2 nécessite communication forte\n• Competition avec ProductX annonce aussi avril - surveillance needed\n• Support team needs training minimum 2 weeks before launch\n\n## ⚠️ RISQUES/BLOCAGES IDENTIFIÉS\n| Risque | Impact | Mitigation | Owner |\n|--------|--------|------------|--------|\n| API performance sous charge | Élevé | Load testing dès février | @Thomas |\n| Retard feature X | Moyen | Version light acceptable | @Marie |\n\n## 📅 PROCHAINE RÉUNION\n**Date :** 29/01/2024 14h\n**Objectif :** Review beta feedback et ajustements\n**À préparer :** Chacun présente avancement actions\n\n---\n*Rapport généré le 15/01/2024 par Marie Martin*\n*Questions/Corrections : marie@company.com*",
+          "hints": [
+            "Choisissez une tâche que vous faites vraiment souvent",
+            "Identifiez toutes les variables qui changent",
+            "Prévoyez des conditions pour différents cas",
+            "Incluez des garde-fous contre les erreurs",
+            "Testez avec un exemple réel"
+          ],
+          "validation": {
+            "checkPoints": [
+              "Template avec structure claire et sections",
+              "Au moins 5 variables identifiées",
+              "Logique conditionnelle présente",
+              "Meta-instructions pour l'IA",
+              "Exemple concret et réaliste fourni"
+            ],
+            "feedbackCorrect": "Félicitations ! Vous avez créé votre premier template professionnel ! Réutilisable, adaptable, et gain de temps garanti. Vous venez d'automatiser votre succès. C'est la fin parfaite pour ce module fondamental !",
+            "feedbackIncorrect": "Bon début ! Assurez-vous d'avoir : 1) Structure complète avec sections, 2) Variables clairement définies {{var}}, 3) Conditions SI/ALORS, 4) Un exemple concret rempli. Un bon template doit être immédiatement réutilisable."
+          },
+          "duration": 120
+        },
+        "recap": {
+          "keyPoint": "🔑 Template = Système réutilisable. Structure + Variables + Conditions + Meta-instructions = Automatisation. Investir 30 min dans un template = Gagner 100 heures/an.",
+          "duration": 15
+        }
+      },
+      "metadata": {
+        "difficulty": "intermediate",
+        "tags": ["templates", "automatisation", "productivité", "système"],
+        "estimatedTime": 5,
+        "prerequisites": ["cap-1-11"]
+      }
+    }
+  ]
+}

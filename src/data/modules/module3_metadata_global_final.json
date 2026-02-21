@@ -1,0 +1,318 @@
+{
+  "module": {
+    "id": "module-3-pratique",
+    "order": 3,
+    "title": "Pratique et Maîtrise - Devenez Expert",
+    "description": "Applications avancées et projets concrets pour maîtriser le Prompt Engineering. Ce module transforme les connaissances théoriques en compétences pratiques expertes.",
+    "duration": 60,
+    "icon": "🎓",
+    "color": "#7C3AED",
+    "version": "1.0.0",
+    "lastUpdated": "2024-01-15",
+    "author": "ESGI E-Learning Team",
+    "language": "fr-FR",
+    "targetAudience": "Grand public - Niveau avancé",
+    "format": "Microlearning - Capsules de 5 minutes",
+    "sections": [
+      {
+        "id": "section-3-1",
+        "title": "Chaînage de Prompts",
+        "description": "Maîtrisez l'art d'orchestrer des prompts complexes en séquences intelligentes",
+        "capsules": ["cap-3-25", "cap-3-26", "cap-3-27"],
+        "duration": 15,
+        "learningOutcomes": [
+          "Décomposer des tâches complexes",
+          "Créer des pipelines automatisés",
+          "Orchestrer des systèmes multi-agents"
+        ]
+      },
+      {
+        "id": "section-3-2",
+        "title": "Templates Avancés",
+        "description": "Créez et gérez une bibliothèque de templates professionnels réutilisables",
+        "capsules": ["cap-3-28", "cap-3-29", "cap-3-30"],
+        "duration": 15,
+        "learningOutcomes": [
+          "Concevoir des templates universels",
+          "Organiser une bibliothèque efficace",
+          "Automatiser les tâches répétitives"
+        ]
+      },
+      {
+        "id": "section-3-3",
+        "title": "Cas Pratiques Complets",
+        "description": "Applications concrètes pour des besoins professionnels quotidiens",
+        "capsules": ["cap-3-31", "cap-3-32", "cap-3-33"],
+        "duration": 15,
+        "learningOutcomes": [
+          "Système email professionnel",
+          "Machine à contenu multi-plateformes",
+          "Analyseur de documents intelligent"
+        ]
+      },
+      {
+        "id": "section-3-4",
+        "title": "Projet Final",
+        "description": "Créez votre assistant IA personnel et lancez votre carrière d'expert",
+        "capsules": ["cap-3-34", "cap-3-35", "cap-3-36"],
+        "duration": 15,
+        "learningOutcomes": [
+          "Configurer un assistant personnel",
+          "Optimiser les performances",
+          "Planifier votre progression professionnelle"
+        ]
+      }
+    ],
+    "capsules_summary": [
+      {
+        "id": "cap-3-25",
+        "title": "Le Pouvoir du Chaînage - Divisez pour Mieux Régner",
+        "keyTakeaway": "Maîtrisez les 5 patterns de chaînage pour orchestrer l'IA comme un chef d'orchestre",
+        "difficulty": "advanced",
+        "practiceTime": 120
+      },
+      {
+        "id": "cap-3-26",
+        "title": "Pipeline de Création - Votre Usine à Contenu",
+        "keyTakeaway": "Construisez des pipelines automatisés qui transforment des inputs bruts en outputs raffinés",
+        "difficulty": "advanced",
+        "practiceTime": 120
+      },
+      {
+        "id": "cap-3-27",
+        "title": "Multi-Agents Simples - Une Équipe d'Experts à Votre Service",
+        "keyTakeaway": "Orchestrez plusieurs IA spécialisées pour résoudre des problèmes complexes",
+        "difficulty": "expert",
+        "practiceTime": 120
+      },
+      {
+        "id": "cap-3-28",
+        "title": "Template Universel - Le Couteau Suisse du Prompt",
+        "keyTakeaway": "Créez des meta-prompts adaptables avec variables et logique conditionnelle",
+        "difficulty": "expert",
+        "practiceTime": 120
+      },
+      {
+        "id": "cap-3-29",
+        "title": "Bibliothèque Personnelle - Vos 10 Templates Indispensables",
+        "keyTakeaway": "Organisez votre arsenal de productivité avec un système de gestion professionnel",
+        "difficulty": "advanced",
+        "practiceTime": 120
+      },
+      {
+        "id": "cap-3-30",
+        "title": "Automatisation Simple - Gagnez 1h par Jour Minimum",
+        "keyTakeaway": "Implémentez 4 niveaux d'automatisation pour récupérer votre temps",
+        "difficulty": "advanced",
+        "practiceTime": 120
+      },
+      {
+        "id": "cap-3-31",
+        "title": "Assistant Email Pro - Plus Jamais de Syndrome de la Page Blanche",
+        "keyTakeaway": "Système complet d'analyse et génération d'emails professionnels",
+        "difficulty": "advanced",
+        "practiceTime": 120
+      },
+      {
+        "id": "cap-3-32",
+        "title": "Créateur de Contenu - Blog, Social Media, Newsletter en Pilote Auto",
+        "keyTakeaway": "Transformez 1 idée en 30 contenus optimisés pour chaque plateforme",
+        "difficulty": "advanced",
+        "practiceTime": 120
+      },
+      {
+        "id": "cap-3-33",
+        "title": "Analyseur de Documents - Comprendre N'importe Quoi en 2 Minutes",
+        "keyTakeaway": "Extrayez insights et actions de tout document avec précision chirurgicale",
+        "difficulty": "advanced",
+        "practiceTime": 120
+      },
+      {
+        "id": "cap-3-34",
+        "title": "Votre Assistant Personnel - Créez VOTRE IA Sur-Mesure",
+        "keyTakeaway": "Configurez un assistant IA personnalisé avec 7 piliers essentiels",
+        "difficulty": "expert",
+        "practiceTime": 120
+      },
+      {
+        "id": "cap-3-35",
+        "title": "Test et Optimisation - Peaufinez Jusqu'à la Perfection",
+        "keyTakeaway": "Transformez des prompts corrects en prompts exceptionnels par l'itération",
+        "difficulty": "expert",
+        "practiceTime": 120
+      },
+      {
+        "id": "cap-3-36",
+        "title": "Next Steps et Ressources - Continuez l'Aventure !",
+        "keyTakeaway": "Votre feuille de route complète pour devenir un expert reconnu",
+        "difficulty": "all-levels",
+        "practiceTime": 120
+      }
+    ],
+    "statistics": {
+      "totalCapsules": 12,
+      "totalDuration": 60,
+      "averageDurationPerCapsule": 5,
+      "totalExercises": 12,
+      "totalDemos": 12,
+      "estimatedPracticeTime": 1440,
+      "difficultyDistribution": {
+        "advanced": 8,
+        "expert": 3,
+        "all-levels": 1
+      },
+      "contentTypes": {
+        "concepts": 12,
+        "demos": 12,
+        "exercises": 12,
+        "recaps": 12
+      }
+    },
+    "prerequisites": {
+      "required": [
+        "module-1-decouverte",
+        "module-2-techniques"
+      ],
+      "recommended": [
+        "Pratique régulière de ChatGPT ou Claude",
+        "Compréhension des concepts de base du Prompt Engineering",
+        "Expérience avec au moins 3 types de prompts différents"
+      ],
+      "skills": [
+        "Capacité à structurer des prompts complexes",
+        "Compréhension de la logique conditionnelle",
+        "Familiarité avec les formats de données (JSON, Markdown)"
+      ]
+    },
+    "learningObjectives": {
+      "primary": [
+        "Maîtriser les techniques avancées de Prompt Engineering",
+        "Créer des systèmes automatisés de génération",
+        "Développer une expertise reconnue dans le domaine"
+      ],
+      "secondary": [
+        "Construire une bibliothèque de templates réutilisables",
+        "Optimiser la productivité quotidienne",
+        "Préparer une carrière dans l'IA"
+      ],
+      "competencies": [
+        "Orchestration de prompts complexes",
+        "Automatisation de workflows",
+        "Analyse et synthèse de documents",
+        "Configuration d'assistants IA",
+        "Optimisation et testing systématique"
+      ]
+    },
+    "assessmentCriteria": {
+      "formative": [
+        "Exercices pratiques dans chaque capsule",
+        "Auto-évaluation avec feedback immédiat",
+        "Challenges progressifs de difficulté croissante"
+      ],
+      "summative": [
+        "Création d'un assistant personnel complet",
+        "Portfolio de 10 templates professionnels",
+        "Projet d'automatisation fonctionnel"
+      ],
+      "certification": {
+        "level": "Expert",
+        "requirements": [
+          "Complétion de toutes les capsules",
+          "Score minimum 80% aux exercices",
+          "Projet final validé"
+        ],
+        "badge": "Prompt Engineering Expert - Niveau 3"
+      }
+    },
+    "resources": {
+      "included": [
+        "12 templates professionnels prêts à l'emploi",
+        "Guide de référence rapide",
+        "Checklist d'optimisation",
+        "Roadmap de progression personnalisée"
+      ],
+      "external": [
+        "Accès communauté Discord",
+        "Newsletter hebdomadaire",
+        "Webinaires mensuels",
+        "Support technique"
+      ],
+      "tools": [
+        "ChatGPT (gratuit ou Plus)",
+        "Claude.ai (gratuit ou Pro)",
+        "Notion ou équivalent pour organisation",
+        "Zapier ou Make pour automatisation"
+      ]
+    },
+    "supportedPlatforms": {
+      "web": true,
+      "mobile": true,
+      "tablet": true,
+      "offline": false,
+      "minimumRequirements": {
+        "browser": "Chrome 90+, Firefox 88+, Safari 14+",
+        "internet": "Connexion stable requise",
+        "storage": "100 MB pour ressources téléchargeables"
+      }
+    },
+    "updates": {
+      "frequency": "Mensuelle",
+      "lastMajorUpdate": "2024-01-15",
+      "plannedUpdates": [
+        "Ajout de cas pratiques sectoriels",
+        "Intégration GPT-5 quand disponible",
+        "Templates pour nouvelles plateformes IA"
+      ]
+    },
+    "engagement": {
+      "expectedCompletionTime": "2-3 semaines",
+      "dailyCommitment": "20-30 minutes",
+      "retentionStrategies": [
+        "Microlearning en capsules courtes",
+        "Pratique immédiate applicable",
+        "Progression visible et mesurable",
+        "Communauté de support active"
+      ]
+    },
+    "successMetrics": {
+      "learnerOutcomes": [
+        "Gain de productivité : 5-10h/semaine",
+        "Taux de succès prompts : 95%+",
+        "Templates créés : 20+",
+        "ROI formation : 10x en 3 mois"
+      ],
+      "businessImpact": [
+        "Réduction temps tâches répétitives : 70%",
+        "Amélioration qualité outputs : 85%",
+        "Adoption IA dans l'équipe : 100%",
+        "Innovation processus : 5+ par mois"
+      ]
+    },
+    "tags": [
+      "prompt-engineering",
+      "intelligence-artificielle",
+      "automatisation",
+      "productivité",
+      "templates",
+      "multi-agents",
+      "optimisation",
+      "carrière-ai",
+      "expert-level",
+      "hands-on"
+    ],
+    "seo": {
+      "metaTitle": "Module 3 : Pratique et Maîtrise du Prompt Engineering - Formation Expert",
+      "metaDescription": "Devenez expert en Prompt Engineering avec 12 capsules pratiques avancées. Chaînage, templates, automatisation et projets concrets.",
+      "keywords": [
+        "prompt engineering avancé",
+        "formation IA expert",
+        "templates prompts",
+        "automatisation IA",
+        "multi-agents",
+        "assistant personnel IA",
+        "optimisation prompts",
+        "carrière prompt engineer"
+      ]
+    }
+  }
+}

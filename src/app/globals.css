@@ -1,0 +1,370 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Correction pour le débordement de code */
+@layer utilities {
+  pre {
+    max-width: 100%;
+    overflow-x: auto;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+  }
+  
+  code {
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+
+    /* PWA Variables */
+    --safe-area-top: env(safe-area-inset-top);
+    --safe-area-right: env(safe-area-inset-right);
+    --safe-area-bottom: env(safe-area-inset-bottom);
+    --safe-area-left: env(safe-area-inset-left);
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  
+  /* Mode sombre */
+  .dark {
+    color-scheme: dark;
+  }
+  
+  .dark body {
+    @apply bg-gray-900 text-gray-100;
+  }
+  
+  .dark .bg-white {
+    @apply bg-gray-800;
+  }
+  
+  .dark .text-gray-900 {
+    @apply text-gray-100;
+  }
+  
+  .dark .text-gray-600 {
+    @apply text-gray-300;
+  }
+  
+  .dark .border-gray-200 {
+    @apply border-gray-700;
+  }
+  
+  .dark .bg-gray-50 {
+    @apply bg-gray-800;
+  }
+}
+
+/* ============================================ */
+/*                PWA STYLES                    */
+/* ============================================ */
+
+/* Viewport et Safe Areas */
+@supports (padding: max(0px)) {
+  .safe-top {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+  
+  .safe-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+  
+  .safe-left {
+    padding-left: max(1rem, env(safe-area-inset-left));
+  }
+  
+  .safe-right {
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+}
+
+/* Mode Standalone PWA */
+@media all and (display-mode: standalone) {
+  .pwa-standalone {
+    /* Styles spécifiques quand l'app est installée */
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  /* Masquer certains éléments en mode PWA */
+  .hide-in-pwa {
+    display: none !important;
+  }
+}
+
+/* iOS Specific */
+html.ios {
+  /* Désactiver le bounce scroll sur iOS */
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+html.ios body {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Désactiver la sélection sur les éléments UI */
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Améliorer les tap sur mobile */
+.tap-highlight-transparent {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Boutons optimisés pour le tactile */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Désactiver le zoom sur double tap */
+button,
+input,
+select,
+textarea {
+  touch-action: manipulation;
+}
+
+/* Scrollbar personnalisée pour PWA */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+  }
+}
+
+/* Animation de chargement PWA */
+.pwa-loading {
+  animation: pwa-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pwa-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+}
+
+/* Mode économie de données */
+html.save-data img,
+html.save-data video {
+  filter: blur(2px);
+  opacity: 0.8;
+}
+
+html.save-data img[loading="eager"],
+html.save-data video[autoplay] {
+  display: none;
+}
+
+/* Mode batterie faible */
+html.reduce-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Swipe Indicator */
+.swipe-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    transparent 0%,
+    rgba(59, 130, 246, 0.5) 50%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  animation: swipe-hint 3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 100;
+}
+
+@keyframes swipe-hint {
+  0%, 100% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+}
+
+/* Navigation mobile optimisée */
+@media (max-width: 768px) {
+  /* Ajuster le contenu pour la nav mobile */
+  main {
+    padding-bottom: calc(60px + env(safe-area-inset-bottom));
+  }
+  
+  /* Effet de blur pour la nav */
+  .mobile-nav-blur {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+}
+
+/* Pull to refresh indicator (futur) */
+.ptr-element {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-100%);
+  transition: transform 0.3s;
+}
+
+.ptr-element.ptr-refresh {
+  transform: translateY(0);
+}
+
+/* Optimisations pour les performances */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.no-bounce {
+  overscroll-behavior: none;
+}
+
+/* Styles pour les splash screens */
+.splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* Focus visible pour l'accessibilité */
+.focus-visible:focus {
+  outline: 2px solid #3B82F6;
+  outline-offset: 2px;
+}
+
+/* Masquer le focus pour les clics souris */
+.focus-visible:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Transitions douces pour PWA */
+.pwa-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* État actif pour les éléments tactiles */
+.touch-active:active {
+  transform: scale(0.98);
+  opacity: 0.9;
+}
+
+/* Orientation paysage - ajustements */
+@media (orientation: landscape) and (max-width: 896px) {
+  .landscape-compact {
+    max-height: 50vh;
+    overflow-y: auto;
+  }
+}

@@ -1,0 +1,237 @@
+{
+  "module": {
+    "id": "module-2-techniques",
+    "order": 2,
+    "title": "Techniques Essentielles du Prompt Engineering",
+    "description": "Maîtrisez les techniques avancées qui font la différence",
+    "duration": 60,
+    "icon": "🚀",
+    "color": "#10B981",
+    "capsules": [
+      {
+        "id": "cap-2-13",
+        "moduleId": "module-2-techniques",
+        "order": 13,
+        "title": "Le Secret du Few-Shot - Multiplier la Précision par 10",
+        "duration": 5,
+        "sections": {
+          "hook": {
+            "text": "Et si je vous disais qu'avec seulement 3 exemples bien choisis, vous pouvez passer de 40% à 95% de précision ? Le few-shot learning est l'arme secrète que 90% des utilisateurs ignorent. Dans 5 minutes, vous ferez partie de l'élite.",
+            "duration": 15
+          },
+          "concept": {
+            "content": "Le few-shot learning transforme l'IA en expert instantané en lui montrant quelques exemples de ce que vous attendez exactement.\n\n**LA HIÉRARCHIE DE L'APPRENTISSAGE**\n\n**ZERO-SHOT : Sans exemple**\n• L'IA devine basée sur les instructions seules\n• Précision : 40-60% selon la complexité\n• Usage : Tâches simples et évidentes\n• Avantage : Rapide, pas de préparation\n• Limite : Résultats inconsistants\n\n**ONE-SHOT : Un seul exemple**\n• L'IA comprend le pattern basique\n• Précision : 60-75%\n• Usage : Format simple à reproduire\n• Avantage : Minimal effort, bon ROI\n• Limite : Pas de nuances\n\n**FEW-SHOT : 2-5 exemples**\n• L'IA maîtrise le pattern et les variations\n• Précision : 85-95%\n• Usage : Tâches complexes nécessitant consistance\n• Avantage : Haute précision, patterns complexes\n• Limite : Temps de préparation\n\n**MANY-SHOT : 10+ exemples**\n• Fine-tuning comportemental\n• Précision : 95-99%\n• Usage : Cas ultra-spécifiques\n• Avantage : Quasi-parfait\n• Limite : Diminishing returns\n\n**LA SCIENCE DES EXEMPLES PARFAITS**\n\n**1. DIVERSITÉ REPRÉSENTATIVE**\n• Couvrir les cas principaux (80%)\n• Inclure 1-2 edge cases (20%)\n• Éviter la redondance\n\n**2. PROGRESSION LOGIQUE**\n• Simple → Complexe\n• Général → Spécifique\n• Pattern évident → Subtil\n\n**3. FORMAT CONSISTANT**\n• Structure identique\n• Marqueurs clairs (Input: / Output:)\n• Séparation nette entre exemples\n\n**4. QUALITÉ > QUANTITÉ**\n• 3 excellents > 10 moyens\n• Chaque exemple doit enseigner quelque chose\n• Pas d'exemples ambigus",
+            "code": "// Système Few-Shot Optimizer\nconst fewShotOptimizer = {\n  // Analyser la tâche pour déterminer le nombre d'exemples optimal\n  analyzeTask: (task) => {\n    const complexity = calculateComplexity(task);\n    const variability = calculateVariability(task);\n    \n    if (complexity < 3 && variability < 2) {\n      return { method: 'zero-shot', examples: 0 };\n    } else if (complexity < 5 && variability < 4) {\n      return { method: 'one-shot', examples: 1 };\n    } else if (complexity < 8) {\n      return { method: 'few-shot', examples: '3-5' };\n    } else {\n      return { method: 'many-shot', examples: '7+' };\n    }\n  },\n  \n  // Générer le prompt optimal\n  buildPrompt: (task, examples) => {\n    const prompt = [];\n    \n    // Instructions\n    prompt.push('Task: ' + task.description);\n    prompt.push('Follow the exact format shown in the examples:\\n');\n    \n    // Exemples avec structure claire\n    examples.forEach((ex, i) => {\n      prompt.push(`Example ${i+1}:`);\n      prompt.push(`Input: ${ex.input}`);\n      prompt.push(`Output: ${ex.output}`);\n      prompt.push('---');\n    });\n    \n    // Nouvelle requête\n    prompt.push('Now process this:');\n    prompt.push(`Input: ${task.input}`);\n    prompt.push('Output:');\n    \n    return prompt.join('\\n');\n  }\n};",
+            "duration": 90
+          },
+          "demo": {
+            "before": "Extrait les informations clés de ce message client : 'Bonjour, je suis Marie Dupont de TechCorp. Nous sommes intéressés par votre solution mais le budget de 50K€ est trop élevé. Pouvons-nous discuter mardi ?'",
+            "after": "[PROMPT FEW-SHOT OPTIMISÉ]\n\nTu es un assistant spécialisé dans l'extraction structurée d'informations à partir de messages clients. Suis EXACTEMENT le format des exemples ci-dessous.\n\n**EXEMPLE 1:**\nInput: \"Salut, c'est Thomas de StartupX. On adore votre produit mais on a que 20K€ de budget pour cette année. Est-ce qu'on peut avoir une démo jeudi matin ?\"\nOutput:\n```json\n{\n  \"contact_name\": \"Thomas\",\n  \"company\": \"StartupX\",\n  \"sentiment\": \"positif\",\n  \"interest_level\": \"élevé\",\n  \"budget_mentioned\": \"20000€\",\n  \"budget_issue\": \"budget_insuffisant\",\n  \"meeting_requested\": true,\n  \"meeting_time\": \"jeudi matin\",\n  \"next_action\": \"proposer_ajustement_offre_et_confirmer_demo\"\n}\n```\n\n**EXEMPLE 2:**\nInput: \"Je suis Lisa Chen, CFO chez GlobalTech. Votre proposition est intéressante et dans notre budget. Organisons un call avec mon équipe la semaine prochaine.\"\nOutput:\n```json\n{\n  \"contact_name\": \"Lisa Chen\",\n  \"company\": \"GlobalTech\",\n  \"role\": \"CFO\",\n  \"sentiment\": \"positif\",\n  \"interest_level\": \"très_élevé\",\n  \"budget_mentioned\": null,\n  \"budget_issue\": \"aucun\",\n  \"meeting_requested\": true,\n  \"meeting_time\": \"semaine prochaine\",\n  \"stakeholders\": \"équipe\",\n  \"next_action\": \"envoyer_calendly_pour_call_equipe\"\n}\n```\n\n**EXEMPLE 3:**\nInput: \"Bonjour, Jean-Marc Petit d'InnovateCo ici. Pas convaincu par la démo. Le ROI n'est pas clair et nos process actuels fonctionnent bien. Merci quand même.\"\nOutput:\n```json\n{\n  \"contact_name\": \"Jean-Marc Petit\",\n  \"company\": \"InnovateCo\",\n  \"sentiment\": \"négatif\",\n  \"interest_level\": \"faible\",\n  \"objections\": [\"ROI_non_clair\", \"satisfaction_solution_actuelle\"],\n  \"meeting_requested\": false,\n  \"deal_status\": \"perdu\",\n  \"next_action\": \"nurturing_long_terme_ou_close_file\"\n}\n```\n\n**MAINTENANT, TRAITE CE MESSAGE:**\nInput: \"Bonjour, je suis Marie Dupont de TechCorp. Nous sommes intéressés par votre solution mais le budget de 50K€ est trop élevé. Pouvons-nous discuter mardi ?\"\nOutput:",
+            "explanation": "Regardez la transformation ! Le zero-shot donne une extraction basique et inconsistante. Le few-shot avec 3 exemples bien choisis produit une extraction structurée, complète et parfaitement formatée. Les exemples enseignent : 1) Le format JSON exact, 2) Les champs à extraire, 3) Comment gérer différents cas (positif, très positif, négatif). L'IA comprend instantanément le pattern.",
+            "duration": 90
+          },
+          "exercise": {
+            "type": "create",
+            "instruction": "Créez un prompt few-shot pour classifier automatiquement des emails en 5 catégories : Urgent, Important, Normal, Spam, Newsletter. Fournissez 3 exemples parfaits qui couvrent les nuances.",
+            "starter": "// Template à compléter\n[INSTRUCTIONS]\nClassifier les emails dans une de ces catégories : Urgent, Important, Normal, Spam, Newsletter.\n\n[EXEMPLES]\nExemple 1:\nInput: [email à définir]\nOutput: [catégorie + justification]\n\nExemple 2:\nInput: [email à définir]\nOutput: [catégorie + justification]\n\nExemple 3:\nInput: [email à définir]\nOutput: [catégorie + justification]\n\n[VOTRE EMAIL À CLASSIFIER]\nInput: \"Rappel : Votre abonnement expire dans 3 jours. Renouvelez maintenant pour maintenir l'accès.\"\nOutput:",
+            "solution": "[CLASSIFICATION EMAIL - FEW-SHOT OPTIMISÉ]\n\n**INSTRUCTIONS:**\nClasse chaque email dans exactement UNE catégorie selon ces critères :\n- URGENT : Action requise sous 24h, conséquences graves si ignoré\n- IMPORTANT : Action requise sous 7 jours, impact business significatif\n- NORMAL : Information utile, pas de deadline critique\n- SPAM : Non sollicité, commercial agressif, sans valeur\n- NEWSLETTER : Contenu informatif souscrit, pas d'action requise\n\nFormat : Catégorie | Justification (max 15 mots) | Indicateurs clés\n\n**EXEMPLE 1: Cas Urgent Authentique**\nInput: \"ALERTE SÉCURITÉ : Activité suspecte détectée sur votre compte. Changez votre mot de passe immédiatement. Connexion depuis Russie à 3h47.\"\nOutput: URGENT | Sécurité compromise nécessite action immédiate | Indicateurs: 'ALERTE', 'immédiatement', 'activité suspecte', risque réel\n\n**EXEMPLE 2: Faux Urgent (Spam déguisé)**\nInput: \"⚠️ URGENT : Félicitations ! Vous avez gagné 50000€ ! Réclamez sous 24h en cliquant ici ou perdez votre prix !!!\"\nOutput: SPAM | Fausse urgence pour arnaque évidente | Indicateurs: prix non mérité, multiple '!', pression temporelle artificielle\n\n**EXEMPLE 3: Important mais pas Urgent**\nInput: \"Rappel : Revue trimestrielle avec le board prévue vendredi 15 à 14h. Merci de préparer vos KPIs Q4 et projections Q1.\"\nOutput: IMPORTANT | Meeting board nécessite préparation mais pas immédiat | Indicateurs: 'board', 'vendredi' (3+ jours), 'préparer KPIs'\n\n**EXEMPLE 4: Newsletter typique**\nInput: \"📊 Votre digest hebdo Tech : Apple Vision Pro 2 annoncé | Microsoft investit dans l'IA | Guide : Optimiser votre LinkedIn\"\nOutput: NEWSLETTER | Contenu informatif périodique sans action requise | Indicateurs: 'digest hebdo', emojis, multiples sujets, ton informatif\n\n**EXEMPLE 5: Normal - Info utile**\nInput: \"Marie de la compta : Les notes de frais de novembre sont traitées. Virement effectué ce matin. Nouveau formulaire disponible sur l'intranet.\"\nOutput: NORMAL | Information process standard sans urgence | Indicateurs: 'traité', passé accompli, info FYI\n\n**MAINTENANT, CLASSIFIE CET EMAIL:**\nInput: \"Rappel : Votre abonnement expire dans 3 jours. Renouvelez maintenant pour maintenir l'accès.\"\nOutput: IMPORTANT | Deadline proche avec impact service si ignoré | Indicateurs: '3 jours', 'expire', 'maintenir accès', action commerciale légitime\n\n**VALIDATION PATTERN:**\nLes 5 exemples enseignent :\n1. Vraie urgence sécurité vs fausse urgence spam\n2. Important (board) vs Normal (process routine)\n3. Newsletter (contenu périodique) vs communication business\n4. Nuances temporelles (24h = urgent, 3-7j = important, 7j+ = normal)\n5. Indicateurs linguistiques spécifiques à chaque catégorie",
+            "hints": [
+              "Incluez un exemple de 'fausse urgence' (spam déguisé)",
+              "Montrez la nuance entre Urgent et Important",
+              "Un exemple doit être ambigu pour enseigner la subtilité",
+              "Incluez les mots-clés qui signalent chaque catégorie",
+              "Format consistant pour tous les exemples"
+            ],
+            "validation": {
+              "checkPoints": [
+                "3-5 exemples couvrant différents cas",
+                "Format de sortie consistant",
+                "Exemples progressifs en complexité",
+                "Cas ambigus ou edge cases inclus",
+                "Instructions claires sur les critères"
+              ],
+              "feedbackCorrect": "Parfait ! Vos exemples few-shot sont bien choisis et enseignent efficacement le pattern de classification. L'IA peut maintenant classifier avec 90%+ de précision !",
+              "feedbackIncorrect": "Améliorez en : 1) Variant plus les exemples (évitez la redondance), 2) Incluant un cas ambigu, 3) Gardant un format consistant pour tous les outputs."
+            },
+            "duration": 120
+          },
+          "recap": {
+            "keyPoint": "🔑 Zero-shot = 40% précision. Few-shot (3-5 exemples) = 95% précision. Les exemples bien choisis transforment l'IA en expert instantané. Qualité > Quantité.",
+            "duration": 15
+          }
+        },
+        "metadata": {
+          "difficulty": "intermediate",
+          "tags": ["few-shot", "zero-shot", "exemples", "précision"],
+          "estimatedTime": 5,
+          "prerequisites": ["cap-1-1"]
+        }
+      },
+      {
+        "id": "cap-2-14",
+        "moduleId": "module-2-techniques",
+        "order": 14,
+        "title": "Créer des Exemples qui Enseignent - L'Art du Pattern Teaching",
+        "duration": 5,
+        "sections": {
+          "hook": {
+            "text": "La différence entre un exemple moyen et un exemple parfait ? 50% de précision en plus. Je vais vous révéler la méthode exacte pour créer des exemples qui transforment l'IA en expert de votre domaine.",
+            "duration": 15
+          },
+          "concept": {
+            "content": "Créer des exemples efficaces est un art qui suit des principes scientifiques précis. Chaque exemple doit enseigner, pas juste montrer.\n\n**LE FRAMEWORK T.E.A.C.H**\n\n**T - TYPIQUE (70% des cas)**\n• Représente le cas standard\n• Pattern principal clair\n• Facile à comprendre\n• Base de référence\n\n**E - EDGE CASE (20% des cas)**\n• Montre les limites\n• Cas particuliers importants\n• Exceptions qui confirment\n• Nuances subtiles\n\n**A - AMBIGU (5% des cas)**\n• Force la clarification\n• Montre comment trancher\n• Enseigne la priorité\n• Évite les erreurs futures\n\n**C - CONTRE-EXEMPLE (5% des cas)**\n• Ce qu'il NE faut PAS faire\n• Erreurs communes à éviter\n• Mauvais patterns\n• Red flags\n\n**H - HIÉRARCHIQUE**\n• Progression simple → complexe\n• Build-up des concepts\n• Scaffolding pédagogique\n• Reinforcement learning\n\n**LES 7 RÈGLES D'OR DES EXEMPLES**\n\n**1. RÈGLE DE LA DIVERSITÉ MINIMALE**\n• Maximum de variation avec minimum d'exemples\n• Chaque exemple apporte quelque chose d'unique\n• Pas de redondance\n\n**2. RÈGLE DU CONTRASTE**\n• Exemples suffisamment différents\n• Boundaries claires entre catégories\n• Éviter la zone grise\n\n**3. RÈGLE DE LA COMPLÉTUDE**\n• Input complet et réaliste\n• Output exhaustif souhaité\n• Context si nécessaire\n\n**4. RÈGLE DE LA CONSISTANCE**\n• Format identique pour tous\n• Marqueurs constants\n• Structure prévisible\n\n**5. RÈGLE DE LA CLARTÉ**\n• Pas d'ambiguïté dans l'exemple\n• Résultat évident et justifié\n• Logique apparente\n\n**6. RÈGLE DE LA RÉALITÉ**\n• Exemples vraisemblables\n• Cas réels anonymisés\n• Pas de scenarios artificiels\n\n**7. RÈGLE DE L'ANNOTATION**\n• Expliquer POURQUOI si complexe\n• Mettre en évidence les patterns\n• Signaler les points d'attention",
+            "code": "// Example Quality Scorer\nclass ExampleQualityAnalyzer {\n  scoreExampleSet(examples) {\n    const scores = {\n      diversity: this.calculateDiversity(examples),\n      coverage: this.calculateCoverage(examples),\n      clarity: this.calculateClarity(examples),\n      progression: this.calculateProgression(examples),\n      consistency: this.calculateConsistency(examples)\n    };\n    \n    // Recommendations basées sur les scores\n    const recommendations = [];\n    \n    if (scores.diversity < 0.7) {\n      recommendations.push('Add more varied examples');\n    }\n    if (scores.coverage < 0.8) {\n      recommendations.push('Missing edge cases');\n    }\n    if (scores.clarity < 0.9) {\n      recommendations.push('Ambiguous outputs detected');\n    }\n    if (scores.progression < 0.6) {\n      recommendations.push('Reorder: simple → complex');\n    }\n    if (scores.consistency < 0.95) {\n      recommendations.push('Standardize format across examples');\n    }\n    \n    return {\n      overallScore: Object.values(scores).reduce((a,b) => a+b) / 5,\n      breakdown: scores,\n      recommendations: recommendations,\n      isOptimal: recommendations.length === 0\n    };\n  }\n  \n  generateOptimalSet(task, data) {\n    // Algorithme pour sélectionner les exemples optimaux\n    const selected = [];\n    \n    // 1. Ajouter cas typique (centroid)\n    selected.push(this.findCentroid(data));\n    \n    // 2. Ajouter cas extrêmes (boundary)\n    selected.push(...this.findBoundaries(data, 2));\n    \n    // 3. Ajouter cas ambigu si nécessaire\n    if (task.hasAmbiguity) {\n      selected.push(this.findMostAmbiguous(data));\n    }\n    \n    // 4. Ordonner par complexité\n    return this.orderByComplexity(selected);\n  }\n}",
+            "duration": 90
+          },
+          "demo": {
+            "before": "Exemple 1: 'Produit excellent' → Sentiment: Positif\nExemple 2: 'Très bon produit' → Sentiment: Positif\nExemple 3: 'Super produit' → Sentiment: Positif",
+            "after": "[EXEMPLES OPTIMISÉS MÉTHODE T.E.A.C.H]\n\n**TÂCHE:** Analyse de sentiment pour reviews produits e-commerce\n\n**EXEMPLE 1 - TYPIQUE POSITIF**\nInput: \"Excellent produit, livraison rapide. La qualité dépasse mes attentes. Je recommande vivement.\"\nOutput: \n```json\n{\n  \"sentiment\": \"POSITIF\",\n  \"score\": 0.95,\n  \"aspects\": {\n    \"produit\": \"positif\",\n    \"livraison\": \"positif\",\n    \"qualité\": \"positif\"\n  },\n  \"intention_achat_futur\": \"très_probable\"\n}\n```\n*Pattern enseigné: Review positive complète multi-aspects*\n\n**EXEMPLE 2 - EDGE CASE MIXTE**\nInput: \"Le produit est top mais livraison catastrophique. 15 jours de retard et colis abîmé. Produit intact heureusement.\"\nOutput:\n```json\n{\n  \"sentiment\": \"MIXTE\",\n  \"score\": 0.45,\n  \"aspects\": {\n    \"produit\": \"positif\",\n    \"livraison\": \"très_négatif\",\n    \"emballage\": \"négatif\"\n  },\n  \"intention_achat_futur\": \"incertaine\",\n  \"action_requise\": \"améliorer_logistique\"\n}\n```\n*Pattern enseigné: Sentiments contradictoires, priorisation des aspects*\n\n**EXEMPLE 3 - AMBIGU (IRONIE)**\nInput: \"Magnifique ! J'adore payer 50€ pour recevoir un produit cassé après 3 semaines. Vraiment, bravo pour le 'service premium' 👍\"\nOutput:\n```json\n{\n  \"sentiment\": \"TRÈS_NÉGATIF\",\n  \"score\": 0.05,\n  \"aspects\": {\n    \"produit\": \"négatif\",\n    \"prix\": \"négatif\",\n    \"livraison\": \"très_négatif\",\n    \"service\": \"très_négatif\"\n  },\n  \"ironie_détectée\": true,\n  \"intention_achat_futur\": \"impossible\",\n  \"risque_churn\": \"élevé\"\n}\n```\n*Pattern enseigné: Détection de l'ironie et du sarcasme*\n\n**EXEMPLE 4 - NÉGATIF CONSTRUCTIF**\nInput: \"Déçu. Le produit ne correspond pas à la description. Taille trop petite, couleur différente de la photo. Demande de retour initiée.\"\nOutput:\n```json\n{\n  \"sentiment\": \"NÉGATIF\",\n  \"score\": 0.20,\n  \"aspects\": {\n    \"correspondance_description\": \"très_négatif\",\n    \"taille\": \"négatif\",\n    \"couleur\": \"négatif\"\n  },\n  \"feedback_type\": \"constructif\",\n  \"action_requise\": \"améliorer_fiches_produit\",\n  \"retour_initié\": true\n}\n```\n*Pattern enseigné: Critique factuelle vs émotionnelle*\n\n**EXEMPLE 5 - CONTRE-EXEMPLE (NE PAS FAIRE)**\nInput: \"C'est bien\"\nOutput: ❌ INCORRECT: \"Sentiment: Bien\" \n✅ CORRECT:\n```json\n{\n  \"sentiment\": \"POSITIF_FAIBLE\",\n  \"score\": 0.60,\n  \"aspects\": {},\n  \"note\": \"Review minimal, pas assez d'info pour analyse détaillée\",\n  \"fiabilité_analyse\": \"faible\"\n}\n```\n*Pattern enseigné: Gérer le manque d'information*",
+            "explanation": "Voyez la différence ! Les 'mauvais' exemples sont redondants (3x positif simple) et n'enseignent rien. Les exemples T.E.A.C.H couvrent : cas typique, sentiment mixte, ironie (piège !), négatif constructif, et même comment gérer le manque d'info. Chaque exemple enseigne un pattern unique. L'IA apprend les nuances, pas juste les catégories.",
+            "duration": 90
+          },
+          "exercise": {
+            "type": "create",
+            "instruction": "Créez 4 exemples T.E.A.C.H pour apprendre à l'IA à extraire des dates et deadlines d'emails. Couvrez : format standard, format ambigu, date relative, et contre-exemple.",
+            "starter": "TÂCHE: Extraire toutes les dates et deadlines d'emails professionnels\n\nEXEMPLE 1 - [Type: à définir]\nInput: [email]\nOutput: [extraction structurée]\nPattern enseigné: [quoi]\n\nEXEMPLE 2 - [Type: à définir]\nInput: [email]\nOutput: [extraction structurée]\nPattern enseigné: [quoi]\n\nEXEMPLE 3 - [Type: à définir]\nInput: [email]\nOutput: [extraction structurée]\nPattern enseigné: [quoi]\n\nEXEMPLE 4 - [Type: à définir]\nInput: [email]\nOutput: [extraction structurée]\nPattern enseigné: [quoi]",
+            "solution": "TÂCHE: Extraire toutes les dates et deadlines d'emails professionnels\n\n**EXEMPLE 1 - TYPIQUE (FORMATS STANDARDS)**\nInput: \"Bonjour équipe, voici les prochaines échéances : \n- Rapport mensuel à rendre le 15/02/2024\n- Réunion client prévue le 20 février à 14h30\n- Deadline finale du projet : 28 février 2024 à 23h59\nMerci de bloquer vos agendas.\"\n\nOutput:\n```json\n{\n  \"dates_extraites\": [\n    {\n      \"description\": \"Rapport mensuel\",\n      \"date\": \"2024-02-15\",\n      \"heure\": null,\n      \"type\": \"deadline\",\n      \"format_original\": \"15/02/2024\",\n      \"priorité\": \"haute\"\n    },\n    {\n      \"description\": \"Réunion client\",\n      \"date\": \"2024-02-20\",\n      \"heure\": \"14:30\",\n      \"type\": \"événement\",\n      \"format_original\": \"20 février à 14h30\",\n      \"priorité\": \"normale\"\n    },\n    {\n      \"description\": \"Deadline finale du projet\",\n      \"date\": \"2024-02-28\",\n      \"heure\": \"23:59\",\n      \"type\": \"deadline_critique\",\n      \"format_original\": \"28 février 2024 à 23h59\",\n      \"priorité\": \"critique\"\n    }\n  ],\n  \"nombre_dates\": 3,\n  \"plus_proche\": \"2024-02-15\"\n}\n```\nPattern enseigné: Reconnaissance formats standards (JJ/MM/AAAA, texte français, avec/sans heure)\n\n**EXEMPLE 2 - EDGE CASE (DATES RELATIVES)**\nInput: \"Quick update: On doit finir ça d'ici vendredi. La démo est dans 2 semaines. N'oubliez pas, on a promis les specs après-demain. Le client veut une réponse avant la fin du mois prochain.\"\n[Email envoyé le: 05/02/2024 (lundi)]\n\nOutput:\n```json\n{\n  \"dates_extraites\": [\n    {\n      \"description\": \"Finir ça\",\n      \"date\": \"2024-02-09\",\n      \"type\": \"deadline\",\n      \"format_original\": \"vendredi\",\n      \"calcul\": \"prochain vendredi depuis 05/02\",\n      \"priorité\": \"haute\"\n    },\n    {\n      \"description\": \"La démo\",\n      \"date\": \"2024-02-19\",\n      \"type\": \"événement\",\n      \"format_original\": \"dans 2 semaines\",\n      \"calcul\": \"05/02 + 14 jours\",\n      \"priorité\": \"haute\"\n    },\n    {\n      \"description\": \"specs promises\",\n      \"date\": \"2024-02-07\",\n      \"type\": \"deadline\",\n      \"format_original\": \"après-demain\",\n      \"calcul\": \"05/02 + 2 jours\",\n      \"priorité\": \"très_haute\"\n    },\n    {\n      \"description\": \"réponse client\",\n      \"date\": \"2024-03-31\",\n      \"type\": \"deadline\",\n      \"format_original\": \"fin du mois prochain\",\n      \"calcul\": \"dernier jour de mars\",\n      \"priorité\": \"normale\"\n    }\n  ],\n  \"date_reference\": \"2024-02-05\",\n  \"nombre_dates\": 4,\n  \"plus_proche\": \"2024-02-07\"\n}\n```\nPattern enseigné: Calcul dates relatives (vendredi, dans X semaines, après-demain, mois prochain)\n\n**EXEMPLE 3 - AMBIGU (DATES INCERTAINES)**\nInput: \"Salut, on devrait se voir début mars ou peut-être fin février si vous êtes dispo. Le draft est attendu autour du 15, mais si besoin on peut pousser à la semaine d'après. Sinon on fait ça au Q2?\"\n\nOutput:\n```json\n{\n  \"dates_extraites\": [\n    {\n      \"description\": \"se voir\",\n      \"date_min\": \"2024-02-26\",\n      \"date_max\": \"2024-03-10\",\n      \"date_probable\": \"2024-03-05\",\n      \"type\": \"événement_flexible\",\n      \"format_original\": \"début mars ou peut-être fin février\",\n      \"certitude\": \"faible\",\n      \"priorité\": \"basse\"\n    },\n    {\n      \"description\": \"draft attendu\",\n      \"date\": \"2024-02-15\",\n      \"date_alternative\": \"2024-02-22\",\n      \"type\": \"deadline_flexible\",\n      \"format_original\": \"autour du 15... semaine d'après\",\n      \"certitude\": \"moyenne\",\n      \"priorité\": \"moyenne\"\n    },\n    {\n      \"description\": \"Alternative Q2\",\n      \"date_min\": \"2024-04-01\",\n      \"date_max\": \"2024-06-30\",\n      \"type\": \"période_alternative\",\n      \"format_original\": \"Q2\",\n      \"certitude\": \"option_backup\",\n      \"priorité\": \"très_basse\"\n    }\n  ],\n  \"dates_ambiguës\": true,\n  \"action_requise\": \"clarification_nécessaire\"\n}\n```\nPattern enseigné: Gérer l'incertitude (\"autour de\", \"peut-être\", périodes vagues)\n\n**EXEMPLE 4 - CONTRE-EXEMPLE (FAUX POSITIFS)**\nInput: \"En 2019, on avait prévu ça pour mars 2020, mais avec le COVID tout a été annulé. Maintenant on ne fixe plus de dates. On verra en fonction.\"\n\nOutput:\n```json\n{\n  \"dates_extraites\": [],\n  \"dates_mentionnées_mais_invalides\": [\n    {\n      \"texte\": \"2019\",\n      \"raison\": \"date_passée_contexte_historique\"\n    },\n    {\n      \"texte\": \"mars 2020\",\n      \"raison\": \"deadline_annulée_explicitement\"\n    }\n  ],\n  \"nombre_dates\": 0,\n  \"note\": \"Aucune date actionnable. Email mentionne seulement historique.\",\n  \"action_requise\": \"aucune\"\n}\n```\nPattern enseigné: Ne PAS extraire dates historiques/annulées/non-actionnables",
+            "hints": [
+              "Variez les formats de dates (numérique, texte, relatif)",
+              "Incluez un cas avec ambiguïté temporelle",
+              "Montrez comment calculer les dates relatives",
+              "Le contre-exemple évite les faux positifs",
+              "Structure JSON cohérente pour tous"
+            ],
+            "validation": {
+              "checkPoints": [
+                "4 exemples couvrant cas typique, edge, ambigu et contre-exemple",
+                "Formats de dates variés (DD/MM, texte, relatif)",
+                "Gestion de l'ambiguïté et de l'incertitude",
+                "Contre-exemple montrant quoi ne PAS extraire",
+                "Annotations expliquant le pattern enseigné"
+              ],
+              "feedbackCorrect": "Excellent ! Vos exemples T.E.A.C.H sont parfaits. L'IA peut maintenant extraire des dates dans toute leur complexité, gérer l'ambiguïté et éviter les faux positifs !",
+              "feedbackIncorrect": "Améliorez en : 1) Variant plus les formats de dates, 2) Ajoutant un cas vraiment ambigu, 3) Montrant ce qu'il ne faut PAS extraire. Chaque exemple doit enseigner quelque chose d'unique."
+            },
+            "duration": 120
+          },
+          "recap": {
+            "keyPoint": "🔑 T.E.A.C.H = Typique + Edge + Ambigu + Contre-exemple + Hiérarchique. Chaque exemple doit enseigner un pattern unique. 4 exemples parfaits > 20 exemples moyens.",
+            "duration": 15
+          }
+        },
+        "metadata": {
+          "difficulty": "advanced",
+          "tags": ["exemples", "TEACH", "few-shot", "patterns"],
+          "estimatedTime": 5,
+          "prerequisites": ["cap-2-13"]
+        }
+      },
+      {
+        "id": "cap-2-15",
+        "moduleId": "module-2-techniques",
+        "order": 15,
+        "title": "Cas Pratique : Extraction de Données Pro",
+        "duration": 5,
+        "sections": {
+          "hook": {
+            "text": "Transformez n'importe quel document chaos en données structurées parfaites. Je vais vous montrer comment passer de 60% à 98% de précision d'extraction avec la bonne approche few-shot. C'est la compétence qui vaut de l'or.",
+            "duration": 15
+          },
+          "concept": {
+            "content": "L'extraction de données est LE cas d'usage qui bénéficie le plus du few-shot learning. La différence est spectaculaire.\n\n**ÉVOLUTION DE LA PRÉCISION**\n\n**NIVEAU 0 : ZERO-SHOT BASIQUE**\n• Précision : 40-60%\n• Problèmes : Format inconsistant, champs manqués, confusion\n• Utilisable : NON en production\n\n**NIVEAU 1 : ZERO-SHOT STRUCTURÉ**\n• Précision : 60-75%\n• Amélioration : Instructions détaillées, format spécifié\n• Utilisable : Cas simples seulement\n\n**NIVEAU 2 : ONE-SHOT**\n• Précision : 75-85%\n• Amélioration : Un exemple clair du format\n• Utilisable : Données uniformes\n\n**NIVEAU 3 : FEW-SHOT OPTIMISÉ**\n• Précision : 90-95%\n• Amélioration : 3-5 exemples couvrant les variations\n• Utilisable : Production avec supervision\n\n**NIVEAU 4 : FEW-SHOT ADVANCED**\n• Précision : 95-98%\n• Amélioration : Exemples + règles + edge cases\n• Utilisable : Production autonome\n\n**LA MÉTHODE S.M.A.R.T EXTRACTION**\n\n**S - SCHEMA DEFINITION**\n• Définir TOUS les champs à extraire\n• Types de données pour chaque champ\n• Cardinalité (single/multiple)\n• Required vs Optional\n\n**M - MAPPING RULES**\n• Comment identifier chaque champ\n• Keywords et patterns\n• Priorités en cas de conflit\n• Valeurs par défaut\n\n**A - AMBIGUITY RESOLUTION**\n• Que faire si pas trouvé\n• Comment gérer les doublons\n• Fusion de données similaires\n• Validation croisée\n\n**R - ROBUST PARSING**\n• Gestion formats variés\n• Tolérance aux fautes\n• Extraction partielle OK\n• Confidence scores\n\n**T - TRANSFORMATION RULES**\n• Normalisation des données\n• Format de sortie uniforme\n• Enrichissement si possible\n• Cleaning automatique",
+            "code": "// Smart Extraction System\nclass SmartDataExtractor {\n  constructor(schema) {\n    this.schema = schema;\n    this.examples = [];\n    this.rules = {};\n  }\n  \n  // Construire le prompt optimal\n  buildExtractionPrompt(document) {\n    const prompt = [];\n    \n    // 1. Définition du schéma\n    prompt.push('Extract data according to this schema:');\n    prompt.push(JSON.stringify(this.schema, null, 2));\n    \n    // 2. Règles spécifiques\n    prompt.push('\\nExtraction Rules:');\n    for (let [field, rule] of Object.entries(this.rules)) {\n      prompt.push(`- ${field}: ${rule}`);\n    }\n    \n    // 3. Few-shot examples\n    prompt.push('\\nExamples of correct extraction:');\n    this.examples.forEach((ex, i) => {\n      prompt.push(`\\nExample ${i+1}:`);\n      prompt.push('Input: ' + ex.input);\n      prompt.push('Output: ' + JSON.stringify(ex.output));\n    });\n    \n    // 4. Document à traiter\n    prompt.push('\\nNow extract from this document:');\n    prompt.push(document);\n    prompt.push('\\nOutput (JSON):');\n    \n    return prompt.join('\\n');\n  }\n  \n  // Validation du résultat\n  validateExtraction(result) {\n    const errors = [];\n    const warnings = [];\n    \n    // Vérifier required fields\n    for (let field of this.schema.required) {\n      if (!result[field]) {\n        errors.push(`Missing required field: ${field}`);\n      }\n    }\n    \n    // Vérifier types\n    for (let [field, value] of Object.entries(result)) {\n      if (!this.validateType(value, this.schema.fields[field].type)) {\n        warnings.push(`Type mismatch: ${field}`);\n      }\n    }\n    \n    // Calculer confidence\n    const confidence = 1 - (errors.length * 0.2 + warnings.length * 0.1);\n    \n    return {\n      valid: errors.length === 0,\n      errors,\n      warnings,\n      confidence: Math.max(0, confidence)\n    };\n  }\n}",
+            "duration": 90
+          },
+          "demo": {
+            "before": "Extrais les infos de cette facture : 'FACTURE #2024-001 du 15/01/2024. Client: TechCorp SARL. Montant HT: 5000€. TVA 20%: 1000€. Total TTC: 6000€. Échéance: 15/02/2024.'",
+            "after": "[EXTRACTION OPTIMISÉE NIVEAU 4]\n\n**SCHEMA DÉFINITION:**\n```json\n{\n  \"invoice_number\": \"string\",\n  \"invoice_date\": \"date\",\n  \"client\": {\n    \"name\": \"string\",\n    \"type\": \"string\",\n    \"siret\": \"string|null\"\n  },\n  \"amounts\": {\n    \"ht\": \"number\",\n    \"tva_rate\": \"number\",\n    \"tva_amount\": \"number\",\n    \"ttc\": \"number\"\n  },\n  \"payment\": {\n    \"due_date\": \"date\",\n    \"terms\": \"string\",\n    \"status\": \"string\"\n  }\n}\n```\n\n**EXEMPLES FEW-SHOT:**\n\n**Exemple 1 - Facture Standard:**\nInput: \"FACTURE N°2023-789 Date: 30/11/2023 Pour: Digital Agency SAS (SIRET: 12345678900001) Prestations: 8500€ HT TVA (20%): 1700€ Net à payer: 10200€ TTC Paiement à 30 jours\"\nOutput:\n```json\n{\n  \"invoice_number\": \"2023-789\",\n  \"invoice_date\": \"2023-11-30\",\n  \"client\": {\n    \"name\": \"Digital Agency\",\n    \"type\": \"SAS\",\n    \"siret\": \"12345678900001\"\n  },\n  \"amounts\": {\n    \"ht\": 8500,\n    \"tva_rate\": 20,\n    \"tva_amount\": 1700,\n    \"ttc\": 10200\n  },\n  \"payment\": {\n    \"due_date\": \"2023-12-30\",\n    \"terms\": \"30 jours\",\n    \"status\": \"pending\"\n  },\n  \"confidence\": 0.95\n}\n```\n\n**Exemple 2 - Format Alternatif:**\nInput: \"Fact. 2024/002 émise le 10 janvier 2024 / Société: StartupX / Total HT 3.000 euros / + TVA 600 / = 3.600 € TTC / À régler avant le 10/02\"\nOutput:\n```json\n{\n  \"invoice_number\": \"2024/002\",\n  \"invoice_date\": \"2024-01-10\",\n  \"client\": {\n    \"name\": \"StartupX\",\n    \"type\": \"non_spécifié\",\n    \"siret\": null\n  },\n  \"amounts\": {\n    \"ht\": 3000,\n    \"tva_rate\": 20,\n    \"tva_amount\": 600,\n    \"ttc\": 3600\n  },\n  \"payment\": {\n    \"due_date\": \"2024-02-10\",\n    \"terms\": \"30 jours\",\n    \"status\": \"pending\"\n  },\n  \"confidence\": 0.90\n}\n```\n\n**Exemple 3 - Données Incomplètes:**\nInput: \"INVOICE INV-45 Total: 2400€ including VAT Customer: GlobalTech Date: today\"\nOutput:\n```json\n{\n  \"invoice_number\": \"INV-45\",\n  \"invoice_date\": \"2024-02-05\",\n  \"client\": {\n    \"name\": \"GlobalTech\",\n    \"type\": \"non_spécifié\",\n    \"siret\": null\n  },\n  \"amounts\": {\n    \"ht\": 2000,\n    \"tva_rate\": 20,\n    \"tva_amount\": 400,\n    \"ttc\": 2400\n  },\n  \"payment\": {\n    \"due_date\": null,\n    \"terms\": \"non_spécifié\",\n    \"status\": \"pending\"\n  },\n  \"confidence\": 0.75,\n  \"notes\": \"HT calculé depuis TTC, date 'today' interprétée comme date actuelle\"\n}\n```\n\n**MAINTENANT, EXTRACTION DE VOTRE DOCUMENT:**\n\nInput: \"FACTURE #2024-001 du 15/01/2024. Client: TechCorp SARL. Montant HT: 5000€. TVA 20%: 1000€. Total TTC: 6000€. Échéance: 15/02/2024.\"\n\nOutput:\n```json\n{\n  \"invoice_number\": \"2024-001\",\n  \"invoice_date\": \"2024-01-15\",\n  \"client\": {\n    \"name\": \"TechCorp\",\n    \"type\": \"SARL\",\n    \"siret\": null\n  },\n  \"amounts\": {\n    \"ht\": 5000,\n    \"tva_rate\": 20,\n    \"tva_amount\": 1000,\n    \"ttc\": 6000\n  },\n  \"payment\": {\n    \"due_date\": \"2024-02-15\",\n    \"terms\": \"30 jours\",\n    \"status\": \"pending\"\n  },\n  \"confidence\": 0.98,\n  \"validation\": {\n    \"amounts_check\": \"✓ (5000 + 1000 = 6000)\",\n    \"date_check\": \"✓ (échéance = date + 31j)\",\n    \"completeness\": \"95% (manque SIRET)\"\n  }\n}\n```",
+            "explanation": "Transformation complète ! Zero-shot donne une extraction chaotique et incomplète. Le few-shot niveau 4 produit une extraction parfaite, structurée, avec validation et confidence score. Les exemples enseignent : formats variés, données manquantes, calculs implicites. Résultat : 98% de précision, prêt pour la production.",
+            "duration": 90
+          },
+          "exercise": {
+            "type": "transform",
+            "instruction": "Créez un système few-shot pour extraire les informations de contacts depuis des signatures d'email. Partez du zero-shot basique et montrez l'évolution jusqu'au few-shot optimal.",
+            "starter": "// ÉVOLUTION DE L'EXTRACTION\n\n// NIVEAU 0 : Zero-shot basique\nPrompt v0: \"Extrais les infos de contact de cette signature email\"\n\n// NIVEAU 1 : Zero-shot structuré  \nPrompt v1: [À améliorer]\n\n// NIVEAU 2 : One-shot\nPrompt v2: [À créer avec 1 exemple]\n\n// NIVEAU 3 : Few-shot optimal\nPrompt v3: [À créer avec 3+ exemples]\n\n// Test sur cette signature:\n\"Cordialement,\\nDr. Marie Lambert\\nDirectrice Innovation & R&D\\nBioTech Solutions International\\n📧 m.lambert@biotech-solutions.com\\n📱 +33 6 12 34 56 78\\n☎️ +33 1 42 42 42 42 (direct)\\n🌐 www.biotech-solutions.com\\n📍 Tour Défense, 92400 Courbevoie\\nLinkedIn: /in/marie-lambert-phd\"",
+            "solution": "// ÉVOLUTION DE L'EXTRACTION DE SIGNATURES\n\n**// NIVEAU 0 : Zero-shot basique (40% précision)**\nPrompt v0: \"Extrais les infos de contact de cette signature email\"\n\nRésultat typique: Extraction chaotique, format inconsistant, infos manquées\n\n**// NIVEAU 1 : Zero-shot structuré (65% précision)**\nPrompt v1: \n\"Extrais de cette signature email :\n- Nom complet\n- Titre/Poste\n- Entreprise  \n- Email\n- Téléphones\n- Site web\n- Adresse\n- LinkedIn\nFormat JSON structuré.\"\n\nRésultat: Meilleur mais toujours des erreurs de parsing\n\n**// NIVEAU 2 : One-shot (80% précision)**\nPrompt v2:\n\"Extrais les contacts selon ce format:\n\nExemple:\nInput: 'John Doe | CEO | TechCo | john@techco.com | +1-234-567-8900'\nOutput:\n```json\n{\n  \"name\": \"John Doe\",\n  \"title\": \"CEO\",\n  \"company\": \"TechCo\",\n  \"email\": \"john@techco.com\",\n  \"phones\": [{\"number\": \"+1-234-567-8900\", \"type\": \"main\"}]\n}\n```\n\nMaintenant extrais de: [signature]\"\n\n**// NIVEAU 3 : Few-shot optimal (95%+ précision)**\nPrompt v3:\n\n**EXTRACTION SIGNATURES EMAIL - SYSTÈME COMPLET**\n\nSchéma cible:\n```json\n{\n  \"person\": {\n    \"full_name\": \"string\",\n    \"title\": \"string\",\n    \"credentials\": [\"array of string\"],\n    \"department\": \"string|null\"\n  },\n  \"company\": {\n    \"name\": \"string\",\n    \"division\": \"string|null\"\n  },\n  \"contact\": {\n    \"emails\": [{\"address\": \"string\", \"type\": \"string\"}],\n    \"phones\": [{\"number\": \"string\", \"type\": \"string\", \"label\": \"string\"}],\n    \"website\": \"string|null\",\n    \"linkedin\": \"string|null\",\n    \"address\": {\n      \"street\": \"string|null\",\n      \"city\": \"string|null\",\n      \"postal\": \"string|null\",\n      \"country\": \"string|null\"\n    }\n  },\n  \"metadata\": {\n    \"signature_language\": \"string\",\n    \"extraction_confidence\": \"float\"\n  }\n}\n```\n\n**EXEMPLE 1 - Signature Complète FR:**\nInput:\n\"Bien cordialement,\nJean-Pierre Martin, MBA\nVP Sales EMEA | Strategic Accounts\nGlobalTech France\n✉ jp.martin@globaltech.fr | 📧 jean-pierre.martin@gmail.com (perso)\n📞 +33 1 40 50 60 70 (bureau) | 📱 06 98 76 54 32\nwww.globaltech.com/fr\n123 Avenue des Champs, 75008 Paris\nLinkedIn: linkedin.com/in/jpmartinparis\"\n\nOutput:\n```json\n{\n  \"person\": {\n    \"full_name\": \"Jean-Pierre Martin\",\n    \"title\": \"VP Sales EMEA\",\n    \"credentials\": [\"MBA\"],\n    \"department\": \"Strategic Accounts\"\n  },\n  \"company\": {\n    \"name\": \"GlobalTech France\",\n    \"division\": \"France\"\n  },\n  \"contact\": {\n    \"emails\": [\n      {\"address\": \"jp.martin@globaltech.fr\", \"type\": \"professional\"},\n      {\"address\": \"jean-pierre.martin@gmail.com\", \"type\": \"personal\"}\n    ],\n    \"phones\": [\n      {\"number\": \"+33 1 40 50 60 70\", \"type\": \"office\", \"label\": \"bureau\"},\n      {\"number\": \"+33 6 98 76 54 32\", \"type\": \"mobile\", \"label\": \"mobile\"}\n    ],\n    \"website\": \"www.globaltech.com/fr\",\n    \"linkedin\": \"linkedin.com/in/jpmartinparis\",\n    \"address\": {\n      \"street\": \"123 Avenue des Champs\",\n      \"city\": \"Paris\",\n      \"postal\": \"75008\",\n      \"country\": \"France\"\n    }\n  },\n  \"metadata\": {\n    \"signature_language\": \"FR\",\n    \"extraction_confidence\": 0.98\n  }\n}\n```\n\n**EXEMPLE 2 - Signature Minimale EN:**\nInput:\n\"Thanks,\nSarah\nMarketing @ StartupXYZ\nsarah@startupxyz.io\"\n\nOutput:\n```json\n{\n  \"person\": {\n    \"full_name\": \"Sarah\",\n    \"title\": \"Marketing\",\n    \"credentials\": [],\n    \"department\": null\n  },\n  \"company\": {\n    \"name\": \"StartupXYZ\",\n    \"division\": null\n  },\n  \"contact\": {\n    \"emails\": [\n      {\"address\": \"sarah@startupxyz.io\", \"type\": \"professional\"}\n    ],\n    \"phones\": [],\n    \"website\": null,\n    \"linkedin\": null,\n    \"address\": {\n      \"street\": null,\n      \"city\": null,\n      \"postal\": null,\n      \"country\": null\n    }\n  },\n  \"metadata\": {\n    \"signature_language\": \"EN\",\n    \"extraction_confidence\": 0.85\n  }\n}\n```\n\n**EXEMPLE 3 - Signature Multi-lignes Complexe:**\nInput:\n\"Best regards,\n\nProf. Dr. Hans Mueller | CTO & Co-Founder\nQuantumAI GmbH (Part of TechGroup)\nHead of Applied Research | Advisory Board Member\n\n📧 h.mueller@quantum-ai.de | hans@techgroup.eu\n📱 +49 151 1234 5678 (Mobile/WhatsApp)\n☎️ +49 30 9876 5432 ext. 101 (Office)\n🔗 quantum-ai.de | LinkedIn: /in/profhansmueller | Twitter: @quantum_hans\n\n🏢 Headquarters: TechPark Building A, Friedrichstraße 123\n    10117 Berlin, Germany\n\n💡 'Innovation through Quantum Intelligence'\"\n\nOutput:\n```json\n{\n  \"person\": {\n    \"full_name\": \"Hans Mueller\",\n    \"title\": \"CTO & Co-Founder\",\n    \"credentials\": [\"Prof.\", \"Dr.\"],\n    \"department\": \"Head of Applied Research\"\n  },\n  \"company\": {\n    \"name\": \"QuantumAI GmbH\",\n    \"division\": \"Part of TechGroup\"\n  },\n  \"contact\": {\n    \"emails\": [\n      {\"address\": \"h.mueller@quantum-ai.de\", \"type\": \"professional\"},\n      {\"address\": \"hans@techgroup.eu\", \"type\": \"professional\"}\n    ],\n    \"phones\": [\n      {\"number\": \"+49 151 1234 5678\", \"type\": \"mobile\", \"label\": \"Mobile/WhatsApp\"},\n      {\"number\": \"+49 30 9876 5432 ext. 101\", \"type\": \"office\", \"label\": \"Office\"}\n    ],\n    \"website\": \"quantum-ai.de\",\n    \"linkedin\": \"/in/profhansmueller\",\n    \"address\": {\n      \"street\": \"TechPark Building A, Friedrichstraße 123\",\n      \"city\": \"Berlin\",\n      \"postal\": \"10117\",\n      \"country\": \"Germany\"\n    }\n  },\n  \"metadata\": {\n    \"signature_language\": \"EN/DE\",\n    \"extraction_confidence\": 0.96,\n    \"additional_info\": {\n      \"twitter\": \"@quantum_hans\",\n      \"tagline\": \"Innovation through Quantum Intelligence\",\n      \"role_notes\": \"Advisory Board Member\"\n    }\n  }\n}\n```\n\n**APPLICATION SUR SIGNATURE TEST:**\n\nInput: \"Cordialement,\\nDr. Marie Lambert\\nDirectrice Innovation & R&D\\nBioTech Solutions International\\n📧 m.lambert@biotech-solutions.com\\n📱 +33 6 12 34 56 78\\n☎️ +33 1 42 42 42 42 (direct)\\n🌐 www.biotech-solutions.com\\n📍 Tour Défense, 92400 Courbevoie\\nLinkedIn: /in/marie-lambert-phd\"\n\nOutput:\n```json\n{\n  \"person\": {\n    \"full_name\": \"Marie Lambert\",\n    \"title\": \"Directrice Innovation & R&D\",\n    \"credentials\": [\"Dr.\"],\n    \"department\": \"Innovation & R&D\"\n  },\n  \"company\": {\n    \"name\": \"BioTech Solutions International\",\n    \"division\": \"International\"\n  },\n  \"contact\": {\n    \"emails\": [\n      {\"address\": \"m.lambert@biotech-solutions.com\", \"type\": \"professional\"}\n    ],\n    \"phones\": [\n      {\"number\": \"+33 6 12 34 56 78\", \"type\": \"mobile\", \"label\": \"mobile\"},\n      {\"number\": \"+33 1 42 42 42 42\", \"type\": \"office\", \"label\": \"direct\"}\n    ],\n    \"website\": \"www.biotech-solutions.com\",\n    \"linkedin\": \"/in/marie-lambert-phd\",\n    \"address\": {\n      \"street\": \"Tour Défense\",\n      \"city\": \"Courbevoie\",\n      \"postal\": \"92400\",\n      \"country\": \"France\"\n    }\n  },\n  \"metadata\": {\n    \"signature_language\": \"FR\",\n    \"extraction_confidence\": 0.97\n  }\n}\n```\n\n**AMÉLIORATION MESURABLE:**\n- V0: 40% des champs, format chaos\n- V1: 65% des champs, structure basique\n- V2: 80% des champs, quelques erreurs\n- V3: 98% des champs, production-ready ✅",
+            "hints": [
+              "Montrez l'évolution progressive de la précision",
+              "Chaque niveau doit apporter une amélioration claire",
+              "Les exemples few-shot doivent couvrir : simple, complexe, edge case",
+              "Format JSON structuré pour la sortie",
+              "Incluez confidence score dans v3"
+            ],
+            "validation": {
+              "checkPoints": [
+                "4 niveaux d'évolution clairement définis",
+                "Amélioration mesurable entre chaque niveau",
+                "Few-shot avec 3+ exemples variés",
+                "Schéma JSON complet et structuré",
+                "Gestion des cas edge (données manquantes, formats variés)"
+              ],
+              "feedbackCorrect": "Parfait ! Vous maîtrisez l'évolution du zero-shot au few-shot. La progression est claire, mesurable, et votre système final est production-ready avec 95%+ de précision !",
+              "feedbackIncorrect": "Montrez mieux la progression : 1) V0 très basique, 2) V1 avec structure, 3) V2 avec un exemple, 4) V3 avec multiple exemples couvrant tous les cas. Chaque niveau doit clairement améliorer la précision."
+            },
+            "duration": 120
+          },
+          "recap": {
+            "keyPoint": "🔑 Zero-shot = 60% précision. Few-shot optimisé = 98% précision. Pour l'extraction de données, les exemples font passer de 'inutilisable' à 'production-ready'. S.M.A.R.T extraction is the way.",
+            "duration": 15
+          }
+        },
+        "metadata": {
+          "difficulty": "advanced",
+          "tags": ["extraction", "few-shot", "cas pratique", "production"],
+          "estimatedTime": 5,
+          "prerequisites": ["cap-2-13", "cap-2-14"]
+        }
+      }
+    ]
+  },
+  "continuedCapsules": [
+    {
+      "id": "cap-2-16",
+      "title": "Délimiteurs : Vos Meilleurs Amis",
+      "description": "Organisez vos prompts comme un pro avec les bons délimiteurs"
+    },
+    {
+      "id": "cap-2-17",
+      "title": "Parser l'Information - Extraction Chirurgicale",
+      "description": "Extraire exactement ce qu'il faut, où il faut"
+    },
+    {
+      "id": "cap-2-18",
+      "title": "JSON : Le Format Magique",
+      "description": "Structurez vos données pour l'automatisation"
+    },
+    {
+      "id": "cap-2-19",
+      "title": "Chain of Thought - Pensée Explicite",
+      "description": "Faites réfléchir l'IA tout haut pour +40% de précision"
+    },
+    {
+      "id": "cap-2-20",
+      "title": "Débugger en 3 Étapes",
+      "description": "Trouvez et corrigez les problèmes rapidement"
+    },
+    {
+      "id": "cap-2-21",
+      "title": "Speed Optimization - 5 Itérations pour la Perfection",
+      "description": "Optimisez vos prompts en temps record"
+    },
+    {
+      "id": "cap-2-22",
+      "title": "Détecter les Hallucinations",
+      "description": "L'IA invente ? Détectez et prévenez"
+    },
+    {
+      "id": "cap-2-23",
+      "title": "Garde-fous Essentiels",
+      "description": "Protégez-vous et protégez les autres"
+    },
+    {
+      "id": "cap-2-24",
+      "title": "Biais : Les Reconnaître et les Éviter",
+      "description": "Pour une IA plus juste et équitable"
+    }
+  ]
+}
