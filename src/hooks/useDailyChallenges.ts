@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { useUser } from '@supabase/auth-helpers-react';
+import type { User } from '@supabase/supabase-js';
 import { createClient } from '@/lib/supabase/client';
 import { challengeService } from '@/services/challengeService';
 import type {
@@ -25,6 +25,7 @@ export function useDailyChallenges(
   }
 ): UseDailyChallenges {
   // États
+  const [user, setUser] = useState<User | null>(null);
   const [todayChallenge, setTodayChallenge] = useState<DailyChallenge | null>(null);
   const [participation, setParticipation] = useState<ChallengeParticipation | null>(null);
   const [recentChallenges, setRecentChallenges] = useState<DailyChallenge[]>([]);
@@ -36,8 +37,24 @@ export function useDailyChallenges(
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const user = useUser();
   const supabase = createClient();
+
+  // Gestion de l'authentification
+  useEffect(() => {
+    // Charger l'utilisateur actuel
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user);
+    });
+
+    // Écouter les changements d'état d'authentification
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [supabase]);
 
   /**
    * Charge le défi du jour
