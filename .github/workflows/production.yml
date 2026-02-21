@@ -3,12 +3,14 @@ name: Production Deployment
 on:
   push:
     branches:
+      - master
       - main
   workflow_run:
     workflows: ["CI"]
     types:
       - completed
     branches:
+      - master
       - main
 
 jobs:
