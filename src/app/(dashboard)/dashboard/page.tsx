@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/hooks/useAuth'
-import { BookOpen, Trophy, Flame, Target, Clock, ChevronRight } from 'lucide-react'
+import { BookOpen, Trophy, Flame, Target, Clock, ChevronRight, BarChart3 } from 'lucide-react'
 import Link from 'next/link'
 import { getAllModules, getAllModulesWithProgress } from '@/lib/data'
 import { createClient } from '@/lib/supabase/client'
@@ -171,7 +171,7 @@ export default function DashboardPage() {
                 <p className="text-gray-600">Relevez des challenges de Prompt Engineering</p>
               </div>
             </div>
-            <Link 
+            <Link
               href="/challenges"
               className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-pink-700 transition-all"
             >
@@ -184,6 +184,35 @@ export default function DashboardPage() {
             </p>
             <p className="text-sm text-gray-600">
               Gagnez des points, montez dans le classement et débloquez des badges !
+            </p>
+          </div>
+        </div>
+
+        {/* Analytics */}
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 shadow-sm mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg">
+                <BarChart3 className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-gray-800">Analytiques d'Apprentissage</h3>
+                <p className="text-gray-600">Visualisez votre progression détaillée</p>
+              </div>
+            </div>
+            <Link
+              href="/analytics"
+              className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-2 rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-all"
+            >
+              Voir les analytics
+            </Link>
+          </div>
+          <div className="bg-white rounded-lg p-4 border border-blue-200">
+            <p className="text-gray-700 mb-3">
+              📊 <strong>Tableau de bord analytique</strong> : Suivez vos performances, visualisez votre temps d'apprentissage et identifiez vos points forts.
+            </p>
+            <p className="text-sm text-gray-600">
+              Obtenez des insights détaillés sur votre parcours d'apprentissage !
             </p>
           </div>
         </div>
