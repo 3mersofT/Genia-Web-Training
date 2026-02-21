@@ -1,0 +1,121 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "outputDirectory": ".next",
+  "regions": ["iad1"],
+  "git": {
+    "deploymentEnabled": {
+      "main": true
+    }
+  },
+  "github": {
+    "autoAlias": true,
+    "enabled": true,
+    "silent": false
+  },
+  "env": {
+    "NODE_ENV": "production",
+    "NEXT_PUBLIC_SUPABASE_URL": "@next_public_supabase_url",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@next_public_supabase_anon_key",
+    "SUPABASE_SERVICE_KEY": "@supabase_service_key",
+    "MISTRAL_API_KEY": "@mistral_api_key",
+    "NEXT_PUBLIC_APP_URL": "@next_public_app_url",
+    "JWT_SECRET": "@jwt_secret",
+    "COOKIE_SECRET": "@cookie_secret",
+    "NEXT_PUBLIC_GA_ID": "@next_public_ga_id",
+    "NEXT_PUBLIC_POSTHOG_KEY": "@next_public_posthog_key",
+    "NEXT_PUBLIC_POSTHOG_HOST": "@next_public_posthog_host",
+    "SMTP_HOST": "@smtp_host",
+    "SMTP_PORT": "@smtp_port",
+    "SMTP_USER": "@smtp_user",
+    "SMTP_PASS": "@smtp_pass",
+    "MAGISTRAL_MEDIUM_DAILY_QUOTA": "@magistral_medium_daily_quota",
+    "MISTRAL_MEDIUM_3_DAILY_QUOTA": "@mistral_medium_3_daily_quota",
+    "MISTRAL_SMALL_DAILY_QUOTA": "@mistral_small_daily_quota"
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    },
+    {
+      "source": "/sw.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        },
+        {
+          "key": "Service-Worker-Allowed",
+          "value": "/"
+        }
+      ]
+    },
+    {
+      "source": "/workbox-:hash.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/_next/static/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/fonts/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/images/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "/api/:path*"
+    }
+  ],
+  "crons": []
+}

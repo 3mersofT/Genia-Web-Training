@@ -1,0 +1,190 @@
+name: Preview Deployment
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+
+jobs:
+  # Only deploy if CI passed
+  check-ci:
+    name: Check CI Status
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_run' && github.event.workflow_run.event == 'pull_request'
+    outputs:
+      ci-passed: ${{ steps.check.outputs.ci-passed }}
+      pr-number: ${{ steps.pr.outputs.pr-number }}
+    steps:
+      - name: Check CI workflow result
+        id: check
+        run: |
+          if [ "${{ github.event.workflow_run.conclusion }}" == "success" ]; then
+            echo "ci-passed=true" >> $GITHUB_OUTPUT
+          else
+            echo "ci-passed=false" >> $GITHUB_OUTPUT
+            echo "CI workflow failed or was cancelled. Skipping preview deployment."
+            exit 1
+          fi
+
+      - name: Get PR number
+        id: pr
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const pulls = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              head: `${context.repo.owner}:${github.event.workflow_run.head_branch}`,
+              state: 'open'
+            });
+
+            if (pulls.data.length > 0) {
+              const prNumber = pulls.data[0].number;
+              core.setOutput('pr-number', prNumber);
+              console.log(`Found PR #${prNumber}`);
+            } else {
+              core.setFailed('No open PR found for this branch');
+            }
+
+  # Deploy to Vercel preview
+  deploy:
+    name: Deploy Preview
+    runs-on: ubuntu-latest
+    # Deploy on PR events or after CI passes via workflow_run
+    if: |
+      github.event_name == 'pull_request' ||
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # For workflow_run events, checkout the PR head commit
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.event.pull_request.head.sha }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel environment information
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Build project artifacts
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Deploy to Vercel Preview
+        id: deploy
+        run: |
+          DEPLOYMENT_URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
+          echo "deployment-url=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
+          echo "Deployed to: $DEPLOYMENT_URL"
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Get PR number
+        id: pr
+        if: github.event_name == 'pull_request'
+        run: echo "pr-number=${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
+
+      - name: Add preview comment to PR
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const deploymentUrl = '${{ steps.deploy.outputs.deployment-url }}';
+            const prNumber = ${{ github.event_name == 'pull_request' && github.event.pull_request.number || needs.check-ci.outputs.pr-number || 0 }};
+            const commitSha = context.sha.substring(0, 7);
+            const commitUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/commit/${context.sha}`;
+
+            if (prNumber === 0) {
+              console.log('No PR number found, skipping comment');
+              return;
+            }
+
+            const comment = `## ✅ Preview Deployment Ready
+
+            **Commit:** [\`${commitSha}\`](${commitUrl})
+            **Preview URL:** [${deploymentUrl}](${deploymentUrl})
+            **Environment:** Preview
+            **Workflow:** [View workflow run](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})
+
+            🔍 Review the changes in this preview deployment before merging.`;
+
+            // Check if there's an existing preview comment
+            const comments = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber
+            });
+
+            const botComment = comments.data.find(comment =>
+              comment.user.type === 'Bot' &&
+              comment.body.includes('## ✅ Preview Deployment Ready')
+            );
+
+            if (botComment) {
+              // Update existing comment
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: comment
+              });
+            } else {
+              // Create new comment
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: comment
+              });
+            }
+
+      - name: Deployment failed comment
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const prNumber = ${{ github.event_name == 'pull_request' && github.event.pull_request.number || needs.check-ci.outputs.pr-number || 0 }};
+            const commitSha = context.sha.substring(0, 7);
+            const commitUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/commit/${context.sha}`;
+
+            if (prNumber === 0) {
+              console.log('No PR number found, skipping comment');
+              return;
+            }
+
+            const comment = `## ❌ Preview Deployment Failed
+
+            **Commit:** [\`${commitSha}\`](${commitUrl})
+            **Environment:** Preview
+            **Workflow:** [View workflow run](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})
+
+            Please check the workflow logs for details.`;
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: comment
+            });
