@@ -15,10 +15,20 @@ import type {
 } from '@/types/analytics.types';
 
 /**
+ * Cache en mémoire pour les analytics
+ */
+interface CacheEntry<T> {
+  data: T;
+  timestamp: number;
+}
+
+/**
  * Service de gestion des analytics d'apprentissage étudiant
  */
 class AnalyticsService {
   private supabase = createClient();
+  private cache = new Map<string, CacheEntry<any>>();
+  private readonly CACHE_TTL = 60000; // 1 minute en millisecondes
 
   /**
    * Récupère les analytics complètes d'un étudiant
@@ -27,7 +37,18 @@ class AnalyticsService {
     userId: string,
     filters?: AnalyticsFilters
   ): Promise<StudentAnalytics | null> {
+    // Vérifier le cache
+    const cacheKey = `analytics_${userId}_${JSON.stringify(filters || {})}`;
+    const cached = this.getFromCache<StudentAnalytics>(cacheKey);
+    if (cached) {
+      return cached;
+    }
+
     try {
+      // Récupérer toutes les données de base en une seule requête optimisée
+      const baseData = await this.getBaseProgressData(userId, filters);
+
+      // Exécuter les requêtes en parallèle pour les autres données
       const [
         progress,
         skills,
@@ -39,18 +60,18 @@ class AnalyticsService {
         nextSteps,
         accountInfo
       ] = await Promise.all([
-        this.getProgressOverview(userId, filters),
-        this.getSkillCompetencies(userId, filters),
-        this.getScoreTrend(userId, filters),
-        this.getStreakStats(userId, filters),
-        this.getBadgeProgress(userId),
-        this.getUserPoints(userId),
-        this.getTimeAnalytics(userId, filters),
-        this.getNextStepRecommendations(userId),
-        this.getAccountInfo(userId)
+        this.getProgressOverviewOptimized(userId, filters, baseData),
+        this.getSkillCompetenciesOptimized(userId, filters, baseData),
+        this.getScoreTrendOptimized(userId, filters),
+        this.getStreakStatsOptimized(userId, filters),
+        this.getBadgeProgressOptimized(userId, baseData),
+        this.getUserPointsOptimized(baseData),
+        this.getTimeAnalyticsOptimized(userId, filters),
+        this.getNextStepRecommendationsOptimized(userId, baseData),
+        this.getAccountInfoOptimized(userId)
       ]);
 
-      return {
+      const analytics = {
         user_id: userId,
         generated_at: new Date().toISOString(),
         progress,
@@ -66,10 +87,82 @@ class AnalyticsService {
         last_activity_at: accountInfo.last_activity_at,
         account_age_days: accountInfo.account_age_days
       };
+
+      // Mettre en cache
+      this.setInCache(cacheKey, analytics);
+
+      return analytics;
     } catch (error) {
       console.error('Erreur lors de la récupération des analytics:', error);
       return null;
     }
+  }
+
+  /**
+   * Récupère les données de progression de base en une seule requête
+   */
+  private async getBaseProgressData(userId: string, filters?: AnalyticsFilters) {
+    const cacheKey = `base_progress_${userId}_${JSON.stringify(filters || {})}`;
+    const cached = this.getFromCache<any>(cacheKey);
+    if (cached) {
+      return cached;
+    }
+
+    // Récupérer la progression utilisateur avec les données des capsules et modules
+    let progressQuery = this.supabase
+      .from('user_progress')
+      .select(`
+        capsule_id,
+        status,
+        exercise_score,
+        exercise_attempts,
+        completed_at,
+        time_spent_seconds,
+        started_at,
+        updated_at,
+        capsules (
+          id,
+          title,
+          module_id,
+          duration_minutes,
+          prerequisites,
+          content,
+          modules (
+            id,
+            title
+          )
+        )
+      `)
+      .eq('user_id', userId);
+
+    if (filters?.date_range && filters.date_range !== 'all') {
+      const dateLimit = this.getDateLimit(filters.date_range);
+      progressQuery = progressQuery.gte('updated_at', dateLimit);
+    }
+
+    const { data: progressData, error: progressError } = await progressQuery;
+    if (progressError) throw progressError;
+
+    // Récupérer les comptes globaux en parallèle
+    const [modulesCount, capsulesCount] = await Promise.all([
+      this.supabase
+        .from('modules')
+        .select('id', { count: 'exact', head: true })
+        .eq('is_published', true),
+      this.supabase
+        .from('capsules')
+        .select('id', { count: 'exact', head: true })
+        .eq('is_published', true)
+    ]);
+
+    const baseData = {
+      progressData: progressData || [],
+      totalModules: modulesCount.count || 0,
+      totalCapsules: capsulesCount.count || 0
+    };
+
+    this.setInCache(cacheKey, baseData);
+    return baseData;
   }
 
   /**
@@ -777,6 +870,403 @@ class AnalyticsService {
     } catch (error) {
       console.error('Erreur lors de la récupération des infos de compte:', error);
       return { last_activity_at: null, account_age_days: 0 };
+    }
+  }
+
+  /**
+   * Versions optimisées des méthodes d'analytics
+   */
+
+  private async getProgressOverviewOptimized(
+    userId: string,
+    filters: AnalyticsFilters | undefined,
+    baseData: any
+  ): Promise<ProgressOverviewStats> {
+    try {
+      const { progressData, totalModules, totalCapsules } = baseData;
+
+      // Calculer les statistiques en une seule passe
+      const stats = progressData.reduce((acc: any, p: any) => {
+        if (p.status === 'completed') {
+          acc.completedCapsules++;
+          const moduleId = p.capsules?.module_id;
+          if (moduleId) {
+            if (!acc.modulesProgress[moduleId]) {
+              acc.modulesProgress[moduleId] = { completed: 0, inProgress: 0 };
+            }
+            acc.modulesProgress[moduleId].completed++;
+          }
+        } else if (p.status === 'in_progress') {
+          acc.inProgressCapsules++;
+          const moduleId = p.capsules?.module_id;
+          if (moduleId) {
+            if (!acc.modulesProgress[moduleId]) {
+              acc.modulesProgress[moduleId] = { completed: 0, inProgress: 0 };
+            }
+            acc.modulesProgress[moduleId].inProgress++;
+          }
+        }
+
+        if (p.exercise_score !== null) {
+          acc.exercisesCompleted++;
+          acc.totalScore += p.exercise_score;
+        }
+        acc.exercisesAttempted += p.exercise_attempts || 0;
+
+        return acc;
+      }, {
+        completedCapsules: 0,
+        inProgressCapsules: 0,
+        exercisesCompleted: 0,
+        exercisesAttempted: 0,
+        totalScore: 0,
+        modulesProgress: {} as Record<string, { completed: number; inProgress: number }>
+      });
+
+      // Calculer les modules complétés (ceci nécessiterait les capsules par module)
+      const completedModules = Object.values(stats.modulesProgress).filter(
+        (m: any) => m.completed > 0 && m.inProgress === 0
+      ).length;
+      const inProgressModules = Object.values(stats.modulesProgress).filter(
+        (m: any) => m.inProgress > 0 || m.completed > 0
+      ).length - completedModules;
+
+      const averageScore = stats.exercisesCompleted > 0
+        ? stats.totalScore / stats.exercisesCompleted
+        : null;
+
+      const overallCompletionPercentage = totalCapsules > 0
+        ? (stats.completedCapsules / totalCapsules) * 100
+        : 0;
+
+      return {
+        total_modules: totalModules,
+        completed_modules: completedModules,
+        in_progress_modules: inProgressModules,
+        total_capsules: totalCapsules,
+        completed_capsules: stats.completedCapsules,
+        in_progress_capsules: stats.inProgressCapsules,
+        overall_completion_percentage: Math.round(overallCompletionPercentage * 10) / 10,
+        total_exercises_attempted: stats.exercisesAttempted,
+        total_exercises_completed: stats.exercisesCompleted,
+        average_exercise_score: averageScore !== null ? Math.round(averageScore * 10) / 10 : null
+      };
+    } catch (error) {
+      console.error('Erreur lors de la récupération de la progression optimisée:', error);
+      return this.getEmptyProgressOverview();
+    }
+  }
+
+  private async getSkillCompetenciesOptimized(
+    userId: string,
+    filters: AnalyticsFilters | undefined,
+    baseData: any
+  ): Promise<SkillCompetency[]> {
+    try {
+      const { progressData } = baseData;
+
+      // Créer une map de progression par capsule pour accès rapide
+      const progressMap = new Map(
+        progressData.map((p: any) => [p.capsule_id, p])
+      );
+
+      const skillMap = new Map<string, {
+        category: string;
+        capsules: string[];
+        completed: string[];
+        scores: number[];
+      }>();
+
+      // Traiter toutes les capsules depuis les données de progression
+      progressData.forEach((p: any) => {
+        if (!p.capsules) return;
+
+        const skills = this.extractSkillsFromContent(p.capsules.content);
+
+        skills.forEach(skill => {
+          if (!skillMap.has(skill.name)) {
+            skillMap.set(skill.name, {
+              category: skill.category,
+              capsules: [],
+              completed: [],
+              scores: []
+            });
+          }
+          const skillData = skillMap.get(skill.name)!;
+
+          if (!skillData.capsules.includes(p.capsule_id)) {
+            skillData.capsules.push(p.capsule_id);
+          }
+
+          if (p.status === 'completed' && !skillData.completed.includes(p.capsule_id)) {
+            skillData.completed.push(p.capsule_id);
+            if (p.exercise_score !== null) {
+              skillData.scores.push(p.exercise_score);
+            }
+          }
+        });
+      });
+
+      // Convertir en tableau de compétences
+      const competencies: SkillCompetency[] = [];
+      skillMap.forEach((data, skillName) => {
+        const completionRate = data.capsules.length > 0
+          ? (data.completed.length / data.capsules.length) * 100
+          : 0;
+        const averageScore = data.scores.length > 0
+          ? data.scores.reduce((sum, score) => sum + score, 0) / data.scores.length
+          : null;
+
+        let competencyLevel = completionRate * 0.5;
+        if (averageScore !== null) {
+          competencyLevel += averageScore * 0.5;
+        }
+
+        competencies.push({
+          skill_name: skillName,
+          skill_category: data.category,
+          competency_level: Math.round(competencyLevel * 10) / 10,
+          capsules_completed: data.completed.length,
+          total_capsules: data.capsules.length,
+          average_score: averageScore !== null ? Math.round(averageScore * 10) / 10 : null
+        });
+      });
+
+      return competencies.sort((a, b) => b.competency_level - a.competency_level);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des compétences optimisées:', error);
+      return [];
+    }
+  }
+
+  private async getScoreTrendOptimized(
+    userId: string,
+    filters?: AnalyticsFilters
+  ): Promise<ScoreTrendPoint[]> {
+    // Cette méthode est déjà assez optimisée, on peut la réutiliser
+    return this.getScoreTrend(userId, filters);
+  }
+
+  private async getStreakStatsOptimized(
+    userId: string,
+    filters?: AnalyticsFilters
+  ): Promise<StreakStats> {
+    // Cette méthode est déjà assez optimisée, on peut la réutiliser
+    return this.getStreakStats(userId, filters);
+  }
+
+  private async getBadgeProgressOptimized(
+    userId: string,
+    baseData: any
+  ): Promise<BadgeProgress[]> {
+    try {
+      const badges = this.getMockBadges();
+      const { progressData } = baseData;
+
+      const completedCount = progressData.filter((p: any) => p.status === 'completed').length;
+      const perfectScores = progressData.filter((p: any) => p.exercise_score === 100).length;
+
+      return badges.map(badge => {
+        let progress = 0;
+        let currentValue = 0;
+        let targetValue = 100;
+        let earned = false;
+
+        switch (badge.id) {
+          case 'first-capsule':
+            currentValue = completedCount > 0 ? 1 : 0;
+            targetValue = 1;
+            progress = currentValue >= targetValue ? 100 : 0;
+            earned = currentValue >= targetValue;
+            break;
+          case 'ten-capsules':
+            currentValue = completedCount;
+            targetValue = 10;
+            progress = Math.min((currentValue / targetValue) * 100, 100);
+            earned = currentValue >= targetValue;
+            break;
+          case 'perfect-score':
+            currentValue = perfectScores;
+            targetValue = 1;
+            progress = currentValue >= targetValue ? 100 : 0;
+            earned = currentValue >= targetValue;
+            break;
+          case 'week-streak':
+            currentValue = 0;
+            targetValue = 7;
+            progress = 0;
+            earned = false;
+            break;
+        }
+
+        return {
+          badge,
+          earned,
+          earned_at: earned ? new Date().toISOString() : null,
+          progress: Math.round(progress * 10) / 10,
+          current_value: currentValue,
+          target_value: targetValue
+        };
+      });
+    } catch (error) {
+      console.error('Erreur lors de la récupération des badges optimisés:', error);
+      return [];
+    }
+  }
+
+  private async getUserPointsOptimized(baseData: any): Promise<{
+    total_points: number;
+    level: number;
+    level_progress: number;
+  }> {
+    try {
+      const { progressData } = baseData;
+
+      const completedCount = progressData.filter((p: any) => p.status === 'completed').length;
+      const scoreSum = progressData.reduce((sum: number, p: any) => sum + (p.exercise_score || 0), 0);
+
+      const totalPoints = (completedCount * 100) + scoreSum;
+      const level = Math.floor(totalPoints / 1000) + 1;
+      const pointsInLevel = totalPoints % 1000;
+      const levelProgress = (pointsInLevel / 1000) * 100;
+
+      return {
+        total_points: totalPoints,
+        level,
+        level_progress: Math.round(levelProgress * 10) / 10
+      };
+    } catch (error) {
+      console.error('Erreur lors de la récupération des points optimisés:', error);
+      return { total_points: 0, level: 1, level_progress: 0 };
+    }
+  }
+
+  private async getTimeAnalyticsOptimized(
+    userId: string,
+    filters?: AnalyticsFilters
+  ): Promise<TimeAnalytics> {
+    // Cette méthode est déjà assez optimisée, on peut la réutiliser
+    return this.getTimeAnalytics(userId, filters);
+  }
+
+  private async getNextStepRecommendationsOptimized(
+    userId: string,
+    baseData: any
+  ): Promise<NextStepRecommendation[]> {
+    try {
+      const { progressData } = baseData;
+
+      const completedCapsuleIds = new Set(
+        progressData.filter((p: any) => p.status === 'completed').map((p: any) => p.capsule_id)
+      );
+      const inProgressCapsuleIds = new Set(
+        progressData.filter((p: any) => p.status === 'in_progress').map((p: any) => p.capsule_id)
+      );
+
+      // Récupérer toutes les capsules publiées non complétées
+      const { data: allCapsules, error } = await this.supabase
+        .from('capsules')
+        .select(`
+          id,
+          title,
+          duration_minutes,
+          prerequisites,
+          module_id,
+          content,
+          modules (
+            title
+          )
+        `)
+        .eq('is_published', true)
+        .not('id', 'in', `(${Array.from(completedCapsuleIds).join(',') || 'null'})`)
+        .limit(10);
+
+      if (error) throw error;
+
+      const recommendations: NextStepRecommendation[] = [];
+
+      allCapsules?.forEach((capsule: any) => {
+        const prerequisites = capsule.prerequisites || [];
+        const prerequisitesMet = prerequisites.every((prereq: string) =>
+          completedCapsuleIds.has(prereq)
+        );
+
+        if (!prerequisitesMet && prerequisites.length > 0) return;
+
+        let reason: NextStepRecommendation['reason'] = 'continuation';
+        let priority: NextStepRecommendation['priority'] = 'medium';
+
+        if (inProgressCapsuleIds.has(capsule.id)) {
+          reason = 'continuation';
+          priority = 'high';
+        } else if (prerequisites.length > 0) {
+          reason = 'prerequisite';
+          priority = 'high';
+        }
+
+        const content = capsule.content as any;
+        const skills = this.extractSkillsFromContent(content);
+        const skillFocus = skills.map(s => s.name);
+        const difficulty = this.estimateDifficulty(capsule);
+
+        recommendations.push({
+          capsule_id: capsule.id,
+          capsule_title: capsule.title,
+          module_id: capsule.module_id,
+          module_title: capsule.modules?.title || 'Unknown',
+          reason,
+          priority,
+          estimated_duration_minutes: capsule.duration_minutes || 30,
+          skill_focus: skillFocus,
+          difficulty_level: difficulty
+        });
+      });
+
+      const priorityOrder = { high: 0, medium: 1, low: 2 };
+      return recommendations
+        .sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority])
+        .slice(0, 5);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des recommandations optimisées:', error);
+      return [];
+    }
+  }
+
+  private async getAccountInfoOptimized(userId: string): Promise<{
+    last_activity_at: string | null;
+    account_age_days: number;
+  }> {
+    // Cette méthode est déjà optimisée, on peut la réutiliser
+    return this.getAccountInfo(userId);
+  }
+
+  /**
+   * Utilitaires de cache
+   */
+
+  private getFromCache<T>(key: string): T | null {
+    const entry = this.cache.get(key);
+    if (!entry) return null;
+
+    const now = Date.now();
+    if (now - entry.timestamp > this.CACHE_TTL) {
+      this.cache.delete(key);
+      return null;
+    }
+
+    return entry.data as T;
+  }
+
+  private setInCache<T>(key: string, data: T): void {
+    this.cache.set(key, {
+      data,
+      timestamp: Date.now()
+    });
+
+    // Nettoyer le cache périodiquement (garder max 100 entrées)
+    if (this.cache.size > 100) {
+      const keysToDelete = Array.from(this.cache.keys()).slice(0, 20);
+      keysToDelete.forEach(k => this.cache.delete(k));
     }
   }
 
