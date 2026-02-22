@@ -7,10 +7,12 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/hooks/useAuth'
 import { BookOpen, Trophy, Flame, Target, Clock, ChevronRight, BarChart3 } from 'lucide-react'
+import { BookOpen, Trophy, Flame, Target, Clock, ChevronRight, Award } from 'lucide-react'
 import Link from 'next/link'
 import { getAllModules, getAllModulesWithProgress } from '@/lib/data'
 import { createClient } from '@/lib/supabase/client'
 import FeedbackButton from '@/components/feedback/FeedbackButton'
+import CertificateButton from '@/components/certificates/CertificateButton'
 
 export default function DashboardPage() {
   const { user, loading, signOut } = useAuth()
@@ -216,6 +218,74 @@ export default function DashboardPage() {
             </p>
           </div>
         </div>
+        {/* Master Certificate Section */}
+        {user && (() => {
+          const allModulesCompleted = modules.length > 0 && modules.every(m => m.progress === 100);
+
+          if (allModulesCompleted) {
+            // Show master certificate button
+            return (
+              <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-6 shadow-sm mb-8 border-2 border-indigo-200">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg">
+                      <Award className="w-8 h-8 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold text-gray-800 mb-1">
+                        Certificat Master 🎓
+                      </h3>
+                      <p className="text-gray-600">
+                        Félicitations ! Vous avez terminé tous les modules. Obtenez votre certificat master.
+                      </p>
+                    </div>
+                  </div>
+                  <CertificateButton
+                    moduleTitle="AI-Powered Prompt Engineering"
+                    certificateType="master"
+                    variant="button"
+                    size="lg"
+                  />
+                </div>
+              </div>
+            );
+          } else if (modules.length > 0) {
+            // Show overall progress
+            const completedModules = modules.filter(m => m.progress === 100).length;
+            const totalModules = modules.length;
+
+            return (
+              <div className="bg-gradient-to-r from-gray-50 to-indigo-50 rounded-xl p-6 shadow-sm mb-8 border border-gray-200">
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-gradient-to-r from-gray-400 to-indigo-400 rounded-lg">
+                    <Award className="w-8 h-8 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-gray-800 mb-2">
+                      Progression vers le Certificat Master
+                    </h3>
+                    <p className="text-gray-600 mb-3">
+                      Complétez tous les modules pour débloquer votre certificat master.
+                    </p>
+                    <div className="flex items-center gap-4">
+                      <div className="flex-1 bg-gray-200 rounded-full h-3">
+                        <div
+                          className="h-full bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full transition-all"
+                          style={{ width: `${Math.round((completedModules / totalModules) * 100)}%` }}
+                        />
+                      </div>
+                      <span className="text-sm font-semibold text-gray-700 whitespace-nowrap">
+                        {completedModules}/{totalModules} modules
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          }
+
+          return null;
+        })()}
 
         {/* Modules */}
         <div id="modules" className="bg-white rounded-xl p-6 shadow-sm">

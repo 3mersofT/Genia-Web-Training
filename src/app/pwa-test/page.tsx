@@ -177,9 +177,9 @@ export default function PWATestPage() {
             
             <StatusCard
               label="Vibration"
-              value={'vibrate' in navigator ? 'Supportée' : 'Non'}
+              value={typeof navigator !== 'undefined' && 'vibrate' in navigator ? 'Supportée' : 'Non'}
               icon={<AlertCircle className="w-4 h-4" />}
-              status={'vibrate' in navigator}
+              status={typeof navigator !== 'undefined' && 'vibrate' in navigator}
             />
           </div>
         </div>
@@ -213,21 +213,21 @@ export default function PWATestPage() {
               onClick={testVibration}
               label="Vibration"
               icon={<AlertCircle className="w-4 h-4" />}
-              disabled={!('vibrate' in navigator)}
+              disabled={typeof navigator === 'undefined' || !('vibrate' in navigator)}
             />
             
             <TestButton
               onClick={testBattery}
               label="Batterie"
               icon={<Battery className="w-4 h-4" />}
-              disabled={!('getBattery' in navigator)}
+              disabled={typeof navigator === 'undefined' || !('getBattery' in navigator)}
             />
             
             <TestButton
               onClick={testShare}
               label="Partage"
               icon={<Info className="w-4 h-4" />}
-              disabled={!navigator.share}
+              disabled={typeof navigator === 'undefined' || !navigator.share}
             />
           </div>
         </div>
