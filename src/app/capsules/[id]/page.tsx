@@ -14,6 +14,7 @@ import {
 import FeedbackButton from '@/components/feedback/FeedbackButton';
 import FeedbackStats from '@/components/feedback/FeedbackStats';
 import RichContentRenderer from '@/components/capsule/RichContentRenderer';
+import CodeBlock from '@/components/capsule/CodeBlock';
 import { getCapsuleContent, getCapsuleById, getNextCapsule, getPreviousCapsule, getModuleBySlug } from '@/lib/data';
 
 export default function CapsulePage() {
@@ -136,20 +137,26 @@ export default function CapsulePage() {
                         em: ({node, ...props}) => <em className="italic text-gray-600" {...props} />,
                         code: ({node, className, children, ...props}) => {
                           const match = /language-(\w+)/.exec(className || '');
-                          return !match ? (
-                            <code className="bg-gray-100 px-2 py-1 rounded text-sm font-mono" {...props}>
-                              {children}
-                            </code>
-                          ) : (
-                            <div className="bg-gray-50 rounded-lg overflow-hidden my-4">
-                              <div className="overflow-x-auto">
-                                <pre className="p-4 text-sm whitespace-pre-wrap break-words">
-                                  <code className={className} {...props}>
-                                    {children}
-                                  </code>
-                                </pre>
-                              </div>
-                            </div>
+                          const language = match ? match[1] : undefined;
+
+                          // Inline code (no language specified)
+                          if (!match) {
+                            return (
+                              <code className="bg-gray-100 px-2 py-1 rounded text-sm font-mono" {...props}>
+                                {children}
+                              </code>
+                            );
+                          }
+
+                          // Code block with syntax highlighting
+                          const codeString = String(children).replace(/\n$/, '');
+                          return (
+                            <CodeBlock
+                              code={codeString}
+                              language={language}
+                              showLineNumbers={true}
+                              className="my-4"
+                            />
                           );
                         },
                         table: ({node, ...props}) => (
