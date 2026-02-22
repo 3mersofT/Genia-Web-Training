@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Play, AlertCircle, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -122,6 +122,36 @@ export default function VideoEmbed({
   const [videoInfo, setVideoInfo] = useState<VideoInfo | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const [isInView, setIsInView] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Lazy loading avec Intersection Observer
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsInView(true);
+            // Une fois visible, on arrête d'observer
+            observer.disconnect();
+          }
+        });
+      },
+      {
+        // Charger la vidéo 200px avant qu'elle entre dans le viewport
+        rootMargin: '200px',
+        threshold: 0.01
+      }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     setIsLoading(true);
@@ -141,6 +171,7 @@ export default function VideoEmbed({
   if (isLoading) {
     return (
       <div
+        ref={containerRef}
         className={`relative w-full bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center ${className}`}
         style={{ aspectRatio }}
       >
@@ -152,6 +183,7 @@ export default function VideoEmbed({
   if (hasError || !videoInfo || videoInfo.error) {
     return (
       <div
+        ref={containerRef}
         className={`relative w-full bg-red-50 dark:bg-red-900/20 rounded-lg border-2 border-red-200 dark:border-red-800 ${className}`}
         style={{ aspectRatio }}
       >
@@ -168,10 +200,29 @@ export default function VideoEmbed({
     );
   }
 
+  // ============= PLACEHOLDER AVANT CHARGEMENT LAZY =============
+  if (!isInView) {
+    return (
+      <div
+        ref={containerRef}
+        className={`relative w-full bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center ${className}`}
+        style={{ aspectRatio }}
+      >
+        <div className="flex flex-col items-center justify-center text-center">
+          <Play className="w-12 h-12 text-slate-400 mb-3" />
+          <p className="text-slate-600 dark:text-slate-400 text-sm">
+            Chargement de la vidéo...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   // ============= RENDU VIDÉO SELF-HOSTED =============
   if (videoInfo.type === 'self-hosted' && videoInfo.embedUrl) {
     return (
       <motion.div
+        ref={containerRef}
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3 }}
@@ -185,6 +236,7 @@ export default function VideoEmbed({
           autoPlay={autoplay}
           muted={muted}
           loop={loop}
+          preload="metadata"
           className="absolute inset-0 w-full h-full object-contain bg-black"
           onError={() => setHasError(true)}
         >
@@ -210,6 +262,7 @@ export default function VideoEmbed({
 
     return (
       <motion.div
+        ref={containerRef}
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3 }}
@@ -231,6 +284,7 @@ export default function VideoEmbed({
   // ============= FALLBACK =============
   return (
     <div
+      ref={containerRef}
       className={`relative w-full bg-slate-100 dark:bg-slate-800 rounded-lg ${className}`}
       style={{ aspectRatio }}
     >
