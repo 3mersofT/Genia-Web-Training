@@ -319,6 +319,101 @@ class StudentNotificationService {
     // Vérifier la fréquence des emails
     return prefs.email_digest_frequency !== 'off';
   }
+
+  /**
+   * 📱 Vérifier le statut des permissions de notification push
+   */
+  async checkPushPermission(): Promise<NotificationPermission | null> {
+    if (typeof window === 'undefined' || !('Notification' in window)) {
+      return null;
+    }
+
+    return Notification.permission;
+  }
+
+  /**
+   * 🔔 Demander la permission pour les notifications push
+   */
+  async requestPushPermission(): Promise<boolean> {
+    try {
+      // Vérifier si les notifications sont supportées
+      if (typeof window === 'undefined' || !('Notification' in window)) {
+        throw new Error('Les notifications push ne sont pas supportées par ce navigateur');
+      }
+
+      // Si déjà accordé, retourner true
+      if (Notification.permission === 'granted') {
+        return true;
+      }
+
+      // Si déjà refusé, retourner false
+      if (Notification.permission === 'denied') {
+        return false;
+      }
+
+      // Demander la permission
+      const permission = await Notification.requestPermission();
+
+      if (permission === 'granted') {
+        // Tracker l'acceptation
+        if (typeof window !== 'undefined' && 'gtag' in window) {
+          (window as any).gtag('event', 'push_permission_granted', {
+            event_category: 'engagement',
+            event_label: 'notifications'
+          });
+        }
+        return true;
+      } else {
+        // Tracker le refus
+        if (typeof window !== 'undefined' && 'gtag' in window) {
+          (window as any).gtag('event', 'push_permission_denied', {
+            event_category: 'engagement',
+            event_label: 'notifications'
+          });
+        }
+
+        // Sauvegarder le refus
+        localStorage.setItem('push-permission-denied', new Date().toISOString());
+        return false;
+      }
+    } catch (error) {
+      console.error('Erreur demande permission push:', error);
+      return false;
+    }
+  }
+
+  /**
+   * 🔕 Révoquer l'abonnement aux notifications push
+   */
+  async revokePushSubscription(): Promise<boolean> {
+    try {
+      if (typeof window === 'undefined' || !('serviceWorker' in navigator)) {
+        return false;
+      }
+
+      const registration = await navigator.serviceWorker.getRegistration();
+      if (!registration) return false;
+
+      const subscription = await registration.pushManager.getSubscription();
+      if (!subscription) return false;
+
+      const result = await subscription.unsubscribe();
+      return result;
+    } catch (error) {
+      console.error('Erreur révocation abonnement push:', error);
+      return false;
+    }
+  }
+
+  /**
+   * 📲 Vérifier si les notifications push sont disponibles
+   */
+  isPushNotificationSupported(): boolean {
+    return typeof window !== 'undefined' &&
+           'Notification' in window &&
+           'serviceWorker' in navigator &&
+           'PushManager' in window;
+  }
 }
 
 // Export singleton
