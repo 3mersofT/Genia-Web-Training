@@ -72,6 +72,9 @@ export default function SkillRadarChart({ skills, loading = false }: SkillRadarC
   const chartOptions: ChartOptions<'radar'> = {
     responsive: true,
     maintainAspectRatio: false,
+    animation: {
+      duration: 0 // Disable animations for performance
+    },
     scales: {
       r: {
         beginAtZero: true,

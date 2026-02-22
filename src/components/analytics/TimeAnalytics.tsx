@@ -84,6 +84,9 @@ export default function TimeAnalytics({ timeAnalytics }: TimeAnalyticsProps) {
   const moduleChartOptions: ChartOptions<'bar'> = {
     responsive: true,
     maintainAspectRatio: false,
+    animation: {
+      duration: 0 // Disable animations for performance
+    },
     indexAxis: 'y',
     scales: {
       x: {
@@ -171,6 +174,9 @@ export default function TimeAnalytics({ timeAnalytics }: TimeAnalyticsProps) {
   const dayOfWeekChartOptions: ChartOptions<'bar'> = {
     responsive: true,
     maintainAspectRatio: false,
+    animation: {
+      duration: 0 // Disable animations for performance
+    },
     scales: {
       y: {
         beginAtZero: true,
@@ -256,6 +262,9 @@ export default function TimeAnalytics({ timeAnalytics }: TimeAnalyticsProps) {
   const trendChartOptions: ChartOptions<'line'> = {
     responsive: true,
     maintainAspectRatio: false,
+    animation: {
+      duration: 0 // Disable animations for performance
+    },
     scales: {
       y: {
         beginAtZero: true,

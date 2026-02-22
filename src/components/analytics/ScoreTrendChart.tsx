@@ -92,6 +92,9 @@ export default function ScoreTrendChart({ scoreTrend, loading = false }: ScoreTr
   const chartOptions: ChartOptions<'line'> = {
     responsive: true,
     maintainAspectRatio: false,
+    animation: {
+      duration: 0 // Disable animations for performance
+    },
     scales: {
       y: {
         beginAtZero: true,
