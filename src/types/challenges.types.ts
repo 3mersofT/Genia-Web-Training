@@ -55,6 +55,23 @@ export interface ChallengeParticipation {
 }
 
 /**
+ * Résultat de la soumission d'un défi avec XP et récompenses
+ */
+export interface ChallengeSubmissionResult {
+  participation: ChallengeParticipation;
+  xp_awarded: number;
+  leveled_up: boolean;
+  new_level?: number;
+  skills_unlocked: string[];
+  level_up_notification?: {
+    from_level_rank: number;
+    to_level_rank: number;
+    from_level_name?: string;
+    to_level_name?: string;
+  };
+}
+
+/**
  * Évaluation par les pairs
  */
 export interface PeerReview {
