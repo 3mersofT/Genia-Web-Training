@@ -110,7 +110,7 @@ const parseContent = (content: string | any) => {
     }
   }
 
-  return elements.length > 0 ? elements : [{ type: 'text', content: textContent }];
+  return elements.length > 0 ? elements : [{ type: 'text' as const, content: textContent }];
 };
 
 export default function ContentPreview({ module, capsule, isOpen, onClose }: ContentPreviewProps) {

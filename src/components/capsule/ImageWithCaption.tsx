@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ZoomIn, AlertCircle, Loader2, X } from 'lucide-react'
@@ -31,11 +31,43 @@ export default function ImageWithCaption({
   const [isLightboxOpen, setIsLightboxOpen] = useState(false)
   const [imageLoaded, setImageLoaded] = useState(false)
   const [hasError, setHasError] = useState(false)
+  const [isInView, setIsInView] = useState(priority) // Si priority, charger immédiatement
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  // Lazy loading avec Intersection Observer (sauf si priority)
+  useEffect(() => {
+    if (priority) return // Skip l'observer si priority est true
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsInView(true)
+            // Une fois visible, on arrête d'observer
+            observer.disconnect()
+          }
+        })
+      },
+      {
+        // Charger l'image 300px avant qu'elle entre dans le viewport
+        rootMargin: '300px',
+        threshold: 0.01
+      }
+    )
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current)
+    }
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [priority])
 
   // ============= ÉTAT D'ERREUR =============
   if (hasError) {
     return (
-      <div className={`w-full ${className}`}>
+      <div ref={containerRef} className={`w-full ${className}`}>
         <div className="relative w-full bg-red-50 dark:bg-red-900/20 rounded-lg border-2 border-red-200 dark:border-red-800 p-8">
           <div className="flex flex-col items-center justify-center text-center">
             <AlertCircle className="w-12 h-12 text-red-500 dark:text-red-400 mb-3" />
@@ -56,9 +88,27 @@ export default function ImageWithCaption({
     )
   }
 
+  // ============= PLACEHOLDER AVANT CHARGEMENT LAZY =============
+  if (!isInView) {
+    return (
+      <div ref={containerRef} className={`w-full ${className}`}>
+        <div className="relative w-full bg-slate-100 dark:bg-slate-800 rounded-lg" style={{ aspectRatio: `${width}/${height}` }}>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
+          </div>
+        </div>
+        {caption && (
+          <p className="mt-3 text-sm text-gray-600 dark:text-gray-400 text-center italic">
+            {caption}
+          </p>
+        )}
+      </div>
+    )
+  }
+
   // ============= RENDU PRINCIPAL =============
   return (
-    <div className={`w-full ${className}`}>
+    <div ref={containerRef} className={`w-full ${className}`}>
       {/* Image Container */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
