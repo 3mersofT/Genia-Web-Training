@@ -181,6 +181,187 @@ export class TournamentService {
   }
 
   /**
+   * Inscrit une équipe à un tournoi
+   */
+  async registerTeam(
+    tournamentId: string,
+    teamId: string,
+    userId: string
+  ): Promise<TournamentParticipant[]> {
+    try {
+      // Vérifier que le tournoi accepte encore les inscriptions
+      const tournament = await this.getTournament(tournamentId);
+      if (!tournament || tournament.status !== 'registration') {
+        throw new Error('Tournoi non disponible pour inscription');
+      }
+
+      // Récupérer les membres actifs de l'équipe
+      const { data: members, error: membersError } = await this.supabase
+        .from('team_members')
+        .select('user_id, role')
+        .eq('team_id', teamId)
+        .eq('status', 'active');
+
+      if (membersError) throw membersError;
+      if (!members || members.length === 0) {
+        throw new Error('Aucun membre actif dans l\'équipe');
+      }
+
+      // Vérifier que l'utilisateur est capitaine de l'équipe
+      const userMember = members.find((m: { user_id: string; role: string }) => m.user_id === userId);
+      if (!userMember || (userMember.role !== 'captain' && userMember.role !== 'co_captain')) {
+        throw new Error('Seuls les capitaines peuvent inscrire l\'équipe');
+      }
+
+      // Vérifier la limite de participants
+      if (tournament.participant_count + members.length > tournament.max_participants) {
+        throw new Error('Pas assez de places disponibles pour toute l\'équipe');
+      }
+
+      // Inscrire tous les membres
+      const participants: TournamentParticipant[] = [];
+      for (const member of members) {
+        const participantData = {
+          tournament_id: tournamentId,
+          user_id: member.user_id,
+          team_id: teamId,
+          status: 'registered' as ParticipantStatus,
+          matches_played: 0,
+          matches_won: 0,
+          matches_lost: 0,
+          total_score: 0,
+        };
+
+        const { data, error } = await this.supabase
+          .from('tournament_participants')
+          .insert(participantData)
+          .select(`
+            *,
+            user_profiles:user_id (
+              full_name,
+              avatar_url
+            )
+          `)
+          .single();
+
+        if (error) {
+          // Si une inscription échoue, on continue mais on le signale
+          console.error(`Erreur inscription membre ${member.user_id}:`, error);
+          continue;
+        }
+
+        if (data) {
+          participants.push(data);
+
+          // Notifier chaque membre
+          await this.createNotification({
+            user_id: member.user_id,
+            tournament_id: tournamentId,
+            type: 'registration_open',
+            title: 'Équipe inscrite au tournoi',
+            message: `Votre équipe est inscrite au tournoi "${tournament.title}"`,
+            data: { tournament_id: tournamentId, team_id: teamId },
+          });
+        }
+      }
+
+      return participants;
+    } catch (error) {
+      console.error('Erreur inscription équipe au tournoi:', error);
+      return [];
+    }
+  }
+
+  /**
+   * Récupère les participants d'une équipe dans un tournoi
+   */
+  async getTeamParticipants(
+    tournamentId: string,
+    teamId: string
+  ): Promise<TournamentParticipant[]> {
+    try {
+      const { data, error } = await this.supabase
+        .from('tournament_participants')
+        .select(`
+          *,
+          user_profiles:user_id (
+            full_name,
+            avatar_url,
+            level
+          )
+        `)
+        .eq('tournament_id', tournamentId)
+        .eq('team_id', teamId)
+        .order('total_score', { ascending: false });
+
+      if (error) throw error;
+      return data || [];
+    } catch (error) {
+      console.error('Erreur récupération participants équipe:', error);
+      return [];
+    }
+  }
+
+  /**
+   * Agrège le score d'une équipe dans un tournoi
+   */
+  async aggregateTeamScore(
+    tournamentId: string,
+    teamId: string
+  ): Promise<number> {
+    try {
+      const { data, error } = await this.supabase
+        .from('tournament_participants')
+        .select('total_score')
+        .eq('tournament_id', tournamentId)
+        .eq('team_id', teamId);
+
+      if (error) throw error;
+      if (!data) return 0;
+
+      // Calculer la moyenne ou la somme des scores
+      const totalScore = data.reduce((sum: number, p: { total_score?: number }) => sum + (p.total_score || 0), 0);
+      return Math.round(totalScore / data.length); // Moyenne
+    } catch (error) {
+      console.error('Erreur agrégation score équipe:', error);
+      return 0;
+    }
+  }
+
+  /**
+   * Met à jour les statistiques d'équipe après un match
+   */
+  async updateTeamTournamentStats(
+    tournamentId: string,
+    teamId: string,
+    matchResult: { won: boolean; score: number }
+  ): Promise<boolean> {
+    try {
+      // Mettre à jour les participants de l'équipe
+      const { error } = await this.supabase
+        .from('tournament_participants')
+        .update({
+          matches_played: this.supabase.rpc('increment', { x: 1 }),
+          matches_won: matchResult.won
+            ? this.supabase.rpc('increment', { x: 1 })
+            : undefined,
+          matches_lost: !matchResult.won
+            ? this.supabase.rpc('increment', { x: 1 })
+            : undefined,
+          total_score: this.supabase.rpc('increment', { x: matchResult.score }),
+        })
+        .eq('tournament_id', tournamentId)
+        .eq('team_id', teamId);
+
+      if (error) throw error;
+      return true;
+    } catch (error) {
+      console.error('Erreur mise à jour stats équipe:', error);
+      return false;
+    }
+  }
+
+  /**
    * Génère les brackets pour un tournoi
    */
   async generateBrackets(tournamentId: string): Promise<boolean> {
