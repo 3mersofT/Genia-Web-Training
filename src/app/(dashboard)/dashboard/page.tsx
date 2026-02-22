@@ -6,13 +6,14 @@ export const dynamic = 'force-dynamic'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/hooks/useAuth'
-import { BookOpen, Trophy, Flame, Target, Clock, ChevronRight, BarChart3 } from 'lucide-react'
-import { BookOpen, Trophy, Flame, Target, Clock, ChevronRight, Award } from 'lucide-react'
+import { BookOpen, Trophy, Flame, Target, Clock, ChevronRight, BarChart3, Award } from 'lucide-react'
 import Link from 'next/link'
 import { getAllModules, getAllModulesWithProgress } from '@/lib/data'
 import { createClient } from '@/lib/supabase/client'
 import FeedbackButton from '@/components/feedback/FeedbackButton'
 import CertificateButton from '@/components/certificates/CertificateButton'
+import LevelBadge from '@/components/gamification/LevelBadge'
+import { LevelProgress, LevelDefinition } from '@/types/levels.types'
 
 export default function DashboardPage() {
   const { user, loading, signOut } = useAuth()
@@ -124,6 +125,48 @@ export default function DashboardPage() {
               size="sm"
             />
           </div>
+        </div>
+
+        {/* Level Badge */}
+        <div className="mb-8">
+          <LevelBadge
+            levelProgress={{
+              current_level: {
+                id: '2',
+                level_rank: 2,
+                level_name: 'Apprentice',
+                level_name_fr: 'Apprenti',
+                xp_required: 1000,
+                xp_next_level: 5000,
+                icon_emoji: '📚',
+                color_hex: '#60A5FA',
+                description: 'Vous progressez bien dans votre apprentissage!',
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString()
+              } as LevelDefinition,
+              next_level: {
+                id: '3',
+                level_rank: 3,
+                level_name: 'Expert',
+                level_name_fr: 'Expert',
+                xp_required: 5000,
+                xp_next_level: 15000,
+                icon_emoji: '⚡',
+                color_hex: '#F59E0B',
+                description: 'Vous maîtrisez les bases',
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString()
+              } as LevelDefinition,
+              current_xp: 2500,
+              total_xp: 3500,
+              xp_to_next_level: 1500,
+              progress_percentage: 62.5,
+              level_rank: 2,
+              level_name: 'Apprentice',
+              level_name_fr: 'Apprenti'
+            }}
+            showDetails={true}
+          />
         </div>
 
         {/* Stats Grid - Progress Section */}
