@@ -103,11 +103,11 @@
               {
                 "type": "attachment",
                 "id": "recap-cheat-sheet",
-                "url": "/downloads/rctf-cheat-sheet.pdf",
+                "url": "https://www.example.com/placeholder/RCTF-Cheat-Sheet.pdf",
                 "filename": "RCTF-Cheat-Sheet.pdf",
                 "fileType": "pdf",
                 "fileSize": 245760,
-                "description": "Téléchargez votre aide-mémoire RCTF - Un guide de référence rapide à garder sous la main"
+                "description": "Téléchargez votre aide-mémoire RCTF (placeholder URL for demo)"
               }
             ]
           }
