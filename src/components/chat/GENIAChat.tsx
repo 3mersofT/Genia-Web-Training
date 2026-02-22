@@ -10,6 +10,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '@/hooks/useAuth';
 import { useGENIA } from '@/components/providers/GENIAProvider';
 import { useEnhancedGENIA } from '@/hooks/useEnhancedGENIA';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeSanitize from 'rehype-sanitize';
 
 // ============= TYPES =============
 interface Message {
@@ -572,12 +575,18 @@ Tu es sur la bonne voie ! Chaque prompt est une opportunité d'apprendre.`
                 )}
                 
                 {/* Message Content */}
-                <div className="prose prose-sm max-w-none"
-                     dangerouslySetInnerHTML={{ 
-                       __html: message.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                                              .replace(/\n/g, '<br/>')
-                     }} 
-                />
+                <div className="prose prose-sm max-w-none">
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    rehypePlugins={[rehypeSanitize]}
+                    components={{
+                      strong: ({node, ...props}) => <strong className="font-semibold" {...props} />,
+                      p: ({node, ...props}) => <p className="mb-2" {...props} />,
+                    }}
+                  >
+                    {message.content}
+                  </ReactMarkdown>
+                </div>
                 
                 {/* CoT Reasoning for Magistral */}
                 {message.reasoning && (
@@ -798,12 +807,18 @@ Tu es sur la bonne voie ! Chaque prompt est une opportunité d'apprendre.`
                     )}
                     
                     {/* Message Content */}
-                    <div className="prose prose-sm max-w-none"
-                         dangerouslySetInnerHTML={{ 
-                           __html: message.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                                                  .replace(/\n/g, '<br/>')
-                         }} 
-                    />
+                    <div className="prose prose-sm max-w-none">
+                      <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        rehypePlugins={[rehypeSanitize]}
+                        components={{
+                          strong: ({node, ...props}) => <strong className="font-semibold" {...props} />,
+                          p: ({node, ...props}) => <p className="mb-2" {...props} />,
+                        }}
+                      >
+                        {message.content}
+                      </ReactMarkdown>
+                    </div>
                     
                     {/* CoT Reasoning for Magistral */}
                     {message.reasoning && (
