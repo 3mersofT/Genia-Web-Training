@@ -805,12 +805,17 @@ Tu es sur la bonne voie ! Chaque prompt est une opportunité d'apprendre.`
                     )}
                     
                     {/* Message Content */}
-                    <div className="prose prose-sm max-w-none"
-                         dangerouslySetInnerHTML={{ 
-                           __html: message.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                                                  .replace(/\n/g, '<br/>')
-                         }} 
-                    />
+                    <div className="prose prose-sm max-w-none">
+                      <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        components={{
+                          strong: ({node, ...props}) => <strong className="font-semibold" {...props} />,
+                          p: ({node, ...props}) => <p className="mb-2" {...props} />,
+                        }}
+                      >
+                        {message.content}
+                      </ReactMarkdown>
+                    </div>
                     
                     {/* CoT Reasoning for Magistral */}
                     {message.reasoning && (
