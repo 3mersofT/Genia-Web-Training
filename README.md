@@ -1,5 +1,10 @@
 # 🚀 Plateforme de Formation au Prompt Engineering avec GENIA
 
+[![CI](https://github.com/3mersofT/Genia-Web-Training/workflows/CI/badge.svg)](https://github.com/3mersofT/Genia-Web-Training/actions/workflows/ci.yml)
+[![E2E Tests](https://github.com/3mersofT/Genia-Web-Training/workflows/E2E%20Tests/badge.svg)](https://github.com/3mersofT/Genia-Web-Training/actions/workflows/e2e.yml)
+[![Production Deployment](https://github.com/3mersofT/Genia-Web-Training/workflows/Production%20Deployment/badge.svg)](https://github.com/3mersofT/Genia-Web-Training/actions/workflows/production.yml)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2F3mersofT%2FGenia-Web-Training)
+
 ## 📋 Vue d'ensemble
 
 Plateforme de formation interactive au Prompt Engineering utilisant la méthode pédagogique GENIA et l'IA française Mistral. Développée par Hemerson KOFFI.
