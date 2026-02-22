@@ -9,7 +9,6 @@ import {
   Home, BookOpen, MessageSquare, User, Trophy,
   Settings, LogOut, ChevronDown, Bell, Sun, Moon, Monitor,
   Swords, Users, Network
-  Settings, LogOut, ChevronDown, Sun, Moon, Monitor
 } from 'lucide-react';
 
 interface NavItem {
