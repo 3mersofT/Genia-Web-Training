@@ -8,13 +8,26 @@ import { studentNotificationService } from '@/lib/services/studentNotificationSe
 
 export async function POST(req: NextRequest) {
   try {
-    const { userId, capsuleId, score } = await req.json();
+    const supabase = await createClient();
 
-    if (!userId || !capsuleId) {
-      return NextResponse.json({ error: 'userId et capsuleId requis' }, { status: 400 });
+    // Vérifier l'authentification
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+
+    if (authError || !user) {
+      return NextResponse.json(
+        { error: 'Non autorisé' },
+        { status: 401 }
+      );
     }
 
-    const supabase = await createClient();
+    const { capsuleId, score } = await req.json();
+
+    if (!capsuleId) {
+      return NextResponse.json({ error: 'capsuleId requis' }, { status: 400 });
+    }
+
+    // Utiliser l'ID de l'utilisateur authentifié au lieu de faire confiance au client
+    const userId = user.id;
     const levelProgressionService = new LevelProgressionService();
 
     // Vérifier d'abord si l'entrée existe
@@ -86,14 +99,13 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    // 🏆 Vérifier et notifier pour les badges récemment gagnés
+    await checkAndNotifyBadges(userId, supabase);
+
     return NextResponse.json({
       ok: true,
       xpResult: xpResult || undefined
     });
-    // 🏆 Vérifier et notifier pour les badges récemment gagnés
-    await checkAndNotifyBadges(userId, supabase);
-
-    return NextResponse.json({ ok: true });
   } catch (error) {
     console.error('Erreur completion capsule:', error);
     return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 });
