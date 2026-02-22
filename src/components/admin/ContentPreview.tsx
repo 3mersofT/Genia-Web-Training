@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import { 
-  Eye, EyeOff, Monitor, Tablet, Smartphone, 
+import {
+  Eye, EyeOff, Monitor, Tablet, Smartphone,
   Play, Pause, SkipBack, SkipForward,
-  User, BookOpen, Clock, Award
+  User, BookOpen, Clock, Award,
+  Image as ImageIcon, Video as VideoIcon, Code
 } from 'lucide-react';
 
 interface ContentPreviewProps {
@@ -13,6 +14,104 @@ interface ContentPreviewProps {
   isOpen: boolean;
   onClose: () => void;
 }
+
+// Helper component to render multimedia content
+const MediaRenderer = ({ content, type }: { content: string; type: 'video' | 'image' | 'code' | 'text' }) => {
+  if (type === 'video') {
+    return (
+      <div className="my-4 rounded-lg overflow-hidden bg-black">
+        <video
+          controls
+          className="w-full"
+          poster="/api/placeholder/800/450"
+        >
+          <source src={content} type="video/mp4" />
+          Votre navigateur ne supporte pas la lecture de vidéos.
+        </video>
+      </div>
+    );
+  }
+
+  if (type === 'image') {
+    return (
+      <div className="my-4 rounded-lg overflow-hidden border">
+        <img
+          src={content}
+          alt="Contenu visuel"
+          className="w-full h-auto"
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = '/api/placeholder/800/450';
+          }}
+        />
+      </div>
+    );
+  }
+
+  if (type === 'code') {
+    return (
+      <div className="my-4 bg-gray-900 rounded-lg p-4 overflow-x-auto">
+        <pre className="text-sm text-green-400 font-mono">
+          <code>{content}</code>
+        </pre>
+      </div>
+    );
+  }
+
+  return <p className="text-gray-700 whitespace-pre-wrap">{content}</p>;
+};
+
+// Parse content to detect multimedia elements
+const parseContent = (content: string | any) => {
+  if (!content) return [];
+
+  const textContent = typeof content === 'string' ? content : JSON.stringify(content);
+  const elements: Array<{ type: 'video' | 'image' | 'code' | 'text'; content: string }> = [];
+
+  // Simple parsing for demo purposes
+  const lines = textContent.split('\n');
+  let codeBlock = '';
+  let inCodeBlock = false;
+
+  for (const line of lines) {
+    // Detect code blocks
+    if (line.trim().startsWith('```')) {
+      if (inCodeBlock) {
+        elements.push({ type: 'code', content: codeBlock });
+        codeBlock = '';
+        inCodeBlock = false;
+      } else {
+        inCodeBlock = true;
+      }
+      continue;
+    }
+
+    if (inCodeBlock) {
+      codeBlock += line + '\n';
+      continue;
+    }
+
+    // Detect video URLs
+    if (line.match(/\.(mp4|webm|ogg)$/i) || line.includes('video:')) {
+      const url = line.replace('video:', '').trim();
+      elements.push({ type: 'video', content: url });
+      continue;
+    }
+
+    // Detect image URLs
+    if (line.match(/\.(jpg|jpeg|png|gif|webp)$/i) || line.includes('image:')) {
+      const url = line.replace('image:', '').trim();
+      elements.push({ type: 'image', content: url });
+      continue;
+    }
+
+    // Regular text
+    if (line.trim()) {
+      elements.push({ type: 'text', content: line });
+    }
+  }
+
+  return elements.length > 0 ? elements : [{ type: 'text' as const, content: textContent }];
+};
 
 export default function ContentPreview({ module, capsule, isOpen, onClose }: ContentPreviewProps) {
   const [previewMode, setPreviewMode] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
@@ -164,24 +263,42 @@ export default function ContentPreview({ module, capsule, isOpen, onClose }: Con
                     {currentSection === 'hook' && (
                       <div className="bg-yellow-50 p-6 rounded-lg">
                         <h3 className="text-xl font-semibold mb-3 text-yellow-800">🎯 Accroche</h3>
-                        <p className="text-gray-700">
-                          Imaginez pouvoir créer des prompts qui génèrent exactement ce que vous voulez, 
-                          à chaque fois. Dans cette capsule, vous allez découvrir les secrets des experts...
-                        </p>
+                        {capsule.hook_content ? (
+                          <div className="space-y-3">
+                            {parseContent(capsule.hook_content).map((element, idx) => (
+                              <MediaRenderer key={idx} content={element.content} type={element.type} />
+                            ))}
+                          </div>
+                        ) : (
+                          <p className="text-gray-700">
+                            Imaginez pouvoir créer des prompts qui génèrent exactement ce que vous voulez,
+                            à chaque fois. Dans cette capsule, vous allez découvrir les secrets des experts...
+                          </p>
+                        )}
                       </div>
                     )}
-                    
+
                     {currentSection === 'concept' && (
                       <div className="space-y-4">
                         <h3 className="text-xl font-semibold text-gray-900">💡 Concept Clé</h3>
                         <div className="bg-blue-50 p-4 rounded-lg">
-                          <h4 className="font-semibold text-blue-900 mb-2">Principe RCTF</h4>
-                          <ul className="list-disc list-inside text-gray-700 space-y-1">
-                            <li><strong>Rôle</strong> : Définir le persona de l'IA</li>
-                            <li><strong>Contexte</strong> : Donner les informations nécessaires</li>
-                            <li><strong>Tâche</strong> : Préciser l'action attendue</li>
-                            <li><strong>Format</strong> : Spécifier la structure de sortie</li>
-                          </ul>
+                          {capsule.concept_content ? (
+                            <div className="space-y-3">
+                              {parseContent(capsule.concept_content).map((element, idx) => (
+                                <MediaRenderer key={idx} content={element.content} type={element.type} />
+                              ))}
+                            </div>
+                          ) : (
+                            <>
+                              <h4 className="font-semibold text-blue-900 mb-2">Principe RCTF</h4>
+                              <ul className="list-disc list-inside text-gray-700 space-y-1">
+                                <li><strong>Rôle</strong> : Définir le persona de l'IA</li>
+                                <li><strong>Contexte</strong> : Donner les informations nécessaires</li>
+                                <li><strong>Tâche</strong> : Préciser l'action attendue</li>
+                                <li><strong>Format</strong> : Spécifier la structure de sortie</li>
+                              </ul>
+                            </>
+                          )}
                         </div>
                       </div>
                     )}
@@ -189,26 +306,41 @@ export default function ContentPreview({ module, capsule, isOpen, onClose }: Con
                     {currentSection === 'demo' && (
                       <div className="space-y-4">
                         <h3 className="text-xl font-semibold text-gray-900">🎬 Démonstration</h3>
-                        <div className="bg-gray-900 rounded-lg p-4 text-green-400 font-mono text-sm">
-                          <div className="mb-2">
-                            <span className="text-blue-400">Prompt :</span>
+                        {capsule.demo_content ? (
+                          <div className="space-y-3">
+                            {parseContent(capsule.demo_content).map((element, idx) => (
+                              <MediaRenderer key={idx} content={element.content} type={element.type} />
+                            ))}
                           </div>
-                          <div className="ml-4 text-white">
-                            Rôle : Tu es un expert marketing digital<br/>
-                            Contexte : Pour une startup SaaS de gestion de projet<br/>
-                            Tâche : Créer 5 titres d'articles de blog<br/>
-                            Format : Liste numérotée, max 60 caractères
+                        ) : (
+                          <div className="bg-gray-900 rounded-lg p-4 text-green-400 font-mono text-sm">
+                            <div className="mb-2">
+                              <span className="text-blue-400">Prompt :</span>
+                            </div>
+                            <div className="ml-4 text-white">
+                              Rôle : Tu es un expert marketing digital<br/>
+                              Contexte : Pour une startup SaaS de gestion de projet<br/>
+                              Tâche : Créer 5 titres d'articles de blog<br/>
+                              Format : Liste numérotée, max 60 caractères
+                            </div>
                           </div>
-                        </div>
+                        )}
                       </div>
                     )}
 
                     {currentSection === 'exercise' && (
                       <div className="space-y-4">
                         <h3 className="text-xl font-semibold text-gray-900">✏️ À Votre Tour !</h3>
+                        {capsule.exercise_content && (
+                          <div className="mb-4 space-y-3">
+                            {parseContent(capsule.exercise_content).map((element, idx) => (
+                              <MediaRenderer key={idx} content={element.content} type={element.type} />
+                            ))}
+                          </div>
+                        )}
                         <div className="bg-purple-50 p-4 rounded-lg">
                           <p className="text-purple-800 mb-3">
-                            Créez un prompt RCTF pour générer une description de produit e-commerce
+                            {capsule.exercise_prompt || 'Créez un prompt RCTF pour générer une description de produit e-commerce'}
                           </p>
                           <textarea
                             className="w-full h-32 p-3 border rounded-lg resize-none"
@@ -229,24 +361,32 @@ export default function ContentPreview({ module, capsule, isOpen, onClose }: Con
                     {currentSection === 'recap' && (
                       <div className="space-y-4">
                         <h3 className="text-xl font-semibold text-gray-900">📋 Points Clés</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div className="bg-green-50 p-4 rounded-lg">
-                            <h4 className="font-semibold text-green-800 mb-2">✅ Acquis</h4>
-                            <ul className="text-sm text-green-700 space-y-1">
-                              <li>• Structure RCTF maîtrisée</li>
-                              <li>• Exemples pratiques testés</li>
-                              <li>• Exercice complété</li>
-                            </ul>
+                        {capsule.recap_content ? (
+                          <div className="space-y-3">
+                            {parseContent(capsule.recap_content).map((element, idx) => (
+                              <MediaRenderer key={idx} content={element.content} type={element.type} />
+                            ))}
                           </div>
-                          <div className="bg-blue-50 p-4 rounded-lg">
-                            <h4 className="font-semibold text-blue-800 mb-2">🎯 Next Steps</h4>
-                            <ul className="text-sm text-blue-700 space-y-1">
-                              <li>• Capsule suivante : Personas</li>
-                              <li>• Challenge bonus disponible</li>
-                              <li>• Quiz de validation</li>
-                            </ul>
+                        ) : (
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="bg-green-50 p-4 rounded-lg">
+                              <h4 className="font-semibold text-green-800 mb-2">✅ Acquis</h4>
+                              <ul className="text-sm text-green-700 space-y-1">
+                                <li>• Structure RCTF maîtrisée</li>
+                                <li>• Exemples pratiques testés</li>
+                                <li>• Exercice complété</li>
+                              </ul>
+                            </div>
+                            <div className="bg-blue-50 p-4 rounded-lg">
+                              <h4 className="font-semibold text-blue-800 mb-2">🎯 Next Steps</h4>
+                              <ul className="text-sm text-blue-700 space-y-1">
+                                <li>• Capsule suivante : Personas</li>
+                                <li>• Challenge bonus disponible</li>
+                                <li>• Quiz de validation</li>
+                              </ul>
+                            </div>
                           </div>
-                        </div>
+                        )}
                       </div>
                     )}
                   </div>
