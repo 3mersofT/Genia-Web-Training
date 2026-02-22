@@ -2,6 +2,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { studentNotificationService } from '@/lib/services/studentNotificationService';
 
 export async function POST(req: NextRequest) {
   try {
@@ -52,10 +53,75 @@ export async function POST(req: NextRequest) {
 
     if (error) throw error;
 
+    // 🏆 Vérifier et notifier pour les badges récemment gagnés
+    await checkAndNotifyBadges(userId, supabase);
+
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error('Erreur completion capsule:', error);
     return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 });
+  }
+}
+
+/**
+ * 🏆 Vérifie les badges récemment gagnés et envoie des notifications
+ */
+async function checkAndNotifyBadges(userId: string, supabase: any) {
+  try {
+    // Récupérer les badges gagnés dans les dernières 10 secondes
+    const tenSecondsAgo = new Date();
+    tenSecondsAgo.setSeconds(tenSecondsAgo.getSeconds() - 10);
+
+    const { data: recentBadges, error: badgesError } = await supabase
+      .from('user_badges')
+      .select(`
+        id,
+        badge_id,
+        earned_at,
+        badges (
+          name,
+          description
+        )
+      `)
+      .eq('user_id', userId)
+      .gte('earned_at', tenSecondsAgo.toISOString())
+      .order('earned_at', { ascending: false });
+
+    if (badgesError) {
+      console.error('Erreur récupération badges récents:', badgesError);
+      return;
+    }
+
+    if (!recentBadges || recentBadges.length === 0) {
+      return;
+    }
+
+    // Pour chaque badge récent, vérifier si une notification a déjà été envoyée
+    for (const userBadge of recentBadges) {
+      const badge = userBadge.badges;
+      if (!badge) continue;
+
+      // Vérifier si une notification existe déjà pour ce badge
+      const { data: existingNotification } = await supabase
+        .from('student_notifications')
+        .select('id')
+        .eq('user_id', userId)
+        .eq('type', 'badge_earned')
+        .contains('data', { badgeName: badge.name })
+        .single();
+
+      // Si pas de notification existante, en créer une
+      if (!existingNotification) {
+        await studentNotificationService.notifyBadgeEarned(
+          userId,
+          badge.name,
+          badge.description || ''
+        );
+      }
+    }
+  } catch (error) {
+    // Ne pas faire échouer la requête si la notification échoue
+    console.error('Erreur vérification badges:', error);
   }
 }
 

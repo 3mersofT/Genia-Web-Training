@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/client';
+import { studentNotificationService } from '@/lib/services/studentNotificationService';
 import type {
   DailyChallenge,
   ChallengeParticipation,
@@ -15,7 +16,8 @@ import type {
  */
 export class ChallengeService {
   private supabase = createClient();
-  
+  private lastNotificationDate: string | null = null;
+
   /**
    * Templates de défis prédéfinis
    */
@@ -168,15 +170,18 @@ export class ChallengeService {
   async getTodayChallenge(): Promise<DailyChallenge | null> {
     try {
       const today = new Date().toISOString().split('T')[0];
-      
+
       // Générer directement un défi sans interaction avec Supabase
       console.log('Génération d\'un nouveau défi pour aujourd\'hui...');
       const challenge = await this.generateDailyChallenge();
-      
+
       if (challenge) {
+        // Notifier les utilisateurs si c'est la première génération du jour
+        await this.notifyUsersOfDailyChallenge(challenge, today);
+
         return challenge;
       }
-      
+
       // Fallback vers défi par défaut
       return this.getDefaultChallenge();
     } catch (error) {
@@ -324,6 +329,54 @@ export class ChallengeService {
     };
 
     return hintsMap[type] || [];
+  }
+
+  /**
+   * Notifie les utilisateurs de la disponibilité du nouveau défi quotidien
+   */
+  private async notifyUsersOfDailyChallenge(
+    challenge: DailyChallenge,
+    date: string
+  ): Promise<void> {
+    try {
+      // Vérifier si nous avons déjà notifié aujourd'hui
+      if (this.lastNotificationDate === date) {
+        return;
+      }
+
+      // Récupérer tous les utilisateurs avec les notifications daily_challenge activées
+      const { data: preferences, error } = await this.supabase
+        .from('notification_preferences')
+        .select('user_id, notification_types_enabled')
+        .eq('notification_types_enabled->daily_challenge', true);
+
+      if (error) {
+        console.error('Erreur récupération préférences notifications:', error);
+        return;
+      }
+
+      // Notifier chaque utilisateur
+      if (preferences && preferences.length > 0) {
+        const notificationPromises = preferences.map((pref: { user_id: string }) =>
+          studentNotificationService.notifyDailyChallengeAvailable(
+            pref.user_id,
+            challenge.title
+          )
+        );
+
+        await Promise.all(notificationPromises);
+
+        // Marquer que nous avons notifié pour cette date
+        this.lastNotificationDate = date;
+
+        console.log(
+          `✅ ${preferences.length} utilisateur(s) notifié(s) du nouveau défi quotidien`
+        );
+      }
+    } catch (error) {
+      console.error('Erreur notification utilisateurs défi quotidien:', error);
+      // Ne pas bloquer l'exécution si les notifications échouent
+    }
   }
 
   /**
@@ -721,6 +774,38 @@ export class ChallengeService {
         .single();
 
       if (error) throw error;
+
+      // Notifier l'auteur de la soumission qu'il a reçu une peer review
+      try {
+        // Récupérer la participation pour obtenir l'ID de l'auteur et le challenge
+        const { data: participation } = await this.supabase
+          .from('challenge_participations')
+          .select(`
+            user_id,
+            daily_challenges!inner(title)
+          `)
+          .eq('id', participationId)
+          .single();
+
+        // Récupérer le nom du reviewer
+        const { data: reviewer } = await this.supabase
+          .from('user_profiles')
+          .select('full_name')
+          .eq('user_id', reviewerId)
+          .single();
+
+        if (participation && reviewer) {
+          await studentNotificationService.notifyPeerReview(
+            participation.user_id,
+            reviewer.full_name || 'Un étudiant',
+            (participation.daily_challenges as any).title
+          );
+        }
+      } catch (notificationError) {
+        console.error('Erreur notification peer review:', notificationError);
+        // Ne pas bloquer la création de la review si la notification échoue
+      }
+
       return data as PeerReview;
     } catch (error) {
       console.error('Erreur soumission peer review:', error);

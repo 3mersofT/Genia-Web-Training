@@ -4,9 +4,10 @@ import React, { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { useTheme } from '@/contexts/ThemeContext';
+import NotificationCenter from '@/components/notifications/NotificationCenter';
 import {
-  Home, BookOpen, MessageSquare, User, Trophy, 
-  Settings, LogOut, ChevronDown, Bell, Sun, Moon, Monitor
+  Home, BookOpen, MessageSquare, User, Trophy,
+  Settings, LogOut, ChevronDown, Sun, Moon, Monitor
 } from 'lucide-react';
 
 interface NavItem {
@@ -134,13 +135,7 @@ export default function DesktopNavigation() {
           </div>
 
           {/* Notifications */}
-          <button 
-            onClick={() => alert('Centre de notifications en cours de développement')}
-            className="p-2 text-gray-400 hover:text-gray-600 relative"
-          >
-            <Bell className="w-5 h-5" />
-            <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
-          </button>
+          {user?.id && <NotificationCenter userId={user.id} />}
 
           {/* Menu utilisateur */}
           <div className="relative">
