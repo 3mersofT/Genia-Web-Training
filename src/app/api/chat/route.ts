@@ -82,18 +82,29 @@ async function checkAndUpdateQuota(
 // Route principale du chat
 export async function POST(req: NextRequest) {
   try {
+    const supabase = await createClient();
+
+    // Vérifier l'authentification
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Non autorisé' },
+        { status: 401 }
+      );
+    }
+
     const body = await req.json();
     const {
       messages,
       model = 'mistral-medium-3',
       temperature,
       maxTokens,
-      userId,
       conversationId,
       capsuleId,
       reasoning = 'implicit'
     } = body;
-    
+
     // Validation
     if (!messages) {
       return NextResponse.json(
@@ -144,27 +155,24 @@ export async function POST(req: NextRequest) {
       (usage.completion_tokens / 1_000_000) * config.costPerMillionOutput
     );
     
-    // Mettre à jour les quotas (uniquement si utilisateur authentifié)
+    // Mettre à jour les quotas
     let quotaInfo: { used: number; limit: number } | undefined;
-    if (userId) {
-      try {
-        quotaInfo = await checkAndUpdateQuota(userId, model as any, usage.total_tokens || 0, cost || 0);
-      } catch (e) {
-        // ne bloque pas la réponse chat en cas d'erreur quota
-        console.warn('Quota update skipped:', (e as Error).message);
-      }
+    try {
+      quotaInfo = await checkAndUpdateQuota(user.id, model as any, usage.total_tokens || 0, cost || 0);
+    } catch (e) {
+      // ne bloque pas la réponse chat en cas d'erreur quota
+      console.warn('Quota update skipped:', (e as Error).message);
     }
     
-    // Sauvegarder la conversation si nécessaire (uniquement pour utilisateurs connectés)
+    // Sauvegarder la conversation si nécessaire
     let returnedConversationId: string | undefined = conversationId;
-    if (userId && conversationId) {
-      const supabase = await createClient();
+    if (conversationId) {
       let convId = conversationId;
       if (conversationId === 'new') {
         const { data: newConv } = await supabase
           .from('chat_conversations')
           .insert({
-            user_id: userId,
+            user_id: user.id,
             capsule_id: capsuleId,
             model,
             created_at: new Date().toISOString()
