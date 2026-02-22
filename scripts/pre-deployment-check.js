@@ -83,7 +83,7 @@ function checkEnvironmentVariables() {
   const requiredVars = [
     'NEXT_PUBLIC_SUPABASE_URL',
     'NEXT_PUBLIC_SUPABASE_ANON_KEY',
-    'SUPABASE_SERVICE_KEY',
+    'SUPABASE_SERVICE_ROLE_KEY',
     'MISTRAL_API_KEY',
     'NEXT_PUBLIC_APP_URL'
   ];

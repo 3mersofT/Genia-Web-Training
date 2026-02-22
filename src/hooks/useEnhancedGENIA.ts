@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useUser } from '@supabase/auth-helpers-react';
+import type { User, AuthChangeEvent, Session } from '@supabase/supabase-js';
+import { createClient } from '@/lib/supabase/client';
 import { geniaMemoryService } from '@/services/geniaMemoryService';
 import type {
   UseEnhancedGENIA,
@@ -26,6 +27,7 @@ export function useEnhancedGENIA(
   enableMemory: boolean = true
 ): UseEnhancedGENIA {
   // États
+  const [user, setUser] = useState<User | null>(null);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [sessionMemory, setSessionMemory] = useState<SessionMemory | null>(null);
   const [learningInsights, setLearningInsights] = useState<LearningInsights | null>(null);
@@ -41,8 +43,8 @@ export function useEnhancedGENIA(
   const interactionCount = useRef(0);
   const abortController = useRef<AbortController | null>(null);
 
-  // Hook Supabase pour l'utilisateur
-  const user = useUser();
+  // Créer le client Supabase
+  const supabase = createClient();
 
   /**
    * Initialise la session avec mémoire
@@ -599,6 +601,26 @@ export function useEnhancedGENIA(
       initializeSession();
     }
   }, [user?.id, isInitialized, enableMemory, initializeSession]);
+
+  /**
+   * Récupération et écoute de l'utilisateur
+   */
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+    };
+
+    fetchUser();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event: AuthChangeEvent, session: Session | null) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [supabase.auth]);
 
   /**
    * Nettoyage au démontage

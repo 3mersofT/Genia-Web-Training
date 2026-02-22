@@ -1,9 +1,23 @@
--- ============================================
--- SCRIPT D'INITIALISATION DES COMPTES DE BASE
--- VERSION CORRIGÉE
--- ============================================
+-- =================================================================
+-- MIGRATION 004: Demo Accounts Initialization
+-- Version: 1.1 (Updated with environment warnings)
+-- Description: Creates setup_demo_accounts() function for initializing
+--              demo/test user accounts with sample data
+--
+-- ⚠️  WARNING: DEVELOPMENT/STAGING ENVIRONMENTS ONLY
+-- =================================================================
+-- This migration creates demo accounts that should NEVER be used in
+-- production environments. The setup_demo_accounts() function should
+-- ONLY be called in development or staging environments.
+--
+-- Environment enforcement is handled at the application layer via
+-- the ENABLE_DEMO_ACCOUNTS environment variable (see .env.example).
+--
+-- DO NOT manually call setup_demo_accounts() in production databases!
+-- =================================================================
 
 -- Cette fonction configure les comptes après leur création dans Supabase Auth
+-- ⚠️  DEV/STAGING ONLY: This function should only be executed in non-production environments
 CREATE OR REPLACE FUNCTION setup_demo_accounts()
 RETURNS void AS $$
 DECLARE
@@ -130,8 +144,21 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- NE PAS EXÉCUTER AUTOMATIQUEMENT
--- Cette fonction sera appelée APRÈS la création des comptes dans Supabase Auth
+-- =================================================================
+-- ⚠️  CRITICAL: DO NOT EXECUTE IN PRODUCTION
+-- =================================================================
+-- This function should ONLY be called in development/staging environments.
+--
+-- To use this function:
+-- 1. Ensure ENABLE_DEMO_ACCOUNTS=true in your .env file (dev/staging only)
+-- 2. Create the demo accounts manually in Supabase Auth first
+-- 3. Then call: SELECT setup_demo_accounts();
+--
+-- PRODUCTION SAFETY:
+-- - Set ENABLE_DEMO_ACCOUNTS=false (or omit) in production .env
+-- - Never manually call this function in production databases
+-- - Demo accounts should not exist in production environments
+-- =================================================================
 
 -- Pour vérifier les comptes après configuration :
 -- SELECT 
