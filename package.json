@@ -57,6 +57,7 @@
     "react-markdown": "^9.1.0",
     "react-swipeable": "^7.0.2",
     "react-syntax-highlighter": "^16.1.0",
+    "rehype-sanitize": "^6.0.0",
     "remark-gfm": "^4.0.1",
     "tailwind-merge": "^2.2.0",
     "workbox-precaching": "^7.3.0",
