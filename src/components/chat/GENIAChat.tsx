@@ -12,6 +12,7 @@ import { useGENIA } from '@/components/providers/GENIAProvider';
 import { useEnhancedGENIA } from '@/hooks/useEnhancedGENIA';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeSanitize from 'rehype-sanitize';
 
 // ============= TYPES =============
 interface Message {
@@ -577,6 +578,7 @@ Tu es sur la bonne voie ! Chaque prompt est une opportunité d'apprendre.`
                 <div className="prose prose-sm max-w-none">
                   <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
+                    rehypePlugins={[rehypeSanitize]}
                     components={{
                       strong: ({node, ...props}) => <strong className="font-semibold" {...props} />,
                       p: ({node, ...props}) => <p className="mb-2" {...props} />,
@@ -808,6 +810,7 @@ Tu es sur la bonne voie ! Chaque prompt est une opportunité d'apprendre.`
                     <div className="prose prose-sm max-w-none">
                       <ReactMarkdown
                         remarkPlugins={[remarkGfm]}
+                        rehypePlugins={[rehypeSanitize]}
                         components={{
                           strong: ({node, ...props}) => <strong className="font-semibold" {...props} />,
                           p: ({node, ...props}) => <p className="mb-2" {...props} />,
