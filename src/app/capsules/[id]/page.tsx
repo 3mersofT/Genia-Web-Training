@@ -13,6 +13,8 @@ import {
 } from 'lucide-react';
 import FeedbackButton from '@/components/feedback/FeedbackButton';
 import FeedbackStats from '@/components/feedback/FeedbackStats';
+import RichContentRenderer from '@/components/capsule/RichContentRenderer';
+import CodeBlock from '@/components/capsule/CodeBlock';
 import { getCapsuleContent, getCapsuleById, getNextCapsule, getPreviousCapsule, getModuleBySlug } from '@/lib/data';
 
 export default function CapsulePage() {
@@ -96,6 +98,13 @@ export default function CapsulePage() {
                   <span>Durée : {section.duration} secondes</span>
                 </div>
               )}
+
+              {/* Render multimedia content if present */}
+              {section.multimedia && section.multimedia.length > 0 && (
+                <div className="mt-6">
+                  <RichContentRenderer blocks={section.multimedia} />
+                </div>
+              )}
             </div>
           </div>
         );
@@ -109,54 +118,72 @@ export default function CapsulePage() {
                   <BookOpen className="w-5 h-5 text-purple-600" />
                   <h3 className="font-semibold text-purple-900">📚 Concept clé</h3>
                 </div>
-                <div className="text-gray-700 leading-relaxed prose max-w-none">
-                  <ReactMarkdown 
-                    remarkPlugins={[remarkGfm]}
-                    components={{
-                      // Personnaliser le rendu des éléments
-                      h1: ({node, ...props}) => <h1 className="text-2xl font-bold text-gray-800 mb-4" {...props} />,
-                      h2: ({node, ...props}) => <h2 className="text-xl font-semibold text-gray-800 mb-3" {...props} />,
-                      h3: ({node, ...props}) => <h3 className="text-lg font-medium text-gray-800 mb-2" {...props} />,
-                      p: ({node, ...props}) => <p className="mb-4" {...props} />,
-                      ul: ({node, ...props}) => <ul className="list-disc list-inside mb-4 space-y-2" {...props} />,
-                      ol: ({node, ...props}) => <ol className="list-decimal list-inside mb-4 space-y-2" {...props} />,
-                      li: ({node, ...props}) => <li className="ml-4" {...props} />,
-                      strong: ({node, ...props}) => <strong className="font-semibold text-blue-700" {...props} />,
-                      em: ({node, ...props}) => <em className="italic text-gray-600" {...props} />,
-                      code: ({node, className, children, ...props}) => {
-                        const match = /language-(\w+)/.exec(className || '');
-                        return !match ? (
-                          <code className="bg-gray-100 px-2 py-1 rounded text-sm font-mono" {...props}>
-                            {children}
-                          </code>
-                        ) : (
-                          <div className="bg-gray-50 rounded-lg overflow-hidden my-4">
-                            <div className="overflow-x-auto">
-                              <pre className="p-4 text-sm whitespace-pre-wrap break-words">
-                                <code className={className} {...props}>
-                                  {children}
-                                </code>
-                              </pre>
-                            </div>
+
+                {/* Render markdown content if present */}
+                {section.content && (
+                  <div className="text-gray-700 leading-relaxed prose max-w-none">
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        // Personnaliser le rendu des éléments
+                        h1: ({node, ...props}) => <h1 className="text-2xl font-bold text-gray-800 mb-4" {...props} />,
+                        h2: ({node, ...props}) => <h2 className="text-xl font-semibold text-gray-800 mb-3" {...props} />,
+                        h3: ({node, ...props}) => <h3 className="text-lg font-medium text-gray-800 mb-2" {...props} />,
+                        p: ({node, ...props}) => <p className="mb-4" {...props} />,
+                        ul: ({node, ...props}) => <ul className="list-disc list-inside mb-4 space-y-2" {...props} />,
+                        ol: ({node, ...props}) => <ol className="list-decimal list-inside mb-4 space-y-2" {...props} />,
+                        li: ({node, ...props}) => <li className="ml-4" {...props} />,
+                        strong: ({node, ...props}) => <strong className="font-semibold text-blue-700" {...props} />,
+                        em: ({node, ...props}) => <em className="italic text-gray-600" {...props} />,
+                        code: ({node, className, children, ...props}) => {
+                          const match = /language-(\w+)/.exec(className || '');
+                          const language = match ? match[1] : undefined;
+
+                          // Inline code (no language specified)
+                          if (!match) {
+                            return (
+                              <code className="bg-gray-100 px-2 py-1 rounded text-sm font-mono" {...props}>
+                                {children}
+                              </code>
+                            );
+                          }
+
+                          // Code block with syntax highlighting
+                          const codeString = String(children).replace(/\n$/, '');
+                          return (
+                            <CodeBlock
+                              code={codeString}
+                              language={language}
+                              showLineNumbers={true}
+                              className="my-4"
+                            />
+                          );
+                        },
+                        table: ({node, ...props}) => (
+                          <div className="overflow-x-auto mb-4">
+                            <table className="min-w-full divide-y divide-gray-200 border border-gray-300 rounded-lg" {...props} />
                           </div>
-                        );
-                      },
-                      table: ({node, ...props}) => (
-                        <div className="overflow-x-auto mb-4">
-                          <table className="min-w-full divide-y divide-gray-200 border border-gray-300 rounded-lg" {...props} />
-                        </div>
-                      ),
-                      thead: ({node, ...props}) => <thead className="bg-gray-50" {...props} />,
-                      th: ({node, ...props}) => <th className="px-4 py-2 text-left font-medium text-gray-700 border-b" {...props} />,
-                      td: ({node, ...props}) => <td className="px-4 py-2 text-gray-600 border-b" {...props} />,
-                    }}
-                  >
-                    {section.content}
-                  </ReactMarkdown>
-                </div>
+                        ),
+                        thead: ({node, ...props}) => <thead className="bg-gray-50" {...props} />,
+                        th: ({node, ...props}) => <th className="px-4 py-2 text-left font-medium text-gray-700 border-b" {...props} />,
+                        td: ({node, ...props}) => <td className="px-4 py-2 text-gray-600 border-b" {...props} />,
+                      }}
+                    >
+                      {section.content}
+                    </ReactMarkdown>
+                  </div>
+                )}
+
                 {section.code && (
                   <div className="mt-4 bg-gray-50 p-4 rounded-md">
                     <pre className="text-sm">{section.code}</pre>
+                  </div>
+                )}
+
+                {/* Render multimedia content if present */}
+                {section.multimedia && section.multimedia.length > 0 && (
+                  <div className="mt-6">
+                    <RichContentRenderer blocks={section.multimedia} />
                   </div>
                 )}
               </div>
@@ -172,7 +199,7 @@ export default function CapsulePage() {
                 <Play className="w-5 h-5 text-green-600" />
                 <h3 className="font-semibold text-green-900">🎥 Démonstration pratique</h3>
               </div>
-              
+
               {section.before && (
                 <div className="mb-6">
                   <h4 className="font-medium text-red-700 mb-2">❌ Version vague (à éviter)</h4>
@@ -181,7 +208,7 @@ export default function CapsulePage() {
                   </div>
                 </div>
               )}
-              
+
               {section.after && (
                 <div className="mb-6">
                   <h4 className="font-medium text-green-700 mb-2">✅ Version professionnelle (objectif)</h4>
@@ -190,11 +217,18 @@ export default function CapsulePage() {
                   </div>
                 </div>
               )}
-              
+
               {section.explanation && (
                 <div>
                   <h4 className="font-medium text-gray-700 mb-2">💡 Explication</h4>
                   <p className="text-gray-700">{section.explanation}</p>
+                </div>
+              )}
+
+              {/* Render multimedia content if present */}
+              {section.multimedia && section.multimedia.length > 0 && (
+                <div className="mt-6">
+                  <RichContentRenderer blocks={section.multimedia} />
                 </div>
               )}
             </div>
@@ -260,6 +294,13 @@ export default function CapsulePage() {
                   </div>
                 )}
               </div>
+
+              {/* Render multimedia content if present */}
+              {section.multimedia && section.multimedia.length > 0 && (
+                <div className="mt-6">
+                  <RichContentRenderer blocks={section.multimedia} />
+                </div>
+              )}
             </div>
           </div>
         );
@@ -284,6 +325,13 @@ export default function CapsulePage() {
                 <div className="mt-6">
                   <h4 className="font-medium text-gray-800 mb-2">🚀 Prochaines étapes :</h4>
                   <p className="text-gray-700">{section.nextSteps}</p>
+                </div>
+              )}
+
+              {/* Render multimedia content if present */}
+              {section.multimedia && section.multimedia.length > 0 && (
+                <div className="mt-6">
+                  <RichContentRenderer blocks={section.multimedia} />
                 </div>
               )}
 

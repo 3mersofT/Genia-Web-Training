@@ -17,18 +17,50 @@
         "sections": {
           "hook": {
             "text": "Imaginez gagner 2 heures par jour grâce à l'IA. Ce n'est pas de la science-fiction, c'est ce que vous allez apprendre à faire dans les prochaines minutes. La plupart des utilisateurs d'IA n'exploitent qu'une fraction de son potentiel. Après cette capsule, vous ferez partie de ceux qui savent vraiment s'en servir.",
-            "duration": 15
+            "duration": 15,
+            "multimedia": [
+              {
+                "type": "video",
+                "id": "hook-video-intro",
+                "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                "provider": "youtube",
+                "title": "Introduction au Prompt Engineering",
+                "caption": "Découvrez pourquoi le prompt engineering est une compétence essentielle en 2026"
+              }
+            ]
           },
           "concept": {
             "content": "Le prompt engineering est l'art de formuler des instructions précises pour obtenir exactement ce que vous voulez d'une IA générative. C'est la différence entre demander 'écris quelque chose' et obtenir un texte médiocre, versus structurer sa demande et obtenir un résultat professionnel.\n\n**Définition simple** : Un prompt, c'est votre message à l'IA. Un bon prompt, c'est un message structuré qui guide l'IA vers le résultat exact que vous voulez.\n\n**Impact concret sur votre quotidien** :\n• **Emails professionnels** : De 20 minutes de rédaction à 30 secondes\n• **Résumés de réunion** : 1h de notes transformées en synthèse structurée instantanément\n• **Brainstorming** : Des idées créatives illimitées à la demande\n• **Analyse de documents** : Comprendre 50 pages en 2 minutes\n• **Code et formules** : Solutions techniques sans être développeur\n\n**Le secret** : La qualité de la réponse dépend à 80% de la qualité de votre prompt. C'est une compétence qui s'apprend, et c'est exactement ce que nous allons faire ensemble.",
             "code": null,
-            "duration": 90
+            "duration": 90,
+            "multimedia": [
+              {
+                "type": "image",
+                "id": "concept-rctf-diagram",
+                "url": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+                "alt": "Diagramme de la structure RÔLE-CONTEXTE-TÂCHE-FORMAT",
+                "caption": "La structure RCTF : les 4 éléments clés d'un prompt professionnel",
+                "width": 800,
+                "height": 600
+              }
+            ]
           },
           "demo": {
             "before": "Écris un email",
             "after": "[RÔLE] Tu es assistant de direction dans une entreprise tech avec 10 ans d'expérience en communication professionnelle.\n\n[CONTEXTE] Nous avons envoyé une proposition commerciale à un client potentiel (entreprise de 500 personnes, secteur finance) il y a 2 semaines. Pas de réponse malgré leur intérêt initial lors de notre call.\n\n[TÂCHE] Rédige un email de relance professionnel qui :\n- Rappelle notre proposition sans être insistant\n- Montre notre compréhension de leurs enjeux\n- Propose une action concrète (call de 15 min)\n\n[FORMAT]\n- Maximum 150 mots\n- Ton professionnel mais chaleureux\n- Structure : Accroche > Rappel valeur > Call-to-action\n- Objet email inclus",
             "explanation": "Regardez la différence ! Le prompt vague 'Écris un email' vous donnera un texte générique et inutilisable. Le prompt structuré produit exactement l'email dont vous avez besoin, avec le bon ton, la bonne longueur, et orienté résultat. C'est ça, le pouvoir du prompt engineering.",
-            "duration": 90
+            "duration": 90,
+            "multimedia": [
+              {
+                "type": "code",
+                "id": "demo-python-example",
+                "code": "# Exemple : Automatiser la création de prompts avec Python\n\ndef create_rctf_prompt(role, context, task, format_spec):\n    \"\"\"\n    Génère un prompt structuré RCTF\n    \n    Args:\n        role: L'expertise de l'IA\n        context: La situation et les enjeux\n        task: Les objectifs à accomplir\n        format_spec: La structure de sortie désirée\n    \n    Returns:\n        str: Le prompt formaté et prêt à utiliser\n    \"\"\"\n    prompt = f\"\"\"[RÔLE] {role}\n\n[CONTEXTE]\n{context}\n\n[TÂCHE]\n{task}\n\n[FORMAT]\n{format_spec}\"\"\"\n    \n    return prompt\n\n# Utilisation\nrole = \"Tu es expert en marketing digital avec 10 ans d'expérience\"\ncontext = \"Startup SaaS B2B, budget 5000€/mois, cible : PME françaises\"\ntask = \"Crée une stratégie social media pour acquérir 1000 leads en 3 mois\"\nformat_spec = \"Plan en 5 étapes avec budget détaillé par canal\"\n\nprompt = create_rctf_prompt(role, context, task, format_spec)\nprint(prompt)",
+                "language": "python",
+                "title": "Automatisez vos prompts avec Python",
+                "showLineNumbers": true,
+                "filename": "rctf_generator.py"
+              }
+            ]
           },
           "exercise": {
             "type": "transform",
@@ -51,11 +83,33 @@
               "feedbackCorrect": "Excellent ! Votre prompt est maintenant professionnel et produira exactement la présentation dont vous avez besoin. Vous maîtrisez la structure de base !",
               "feedbackIncorrect": "Pas mal, mais il manque certains éléments. Vérifiez que vous avez bien : un RÔLE (qui est l'IA), un CONTEXTE (situation spécifique), une TÂCHE (ce que vous voulez) et un FORMAT (comment le présenter)."
             },
-            "duration": 120
+            "duration": 120,
+            "multimedia": [
+              {
+                "type": "playground",
+                "id": "exercise-prompt-playground",
+                "title": "Essayez avec GENIA",
+                "description": "Testez votre prompt transformé directement avec GENIA pour voir la différence",
+                "starterPrompt": "Fais-moi une présentation",
+                "context": "Exercice : Transformer un prompt vague en prompt structuré RCTF",
+                "expectedOutput": "Une présentation structurée avec slides détaillés, métriques clés, et storytelling adapté aux investisseurs"
+              }
+            ]
           },
           "recap": {
             "keyPoint": "🔑 Un bon prompt = 80% du résultat. Retenez la structure magique : RÔLE-CONTEXTE-TÂCHE-FORMAT. C'est votre nouvelle superpuissance.",
-            "duration": 15
+            "duration": 15,
+            "multimedia": [
+              {
+                "type": "attachment",
+                "id": "recap-cheat-sheet",
+                "url": "https://www.example.com/placeholder/RCTF-Cheat-Sheet.pdf",
+                "filename": "RCTF-Cheat-Sheet.pdf",
+                "fileType": "pdf",
+                "fileSize": 245760,
+                "description": "Téléchargez votre aide-mémoire RCTF (placeholder URL for demo)"
+              }
+            ]
           }
         },
         "metadata": {

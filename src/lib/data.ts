@@ -1,4 +1,5 @@
 // Service pour charger et gérer les données des modules
+import type { MultimediaBlock } from '@/types/multimedia.types';
 import module1Metadata from '@/data/modules/module1_metadata_global.json';
 import module2Metadata from '@/data/modules/module2_metadata_global.json';
 import module3Metadata from '@/data/modules/module3_metadata_global_final.json';
@@ -53,6 +54,7 @@ export interface Capsule {
   difficulty: string;
   keyTakeaway?: string;
   exerciseType?: string;
+  multimedia?: MultimediaBlock[];
   sections?: {
     hook?: any;
     concept?: any;
@@ -151,6 +153,7 @@ function transformModule(config: any, index: number): Module {
           difficulty: cap.difficulty,
           keyTakeaway: cap.keyTakeaway,
           exerciseType: cap.exerciseType,
+          multimedia: fullCapsule?.multimedia,
           sections: fullCapsule?.sections,
           completed: false, // Sera calculé dynamiquement
           available: true, // Sera calculé dynamiquement
@@ -193,6 +196,7 @@ function transformModule(config: any, index: number): Module {
           difficulty: cap.difficulty,
           keyTakeaway: cap.keyTakeaway,
           exerciseType: cap.exerciseType,
+          multimedia: fullCapsule?.multimedia,
           sections: fullCapsule?.sections,
           completed: false, // Sera calculé dynamiquement
           available: true, // Sera calculé dynamiquement
