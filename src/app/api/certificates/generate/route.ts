@@ -96,7 +96,7 @@ export async function POST(req: NextRequest) {
         );
       }
 
-      const capsuleIds = capsules.map(c => c.id);
+      const capsuleIds = capsules.map((c: any) => c.id);
 
       // Vérifier la complétion de toutes les capsules
       const { data: progress, error: progressError } = await supabase
@@ -123,21 +123,21 @@ export async function POST(req: NextRequest) {
 
       // Calculer le score moyen
       const scores = progress
-        .map(p => p.exercise_score)
-        .filter((score): score is number => score !== null);
+        .map((p: any) => p.exercise_score)
+        .filter((score: any): score is number => score !== null);
 
       const averageScore = scores.length > 0
-        ? scores.reduce((sum, score) => sum + score, 0) / scores.length
+        ? scores.reduce((sum: number, score: number) => sum + score, 0) / scores.length
         : null;
 
       // Récupérer la date de complétion la plus récente
       const completionDates = progress
-        .map(p => p.completed_at)
-        .filter((date): date is string => date !== null)
-        .map(date => new Date(date));
+        .map((p: any) => p.completed_at)
+        .filter((date: any): date is string => date !== null)
+        .map((date: string) => new Date(date));
 
       const latestCompletion = completionDates.length > 0
-        ? new Date(Math.max(...completionDates.map(d => d.getTime())))
+        ? new Date(Math.max(...completionDates.map((d: Date) => d.getTime())))
         : new Date();
 
       // Créer le certificat
@@ -221,7 +221,7 @@ export async function POST(req: NextRequest) {
 
         if (!capsules || capsules.length === 0) continue;
 
-        const capsuleIds = capsules.map(c => c.id);
+        const capsuleIds = capsules.map((c: any) => c.id);
 
         // Vérifier la complétion
         const { data: progress } = await supabase
@@ -239,7 +239,7 @@ export async function POST(req: NextRequest) {
         completedModules.push(module.title);
 
         // Accumuler les scores
-        progress.forEach(p => {
+        progress.forEach((p: any) => {
           if (p.exercise_score !== null) {
             totalScore += p.exercise_score;
             scoreCount++;

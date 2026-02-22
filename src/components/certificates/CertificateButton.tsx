@@ -8,6 +8,7 @@ import {
   downloadCertificate,
   type CertificateData
 } from '@/lib/certificates/generator';
+import CertificatePreview from './CertificatePreview';
 
 interface CertificateButtonProps {
   moduleId?: string;
@@ -33,6 +34,11 @@ export default function CertificateButton({
 }: CertificateButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showPreview, setShowPreview] = useState(false);
+  const [certificateData, setCertificateData] = useState<CertificateData | null>(null);
+  const [certificateId, setCertificateId] = useState<string>('');
+  const [verificationUrl, setVerificationUrl] = useState<string>('');
+  const [completionDate, setCompletionDate] = useState<Date>(new Date());
 
   const getButtonText = () => {
     switch (certificateType) {
@@ -125,7 +131,7 @@ export default function CertificateButton({
       const certDetails = await certDetailsResponse.json();
 
       // Préparer les données du certificat
-      const certificateData: CertificateData = {
+      const certData: CertificateData = {
         studentName,
         moduleTitle: certDetails.metadata?.module_title || moduleTitle,
         completionDate: new Date(certDetails.completion_date),
@@ -135,16 +141,14 @@ export default function CertificateButton({
         verificationCode: data.verificationCode
       };
 
-      // Générer et télécharger le PDF
-      const pdf = generateCertificatePDF(certificateData);
-      const filename = certificateType === 'master'
-        ? 'certificat-master-genia.pdf'
-        : `certificat-${moduleTitle.toLowerCase().replace(/\s+/g, '-')}.pdf`;
+      // Sauvegarder les données pour le modal
+      setCertificateData(certData);
+      setCertificateId(data.certificateId);
+      setVerificationUrl(data.verificationUrl);
+      setCompletionDate(new Date(certDetails.completion_date));
 
-      downloadCertificate(pdf, filename);
-
-      // Optionnel: afficher un message de succès
-      console.log(data.message);
+      // Afficher le modal de prévisualisation
+      setShowPreview(true);
 
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Erreur inconnue';
@@ -153,6 +157,45 @@ export default function CertificateButton({
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleDownload = () => {
+    if (!certificateData) return;
+
+    const pdf = generateCertificatePDF(certificateData);
+    const filename = certificateType === 'master'
+      ? 'certificat-master-genia.pdf'
+      : `certificat-${moduleTitle.toLowerCase().replace(/\s+/g, '-')}.pdf`;
+
+    downloadCertificate(pdf, filename);
+  };
+
+  const handleShare = () => {
+    if (!certificateId || !verificationUrl) return;
+
+    // Format certificate name based on type
+    const certificateName = certificateType === 'master'
+      ? 'GENIA Master Certificate - AI-Powered Prompt Engineering'
+      : `GENIA Certificate - ${moduleTitle}`;
+
+    // LinkedIn certification URL format
+    const year = completionDate.getFullYear();
+    const month = completionDate.getMonth() + 1;
+
+    const params = new URLSearchParams({
+      startTask: 'CERTIFICATION_NAME',
+      name: certificateName,
+      organizationId: 'GENIA',
+      issueYear: year.toString(),
+      issueMonth: month.toString(),
+      certUrl: verificationUrl,
+      certId: certificateId
+    });
+
+    const linkedInUrl = `https://www.linkedin.com/profile/add?${params.toString()}`;
+
+    // Ouvrir LinkedIn dans un nouvel onglet
+    window.open(linkedInUrl, '_blank', 'noopener,noreferrer');
   };
 
   if (variant === 'icon') {
@@ -202,6 +245,15 @@ export default function CertificateButton({
       </button>
       {error && (
         <div className="text-red-600 text-sm mt-2">{error}</div>
+      )}
+      {certificateData && (
+        <CertificatePreview
+          isOpen={showPreview}
+          onClose={() => setShowPreview(false)}
+          certificateData={certificateData}
+          onDownload={handleDownload}
+          onShare={handleShare}
+        />
       )}
     </>
   );
