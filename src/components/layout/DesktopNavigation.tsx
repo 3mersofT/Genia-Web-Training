@@ -5,8 +5,9 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { useTheme } from '@/contexts/ThemeContext';
 import {
-  Home, BookOpen, MessageSquare, User, Trophy, 
-  Settings, LogOut, ChevronDown, Bell, Sun, Moon, Monitor
+  Home, BookOpen, MessageSquare, User, Trophy,
+  Settings, LogOut, ChevronDown, Bell, Sun, Moon, Monitor,
+  Swords, Users, Network
 } from 'lucide-react';
 
 interface NavItem {
@@ -28,7 +29,10 @@ export default function DesktopNavigation() {
     { icon: Home, label: 'Accueil', href: '/dashboard' },
     { icon: BookOpen, label: 'Modules', href: '/dashboard#modules' },
     { icon: MessageSquare, label: 'GENIA', href: '/dashboard' },
-    { icon: Trophy, label: 'Progrès', href: '/dashboard#progress' }
+    { icon: Trophy, label: 'Progrès', href: '/dashboard#progress' },
+    { icon: Swords, label: 'Tournois', href: '/tournaments' },
+    { icon: Users, label: 'Équipes', href: '/teams' },
+    { icon: Network, label: 'Arbre de Compétences', href: '/skill-tree' }
   ];
 
   const handleSignOut = async () => {
