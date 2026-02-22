@@ -1,3 +1,5 @@
+import type { MultimediaBlock } from './multimedia.types'
+
 export type UserRole = 'student' | 'admin'
 
 export type ProgressStatus = 'not_started' | 'in_progress' | 'completed'
@@ -40,6 +42,7 @@ export interface Capsule {
   title: string
   durationMinutes: number
   content: Record<string, any>
+  multimedia?: MultimediaBlock[]
   exerciseData?: Record<string, any>
   prerequisites?: string[]
   isPublished: boolean
