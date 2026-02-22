@@ -5,7 +5,8 @@ import { motion } from 'framer-motion'
 import { ChevronLeft } from 'lucide-react'
 import Link from 'next/link'
 import TeamManager from '@/components/gamification/TeamManager'
-import { Team, TeamMember, TeamInvitation, CreateTeamData } from '@/types/teams.types'
+import TeamLeaderboard from '@/components/gamification/TeamLeaderboard'
+import { Team, TeamMember, TeamInvitation, CreateTeamData, TeamLeaderboardEntry } from '@/types/teams.types'
 
 export default function TeamsPage() {
   const [mounted, setMounted] = useState(false)
@@ -14,11 +15,13 @@ export default function TeamsPage() {
   const [currentTeam, setCurrentTeam] = useState<Team | null>(null)
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([])
   const [pendingInvitations, setPendingInvitations] = useState<TeamInvitation[]>([])
+  const [leaderboard, setLeaderboard] = useState<TeamLeaderboardEntry[]>([])
 
   useEffect(() => {
     setMounted(true)
     // Load mock data for demonstration
     loadMockData()
+    loadMockLeaderboard()
   }, [])
 
   const loadMockData = () => {
@@ -222,6 +225,129 @@ export default function TeamsPage() {
     setPendingInvitations(mockInvitations)
   }
 
+  const loadMockLeaderboard = () => {
+    // Mock leaderboard data
+    const mockLeaderboard: TeamLeaderboardEntry[] = [
+      {
+        team_id: '1',
+        rank: 1,
+        total_score: 1250,
+        challenges_completed: 15,
+        tournaments_won: 3,
+        average_score: 83.3,
+        member_count: 3,
+        weekly_score: 450,
+        monthly_score: 1250,
+        updated_at: '2024-02-20T15:30:00Z',
+        team: {
+          id: '1',
+          name: 'Les Ninjas du Prompt',
+          description: 'Équipe dédiée à la maîtrise des techniques avancées de prompt engineering',
+          avatar_url: '',
+          captain_id: 'user-1',
+          max_members: 5,
+          is_public: true,
+          total_score: 1250,
+          challenges_completed: 15,
+          tournaments_won: 3,
+          current_streak: 7,
+          tags: ['avancé', 'compétitif', 'actif'],
+          status: 'active',
+          created_at: '2024-01-15T10:00:00Z',
+          updated_at: '2024-02-20T15:30:00Z'
+        }
+      },
+      {
+        team_id: '3',
+        rank: 2,
+        total_score: 1100,
+        challenges_completed: 12,
+        tournaments_won: 2,
+        average_score: 91.7,
+        member_count: 2,
+        weekly_score: 380,
+        monthly_score: 1100,
+        updated_at: '2024-02-20T15:30:00Z',
+        team: {
+          id: '3',
+          name: 'AI Enthusiasts',
+          description: 'Passionnés d\'IA et de prompt engineering - tous niveaux bienvenus',
+          avatar_url: '',
+          captain_id: 'user-5',
+          max_members: 5,
+          is_public: true,
+          total_score: 1100,
+          challenges_completed: 12,
+          tournaments_won: 2,
+          current_streak: 5,
+          tags: ['IA', 'innovation', 'créatif'],
+          status: 'active',
+          created_at: '2024-01-20T10:00:00Z',
+          updated_at: '2024-02-20T15:30:00Z'
+        }
+      },
+      {
+        team_id: '4',
+        rank: 3,
+        total_score: 950,
+        challenges_completed: 11,
+        tournaments_won: 2,
+        average_score: 86.4,
+        member_count: 1,
+        weekly_score: 320,
+        monthly_score: 950,
+        updated_at: '2024-02-20T15:30:00Z',
+        team: {
+          id: '4',
+          name: 'Les Stratèges',
+          description: 'Équipe orientée stratégie et optimisation',
+          avatar_url: '',
+          captain_id: 'user-7',
+          max_members: 5,
+          is_public: true,
+          total_score: 950,
+          challenges_completed: 11,
+          tournaments_won: 2,
+          current_streak: 4,
+          tags: ['stratégie', 'optimisation'],
+          status: 'active',
+          created_at: '2024-01-25T10:00:00Z',
+          updated_at: '2024-02-20T15:30:00Z'
+        }
+      },
+      {
+        team_id: '2',
+        rank: 4,
+        total_score: 850,
+        challenges_completed: 10,
+        tournaments_won: 1,
+        average_score: 85.0,
+        member_count: 1,
+        weekly_score: 280,
+        monthly_score: 850,
+        updated_at: '2024-02-20T15:30:00Z',
+        team: {
+          id: '2',
+          name: 'Prompt Masters',
+          description: 'Équipe pour débutants et intermédiaires qui veulent progresser ensemble',
+          avatar_url: '',
+          captain_id: 'user-4',
+          max_members: 4,
+          is_public: true,
+          total_score: 850,
+          challenges_completed: 10,
+          tournaments_won: 1,
+          current_streak: 3,
+          tags: ['débutant', 'apprentissage', 'friendly'],
+          status: 'active',
+          created_at: '2024-02-01T10:00:00Z',
+          updated_at: '2024-02-20T15:30:00Z'
+        }
+      }
+    ]
+    setLeaderboard(mockLeaderboard)
+  }
+
   const handleCreateTeam = (data: CreateTeamData) => {
     // Mock implementation
     const newTeam: Team = {
@@ -332,6 +458,7 @@ export default function TeamsPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
+          className="space-y-8"
         >
           <TeamManager
             myTeams={myTeams}
@@ -346,6 +473,12 @@ export default function TeamsPage() {
             onAcceptInvitation={handleAcceptInvitation}
             onDeclineInvitation={handleDeclineInvitation}
             onSelectTeam={handleSelectTeam}
+          />
+
+          {/* Team Leaderboard */}
+          <TeamLeaderboard
+            leaderboard={leaderboard}
+            isLoading={false}
           />
         </motion.div>
       </div>
