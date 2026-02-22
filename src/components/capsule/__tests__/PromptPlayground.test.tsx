@@ -22,9 +22,11 @@ jest.mock('framer-motion', () => {
       {},
       {
         get: (_target, prop) => {
-          return React.forwardRef(({ children, ...props }: any, ref: any) =>
+          const Component = React.forwardRef(({ children, ...props }: any, ref: any) =>
             React.createElement(prop as string, { ...props, ref }, children)
           );
+          Component.displayName = `motion.${String(prop)}`;
+          return Component;
         },
       }
     ),
