@@ -791,6 +791,7 @@ export class TournamentService {
 
   /**
    * Finalise un tournoi et génère les résultats
+   * Crée également des notifications de célébration pour les gagnants
    */
   async finalizeTournament(tournamentId: string): Promise<boolean> {
     try {
@@ -806,10 +807,155 @@ export class TournamentService {
         .update({ status: 'completed' as TournamentStatus })
         .eq('id', tournamentId);
 
+      // Récupérer le tournoi et les résultats pour créer des célébrations
+      const tournament = await this.getTournament(tournamentId);
+      if (tournament) {
+        // Récupérer les 3 premiers classés pour les célébrations
+        const { data: results } = await this.supabase
+          .from('tournament_results')
+          .select(`
+            *,
+            participant:tournament_participants(
+              user_id,
+              user_profiles:user_id(full_name)
+            )
+          `)
+          .eq('tournament_id', tournamentId)
+          .order('final_rank', { ascending: true })
+          .limit(3);
+
+        // Créer des notifications de célébration pour les gagnants
+        if (results && results.length > 0) {
+          for (const result of results) {
+            if (result.participant?.user_id) {
+              await this.createTournamentCelebrationNotification(
+                result.participant.user_id,
+                tournamentId,
+                result.final_rank,
+                tournament.title
+              );
+            }
+          }
+        }
+      }
+
       return true;
     } catch (error) {
       console.error('Erreur finalisation tournoi:', error);
       return false;
+    }
+  }
+
+  /**
+   * Crée une notification de célébration pour un placement dans un tournoi
+   */
+  private async createTournamentCelebrationNotification(
+    userId: string,
+    tournamentId: string,
+    rank: number,
+    tournamentTitle: string
+  ): Promise<void> {
+    try {
+      let title = '';
+      let message = '';
+      let rarity: 'common' | 'rare' | 'epic' | 'legendary' = 'common';
+
+      if (rank === 1) {
+        title = '🏆 Victoire au tournoi !';
+        message = `Félicitations ! Vous avez remporté le tournoi "${tournamentTitle}" !`;
+        rarity = 'legendary';
+      } else if (rank === 2) {
+        title = '🥈 Deuxième place !';
+        message = `Excellent travail ! Vous avez terminé deuxième au tournoi "${tournamentTitle}" !`;
+        rarity = 'epic';
+      } else if (rank === 3) {
+        title = '🥉 Troisième place !';
+        message = `Bravo ! Vous avez terminé troisième au tournoi "${tournamentTitle}" !`;
+        rarity = 'rare';
+      }
+
+      await this.createNotification({
+        user_id: userId,
+        tournament_id: tournamentId,
+        type: 'tournament_victory',
+        title,
+        message,
+        data: {
+          rank,
+          tournament_title: tournamentTitle,
+          celebration: true,
+          rarity
+        }
+      });
+    } catch (error) {
+      console.error('Erreur création notification célébration tournoi:', error);
+    }
+  }
+
+  /**
+   * Génère les données de célébration pour une victoire de tournoi
+   */
+  async getCelebrationDataForTournamentWin(
+    tournamentId: string,
+    userId: string,
+    rank: number
+  ): Promise<{
+    id: string;
+    name: string;
+    description: string;
+    icon: string;
+    category: 'completion' | 'performance' | 'streak' | 'social' | 'special';
+    rarity: 'common' | 'rare' | 'epic' | 'legendary';
+    points: number;
+    celebrationType: 'tournament_win';
+    data: any;
+  } | null> {
+    try {
+      const tournament = await this.getTournament(tournamentId);
+      if (!tournament) return null;
+
+      let name = '';
+      let icon = '';
+      let rarity: 'common' | 'rare' | 'epic' | 'legendary' = 'common';
+      let points = 0;
+
+      if (rank === 1) {
+        name = 'Champion du tournoi';
+        icon = '🏆';
+        rarity = 'legendary';
+        points = 1000;
+      } else if (rank === 2) {
+        name = 'Vice-champion';
+        icon = '🥈';
+        rarity = 'epic';
+        points = 500;
+      } else if (rank === 3) {
+        name = 'Médaille de bronze';
+        icon = '🥉';
+        rarity = 'rare';
+        points = 250;
+      }
+
+      return {
+        id: `${tournamentId}-${userId}-${rank}`,
+        name,
+        description: `Félicitations pour votre ${rank === 1 ? 'victoire' : rank === 2 ? 'deuxième place' : 'troisième place'} au tournoi "${tournament.title}" !`,
+        icon,
+        category: 'performance',
+        rarity,
+        points,
+        celebrationType: 'tournament_win',
+        data: {
+          tournament_id: tournamentId,
+          tournament_title: tournament.title,
+          rank,
+          tournament_type: tournament.tournament_type,
+          participant_count: tournament.participant_count
+        }
+      };
+    } catch (error) {
+      console.error('Erreur génération données célébration tournoi:', error);
+      return null;
     }
   }
 

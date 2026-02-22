@@ -17,6 +17,7 @@ export type TournamentNotificationType =
   | 'match_result'
   | 'round_advance'
   | 'tournament_complete'
+  | 'tournament_victory'
   | 'prize_awarded';
 
 /**

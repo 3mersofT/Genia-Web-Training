@@ -129,6 +129,7 @@ export class LevelProgressionService {
 
   /**
    * Crée une notification de montée de niveau
+   * Inclut également un marqueur pour déclencher une célébration
    */
   private async createLevelUpNotification(
     userId: string,
@@ -140,6 +141,13 @@ export class LevelProgressionService {
       const fromLevel = levels.find(l => l.level_rank === fromRank);
       const toLevel = levels.find(l => l.level_rank === toRank);
 
+      // Déterminer la rareté basée sur le niveau atteint
+      let rarity: 'common' | 'rare' | 'epic' | 'legendary' = 'common';
+      if (toRank === 5) rarity = 'legendary'; // Légende
+      else if (toRank === 4) rarity = 'epic'; // Maître
+      else if (toRank === 3) rarity = 'rare'; // Expert
+      else if (toRank === 2) rarity = 'rare'; // Apprenti
+
       const { data, error } = await this.supabase
         .from('level_up_notifications')
         .insert({
@@ -148,7 +156,13 @@ export class LevelProgressionService {
           to_level_rank: toRank,
           from_level_name: fromLevel?.level_name_fr,
           to_level_name: toLevel?.level_name_fr,
-          shown: false
+          shown: false,
+          rewards_unlocked: {
+            celebration: true,
+            rarity,
+            icon_emoji: toLevel?.icon_emoji,
+            color_hex: toLevel?.color_hex
+          }
         })
         .select()
         .single();
@@ -162,6 +176,59 @@ export class LevelProgressionService {
     } catch (error) {
       console.error('Erreur création notification:', error);
       return undefined;
+    }
+  }
+
+  /**
+   * Génère les données de célébration pour une montée de niveau
+   * Ces données peuvent être utilisées pour afficher l'animation de célébration
+   */
+  async getCelebrationDataForLevelUp(
+    levelUpNotification: LevelUpNotification
+  ): Promise<{
+    id: string;
+    name: string;
+    description: string;
+    icon: string;
+    category: 'completion' | 'performance' | 'streak' | 'social' | 'special';
+    rarity: 'common' | 'rare' | 'epic' | 'legendary';
+    points: number;
+    celebrationType: 'level_up';
+    data: any;
+  } | null> {
+    try {
+      const toLevel = await this.getLevelDefinition(levelUpNotification.to_level_rank);
+      if (!toLevel) return null;
+
+      // Déterminer la rareté
+      let rarity: 'common' | 'rare' | 'epic' | 'legendary' = 'common';
+      if (levelUpNotification.to_level_rank === 5) rarity = 'legendary';
+      else if (levelUpNotification.to_level_rank === 4) rarity = 'epic';
+      else if (levelUpNotification.to_level_rank === 3) rarity = 'rare';
+      else if (levelUpNotification.to_level_rank === 2) rarity = 'rare';
+
+      // Points basés sur le niveau
+      const points = levelUpNotification.to_level_rank * 200;
+
+      return {
+        id: levelUpNotification.id,
+        name: `Niveau ${toLevel.level_name_fr}`,
+        description: `Félicitations ! Vous avez atteint le niveau ${toLevel.level_name_fr} ${toLevel.icon_emoji}`,
+        icon: toLevel.icon_emoji || '🎉',
+        category: 'special',
+        rarity,
+        points,
+        celebrationType: 'level_up',
+        data: {
+          from_level: levelUpNotification.from_level_name,
+          to_level: levelUpNotification.to_level_name,
+          level_rank: levelUpNotification.to_level_rank,
+          xp_required: toLevel.xp_required
+        }
+      };
+    } catch (error) {
+      console.error('Erreur génération données célébration:', error);
+      return null;
     }
   }
 
