@@ -1,15 +1,15 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { 
-  Trophy, Clock, Zap, Target, Users, TrendingUp, 
+import {
+  Trophy, Clock, Zap, Target, Users, TrendingUp,
   ChevronRight, Award, Flame, Star, Timer, CheckCircle,
   AlertCircle, Send, RefreshCw
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useUser } from '@supabase/auth-helpers-react';
 import { createClient } from '@/lib/supabase/client';
 import type { DailyChallenge, ChallengeParticipation, LeaderboardEntry } from '@/types/challenges.types';
+import type { User } from '@supabase/supabase-js';
 
 interface ChallengeCardProps {
   challenge: DailyChallenge;
@@ -17,10 +17,10 @@ interface ChallengeCardProps {
   onParticipate: () => void;
 }
 
-export default function DailyChallengeCard({ 
-  challenge, 
+export default function DailyChallengeCard({
+  challenge,
   participation,
-  onParticipate 
+  onParticipate
 }: ChallengeCardProps) {
   const [timeRemaining, setTimeRemaining] = useState<string>('');
   const [isExpanded, setIsExpanded] = useState(false);
@@ -28,9 +28,19 @@ export default function DailyChallengeCard({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [userRank, setUserRank] = useState<number | null>(null);
-  
-  const user = useUser();
+  const [user, setUser] = useState<User | null>(null);
+
   const supabase = createClient();
+
+  // Récupérer l'utilisateur connecté
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+    };
+
+    getUser();
+  }, []);
 
   // Calculer le temps restant
   useEffect(() => {

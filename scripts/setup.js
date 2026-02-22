@@ -120,7 +120,7 @@ async function setupEnvironment() {
     const envContent = `# Configuration Supabase
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
-SUPABASE_SERVICE_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
 
 # Configuration Mistral AI
 MISTRAL_API_KEY=
