@@ -10,6 +10,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '@/hooks/useAuth';
 import { useGENIA } from '@/components/providers/GENIAProvider';
 import { useEnhancedGENIA } from '@/hooks/useEnhancedGENIA';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 // ============= TYPES =============
 interface Message {
