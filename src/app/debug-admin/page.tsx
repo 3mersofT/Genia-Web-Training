@@ -61,62 +61,6 @@ export default function DebugAdminPage() {
     runTest();
   }, []);
 
-  // NOW check for production environment AFTER hooks
-    // Only run in development
-    if (process.env.NODE_ENV !== 'production') {
-      const runTest = async () => {
-        try {
-          // 1. Session et JWT
-          const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-          if (sessionError || !session) {
-            throw new Error(`Pas de session: ${sessionError?.message}`);
-          }
-
-          const jwtPayload = JSON.parse(atob(session.access_token.split('.')[1]));
-
-          // 2. Test user_profiles
-          const { data: profiles, error: profilesError } = await supabase
-            .from('user_profiles')
-            .select('*');
-
-          // 3. Test auth.uid()
-          const { data: { user }, error: userError } = await supabase.auth.getUser();
-
-          setResults({
-            session: {
-              exists: !!session,
-              error: sessionError?.message
-            },
-            jwt: {
-              role: jwtPayload.role,
-              app_metadata_role: jwtPayload.app_metadata?.role,
-              user_metadata_role: jwtPayload.user_metadata?.role
-            },
-            profiles: {
-              count: profiles?.length || 0,
-              error: profilesError?.message,
-              data: profiles
-            },
-            user: {
-              id: user?.id,
-              email: user?.email,
-              error: userError?.message
-            }
-          });
-
-        } catch (error) {
-          setResults({ error: error instanceof Error ? error.message : String(error) });
-        } finally {
-          setLoading(false);
-        }
-      };
-
-      runTest();
-    } else {
-      setLoading(false);
-    }
-  }, []);
-
   // Block access in production environment
   if (process.env.NODE_ENV === 'production') {
     return (
