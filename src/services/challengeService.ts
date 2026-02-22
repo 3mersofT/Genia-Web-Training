@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/client';
 import type {
   DailyChallenge,
   ChallengeParticipation,
+  ChallengeSubmissionResult,
   LeaderboardEntry,
   ChallengeUserStats,
   ChallengeTemplate,
@@ -558,6 +559,75 @@ export class ChallengeService {
       );
 
       return data as ChallengeParticipation;
+    } catch (error) {
+      console.error('Erreur soumission défi:', error);
+      return null;
+    }
+  }
+
+  /**
+   * Soumet une participation à un défi avec retour des récompenses XP
+   * Version étendue qui retourne les informations de XP et montée de niveau
+   */
+  async submitChallengeWithRewards(
+    userId: string,
+    challengeId: string,
+    submission: string
+  ): Promise<ChallengeSubmissionResult | null> {
+    try {
+      // Récupérer le défi pour l'évaluation
+      const { data: challenge } = await this.supabase
+        .from('daily_challenges')
+        .select('*')
+        .eq('id', challengeId)
+        .single();
+
+      if (!challenge) throw new Error('Défi non trouvé');
+
+      // Évaluer la soumission
+      const evaluation = await this.evaluateSubmission(
+        submission,
+        challenge as DailyChallenge
+      );
+
+      // Créer la participation
+      const { data, error } = await this.supabase
+        .from('challenge_participations')
+        .insert({
+          user_id: userId,
+          challenge_id: challengeId,
+          submission,
+          score: evaluation.score,
+          ai_evaluation: evaluation,
+          completed_at: new Date().toISOString()
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      // Mettre à jour le leaderboard
+      await this.updateLeaderboard(challengeId, userId, evaluation.score);
+
+      // Mettre à jour les stats utilisateur
+      await this.updateUserStats(userId);
+
+      // Attribuer XP et récompenses (nouveau système de gamification)
+      const rewardsResult = await this.awardChallengeRewards(
+        userId,
+        challengeId,
+        challenge.challenge_type,
+        challenge.difficulty || 'beginner',
+        evaluation.score
+      );
+
+      return {
+        participation: data as ChallengeParticipation,
+        xp_awarded: rewardsResult.xp_awarded,
+        leveled_up: rewardsResult.leveled_up,
+        new_level: rewardsResult.new_level,
+        skills_unlocked: rewardsResult.skills_unlocked
+      };
     } catch (error) {
       console.error('Erreur soumission défi:', error);
       return null;
