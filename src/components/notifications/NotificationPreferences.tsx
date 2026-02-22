@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Bell, Mail, Clock, Check, AlertCircle, Save } from 'lucide-react';
+import { Bell, Mail, Clock, Check, AlertCircle, Save, Smartphone } from 'lucide-react';
 import type { NotificationPreferences as NotificationPrefsType, EmailDigestFrequency } from '@/types/notifications.types';
+import { studentNotificationService } from '@/lib/services/studentNotificationService';
 
 interface NotificationPreferencesProps {
   userId: string;
@@ -71,9 +72,26 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
   const [emailDigest, setEmailDigest] = useState<EmailDigestFrequency>('daily');
   const [preferredTime, setPreferredTime] = useState<string>('09:00');
 
+  // Push notification state
+  const [pushEnabled, setPushEnabled] = useState(false);
+  const [pushSupported, setPushSupported] = useState(false);
+  const [pushPermission, setPushPermission] = useState<NotificationPermission | null>(null);
+
   useEffect(() => {
     loadPreferences();
+    checkPushNotificationStatus();
   }, [userId]);
+
+  const checkPushNotificationStatus = async () => {
+    const supported = studentNotificationService.isPushNotificationSupported();
+    setPushSupported(supported);
+
+    if (supported) {
+      const permission = await studentNotificationService.checkPushPermission();
+      setPushPermission(permission);
+      setPushEnabled(permission === 'granted');
+    }
+  };
 
   const loadPreferences = async () => {
     try {
@@ -104,6 +122,58 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
       ...prev,
       [key]: !prev[key]
     }));
+  };
+
+  const handlePushToggle = async () => {
+    if (!pushSupported) {
+      setMessage({
+        type: 'error',
+        text: 'Les notifications push ne sont pas supportées par votre navigateur'
+      });
+      setTimeout(() => setMessage(null), 3000);
+      return;
+    }
+
+    if (pushEnabled) {
+      // Désactiver les push notifications
+      const success = await studentNotificationService.revokePushSubscription();
+      if (success) {
+        setPushEnabled(false);
+        setMessage({
+          type: 'success',
+          text: 'Notifications push désactivées'
+        });
+      }
+    } else {
+      // Demander la permission
+      const granted = await studentNotificationService.requestPushPermission();
+
+      if (granted) {
+        setPushEnabled(true);
+        setPushPermission('granted');
+        setMessage({
+          type: 'success',
+          text: 'Notifications push activées avec succès!'
+        });
+      } else {
+        const currentPermission = await studentNotificationService.checkPushPermission();
+        setPushPermission(currentPermission);
+
+        if (currentPermission === 'denied') {
+          setMessage({
+            type: 'error',
+            text: 'Permission refusée. Veuillez autoriser les notifications dans les paramètres de votre navigateur.'
+          });
+        } else {
+          setMessage({
+            type: 'error',
+            text: 'Impossible d\'activer les notifications push'
+          });
+        }
+      }
+    }
+
+    setTimeout(() => setMessage(null), 5000);
   };
 
   const handleSave = async () => {
@@ -197,6 +267,58 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Push Notifications */}
+      <div className="bg-white rounded-lg shadow-sm border p-6">
+        <div className="flex items-center gap-2 mb-4">
+          <Smartphone className="w-5 h-5 text-blue-600" />
+          <h3 className="text-lg font-semibold text-gray-900">Notifications Push</h3>
+        </div>
+        <p className="text-sm text-gray-600 mb-6">
+          Recevez des notifications instantanées sur votre appareil
+        </p>
+
+        {!pushSupported ? (
+          <div className="p-4 bg-yellow-50 text-yellow-800 rounded-lg flex items-center gap-2">
+            <AlertCircle className="w-5 h-5" />
+            <span className="text-sm">
+              Les notifications push ne sont pas supportées par votre navigateur
+            </span>
+          </div>
+        ) : (
+          <div>
+            <div className="flex items-start justify-between py-3">
+              <div className="flex-1">
+                <label htmlFor="pushNotifications" className="font-medium text-gray-900 cursor-pointer">
+                  Activer les notifications push
+                </label>
+                <p className="text-sm text-gray-600 mt-1">
+                  Recevoir des notifications en temps réel même quand l'application n'est pas ouverte
+                </p>
+                {pushPermission === 'denied' && (
+                  <p className="text-sm text-red-600 mt-2">
+                    ⚠️ Permission refusée. Veuillez autoriser les notifications dans les paramètres de votre navigateur.
+                  </p>
+                )}
+              </div>
+              <button
+                id="pushNotifications"
+                onClick={handlePushToggle}
+                disabled={pushPermission === 'denied'}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                  pushEnabled ? 'bg-blue-600' : 'bg-gray-200'
+                } ${pushPermission === 'denied' ? 'opacity-50 cursor-not-allowed' : ''}`}
+              >
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                    pushEnabled ? 'translate-x-6' : 'translate-x-1'
+                  }`}
+                />
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Fréquence des emails */}
