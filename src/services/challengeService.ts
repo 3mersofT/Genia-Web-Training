@@ -3,6 +3,7 @@ import { studentNotificationService } from '@/lib/services/studentNotificationSe
 import type {
   DailyChallenge,
   ChallengeParticipation,
+  ChallengeSubmissionResult,
   LeaderboardEntry,
   ChallengeUserStats,
   ChallengeTemplate,
@@ -10,12 +11,19 @@ import type {
   AIEvaluation,
   ChallengeNotification
 } from '@/types/challenges.types';
+import { LevelProgressionService } from './levelProgressionService';
+import { SkillTreeService } from './skillTreeService';
+import type { XPSourceType } from '@/types/levels.types';
+import type { SkillUnlockSource } from '@/types/skillTree.types';
 
 /**
  * Service de gestion des défis quotidiens
  */
 export class ChallengeService {
   private supabase = createClient();
+  private levelProgressionService = new LevelProgressionService();
+  private skillTreeService = new SkillTreeService();
+  
   private lastNotificationDate: string | null = null;
 
   /**
@@ -403,6 +411,153 @@ export class ChallengeService {
   }
 
   /**
+   * Calcule l'XP à attribuer en fonction du score et de la difficulté du défi
+   */
+  private calculateChallengeXP(score: number, difficulty: string): number {
+    // XP de base selon la difficulté
+    const baseXP: Record<string, number> = {
+      'beginner': 50,
+      'intermediate': 100,
+      'advanced': 200,
+      'expert': 300
+    };
+
+    const base = baseXP[difficulty] || 50;
+
+    // Multiplicateur basé sur le score (0-100)
+    // Score 0-50: 0.5x, 50-70: 1x, 70-85: 1.5x, 85-100: 2x
+    let multiplier = 0.5;
+    if (score >= 85) multiplier = 2;
+    else if (score >= 70) multiplier = 1.5;
+    else if (score >= 50) multiplier = 1;
+
+    return Math.floor(base * multiplier);
+  }
+
+  /**
+   * Détermine les compétences à débloquer en fonction du type et du score du défi
+   */
+  private async checkSkillUnlocks(
+    userId: string,
+    challengeType: string,
+    score: number
+  ): Promise<string[]> {
+    // Mapping des types de défis aux compétences
+    const skillMapping: Record<string, string> = {
+      'transform': 'RCTF Framework',
+      'create': 'Persona Creation',
+      'speed': 'Quick Prompting',
+      'analysis': 'Prompt Analysis',
+      'creative': 'Creative Prompting'
+    };
+
+    const unlockedSkills: string[] = [];
+
+    // Ne débloquer que si le score est suffisamment élevé (>= 70)
+    if (score >= 70) {
+      const skillName = skillMapping[challengeType];
+      if (skillName) {
+        try {
+          // Récupérer le nœud de compétence correspondant
+          const { data: skillNode } = await this.supabase
+            .from('skill_nodes')
+            .select('id')
+            .eq('node_name', skillName)
+            .eq('active', true)
+            .single();
+
+          if (skillNode) {
+            // Vérifier si la compétence peut être débloquée
+            const prerequisitesCheck = await this.skillTreeService.checkPrerequisites(
+              userId,
+              skillNode.id
+            );
+
+            if (prerequisitesCheck.can_unlock) {
+              const result = await this.skillTreeService.unlockSkillNode(
+                userId,
+                skillNode.id,
+                'challenge_complete' as SkillUnlockSource
+              );
+
+              if (result.success) {
+                unlockedSkills.push(skillName);
+              }
+            }
+          }
+        } catch (error) {
+          console.error('Erreur déblocage compétence:', error);
+        }
+      }
+    }
+
+    return unlockedSkills;
+  }
+
+  /**
+   * Attribue l'XP et gère les récompenses après la complétion d'un défi
+   */
+  private async awardChallengeRewards(
+    userId: string,
+    challengeId: string,
+    challengeType: string,
+    difficulty: string,
+    score: number
+  ): Promise<{
+    xp_awarded: number;
+    leveled_up: boolean;
+    new_level?: number;
+    skills_unlocked: string[];
+  }> {
+    const result = {
+      xp_awarded: 0,
+      leveled_up: false,
+      new_level: undefined as number | undefined,
+      skills_unlocked: [] as string[]
+    };
+
+    try {
+      // Calculer et attribuer l'XP
+      const xpAmount = this.calculateChallengeXP(score, difficulty);
+
+      const xpResult = await this.levelProgressionService.awardXP({
+        user_id: userId,
+        xp_amount: xpAmount,
+        source_type: 'challenge_complete' as XPSourceType,
+        source_id: challengeId,
+        description: `Défi complété avec un score de ${score}`
+      });
+
+      result.xp_awarded = xpAmount;
+      result.leveled_up = xpResult.leveled_up;
+      result.new_level = xpResult.new_level_rank;
+
+      // Vérifier les déblocages de compétences
+      result.skills_unlocked = await this.checkSkillUnlocks(
+        userId,
+        challengeType,
+        score
+      );
+
+      // Bonus XP pour déblocage de compétence
+      if (result.skills_unlocked.length > 0) {
+        await this.levelProgressionService.awardXP({
+          user_id: userId,
+          xp_amount: 25 * result.skills_unlocked.length,
+          source_type: 'skill_unlock' as XPSourceType,
+          source_id: challengeId,
+          description: `Déblocage de ${result.skills_unlocked.length} compétence(s)`
+        });
+      }
+
+    } catch (error) {
+      console.error('Erreur attribution récompenses:', error);
+    }
+
+    return result;
+  }
+
+  /**
    * Soumet une participation à un défi
    */
   async submitChallenge(
@@ -448,7 +603,85 @@ export class ChallengeService {
       // Mettre à jour les stats utilisateur
       await this.updateUserStats(userId);
 
+      // Attribuer XP et récompenses (nouveau système de gamification)
+      await this.awardChallengeRewards(
+        userId,
+        challengeId,
+        challenge.challenge_type,
+        challenge.difficulty || 'beginner',
+        evaluation.score
+      );
+
       return data as ChallengeParticipation;
+    } catch (error) {
+      console.error('Erreur soumission défi:', error);
+      return null;
+    }
+  }
+
+  /**
+   * Soumet une participation à un défi avec retour des récompenses XP
+   * Version étendue qui retourne les informations de XP et montée de niveau
+   */
+  async submitChallengeWithRewards(
+    userId: string,
+    challengeId: string,
+    submission: string
+  ): Promise<ChallengeSubmissionResult | null> {
+    try {
+      // Récupérer le défi pour l'évaluation
+      const { data: challenge } = await this.supabase
+        .from('daily_challenges')
+        .select('*')
+        .eq('id', challengeId)
+        .single();
+
+      if (!challenge) throw new Error('Défi non trouvé');
+
+      // Évaluer la soumission
+      const evaluation = await this.evaluateSubmission(
+        submission,
+        challenge as DailyChallenge
+      );
+
+      // Créer la participation
+      const { data, error } = await this.supabase
+        .from('challenge_participations')
+        .insert({
+          user_id: userId,
+          challenge_id: challengeId,
+          submission,
+          score: evaluation.score,
+          ai_evaluation: evaluation,
+          completed_at: new Date().toISOString()
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      // Mettre à jour le leaderboard
+      await this.updateLeaderboard(challengeId, userId, evaluation.score);
+
+      // Mettre à jour les stats utilisateur
+      await this.updateUserStats(userId);
+
+      // Attribuer XP et récompenses (nouveau système de gamification)
+      const rewardsResult = await this.awardChallengeRewards(
+        userId,
+        challengeId,
+        challenge.challenge_type,
+        challenge.difficulty || 'beginner',
+        evaluation.score
+      );
+
+      return {
+        participation: data as ChallengeParticipation,
+        xp_awarded: rewardsResult.xp_awarded,
+        leveled_up: rewardsResult.leveled_up,
+        new_level: rewardsResult.new_level,
+        skills_unlocked: rewardsResult.skills_unlocked
+      };
     } catch (error) {
       console.error('Erreur soumission défi:', error);
       return null;
@@ -867,6 +1100,220 @@ export class ChallengeService {
         .eq('id', notificationId);
     } catch (error) {
       console.error('Erreur marquage notification:', error);
+    }
+  }
+
+  /**
+   * Soumet un défi de tournoi avec XP et récompenses
+   */
+  async submitTournamentChallenge(
+    userId: string,
+    tournamentId: string,
+    matchId: string,
+    submission: string
+  ): Promise<{
+    score: number;
+    evaluation: AIEvaluation;
+    xp_awarded: number;
+    leveled_up: boolean;
+  } | null> {
+    try {
+      // Récupérer les détails du match pour obtenir le défi
+      const { data: match } = await this.supabase
+        .from('tournament_matches')
+        .select('challenge_prompt, challenge_type, difficulty')
+        .eq('id', matchId)
+        .single();
+
+      if (!match) throw new Error('Match non trouvé');
+
+      // Créer un défi temporaire pour l'évaluation
+      const tempChallenge: DailyChallenge = {
+        id: matchId,
+        challenge_date: new Date().toISOString().split('T')[0],
+        challenge_type: match.challenge_type || 'transform',
+        title: match.challenge_prompt || '',
+        description: match.challenge_prompt || '',
+        difficulty: match.difficulty || 'intermediate',
+        success_criteria: {},
+        max_score: 100,
+        active: true,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      };
+
+      // Évaluer la soumission
+      const evaluation = await this.evaluateSubmission(submission, tempChallenge);
+
+      // Attribuer XP pour le tournoi
+      const xpAmount = this.calculateChallengeXP(
+        evaluation.score,
+        match.difficulty || 'intermediate'
+      );
+
+      const xpResult = await this.levelProgressionService.awardXP({
+        user_id: userId,
+        xp_amount: xpAmount,
+        source_type: 'tournament_win' as XPSourceType,
+        source_id: matchId,
+        description: `Match de tournoi complété avec score de ${evaluation.score}`
+      });
+
+      return {
+        score: evaluation.score,
+        evaluation,
+        xp_awarded: xpAmount,
+        leveled_up: xpResult.leveled_up
+      };
+    } catch (error) {
+      console.error('Erreur soumission défi tournoi:', error);
+      return null;
+    }
+  }
+
+  /**
+   * Soumet un défi d'équipe avec XP et récompenses
+   */
+  async submitTeamChallenge(
+    userId: string,
+    teamId: string,
+    challengeId: string,
+    submission: string,
+    contributorIds: string[]
+  ): Promise<{
+    score: number;
+    evaluation: AIEvaluation;
+    xp_awarded_per_member: number;
+    total_xp_awarded: number;
+  } | null> {
+    try {
+      // Récupérer les détails du défi d'équipe
+      const { data: teamChallenge } = await this.supabase
+        .from('team_challenges')
+        .select('challenge_type, difficulty, title')
+        .eq('id', challengeId)
+        .single();
+
+      if (!teamChallenge) throw new Error('Défi d\'équipe non trouvé');
+
+      // Créer un défi temporaire pour l'évaluation
+      const tempChallenge: DailyChallenge = {
+        id: challengeId,
+        challenge_date: new Date().toISOString().split('T')[0],
+        challenge_type: teamChallenge.challenge_type || 'create',
+        title: teamChallenge.title || '',
+        description: teamChallenge.title || '',
+        difficulty: teamChallenge.difficulty || 'intermediate',
+        success_criteria: {},
+        max_score: 100,
+        active: true,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      };
+
+      // Évaluer la soumission
+      const evaluation = await this.evaluateSubmission(submission, tempChallenge);
+
+      // Calculer l'XP par membre (bonus pour travail d'équipe)
+      const baseXP = this.calculateChallengeXP(
+        evaluation.score,
+        teamChallenge.difficulty || 'intermediate'
+      );
+
+      // Bonus de 20% pour défis d'équipe
+      const xpPerMember = Math.floor(baseXP * 1.2);
+
+      // Attribuer XP à tous les contributeurs
+      let totalXPAwarded = 0;
+      for (const contributorId of contributorIds) {
+        try {
+          await this.levelProgressionService.awardXP({
+            user_id: contributorId,
+            xp_amount: xpPerMember,
+            source_type: 'team_challenge' as XPSourceType,
+            source_id: challengeId,
+            description: `Défi d'équipe complété avec score de ${evaluation.score}`
+          });
+          totalXPAwarded += xpPerMember;
+        } catch (error) {
+          console.error(`Erreur attribution XP pour ${contributorId}:`, error);
+        }
+      }
+
+      return {
+        score: evaluation.score,
+        evaluation,
+        xp_awarded_per_member: xpPerMember,
+        total_xp_awarded: totalXPAwarded
+      };
+    } catch (error) {
+      console.error('Erreur soumission défi équipe:', error);
+      return null;
+    }
+  }
+
+  /**
+   * Attribue un bonus XP pour une série de défis réussis (streak)
+   */
+  async awardStreakBonus(
+    userId: string,
+    streakDays: number
+  ): Promise<{ xp_awarded: number } | null> {
+    try {
+      // Bonus XP basé sur la durée de la série
+      // 3 jours: +50 XP, 7 jours: +150 XP, 30 jours: +500 XP
+      let bonusXP = 0;
+      if (streakDays >= 30) bonusXP = 500;
+      else if (streakDays >= 14) bonusXP = 300;
+      else if (streakDays >= 7) bonusXP = 150;
+      else if (streakDays >= 3) bonusXP = 50;
+
+      if (bonusXP > 0) {
+        await this.levelProgressionService.awardXP({
+          user_id: userId,
+          xp_amount: bonusXP,
+          source_type: 'daily_streak' as XPSourceType,
+          source_id: `streak_${streakDays}`,
+          description: `Série de ${streakDays} jours consécutifs`
+        });
+
+        return { xp_awarded: bonusXP };
+      }
+
+      return { xp_awarded: 0 };
+    } catch (error) {
+      console.error('Erreur attribution bonus série:', error);
+      return null;
+    }
+  }
+
+  /**
+   * Récupère le niveau et l'XP d'un utilisateur
+   */
+  async getUserLevelInfo(userId: string): Promise<{
+    level_rank: number;
+    level_name: string;
+    total_xp: number;
+    xp_to_next_level: number;
+    progress_percentage: number;
+  } | null> {
+    try {
+      const userLevel = await this.levelProgressionService.getUserLevel(userId);
+      if (!userLevel) return null;
+
+      const levelProgress = await this.levelProgressionService.getLevelProgress(userId);
+      if (!levelProgress) return null;
+
+      return {
+        level_rank: userLevel.current_level_rank,
+        level_name: levelProgress.current_level.level_name_fr,
+        total_xp: userLevel.total_xp,
+        xp_to_next_level: levelProgress.xp_to_next_level,
+        progress_percentage: levelProgress.progress_percentage
+      };
+    } catch (error) {
+      console.error('Erreur récupération info niveau:', error);
+      return null;
     }
   }
 }

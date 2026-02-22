@@ -205,6 +205,7 @@ export default function TimeAnalytics({ timeAnalytics }: TimeAnalyticsProps) {
         padding: 12,
         callbacks: {
           label: function(context) {
+            const hours = context.parsed?.y?.toFixed(1) ?? '0.0';
             const hours = context.parsed.y?.toFixed(1) || '0.0';
             return `Time: ${hours} hours`;
           }
@@ -302,6 +303,8 @@ export default function TimeAnalytics({ timeAnalytics }: TimeAnalyticsProps) {
         padding: 12,
         callbacks: {
           label: function(context) {
+            const y = context.parsed?.y ?? 0;
+            const minutes = Math.round(y);
             const minutes = Math.round(context.parsed.y || 0);
             const hours = (minutes / 60).toFixed(1);
             return [

@@ -7,6 +7,8 @@ import { useTheme } from '@/contexts/ThemeContext';
 import NotificationCenter from '@/components/notifications/NotificationCenter';
 import {
   Home, BookOpen, MessageSquare, User, Trophy,
+  Settings, LogOut, ChevronDown, Bell, Sun, Moon, Monitor,
+  Swords, Users, Network
   Settings, LogOut, ChevronDown, Sun, Moon, Monitor
 } from 'lucide-react';
 
@@ -29,7 +31,10 @@ export default function DesktopNavigation() {
     { icon: Home, label: 'Accueil', href: '/dashboard' },
     { icon: BookOpen, label: 'Modules', href: '/dashboard#modules' },
     { icon: MessageSquare, label: 'GENIA', href: '/dashboard' },
-    { icon: Trophy, label: 'Progrès', href: '/dashboard#progress' }
+    { icon: Trophy, label: 'Progrès', href: '/dashboard#progress' },
+    { icon: Swords, label: 'Tournois', href: '/tournaments' },
+    { icon: Users, label: 'Équipes', href: '/teams' },
+    { icon: Network, label: 'Arbre de Compétences', href: '/skill-tree' }
   ];
 
   const handleSignOut = async () => {
