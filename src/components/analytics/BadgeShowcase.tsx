@@ -2,6 +2,7 @@
 
 import { BadgeProgress } from '@/types/analytics.types'
 import { Trophy, Award, Medal, Star, Crown, Lock } from 'lucide-react'
+import SocialShareButton from '@/components/gamification/SocialShareButton'
 
 interface BadgeShowcaseProps {
   badges: BadgeProgress[]
@@ -74,13 +75,29 @@ export default function BadgeShowcase({ badges }: BadgeShowcaseProps) {
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
       <div className="mb-6">
-        <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-          <Trophy className="w-6 h-6 text-yellow-500" />
-          Badge Collection
-        </h2>
-        <p className="text-sm text-gray-600 mt-1">
-          Earn badges by completing challenges and milestones
-        </p>
+        <div className="flex items-start justify-between">
+          <div>
+            <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+              <Trophy className="w-6 h-6 text-yellow-500" />
+              Badge Collection
+            </h2>
+            <p className="text-sm text-gray-600 mt-1">
+              Earn badges by completing challenges and milestones
+            </p>
+          </div>
+          {earnedBadges.length > 0 && (
+            <SocialShareButton
+              shareType="achievement"
+              title={`${earnedBadges.length} badges earned on GENIA!`}
+              description={`I've collected ${Math.round((earnedBadges.length / badges.length) * 100)}% of all badges!`}
+              data={{
+                points: earnedBadges.reduce((sum, b) => sum + b.badge.points, 0)
+              }}
+              compact={false}
+              showLabel={false}
+            />
+          )}
+        </div>
       </div>
 
       {/* Summary Stats */}
@@ -161,13 +178,26 @@ export default function BadgeShowcase({ badges }: BadgeShowcaseProps) {
                       <p className="text-sm text-gray-600 mb-2">
                         {badgeProgress.badge.description}
                       </p>
-                      <div className="flex items-center justify-between text-xs">
+                      <div className="flex items-center justify-between text-xs mb-3">
                         <span className="text-gray-500">
                           Earned {badgeProgress.earned_at ? new Date(badgeProgress.earned_at).toLocaleDateString() : 'Recently'}
                         </span>
                         <span className="font-semibold text-yellow-600">
                           +{badgeProgress.badge.points} pts
                         </span>
+                      </div>
+                      {/* Social Share Button */}
+                      <div className="flex justify-end">
+                        <SocialShareButton
+                          shareType="badge"
+                          title={badgeProgress.badge.name}
+                          description={badgeProgress.badge.description}
+                          data={{
+                            badgeName: badgeProgress.badge.name,
+                            points: badgeProgress.badge.points
+                          }}
+                          compact={true}
+                        />
                       </div>
                     </div>
                   </div>

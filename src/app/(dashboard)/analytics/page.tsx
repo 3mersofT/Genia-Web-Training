@@ -7,8 +7,9 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/hooks/useAuth'
 import { analyticsService } from '@/lib/services/analyticsService'
+import { useSeasonalLeaderboard } from '@/hooks/useSeasonalLeaderboard'
 import type { StudentAnalytics } from '@/types/analytics.types'
-import { BarChart3, RefreshCw } from 'lucide-react'
+import { BarChart3, RefreshCw, TrendingUp, Trophy } from 'lucide-react'
 
 // Import all analytics components
 import ProgressOverview from '@/components/analytics/ProgressOverview'
@@ -18,6 +19,10 @@ import StreakCalendar from '@/components/analytics/StreakCalendar'
 import BadgeShowcase from '@/components/analytics/BadgeShowcase'
 import TimeAnalytics from '@/components/analytics/TimeAnalytics'
 import NextStepsRecommendations from '@/components/analytics/NextStepsRecommendations'
+import SeasonalLeaderboard from '@/components/gamification/SeasonalLeaderboard'
+import SocialShareButton from '@/components/gamification/SocialShareButton'
+
+type TabType = 'performance' | 'seasonal'
 
 export default function AnalyticsPage() {
   const { user, loading: authLoading, signOut } = useAuth()
@@ -26,6 +31,23 @@ export default function AnalyticsPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [refreshing, setRefreshing] = useState(false)
+  const [activeTab, setActiveTab] = useState<TabType>('performance')
+
+  // Use seasonal leaderboard hook
+  const {
+    currentSeason,
+    leaderboard,
+    userSeasonStats,
+    historicalSeasons,
+    isLoading: seasonalLoading,
+    switchSeasonType,
+    switchSeason,
+    refresh: refreshSeasonal
+  } = useSeasonalLeaderboard({
+    autoLoad: true,
+    seasonType: 'monthly',
+    includeHistoricalSeasons: true
+  })
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -63,9 +85,13 @@ export default function AnalyticsPage() {
   }, [user])
 
   // Handle refresh
-  const handleRefresh = () => {
+  const handleRefresh = async () => {
     setRefreshing(true)
-    loadAnalytics()
+    await loadAnalytics()
+    if (activeTab === 'seasonal') {
+      await refreshSeasonal()
+    }
+    setRefreshing(false)
   }
 
   // Loading state
@@ -178,58 +204,133 @@ export default function AnalyticsPage() {
           </div>
         </div>
 
-        {/* Analytics Components */}
-        {loading ? (
-          <div className="space-y-6">
-            {/* Loading skeletons */}
-            <div className="bg-white rounded-xl p-6 shadow-sm animate-pulse">
-              <div className="h-8 bg-gray-200 rounded w-48 mb-6" />
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[1, 2, 3, 4, 5, 6].map((i) => (
-                  <div key={i} className="bg-gray-100 rounded-xl p-6 h-32" />
-                ))}
+        {/* Tabs Navigation */}
+        <div className="mb-6">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-1 inline-flex">
+            <button
+              onClick={() => setActiveTab('performance')}
+              className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all ${
+                activeTab === 'performance'
+                  ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+              }`}
+            >
+              <TrendingUp className="w-5 h-5" />
+              <span>Performance Analytics</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('seasonal')}
+              className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all ${
+                activeTab === 'seasonal'
+                  ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+              }`}
+            >
+              <Trophy className="w-5 h-5" />
+              <span>Seasonal Leaderboard</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Performance Tab Content */}
+        {activeTab === 'performance' && (
+          <>
+            {loading ? (
+              <div className="space-y-6">
+                {/* Loading skeletons */}
+                <div className="bg-white rounded-xl p-6 shadow-sm animate-pulse">
+                  <div className="h-8 bg-gray-200 rounded w-48 mb-6" />
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {[1, 2, 3, 4, 5, 6].map((i) => (
+                      <div key={i} className="bg-gray-100 rounded-xl p-6 h-32" />
+                    ))}
+                  </div>
+                </div>
+
+                {/* Chart skeletons */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <SkillRadarChart skills={[]} loading={true} />
+                  <ScoreTrendChart scoreTrend={[]} loading={true} />
+                </div>
               </div>
-            </div>
+            ) : analytics ? (
+              <div className="space-y-6">
+                {/* Progress Overview */}
+                <ProgressOverview stats={analytics.progress} />
 
-            {/* Chart skeletons */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <SkillRadarChart skills={[]} loading={true} />
-              <ScoreTrendChart scoreTrend={[]} loading={true} />
-            </div>
-          </div>
-        ) : analytics ? (
+                {/* Two-column grid for charts */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* Skill Radar Chart */}
+                  <SkillRadarChart skills={analytics.skills} loading={refreshing} />
+
+                  {/* Score Trend Chart */}
+                  <ScoreTrendChart scoreTrend={analytics.score_trend} loading={refreshing} />
+                </div>
+
+                {/* Streak Calendar */}
+                <StreakCalendar streak={analytics.streak} />
+
+                {/* Two-column grid for badges and time */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* Badge Showcase */}
+                  <BadgeShowcase badges={analytics.badges} />
+
+                  {/* Time Analytics */}
+                  <TimeAnalytics timeAnalytics={analytics.time_analytics} />
+                </div>
+
+                {/* Next Steps Recommendations */}
+                <NextStepsRecommendations recommendations={analytics.next_steps} />
+              </div>
+            ) : null}
+          </>
+        )}
+
+        {/* Seasonal Leaderboard Tab Content */}
+        {activeTab === 'seasonal' && (
           <div className="space-y-6">
-            {/* Progress Overview */}
-            <ProgressOverview stats={analytics.progress} />
+            {/* Social Share Section */}
+            {userSeasonStats && userSeasonStats.rank && userSeasonStats.rank <= 10 && (
+              <div className="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl p-6 border border-yellow-200">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
+                      <Trophy className="w-6 h-6 text-yellow-500" />
+                      Congratulations! You're in the Top 10!
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-4">
+                      Share your achievement with friends and showcase your skills
+                    </p>
+                  </div>
+                  <SocialShareButton
+                    shareType="achievement"
+                    title={`Top ${userSeasonStats.rank} in ${currentSeason?.season_name || 'this season'}!`}
+                    description={`I ranked #${userSeasonStats.rank} with ${userSeasonStats.total_score} points on GENIA!`}
+                    data={{
+                      points: userSeasonStats.total_score,
+                      rank: userSeasonStats.rank
+                    }}
+                    compact={false}
+                  />
+                </div>
+              </div>
+            )}
 
-            {/* Two-column grid for charts */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Skill Radar Chart */}
-              <SkillRadarChart skills={analytics.skills} loading={refreshing} />
-
-              {/* Score Trend Chart */}
-              <ScoreTrendChart scoreTrend={analytics.score_trend} loading={refreshing} />
-            </div>
-
-            {/* Streak Calendar */}
-            <StreakCalendar streak={analytics.streak} />
-
-            {/* Two-column grid for badges and time */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Badge Showcase */}
-              <BadgeShowcase badges={analytics.badges} />
-
-              {/* Time Analytics */}
-              <TimeAnalytics timeAnalytics={analytics.time_analytics} />
-            </div>
-
-            {/* Next Steps Recommendations */}
-            <NextStepsRecommendations recommendations={analytics.next_steps} />
+            {/* Seasonal Leaderboard Component */}
+            <SeasonalLeaderboard
+              currentSeason={currentSeason}
+              leaderboard={leaderboard}
+              userSeasonStats={userSeasonStats}
+              historicalSeasons={historicalSeasons}
+              isLoading={seasonalLoading}
+              onSeasonChange={switchSeason}
+              onSeasonTypeChange={switchSeasonType}
+            />
           </div>
-        ) : null}
+        )}
 
-        {/* Empty State */}
-        {!analytics && !loading && !error && (
+        {/* Empty State - Performance Tab Only */}
+        {activeTab === 'performance' && !analytics && !loading && !error && (
           <div className="bg-white rounded-xl p-12 text-center shadow-sm">
             <BarChart3 className="w-16 h-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-xl font-bold text-gray-800 mb-2">No Analytics Data Yet</h3>
