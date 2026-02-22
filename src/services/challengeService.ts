@@ -774,6 +774,38 @@ export class ChallengeService {
         .single();
 
       if (error) throw error;
+
+      // Notifier l'auteur de la soumission qu'il a reçu une peer review
+      try {
+        // Récupérer la participation pour obtenir l'ID de l'auteur et le challenge
+        const { data: participation } = await this.supabase
+          .from('challenge_participations')
+          .select(`
+            user_id,
+            daily_challenges!inner(title)
+          `)
+          .eq('id', participationId)
+          .single();
+
+        // Récupérer le nom du reviewer
+        const { data: reviewer } = await this.supabase
+          .from('user_profiles')
+          .select('full_name')
+          .eq('user_id', reviewerId)
+          .single();
+
+        if (participation && reviewer) {
+          await studentNotificationService.notifyPeerReview(
+            participation.user_id,
+            reviewer.full_name || 'Un étudiant',
+            (participation.daily_challenges as any).title
+          );
+        }
+      } catch (notificationError) {
+        console.error('Erreur notification peer review:', notificationError);
+        // Ne pas bloquer la création de la review si la notification échoue
+      }
+
       return data as PeerReview;
     } catch (error) {
       console.error('Erreur soumission peer review:', error);
