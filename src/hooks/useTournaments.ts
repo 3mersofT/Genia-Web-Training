@@ -71,6 +71,95 @@ export function useTournaments(
     }
   }, [user?.id, options.autoLoad, options.includeStats]);
 
+  // Abonnement temps réel pour les tournois
+  useEffect(() => {
+    if (!user?.id) return;
+
+    // S'abonner aux changements des tournois
+    const channel = supabase
+      .channel('tournament_realtime_updates')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'tournaments'
+        },
+        () => {
+          // Recharger la liste des tournois
+          loadTournaments();
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'tournament_participants',
+          filter: `user_id=eq.${user.id}`
+        },
+        () => {
+          // Recharger les participations de l'utilisateur
+          loadUserTournaments();
+          loadTournaments();
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'tournament_matches'
+        },
+        (payload) => {
+          // Si un match change et qu'on regarde un tournoi, recharger le bracket
+          if (currentTournament?.id) {
+            loadBracket(currentTournament.id);
+
+            // Recharger les matchs de l'utilisateur
+            tournamentService.getUserMatches(currentTournament.id, user.id).then((matches) => {
+              setUserMatches(matches);
+            });
+          }
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'tournament_rounds'
+        },
+        () => {
+          // Recharger le bracket si un round change
+          if (currentTournament?.id) {
+            loadBracket(currentTournament.id);
+          }
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'tournament_results'
+        },
+        () => {
+          // Recharger le classement
+          if (currentTournament?.id) {
+            tournamentService.getTournamentStandings(currentTournament.id).then((standings) => {
+              setLeaderboard(standings);
+            });
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user?.id, currentTournament?.id, supabase, loadTournaments, loadUserTournaments, loadBracket]);
+
   /**
    * Charge tous les tournois actifs
    */

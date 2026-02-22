@@ -379,6 +379,76 @@ export function useSeasonalLeaderboard(
     loadHistoricalSeasons
   ]);
 
+  // Abonnement temps réel pour les classements saisonniers
+  useEffect(() => {
+    if (!currentSeason?.id) return;
+
+    // S'abonner aux changements du classement saisonnier
+    const channel = supabase
+      .channel('seasonal_leaderboard_realtime_updates')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'seasonal_leaderboard',
+          filter: `season_id=eq.${currentSeason.id}`
+        },
+        () => {
+          // Recharger le classement
+          loadLeaderboard({ season_id: currentSeason.id });
+
+          // Recharger les stats utilisateur si disponible
+          if (user?.id) {
+            loadUserStats(user.id, currentSeason.id);
+          }
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'team_seasonal_leaderboard',
+          filter: `season_id=eq.${currentSeason.id}`
+        },
+        () => {
+          // Recharger le classement d'équipe si activé
+          if (options.includeTeamLeaderboard) {
+            loadTeamLeaderboard({ season_id: currentSeason.id });
+          }
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'seasons',
+          filter: `id=eq.${currentSeason.id}`
+        },
+        () => {
+          // Recharger la saison actuelle si elle change
+          loadCurrentSeason(currentSeason.season_type);
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [
+    currentSeason?.id,
+    currentSeason?.season_type,
+    user?.id,
+    options.includeTeamLeaderboard,
+    supabase,
+    loadLeaderboard,
+    loadTeamLeaderboard,
+    loadCurrentSeason,
+    loadUserStats
+  ]);
+
   return {
     // État
     currentSeason,
