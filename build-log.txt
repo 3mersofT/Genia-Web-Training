@@ -1,0 +1,37 @@
+  ▲ Next.js 14.2.35
+  - Environments: .env.local
+
+   Creating an optimized production build ...
+> [PWA] Compile server
+> [PWA] Compile server
+> [PWA] Compile client (static)
+> [PWA] Auto register service worker with: F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\001-s-curiser-les-cl-s-api-retirer-next-public-des-sec\node_modules\next-pwa\register.js
+> [PWA] Service worker: F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\001-s-curiser-les-cl-s-api-retirer-next-public-des-sec\public\sw.js
+> [PWA]   url: /sw.js
+> [PWA]   scope: /
+> [PWA] Fallback to precache routes when fetch failed from cache or network:
+> [PWA]   document (page): /offline
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+
+Failed to compile.
+
+./src/components/admin/ContentPreview.tsx
+38:9  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/capsule/__tests__/ImageWithCaption.test.tsx
+27:18  Error: Component definition is missing display name  react/display-name
+
+./src/components/capsule/__tests__/PromptPlayground.test.tsx
+25:18  Error: Component definition is missing display name  react/display-name
+
+./src/components/capsule/__tests__/RichContentRenderer.test.tsx
+18:18  Error: Component definition is missing display name  react/display-name
+
+./src/components/certificates/CertificatePreview.tsx
+143:23  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/gamification/TeamLeaderboard.tsx
+179:29  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules

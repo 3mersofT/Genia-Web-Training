@@ -1,0 +1,93 @@
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+  ▲ Next.js 14.2.32
+  - Environments: .env.local
+
+   Creating an optimized production build ...
+SyntaxError: Expected ',' or '}' after property value in JSON at position 146502 (line 3804 column 5)
+    at JSON.parse (<anonymous>)
+    at patchIncorrectLockfile (F:\GitHub\Claude\genia-web-training\node_modules\next\dist\lib\patch-incorrect-lockfile.js:94:33)
+> [PWA] Compile server
+> [PWA] Compile server
+> [PWA] Compile client (static)
+> [PWA] Auto register service worker with: F:\GitHub\Claude\genia-web-training\node_modules\next-pwa\register.js
+> [PWA] Service worker: F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\001-s-curiser-les-cl-s-api-retirer-next-public-des-sec\public\sw.js
+> [PWA]   url: /sw.js
+> [PWA]   scope: /
+> [PWA] Fallback to precache routes when fetch failed from cache or network:
+> [PWA]   document (page): /offline
+Failed to compile.
+
+./src/components/analytics/TimeAnalytics.tsx
+Error: 
+  [31mx[0m the name `hours` is defined multiple times
+     ,-[[36;1;4mF:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\001-s-curiser-les-cl-s-api-retirer-next-public-des-sec\src\components\analytics\TimeAnalytics.tsx[0m:205:1]
+ [2m205[0m |         padding: 12,
+ [2m206[0m |         callbacks: {
+ [2m207[0m |           label: function(context) {
+ [2m208[0m |             const hours = context.parsed?.y?.toFixed(1) ?? '0.0';
+     : [31;1m                  ^^|^^[0m
+     :                     [31;1m`-- [31;1mprevious definition of `hours` here[0m[0m
+ [2m209[0m |             const hours = context.parsed.y?.toFixed(1) || '0.0';
+     : [33;1m                  ^^|^^[0m
+     :                     [33;1m`-- [33;1m`hours` redefined here[0m[0m
+ [2m210[0m |             return `Time: ${hours} hours`;
+ [2m211[0m |           }
+ [2m211[0m |         }
+     `----
+
+  [31mx[0m the name `minutes` is defined multiple times
+     ,-[[36;1;4mF:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\001-s-curiser-les-cl-s-api-retirer-next-public-des-sec\src\components\analytics\TimeAnalytics.tsx[0m:304:1]
+ [2m304[0m |         callbacks: {
+ [2m305[0m |           label: function(context) {
+ [2m306[0m |             const y = context.parsed?.y ?? 0;
+ [2m307[0m |             const minutes = Math.round(y);
+     : [31;1m                  ^^^|^^^[0m
+     :                      [31;1m`-- [31;1mprevious definition of `minutes` here[0m[0m
+ [2m308[0m |             const minutes = Math.round(context.parsed.y || 0);
+     : [33;1m                  ^^^|^^^[0m
+     :                      [33;1m`-- [33;1m`minutes` redefined here[0m[0m
+ [2m309[0m |             const hours = (minutes / 60).toFixed(1);
+ [2m310[0m |             return [
+ [2m310[0m |               `Time: ${minutes} minutes`,
+     `----
+
+Import trace for requested module:
+./src/components/analytics/TimeAnalytics.tsx
+./src/app/(dashboard)/analytics/page.tsx
+
+./src/components/capsule/CodeBlock.tsx
+Module not found: Can't resolve 'react-syntax-highlighter'
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+./src/app/capsules/[id]/page.tsx
+
+./src/components/capsule/CodeBlock.tsx
+Module not found: Can't resolve 'react-syntax-highlighter/dist/esm/styles/prism'
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+./src/app/capsules/[id]/page.tsx
+
+./src/components/capsule/ImageWithCaption.tsx
+Module not found: Can't resolve 'yet-another-react-lightbox'
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+./src/components/capsule/RichContentRenderer.tsx
+./src/app/capsules/[id]/page.tsx
+
+./src/components/capsule/ImageWithCaption.tsx
+Module not found: Can't resolve 'yet-another-react-lightbox/styles.css'
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+./src/components/capsule/RichContentRenderer.tsx
+./src/app/capsules/[id]/page.tsx
+
+
+> Build failed because of webpack errors
