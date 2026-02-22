@@ -13,7 +13,11 @@ import { createClient } from '@/lib/supabase/client'
 import FeedbackButton from '@/components/feedback/FeedbackButton'
 import CertificateButton from '@/components/certificates/CertificateButton'
 import LevelBadge from '@/components/gamification/LevelBadge'
+import TournamentCard from '@/components/gamification/TournamentCard'
+import SkillTreeVisualization from '@/components/gamification/SkillTreeVisualization'
 import { LevelProgress, LevelDefinition } from '@/types/levels.types'
+import { Tournament } from '@/types/tournaments.types'
+import { SkillNode, UserSkillProgress } from '@/types/skillTree.types'
 
 export default function DashboardPage() {
   const { user, loading, signOut } = useAuth()
@@ -85,6 +89,122 @@ export default function DashboardPage() {
   }
 
   if (!user) return null
+
+  // Mock tournament data for demonstration
+  const mockTournament: Tournament = {
+    id: 'weekly-tournament-1',
+    title: 'Tournoi Hebdomadaire - Prompt Masters',
+    description: 'Affrontez les meilleurs prompt engineers de la communauté dans un tournoi éliminatoire passionnant!',
+    tournament_type: 'weekly',
+    status: 'registration',
+    start_date: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(),
+    end_date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+    registration_deadline: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
+    max_participants: 32,
+    min_participants: 8,
+    bracket_type: 'single_elimination',
+    difficulty: 'intermediate',
+    prize_pool: { first: 1000, second: 500, third: 250 },
+    xp_rewards: { first: 500, second: 300, third: 150, participant: 50 },
+    participant_count: 18,
+    current_round: 0,
+    tags: ['Prompt Engineering', 'Technique Avancée', 'Compétition'],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  }
+
+  // Mock skill tree data
+  const mockSkillNodes: SkillNode[] = [
+    {
+      id: 'skill-1',
+      category_id: 'cat-1',
+      skill_key: 'basic_prompting',
+      name: 'Basic Prompting',
+      name_fr: 'Prompting de Base',
+      tree_level: 0,
+      display_order: 1,
+      prerequisites: [],
+      min_level_required: 1,
+      xp_required: 0,
+      description: 'Les fondamentaux du prompt engineering',
+      unlock_type: 'automatic',
+      icon_emoji: '🎯',
+      difficulty: 'beginner',
+      estimated_time: 30,
+      active: true,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },
+    {
+      id: 'skill-2',
+      category_id: 'cat-1',
+      skill_key: 'context_control',
+      name: 'Context Control',
+      name_fr: 'Contrôle du Contexte',
+      tree_level: 1,
+      display_order: 1,
+      prerequisites: ['skill-1'],
+      min_level_required: 2,
+      xp_required: 500,
+      description: 'Maîtriser le contrôle du contexte dans vos prompts',
+      unlock_type: 'automatic',
+      icon_emoji: '📝',
+      difficulty: 'intermediate',
+      estimated_time: 45,
+      active: true,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },
+    {
+      id: 'skill-3',
+      category_id: 'cat-2',
+      skill_key: 'advanced_techniques',
+      name: 'Advanced Techniques',
+      name_fr: 'Techniques Avancées',
+      tree_level: 2,
+      display_order: 1,
+      prerequisites: ['skill-2'],
+      min_level_required: 4,
+      xp_required: 2000,
+      description: 'Techniques avancées de prompt engineering',
+      unlock_type: 'challenge',
+      icon_emoji: '⚡',
+      difficulty: 'advanced',
+      estimated_time: 60,
+      active: true,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    }
+  ]
+
+  const mockUserProgress: Record<string, UserSkillProgress> = {
+    'skill-1': {
+      id: 'prog-1',
+      user_id: user.id,
+      skill_node_id: 'skill-1',
+      status: 'completed',
+      progress_percentage: 100,
+      practice_count: 5,
+      success_count: 5,
+      unlocked_at: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+      completed_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    },
+    'skill-2': {
+      id: 'prog-2',
+      user_id: user.id,
+      skill_node_id: 'skill-2',
+      status: 'in_progress',
+      progress_percentage: 60,
+      practice_count: 3,
+      success_count: 2,
+      unlocked_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+      started_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -167,6 +287,62 @@ export default function DashboardPage() {
             }}
             showDetails={true}
           />
+        </div>
+
+        {/* Tournament Widget */}
+        <div className="mb-8">
+          <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <Trophy className="w-6 h-6 text-yellow-500" />
+            Tournoi en cours
+          </h3>
+          <TournamentCard
+            tournament={mockTournament}
+            isRegistered={false}
+            onViewDetails={(id) => router.push(`/tournaments/${id}`)}
+          />
+        </div>
+
+        {/* Skill Progress Widget */}
+        <div className="mb-8">
+          <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <Target className="w-6 h-6 text-indigo-500" />
+            Arbre de Compétences
+          </h3>
+          <SkillTreeVisualization
+            nodes={mockSkillNodes}
+            userProgress={mockUserProgress}
+            loading={false}
+            onNodeClick={(node) => console.log('Node clicked:', node)}
+          />
+        </div>
+
+        {/* Team Widget - Coming Soon */}
+        <div className="mb-8">
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 shadow-sm border border-blue-200">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg">
+                <Trophy className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-gray-800">Équipes</h3>
+                <p className="text-gray-600">Rejoignez ou créez une équipe pour collaborer</p>
+              </div>
+            </div>
+            <div className="bg-white rounded-lg p-4 border border-blue-300">
+              <p className="text-gray-700 mb-2">
+                👥 <strong>Travail d'équipe</strong> : Créez ou rejoignez une équipe de 2 à 5 membres
+              </p>
+              <p className="text-sm text-gray-600 mb-4">
+                Participez aux défis d'équipe, montez dans le classement et débloquez des achievements collectifs!
+              </p>
+              <button
+                onClick={() => router.push('/teams')}
+                className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all font-semibold"
+              >
+                Découvrir les équipes
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Stats Grid - Progress Section */}
