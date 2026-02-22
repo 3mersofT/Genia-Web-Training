@@ -288,16 +288,130 @@ class StudentNotificationService {
   /**
    * 🔍 Vérifier et notifier les streaks en danger
    * Méthode pour détecter les utilisateurs qui n'ont pas eu d'activité depuis 20+ heures
+   *
+   * Cette fonction identifie les utilisateurs qui:
+   * - Ont un streak actif (streak_days > 0)
+   * - N'ont pas eu d'activité depuis 20+ heures
+   * - Ont activé les notifications de rappel de streak
+   *
+   * Note: Cette méthode est destinée à être appelée par un cron job ou Edge Function
+   *
+   * @returns Le nombre de notifications envoyées
    */
   async checkAndNotifyStreakAtRisk(): Promise<number> {
     try {
-      // Cette méthode sera appelée par un cron job ou une Edge Function
-      // Pour l'instant, elle retourne juste le nombre de notifications envoyées
+      // Temps limite: 20 heures en arrière
+      const twentyHoursAgo = new Date();
+      twentyHoursAgo.setHours(twentyHoursAgo.getHours() - 20);
 
-      // Note: La logique complète nécessiterait d'accéder à user_progress
-      // et de vérifier la dernière activité. Ceci sera implémenté dans les triggers.
+      // 1. Trouver les utilisateurs avec streak > 0 et préférences de notification activées
+      const { data: usersAtRisk, error: queryError } = await this.supabase
+        .from('user_points')
+        .select(`
+          user_id,
+          streak_days,
+          user_profiles!inner(display_name, email),
+          notification_preferences!inner(
+            notification_types_enabled,
+            preferred_notification_time
+          )
+        `)
+        .gt('streak_days', 0);
 
-      return 0;
+      if (queryError) {
+        console.error('Erreur requête utilisateurs à risque:', queryError);
+        return 0;
+      }
+
+      if (!usersAtRisk || usersAtRisk.length === 0) {
+        return 0;
+      }
+
+      let notificationsSent = 0;
+
+      // 2. Pour chaque utilisateur, vérifier leur dernière activité
+      for (const user of usersAtRisk) {
+        try {
+          // Vérifier si les notifications de streak sont activées
+          const prefs = user.notification_preferences as any;
+          const typesEnabled = prefs?.notification_types_enabled || {};
+
+          if (!typesEnabled.streak_reminder) {
+            continue; // Skip si notifications désactivées
+          }
+
+          // Vérifier la dernière activité (challenges ou capsules)
+          const [challengeActivity, capsuleActivity] = await Promise.all([
+            // Dernière participation à un défi
+            this.supabase
+              .from('challenge_participations')
+              .select('completed_at')
+              .eq('user_id', user.user_id)
+              .order('completed_at', { ascending: false })
+              .limit(1)
+              .single(),
+
+            // Dernier accès à une capsule
+            this.supabase
+              .from('user_progress')
+              .select('last_accessed_at')
+              .eq('user_id', user.user_id)
+              .order('last_accessed_at', { ascending: false })
+              .limit(1)
+              .single()
+          ]);
+
+          // Déterminer la dernière activité
+          const lastChallengeDate = challengeActivity.data?.completed_at
+            ? new Date(challengeActivity.data.completed_at)
+            : null;
+          const lastCapsuleDate = capsuleActivity.data?.last_accessed_at
+            ? new Date(capsuleActivity.data.last_accessed_at)
+            : null;
+
+          // Trouver la plus récente des deux
+          let lastActivityDate: Date | null = null;
+          if (lastChallengeDate && lastCapsuleDate) {
+            lastActivityDate = lastChallengeDate > lastCapsuleDate
+              ? lastChallengeDate
+              : lastCapsuleDate;
+          } else {
+            lastActivityDate = lastChallengeDate || lastCapsuleDate;
+          }
+
+          // Si aucune activité trouvée ou activité > 20h, notifier
+          if (!lastActivityDate || lastActivityDate < twentyHoursAgo) {
+            // Vérifier si une notification n'a pas déjà été envoyée aujourd'hui
+            const { data: existingNotif } = await this.supabase
+              .from('student_notifications')
+              .select('id')
+              .eq('user_id', user.user_id)
+              .eq('type', 'streak_reminder')
+              .gte('created_at', new Date().toISOString().split('T')[0]) // Aujourd'hui
+              .limit(1)
+              .single();
+
+            if (existingNotif) {
+              continue; // Déjà notifié aujourd'hui
+            }
+
+            // Créer la notification
+            const success = await this.notifyStreakAtRisk(
+              user.user_id,
+              user.streak_days
+            );
+
+            if (success) {
+              notificationsSent++;
+            }
+          }
+        } catch (error) {
+          // Continuer même si un utilisateur échoue
+          console.error(`Erreur notification streak pour utilisateur ${user.user_id}:`, error);
+        }
+      }
+
+      return notificationsSent;
     } catch (error) {
       console.error('Erreur vérification streaks:', error);
       return 0;
