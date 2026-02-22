@@ -5,10 +5,11 @@ import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import { profileService, UserProfile } from '@/lib/services/profileService';
 import {
-  User, Mail, Calendar, Settings, Camera, Save, 
+  User, Mail, Calendar, Settings, Camera, Save,
   Globe, Bell, Palette, Languages, Shield, Award,
   Edit3, X, Check, Upload, Image as ImageIcon, ArrowLeft
 } from 'lucide-react';
+import NotificationPreferences from '@/components/notifications/NotificationPreferences';
 
 
 export default function ProfilePage() {
@@ -370,98 +371,63 @@ export default function ProfilePage() {
             )}
 
             {activeTab === 'preferences' && (
-              <div className="bg-white rounded-xl shadow-sm p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-6">Préférences</h2>
-                
-                <div className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-3">
-                      Thème
-                    </label>
-                    <div className="grid grid-cols-3 gap-4">
-                      {[
-                        { value: 'light', label: 'Clair', icon: '☀️' },
-                        { value: 'dark', label: 'Sombre', icon: '🌙' },
-                        { value: 'system', label: 'Système', icon: '💻' }
-                      ].map((theme) => (
-                        <button
-                          key={theme.value}
-                          onClick={() => editing && setFormData(prev => ({
-                            ...prev,
-                            preferences: { ...prev.preferences, theme: theme.value as any }
-                          }))}
-                          disabled={!editing}
-                          className={`p-4 rounded-lg border-2 text-center transition-colors ${
-                            formData.preferences.theme === theme.value
-                              ? 'border-blue-500 bg-blue-50'
-                              : 'border-gray-200 hover:border-gray-300'
-                          } ${!editing ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
-                        >
-                          <div className="text-2xl mb-2">{theme.icon}</div>
-                          <div className="text-sm font-medium">{theme.label}</div>
-                        </button>
-                      ))}
+              <div className="space-y-6">
+                <div className="bg-white rounded-xl shadow-sm p-6">
+                  <h2 className="text-xl font-semibold text-gray-900 mb-6">Préférences générales</h2>
+
+                  <div className="space-y-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-3">
+                        Thème
+                      </label>
+                      <div className="grid grid-cols-3 gap-4">
+                        {[
+                          { value: 'light', label: 'Clair', icon: '☀️' },
+                          { value: 'dark', label: 'Sombre', icon: '🌙' },
+                          { value: 'system', label: 'Système', icon: '💻' }
+                        ].map((theme) => (
+                          <button
+                            key={theme.value}
+                            onClick={() => editing && setFormData(prev => ({
+                              ...prev,
+                              preferences: { ...prev.preferences, theme: theme.value as any }
+                            }))}
+                            disabled={!editing}
+                            className={`p-4 rounded-lg border-2 text-center transition-colors ${
+                              formData.preferences.theme === theme.value
+                                ? 'border-blue-500 bg-blue-50'
+                                : 'border-gray-200 hover:border-gray-300'
+                            } ${!editing ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
+                          >
+                            <div className="text-2xl mb-2">{theme.icon}</div>
+                            <div className="text-sm font-medium">{theme.label}</div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-3">
+                        Langue
+                      </label>
+                      <select
+                        value={formData.preferences.language}
+                        onChange={(e) => setFormData(prev => ({
+                          ...prev,
+                          preferences: { ...prev.preferences, language: e.target.value as 'fr' | 'en' }
+                        }))}
+                        disabled={!editing}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-50 disabled:text-gray-500"
+                      >
+                        <option value="fr">Français</option>
+                        <option value="en">English</option>
+                      </select>
                     </div>
                   </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-3">
-                      Langue
-                    </label>
-                    <select
-                      value={formData.preferences.language}
-                      onChange={(e) => setFormData(prev => ({
-                        ...prev,
-                        preferences: { ...prev.preferences, language: e.target.value as 'fr' | 'en' }
-                      }))}
-                      disabled={!editing}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-50 disabled:text-gray-500"
-                    >
-                      <option value="fr">Français</option>
-                      <option value="en">English</option>
-                    </select>
-                  </div>
-
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-medium text-gray-900">Notifications</h3>
-                    
-                    {[
-                      { key: 'notifications', label: 'Notifications générales', description: 'Recevoir des notifications sur la plateforme' },
-                      { key: 'email_notifications', label: 'Notifications par email', description: 'Recevoir des mises à jour par email' },
-                      { key: 'push_notifications', label: 'Notifications push', description: 'Recevoir des notifications push' }
-                    ].map((setting) => (
-                      <div key={setting.key} className="flex items-center justify-between">
-                        <div>
-                          <div className="text-sm font-medium text-gray-900">{setting.label}</div>
-                          <div className="text-sm text-gray-500">{setting.description}</div>
-                        </div>
-                        <button
-                          onClick={() => editing && setFormData(prev => ({
-                            ...prev,
-                            preferences: {
-                              ...prev.preferences,
-                              [setting.key]: !prev.preferences[setting.key as keyof typeof prev.preferences]
-                            }
-                          }))}
-                          disabled={!editing}
-                          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                            formData.preferences[setting.key as keyof typeof formData.preferences]
-                              ? 'bg-blue-600'
-                              : 'bg-gray-200'
-                          } ${!editing ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
-                        >
-                          <span
-                            className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                              formData.preferences[setting.key as keyof typeof formData.preferences]
-                                ? 'translate-x-6'
-                                : 'translate-x-1'
-                            }`}
-                          />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
                 </div>
+
+                {/* Notification Preferences Section */}
+                {user && <NotificationPreferences userId={user.id} />}
               </div>
             )}
 
