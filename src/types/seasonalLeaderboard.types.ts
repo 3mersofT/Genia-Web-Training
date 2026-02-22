@@ -253,3 +253,72 @@ export interface HistoricalSeason extends Season {
   user_final_score?: number;
   rewards_claimed?: boolean;
 }
+
+/**
+ * Options du hook useSeasonalLeaderboard
+ */
+export interface UseSeasonalLeaderboardOptions {
+  autoLoad?: boolean;
+  seasonType?: SeasonType;
+  includeTeamLeaderboard?: boolean;
+  includeHistoricalSeasons?: boolean;
+}
+
+/**
+ * État du hook useSeasonalLeaderboard
+ */
+export interface SeasonalLeaderboardState {
+  // Saison actuelle
+  currentSeason: Season | null;
+
+  // Classements
+  leaderboard: LeaderboardEntryWithUser[];
+  teamLeaderboard: TeamLeaderboardEntryWithTeam[];
+
+  // Stats utilisateur
+  userSeasonStats: UserSeasonStats | null;
+
+  // Historique
+  historicalSeasons: HistoricalSeason[];
+
+  // Top performers
+  topPerformers: LeaderboardEntryWithUser[];
+
+  // UI State
+  isLoading: boolean;
+  isLoadingTeams: boolean;
+  isLoadingHistory: boolean;
+  error: string | null;
+
+  // Pagination
+  totalCount: number;
+  teamTotalCount: number;
+}
+
+/**
+ * Actions du hook useSeasonalLeaderboard
+ */
+export interface SeasonalLeaderboardActions {
+  // Chargement des données
+  loadCurrentSeason: (seasonType?: SeasonType) => Promise<void>;
+  loadLeaderboard: (options?: GetLeaderboardOptions) => Promise<void>;
+  loadTeamLeaderboard: (options?: GetTeamLeaderboardOptions) => Promise<void>;
+  loadUserStats: (userId?: string, seasonId?: string) => Promise<void>;
+  loadHistoricalSeasons: (seasonType?: SeasonType, limit?: number) => Promise<void>;
+  loadTopPerformers: (seasonId?: string, limit?: number) => Promise<void>;
+
+  // Changement de saison
+  switchSeason: (seasonId: string) => Promise<void>;
+  switchSeasonType: (seasonType: SeasonType) => Promise<void>;
+
+  // Récompenses
+  claimRewards: (seasonId: string) => Promise<boolean>;
+
+  // Rafraîchissement
+  refresh: () => Promise<void>;
+}
+
+/**
+ * Type complet du hook
+ */
+export type UseSeasonalLeaderboard = SeasonalLeaderboardState & SeasonalLeaderboardActions;
