@@ -1,18 +1,25 @@
 'use client'
 
-import React from 'react'
+import React, { Suspense, lazy } from 'react'
 import { motion } from 'framer-motion'
-import { AlertCircle } from 'lucide-react'
+import { AlertCircle, Loader2 } from 'lucide-react'
 
 // Import multimedia types
 import type { MultimediaBlock } from '@/types/multimedia.types'
 
-// Import renderer components
-import VideoEmbed from './VideoEmbed'
-import ImageWithCaption from './ImageWithCaption'
-import CodeBlock from './CodeBlock'
-import PromptPlayground from './PromptPlayground'
-import DownloadableAttachment from './DownloadableAttachment'
+// Dynamic imports for code splitting - components only loaded when needed
+const VideoEmbed = lazy(() => import('./VideoEmbed'))
+const ImageWithCaption = lazy(() => import('./ImageWithCaption'))
+const CodeBlock = lazy(() => import('./CodeBlock'))
+const PromptPlayground = lazy(() => import('./PromptPlayground'))
+const DownloadableAttachment = lazy(() => import('./DownloadableAttachment'))
+
+// Loading placeholder component
+const LoadingPlaceholder = () => (
+  <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-lg p-8 flex items-center justify-center">
+    <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
+  </div>
+)
 
 // ============= TYPES =============
 interface RichContentRendererProps {
@@ -55,65 +62,76 @@ export default function RichContentRenderer({
 
   /**
    * Rend un bloc multimédia selon son type
+   * Wrapped in Suspense for lazy loading optimization
    */
   const renderBlock = (block: MultimediaBlock) => {
     try {
       switch (block.type) {
         case 'video':
           return (
-            <VideoEmbed
-              url={block.url}
-              title={block.title}
-              autoplay={block.autoplay}
-              className="w-full"
-            />
+            <Suspense fallback={<LoadingPlaceholder />}>
+              <VideoEmbed
+                url={block.url}
+                title={block.title}
+                autoplay={block.autoplay}
+                className="w-full"
+              />
+            </Suspense>
           )
 
         case 'image':
           return (
-            <ImageWithCaption
-              url={block.url}
-              alt={block.alt}
-              caption={block.caption}
-              width={block.width}
-              height={block.height}
-              priority={block.priority}
-              className="w-full"
-            />
+            <Suspense fallback={<LoadingPlaceholder />}>
+              <ImageWithCaption
+                url={block.url}
+                alt={block.alt}
+                caption={block.caption}
+                width={block.width}
+                height={block.height}
+                priority={block.priority}
+                className="w-full"
+              />
+            </Suspense>
           )
 
         case 'code':
           return (
-            <CodeBlock
-              code={block.code}
-              language={block.language}
-              title={block.title}
-              showLineNumbers={block.showLineNumbers}
-              highlightLines={block.highlightLines}
-              className="w-full"
-            />
+            <Suspense fallback={<LoadingPlaceholder />}>
+              <CodeBlock
+                code={block.code}
+                language={block.language}
+                title={block.title}
+                showLineNumbers={block.showLineNumbers}
+                highlightLines={block.highlightLines}
+                className="w-full"
+              />
+            </Suspense>
           )
 
         case 'playground':
           return (
-            <PromptPlayground
-              title={block.title}
-              description={block.description}
-              starterPrompt={block.starterPrompt}
-              expectedOutput={block.expectedOutput}
-              className="w-full"
-            />
+            <Suspense fallback={<LoadingPlaceholder />}>
+              <PromptPlayground
+                title={block.title}
+                description={block.description}
+                starterPrompt={block.starterPrompt}
+                expectedOutput={block.expectedOutput}
+                className="w-full"
+              />
+            </Suspense>
           )
 
         case 'attachment':
           return (
-            <DownloadableAttachment
-              url={block.url}
-              filename={block.filename}
-              fileSize={block.fileSize}
-              description={block.description}
-              className="w-full"
-            />
+            <Suspense fallback={<LoadingPlaceholder />}>
+              <DownloadableAttachment
+                url={block.url}
+                filename={block.filename}
+                fileSize={block.fileSize}
+                description={block.description}
+                className="w-full"
+              />
+            </Suspense>
           )
 
         default:
