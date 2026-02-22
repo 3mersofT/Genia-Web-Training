@@ -13,7 +13,7 @@ import {
   ChartOptions
 } from 'chart.js';
 import { SkillCompetency } from '@/types/analytics.types';
-import { Target, TrendingUp, Award } from 'lucide-react';
+import { Target, TrendingUp, Award, Loader2 } from 'lucide-react';
 
 ChartJS.register(
   RadialLinearScale,
@@ -26,9 +26,10 @@ ChartJS.register(
 
 interface SkillRadarChartProps {
   skills: SkillCompetency[];
+  loading?: boolean;
 }
 
-export default function SkillRadarChart({ skills }: SkillRadarChartProps) {
+export default function SkillRadarChart({ skills, loading = false }: SkillRadarChartProps) {
   // Prepare chart data
   const chartData = useMemo(() => {
     if (!skills || skills.length === 0) {
@@ -144,6 +145,47 @@ export default function SkillRadarChart({ skills }: SkillRadarChartProps) {
       averageCompetency
     };
   }, [skills]);
+
+  // Loading skeleton
+  if (loading) {
+    return (
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+              <Target className="w-6 h-6 text-indigo-600" />
+              Skill Competency Radar
+            </h2>
+            <p className="text-sm text-gray-600 mt-1">
+              Your proficiency across different prompt engineering skills
+            </p>
+          </div>
+        </div>
+
+        {/* Loading Skeleton */}
+        <div className="h-80 mb-6 flex items-center justify-center bg-gray-50 rounded-lg">
+          <div className="text-center">
+            <Loader2 className="w-12 h-12 text-indigo-600 animate-spin mx-auto mb-3" />
+            <p className="text-sm text-gray-600">Loading skill data...</p>
+          </div>
+        </div>
+
+        {/* Loading Stats Skeleton */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-gray-200">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="flex items-start gap-3 animate-pulse">
+              <div className="p-2 bg-gray-200 rounded-lg w-9 h-9" />
+              <div className="flex-1">
+                <div className="h-4 bg-gray-200 rounded w-24 mb-2" />
+                <div className="h-6 bg-gray-200 rounded w-16 mb-1" />
+                <div className="h-3 bg-gray-200 rounded w-20" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">

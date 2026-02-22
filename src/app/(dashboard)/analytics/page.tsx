@@ -36,7 +36,11 @@ export default function AnalyticsPage() {
 
   // Load analytics data
   const loadAnalytics = async () => {
-    if (!user) return
+    if (!user) {
+      setLoading(false)
+      setRefreshing(false)
+      return
+    }
 
     try {
       setError(null)
@@ -44,7 +48,8 @@ export default function AnalyticsPage() {
       setAnalytics(data)
     } catch (err) {
       console.error('Failed to load analytics:', err)
-      setError('Failed to load analytics data. Please try again.')
+      const errorMessage = err instanceof Error ? err.message : 'Failed to load analytics data. Please try again.'
+      setError(errorMessage)
     } finally {
       setLoading(false)
       setRefreshing(false)
@@ -52,7 +57,9 @@ export default function AnalyticsPage() {
   }
 
   useEffect(() => {
-    loadAnalytics()
+    if (user) {
+      loadAnalytics()
+    }
   }, [user])
 
   // Handle refresh
@@ -62,12 +69,12 @@ export default function AnalyticsPage() {
   }
 
   // Loading state
-  if (authLoading || loading) {
+  if (authLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading your analytics...</p>
+          <p className="text-gray-600">Authenticating...</p>
         </div>
       </div>
     )
@@ -76,7 +83,7 @@ export default function AnalyticsPage() {
   if (!user) return null
 
   // Error state
-  if (error) {
+  if (error && !analytics) {
     return (
       <div className="min-h-screen bg-gray-50">
         <header className="bg-white border-b border-gray-200">
@@ -94,13 +101,28 @@ export default function AnalyticsPage() {
         </header>
 
         <div className="container mx-auto px-4 py-8">
-          <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
-            <p className="text-red-800 font-medium mb-4">{error}</p>
+          <div className="bg-red-50 border border-red-200 rounded-lg p-8 text-center max-w-2xl mx-auto">
+            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <BarChart3 className="w-8 h-8 text-red-600" />
+            </div>
+            <h3 className="text-xl font-bold text-red-900 mb-2">Unable to Load Analytics</h3>
+            <p className="text-red-800 mb-6">{error}</p>
             <button
               onClick={handleRefresh}
-              className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors"
+              disabled={refreshing}
+              className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center gap-2"
             >
-              Retry
+              {refreshing ? (
+                <>
+                  <RefreshCw className="w-4 h-4 animate-spin" />
+                  <span>Retrying...</span>
+                </>
+              ) : (
+                <>
+                  <RefreshCw className="w-4 h-4" />
+                  <span>Try Again</span>
+                </>
+              )}
             </button>
           </div>
         </div>
@@ -157,7 +179,25 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Analytics Components */}
-        {analytics && (
+        {loading ? (
+          <div className="space-y-6">
+            {/* Loading skeletons */}
+            <div className="bg-white rounded-xl p-6 shadow-sm animate-pulse">
+              <div className="h-8 bg-gray-200 rounded w-48 mb-6" />
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[1, 2, 3, 4, 5, 6].map((i) => (
+                  <div key={i} className="bg-gray-100 rounded-xl p-6 h-32" />
+                ))}
+              </div>
+            </div>
+
+            {/* Chart skeletons */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <SkillRadarChart skills={[]} loading={true} />
+              <ScoreTrendChart scoreTrend={[]} loading={true} />
+            </div>
+          </div>
+        ) : analytics ? (
           <div className="space-y-6">
             {/* Progress Overview */}
             <ProgressOverview stats={analytics.progress} />
@@ -165,10 +205,10 @@ export default function AnalyticsPage() {
             {/* Two-column grid for charts */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Skill Radar Chart */}
-              <SkillRadarChart skills={analytics.skills} />
+              <SkillRadarChart skills={analytics.skills} loading={refreshing} />
 
               {/* Score Trend Chart */}
-              <ScoreTrendChart scoreTrend={analytics.score_trend} />
+              <ScoreTrendChart scoreTrend={analytics.score_trend} loading={refreshing} />
             </div>
 
             {/* Streak Calendar */}
@@ -186,10 +226,10 @@ export default function AnalyticsPage() {
             {/* Next Steps Recommendations */}
             <NextStepsRecommendations recommendations={analytics.next_steps} />
           </div>
-        )}
+        ) : null}
 
         {/* Empty State */}
-        {!analytics && !loading && (
+        {!analytics && !loading && !error && (
           <div className="bg-white rounded-xl p-12 text-center shadow-sm">
             <BarChart3 className="w-16 h-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-xl font-bold text-gray-800 mb-2">No Analytics Data Yet</h3>

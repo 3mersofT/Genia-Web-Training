@@ -15,7 +15,7 @@ import {
   ChartOptions
 } from 'chart.js';
 import { ScoreTrendPoint } from '@/types/analytics.types';
-import { TrendingUp, TrendingDown, BarChart3, Target } from 'lucide-react';
+import { TrendingUp, TrendingDown, BarChart3, Target, Loader2 } from 'lucide-react';
 
 ChartJS.register(
   CategoryScale,
@@ -30,9 +30,10 @@ ChartJS.register(
 
 interface ScoreTrendChartProps {
   scoreTrend: ScoreTrendPoint[];
+  loading?: boolean;
 }
 
-export default function ScoreTrendChart({ scoreTrend }: ScoreTrendChartProps) {
+export default function ScoreTrendChart({ scoreTrend, loading = false }: ScoreTrendChartProps) {
   // Prepare chart data
   const chartData = useMemo(() => {
     if (!scoreTrend || scoreTrend.length === 0) {
@@ -219,6 +220,46 @@ export default function ScoreTrendChart({ scoreTrend }: ScoreTrendChartProps) {
       totalExercises: scoreTrend.length
     };
   }, [scoreTrend]);
+
+  // Loading skeleton
+  if (loading) {
+    return (
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+              <BarChart3 className="w-6 h-6 text-indigo-600" />
+              Score Trend Over Time
+            </h2>
+            <p className="text-sm text-gray-600 mt-1">
+              Your exercise performance progression
+            </p>
+          </div>
+        </div>
+
+        {/* Loading Skeleton */}
+        <div className="h-80 mb-6 flex items-center justify-center bg-gray-50 rounded-lg">
+          <div className="text-center">
+            <Loader2 className="w-12 h-12 text-indigo-600 animate-spin mx-auto mb-3" />
+            <p className="text-sm text-gray-600">Loading score data...</p>
+          </div>
+        </div>
+
+        {/* Loading Stats Skeleton */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-4 border-t border-gray-200">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="flex items-start gap-3 animate-pulse">
+              <div className="p-2 bg-gray-200 rounded-lg w-9 h-9" />
+              <div className="flex-1">
+                <div className="h-4 bg-gray-200 rounded w-20 mb-2" />
+                <div className="h-6 bg-gray-200 rounded w-12" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
