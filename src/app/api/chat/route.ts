@@ -94,6 +94,14 @@ export async function POST(req: NextRequest) {
     return rateLimitResponse;
   }
 
+  // Helper to add rate limit headers
+  const addHeaders = (response: NextResponse) => {
+    response.headers.set('X-RateLimit-Limit', rateLimitResult.limit.toString());
+    response.headers.set('X-RateLimit-Remaining', rateLimitResult.remaining.toString());
+    response.headers.set('Retry-After', Math.ceil((rateLimitResult.reset - Date.now()) / 1000).toString());
+    return response;
+  };
+
   try {
     const supabase = await createClient();
 
@@ -101,10 +109,10 @@ export async function POST(req: NextRequest) {
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (!user) {
-      return NextResponse.json(
+      return addHeaders(NextResponse.json(
         { error: 'Non autorisé' },
         { status: 401 }
-      );
+      ));
     }
 
     const body = await req.json();
@@ -120,19 +128,19 @@ export async function POST(req: NextRequest) {
 
     // Validation
     if (!messages) {
-      return NextResponse.json(
+      return addHeaders(NextResponse.json(
         { error: 'Messages requis' },
         { status: 400 }
-      );
+      ));
     }
     
     // Configuration du modèle
     const config = MODELS_CONFIG[model as keyof typeof MODELS_CONFIG];
     if (!config) {
-      return NextResponse.json(
+      return addHeaders(NextResponse.json(
         { error: 'Modèle invalide' },
         { status: 400 }
-      );
+      ));
     }
     
     // Préparer la requête Mistral
@@ -251,11 +259,7 @@ export async function POST(req: NextRequest) {
     });
 
     // Add rate limit headers to success response
-    successResponse.headers.set('X-RateLimit-Limit', rateLimitResult.limit.toString());
-    successResponse.headers.set('X-RateLimit-Remaining', rateLimitResult.remaining.toString());
-    successResponse.headers.set('Retry-After', Math.ceil((rateLimitResult.reset - Date.now()) / 1000).toString());
-
-    return successResponse;
+    return addHeaders(successResponse);
     
   } catch (error) {
     console.error('Erreur API chat:', error);
@@ -265,10 +269,6 @@ export async function POST(req: NextRequest) {
     );
 
     // Add rate limit headers to error response
-    errorResponse.headers.set('X-RateLimit-Limit', rateLimitResult.limit.toString());
-    errorResponse.headers.set('X-RateLimit-Remaining', rateLimitResult.remaining.toString());
-    errorResponse.headers.set('Retry-After', Math.ceil((rateLimitResult.reset - Date.now()) / 1000).toString());
-
-    return errorResponse;
+    return addHeaders(errorResponse);
   }
 }
