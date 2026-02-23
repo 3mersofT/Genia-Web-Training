@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase/server';
 import { LevelProgressionService } from '@/services/levelProgressionService';
 import type { AwardXPResult } from '@/types/levels.types';
 import { studentNotificationService } from '@/lib/services/studentNotificationService';
+import { CompleteProgressSchema } from '@/lib/validations/progress.schema';
 
 export async function POST(req: NextRequest) {
   try {
@@ -20,11 +21,18 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { capsuleId, score } = await req.json();
+    // Valider les données de la requête
+    const body = await req.json();
+    const validation = CompleteProgressSchema.safeParse(body);
 
-    if (!capsuleId) {
-      return NextResponse.json({ error: 'capsuleId requis' }, { status: 400 });
+    if (!validation.success) {
+      return NextResponse.json(
+        { error: 'Invalid request data', details: validation.error.errors },
+        { status: 400 }
+      );
     }
+
+    const { capsuleId, score } = validation.data;
 
     // Utiliser l'ID de l'utilisateur authentifié au lieu de faire confiance au client
     const userId = user.id;
