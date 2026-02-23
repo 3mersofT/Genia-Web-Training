@@ -2,6 +2,13 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { createRateLimiter } from '@/lib/rate-limiter';
+
+// Rate limiter: 10 requests per minute
+const rateLimiter = createRateLimiter({
+  interval: 60000, // 1 minute in milliseconds
+  limit: 10, // 10 requests per minute
+});
 
 // Configuration des modèles
 const MODELS_CONFIG = {
@@ -81,6 +88,12 @@ async function checkAndUpdateQuota(
 
 // Route principale du chat
 export async function POST(req: NextRequest) {
+  // Apply rate limiting
+  const rateLimitResponse = await rateLimiter(req);
+  if (rateLimitResponse) {
+    return rateLimitResponse;
+  }
+
   try {
     const supabase = await createClient();
 
