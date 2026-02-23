@@ -1,7 +1,20 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/server'
+import { createRateLimiter } from '@/lib/rate-limiter'
 
-export async function GET(request: Request) {
+// Rate limiter: 5 requests per minute
+const rateLimiter = createRateLimiter({
+  interval: 60000, // 1 minute in milliseconds
+  limit: 5, // 5 requests per minute
+})
+
+export async function GET(request: NextRequest) {
+  // Apply rate limiting
+  const rateLimitResponse = await rateLimiter(request)
+  if (rateLimitResponse) {
+    return rateLimitResponse
+  }
+
   try {
     const url = new URL(request.url)
     const username = (url.searchParams.get('username') || '').toLowerCase().trim()
