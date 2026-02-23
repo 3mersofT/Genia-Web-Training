@@ -6,6 +6,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { createAdminClient } from '@/lib/supabase/server';
+import { CompleteProgressDirectSchema } from '@/lib/validations/progress.schema';
 
 export async function POST(req: NextRequest) {
   try {
@@ -28,12 +29,23 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Accès interdit - admin requis' }, { status: 403 });
     }
 
-    // 3. Parse request body (userId can be different from authenticated user for admin operations)
-    const { userId, capsuleId, score } = await req.json();
+    // 3. Parse and validate request body (userId can be different from authenticated user for admin operations)
+    const body = await req.json();
 
-    if (!userId || !capsuleId) {
-      return NextResponse.json({ error: 'userId et capsuleId requis' }, { status: 400 });
+    // Validation with Zod
+    const validationResult = CompleteProgressDirectSchema.safeParse(body);
+
+    if (!validationResult.success) {
+      return NextResponse.json(
+        {
+          error: 'Validation failed',
+          details: validationResult.error.errors,
+        },
+        { status: 400 }
+      );
     }
+
+    const { userId, capsuleId, score } = validationResult.data;
 
     // 4. Use direct Supabase client with service role key (admin-authorized operation)
     const supabase = createClient(
