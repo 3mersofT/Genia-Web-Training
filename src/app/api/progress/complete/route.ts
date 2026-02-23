@@ -5,8 +5,21 @@ import { createClient } from '@/lib/supabase/server';
 import { LevelProgressionService } from '@/services/levelProgressionService';
 import type { AwardXPResult } from '@/types/levels.types';
 import { studentNotificationService } from '@/lib/services/studentNotificationService';
+import { createRateLimiter } from '@/lib/rate-limiter';
+
+// Rate limiter: 30 requests per minute
+const rateLimiter = createRateLimiter({
+  interval: 60000, // 1 minute in milliseconds
+  limit: 30, // 30 requests per minute
+});
 
 export async function POST(req: NextRequest) {
+  // Apply rate limiting
+  const rateLimitResponse = await rateLimiter(req);
+  if (rateLimitResponse) {
+    return rateLimitResponse;
+  }
+
   try {
     const supabase = await createClient();
 
