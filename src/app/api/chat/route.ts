@@ -2,39 +2,13 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { MODELS_CONFIG, ModelName } from '@/lib/ai-config';
+import { calculateCost, extractGENIAStep } from '@/lib/ai-utils';
 
-// Configuration des modèles
-const MODELS_CONFIG = {
-  'magistral-medium': {
-    modelName: 'mistral-large-latest',
-    costPerMillionInput: 2.0,
-    costPerMillionOutput: 6.0,
-    maxTokens: 3000,
-    defaultTemperature: 0.2,
-    dailyQuota: 30 // Quota par utilisateur par jour (réduit de moitié)
-  },
-  'mistral-medium-3': {
-    modelName: 'mistral-medium-latest',
-    costPerMillionInput: 1.5,
-    costPerMillionOutput: 4.5,
-    maxTokens: 1500,
-    defaultTemperature: 0.4,
-    dailyQuota: 150 // Quota par utilisateur par jour (réduit de moitié)
-  },
-  'mistral-small': {
-    modelName: 'mistral-small-latest',
-    costPerMillionInput: 0.25,
-    costPerMillionOutput: 0.25,
-    maxTokens: 1000,
-    defaultTemperature: 0.5,
-    dailyQuota: 500 // Quota par utilisateur par jour (réduit de moitié)
-  }
-};
-
-// Vérifier et mettre à jour les quotas
+// Vérifier et mettre à jour les quotas (version serveur)
 async function checkAndUpdateQuota(
-  userId: string, 
-  model: keyof typeof MODELS_CONFIG,
+  userId: string,
+  model: ModelName,
   tokens: number,
   cost: number
 ) {
@@ -114,7 +88,7 @@ export async function POST(req: NextRequest) {
     }
     
     // Configuration du modèle
-    const config = MODELS_CONFIG[model as keyof typeof MODELS_CONFIG];
+    const config = MODELS_CONFIG[model as ModelName];
     if (!config) {
       return NextResponse.json(
         { error: 'Modèle invalide' },
@@ -147,18 +121,15 @@ export async function POST(req: NextRequest) {
     }
     
     const data = await response.json();
-    
+
     // Calculer le coût
     const usage = data.usage || { prompt_tokens: 0, completion_tokens: 0, total_tokens: 0 };
-    const cost = (
-      (usage.prompt_tokens / 1_000_000) * config.costPerMillionInput +
-      (usage.completion_tokens / 1_000_000) * config.costPerMillionOutput
-    );
+    const cost = calculateCost(usage, config);
     
     // Mettre à jour les quotas
     let quotaInfo: { used: number; limit: number } | undefined;
     try {
-      quotaInfo = await checkAndUpdateQuota(user.id, model as any, usage.total_tokens || 0, cost || 0);
+      quotaInfo = await checkAndUpdateQuota(user.id, model as ModelName, usage.total_tokens || 0, cost || 0);
     } catch (e) {
       // ne bloque pas la réponse chat en cas d'erreur quota
       console.warn('Quota update skipped:', (e as Error).message);
@@ -203,17 +174,7 @@ export async function POST(req: NextRequest) {
     
     // Extraction du pilier GENIA si présent
     const content = data.choices[0].message.content;
-    let methodStep;
-    const patterns = {
-      'G': /\[G\s*-\s*Guide/i,
-      'E': /\[E\s*-\s*Exemple/i,
-      'N': /\[N\s*-\s*Niveau/i,
-      'I': /\[I\s*-\s*Interaction/i,
-      'A': /\[A\s*-\s*Assessment/i
-    };
-    for (const [step, pattern] of Object.entries(patterns)) {
-      if (pattern.test(content)) { methodStep = step; break; }
-    }
+    const methodStep = extractGENIAStep(content);
     
     // Extraction du raisonnement si demandé
     let reasoningContent;
