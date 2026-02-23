@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { createClient } from '@/lib/supabase/client';
+import { MODELS_CONFIG } from '@/lib/ai-config';
 import {
   Brain, TrendingUp, AlertCircle, DollarSign, BarChart3,
   Calendar, Download, Filter, RefreshCw, Zap, Cpu, Activity
@@ -60,25 +61,34 @@ export default function AIUsagePage() {
   
   const supabase = createClient();
 
-  // Configuration des modèles et quotas
+  // Configuration des modèles - couleurs pour la visualisation (quotas viennent de MODELS_CONFIG)
   const modelConfig = {
     'magistral-medium': {
       name: 'Magistral Medium',
       color: 'rgb(99, 102, 241)',
-      dailyQuota: 60,
-      costPerMillion: { input: 2, output: 6 }
+      dailyQuota: MODELS_CONFIG['magistral-medium'].dailyQuota,
+      costPerMillion: {
+        input: MODELS_CONFIG['magistral-medium'].costPerMillionInput,
+        output: MODELS_CONFIG['magistral-medium'].costPerMillionOutput
+      }
     },
     'mistral-medium-3': {
       name: 'Mistral Medium 3',
       color: 'rgb(16, 185, 129)',
-      dailyQuota: 300,
-      costPerMillion: { input: 1.5, output: 4.5 }
+      dailyQuota: MODELS_CONFIG['mistral-medium-3'].dailyQuota,
+      costPerMillion: {
+        input: MODELS_CONFIG['mistral-medium-3'].costPerMillionInput,
+        output: MODELS_CONFIG['mistral-medium-3'].costPerMillionOutput
+      }
     },
     'mistral-small': {
       name: 'Mistral Small',
       color: 'rgb(251, 146, 60)',
-      dailyQuota: 1000,
-      costPerMillion: { input: 0.25, output: 0.25 }
+      dailyQuota: MODELS_CONFIG['mistral-small'].dailyQuota,
+      costPerMillion: {
+        input: MODELS_CONFIG['mistral-small'].costPerMillionInput,
+        output: MODELS_CONFIG['mistral-small'].costPerMillionOutput
+      }
     }
   };
 

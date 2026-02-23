@@ -3,12 +3,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/server';
-
-const MODELS_CONFIG = {
-  'magistral-medium': { dailyQuota: 30 }, // Quota par utilisateur par jour (réduit de moitié)
-  'mistral-medium-3': { dailyQuota: 150 }, // Quota par utilisateur par jour (réduit de moitié)
-  'mistral-small': { dailyQuota: 500 } // Quota par utilisateur par jour (réduit de moitié)
-};
+import { MODELS_CONFIG } from '@/lib/ai-config';
 
 export async function GET(req: NextRequest) {
   try {
