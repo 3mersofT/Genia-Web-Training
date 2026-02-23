@@ -141,7 +141,7 @@ describe('Rate Limiter - Core Logic', () => {
       // Assert
       expect(response).toBeNull(); // null means request is allowed
       expect(result.success).toBe(true);
-      expect(result.remaining).toBe(2); // 3 limit - 1 used = 2 remaining
+      expect(result.remaining).toBe(4); // 5 limit - 1 used = 4 remaining
     });
 
     it('should block requests over the limit', async () => {
@@ -307,7 +307,7 @@ describe('Rate Limiter - Core Logic', () => {
       const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
 
       // Act
-      const response = await rateLimiter(mockRequest);
+      const { response } = await rateLimiter(mockRequest);
 
       // Assert
       expect(response).toBeNull(); // Fail open - allow request
@@ -338,7 +338,7 @@ describe('Rate Limiter - Core Logic', () => {
       await new Promise(resolve => setTimeout(resolve, shortInterval + 10));
 
       // Make new request - this should trigger cleanup and create fresh window
-      const response = await rateLimiter(mockRequest);
+      const { response } = await rateLimiter(mockRequest);
 
       // Assert
       expect(response).toBeNull(); // Should be allowed with fresh window
@@ -496,7 +496,7 @@ describe('Rate Limiter - Core Logic', () => {
       ]);
 
       // Assert - At least one should be blocked
-      const blockedResponses = responses.filter(r => r?.status === 429);
+      const blockedResponses = responses.filter(r => r.response?.status === 429);
       expect(blockedResponses.length).toBeGreaterThan(0);
     });
 
