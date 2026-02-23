@@ -1,4 +1,6 @@
 /**
+ * @jest-environment node
+ *
  * Unit Tests for /api/chat Authentication
  *
  * Tests verify that the chat API route enforces proper authentication:
