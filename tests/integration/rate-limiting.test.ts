@@ -32,7 +32,7 @@ describe('Rate Limiting - Integration Tests', () => {
 
   // Helper to make multiple requests
   const makeRequests = async (
-    rateLimiter: (req: NextRequest) => Promise<NextResponse | null>,
+    rateLimiter: ReturnType<typeof createRateLimiter>,
     url: string,
     count: number,
     ip: string = '192.168.1.1'
@@ -40,7 +40,7 @@ describe('Rate Limiting - Integration Tests', () => {
     const responses: (NextResponse | null)[] = [];
     for (let i = 0; i < count; i++) {
       const req = createMockRequest(url, ip);
-      const response = await rateLimiter(req);
+      const { response } = await rateLimiter(req);
       responses.push(response);
     }
     return responses;

@@ -89,7 +89,7 @@ async function checkAndUpdateQuota(
 // Route principale du chat
 export async function POST(req: NextRequest) {
   // Apply rate limiting
-  const rateLimitResponse = await rateLimiter(req);
+  const { response: rateLimitResponse, result: rateLimitResult } = await rateLimiter(req);
   if (rateLimitResponse) {
     return rateLimitResponse;
   }
@@ -235,7 +235,7 @@ export async function POST(req: NextRequest) {
       reasoningContent = match ? match[1].trim() : undefined;
     }
     
-    return NextResponse.json({
+    const successResponse = NextResponse.json({
       content: data.choices[0].message.content,
       model,
       usage: {
@@ -249,12 +249,26 @@ export async function POST(req: NextRequest) {
       quotaUsed: quotaInfo,
       conversationId: returnedConversationId
     });
+
+    // Add rate limit headers to success response
+    successResponse.headers.set('X-RateLimit-Limit', rateLimitResult.limit.toString());
+    successResponse.headers.set('X-RateLimit-Remaining', rateLimitResult.remaining.toString());
+    successResponse.headers.set('Retry-After', Math.ceil((rateLimitResult.reset - Date.now()) / 1000).toString());
+
+    return successResponse;
     
   } catch (error) {
     console.error('Erreur API chat:', error);
-    return NextResponse.json(
+    const errorResponse = NextResponse.json(
       { error: error instanceof Error ? error.message : 'Erreur serveur' },
       { status: 500 }
     );
+
+    // Add rate limit headers to error response
+    errorResponse.headers.set('X-RateLimit-Limit', rateLimitResult.limit.toString());
+    errorResponse.headers.set('X-RateLimit-Remaining', rateLimitResult.remaining.toString());
+    errorResponse.headers.set('Retry-After', Math.ceil((rateLimitResult.reset - Date.now()) / 1000).toString());
+
+    return errorResponse;
   }
 }

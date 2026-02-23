@@ -64,12 +64,22 @@ export interface RateLimitErrorResponse {
 export type RouteHandler = (req: NextRequest) => Promise<NextResponse>;
 
 /**
+ * Rate limit check result with optional response
+ */
+export interface RateLimitCheckResult {
+  /** The 429 response if rate limit exceeded, null otherwise */
+  response: NextResponse | null;
+  /** Rate limit result information */
+  result: RateLimitResult;
+}
+
+/**
  * Rate limiter middleware function type
- * Returns null if request is allowed, or NextResponse with 429 status if blocked
+ * Returns rate limit check result with optional 429 response
  */
 export type RateLimiterMiddleware = (
   req: NextRequest
-) => Promise<NextResponse | null>;
+) => Promise<RateLimitCheckResult>;
 
 // Global Map to store rate limit data
 // Key: identifier (IP address or user ID)
@@ -169,7 +179,7 @@ function checkRateLimit(
  * Returns an async function that can be used to check rate limits
  */
 export function createRateLimiter(config: RateLimitConfig): RateLimiterMiddleware {
-  return async (req: NextRequest): Promise<NextResponse | null> => {
+  return async (req: NextRequest): Promise<RateLimitCheckResult> => {
     try {
       // Clean up old entries periodically (every request for simplicity)
       cleanupExpiredEntries(config.interval);
@@ -195,25 +205,39 @@ export function createRateLimiter(config: RateLimitConfig): RateLimiterMiddlewar
           retryAfter: Math.ceil((result.reset - Date.now()) / 1000),
         };
 
-        return new NextResponse(
-          JSON.stringify(errorResponse),
-          {
-            status: 429,
-            headers: {
-              'Content-Type': 'application/json',
-              ...headers,
-            },
-          }
-        );
+        return {
+          response: new NextResponse(
+            JSON.stringify(errorResponse),
+            {
+              status: 429,
+              headers: {
+                'Content-Type': 'application/json',
+                ...headers,
+              },
+            }
+          ),
+          result,
+        };
       }
 
-      // Rate limit not exceeded, return null to indicate request should proceed
-      // The headers will need to be added by the calling code
-      return null;
+      // Rate limit not exceeded, return result so caller can add headers
+      return {
+        response: null,
+        result,
+      };
     } catch (error) {
       // Fail open: if rate limiter errors, allow the request
       console.error('Rate limiter error:', error);
-      return null;
+      // Return a default result that allows the request
+      return {
+        response: null,
+        result: {
+          success: true,
+          limit: config.limit,
+          remaining: config.limit,
+          reset: Date.now() + config.interval,
+        },
+      };
     }
   };
 }
@@ -239,6 +263,7 @@ export function addRateLimitHeaders(
 /**
  * Wraps an API route handler with rate limiting
  * Returns a new handler that checks rate limits before calling the original handler
+ * Automatically adds rate limit headers to all responses
  */
 export function withRateLimit(
   handler: RouteHandler,
@@ -248,7 +273,7 @@ export function withRateLimit(
 
   return async (req: NextRequest): Promise<NextResponse> => {
     // Check rate limit
-    const rateLimitResponse = await rateLimiter(req);
+    const { response: rateLimitResponse, result } = await rateLimiter(req);
 
     // If rate limit exceeded, return the 429 response
     if (rateLimitResponse) {
@@ -256,6 +281,13 @@ export function withRateLimit(
     }
 
     // Otherwise, call the original handler
-    return handler(req);
+    const response = await handler(req);
+
+    // Add rate limit headers to the response
+    response.headers.set('X-RateLimit-Limit', result.limit.toString());
+    response.headers.set('X-RateLimit-Remaining', result.remaining.toString());
+    response.headers.set('Retry-After', Math.ceil((result.reset - Date.now()) / 1000).toString());
+
+    return response;
   };
 }

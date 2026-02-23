@@ -136,10 +136,12 @@ describe('Rate Limiter - Core Logic', () => {
       });
 
       // Act
-      const response = await rateLimiter(mockRequest);
+      const { response, result } = await rateLimiter(mockRequest);
 
       // Assert
       expect(response).toBeNull(); // null means request is allowed
+      expect(result.success).toBe(true);
+      expect(result.remaining).toBe(2); // 3 limit - 1 used = 2 remaining
     });
 
     it('should block requests over the limit', async () => {
@@ -156,10 +158,11 @@ describe('Rate Limiter - Core Logic', () => {
       await rateLimiter(mockRequest);
       await rateLimiter(mockRequest);
       await rateLimiter(mockRequest);
-      const blockedResponse = await rateLimiter(mockRequest);
+      const { response: blockedResponse, result: blockedResult } = await rateLimiter(mockRequest);
 
       // Assert
       expect(blockedResponse).toBeInstanceOf(NextResponse);
+      expect(blockedResult.success).toBe(false);
       expect(blockedResponse?.status).toBe(429);
     });
 
@@ -176,7 +179,7 @@ describe('Rate Limiter - Core Logic', () => {
       // Act - Exceed limit
       await rateLimiter(mockRequest);
       await rateLimiter(mockRequest);
-      const blockedResponse = await rateLimiter(mockRequest);
+      const { response: blockedResponse } = await rateLimiter(mockRequest);
 
       // Assert
       expect(blockedResponse).not.toBeNull();
@@ -201,7 +204,7 @@ describe('Rate Limiter - Core Logic', () => {
       // Act
       await rateLimiter(mockRequest);
       await rateLimiter(mockRequest);
-      const blockedResponse = await rateLimiter(mockRequest);
+      const { response: blockedResponse } = await rateLimiter(mockRequest);
 
       // Assert
       expect(blockedResponse?.headers.get('X-RateLimit-Limit')).toBe('2');
@@ -221,13 +224,13 @@ describe('Rate Limiter - Core Logic', () => {
       });
 
       // Act & Assert - Check that we're tracking but rate limiter returns null
-      const firstResponse = await rateLimiter(mockRequest);
+      const { response: firstResponse } = await rateLimiter(mockRequest);
       expect(firstResponse).toBeNull();
 
-      const secondResponse = await rateLimiter(mockRequest);
+      const { response: secondResponse } = await rateLimiter(mockRequest);
       expect(secondResponse).toBeNull();
 
-      const thirdResponse = await rateLimiter(mockRequest);
+      const { response: thirdResponse } = await rateLimiter(mockRequest);
       expect(thirdResponse).toBeNull();
     });
 
@@ -247,10 +250,10 @@ describe('Rate Limiter - Core Logic', () => {
       // Act - Exhaust limit for first identifier
       await rateLimiter(request1);
       await rateLimiter(request1);
-      const blocked1 = await rateLimiter(request1);
+      const { response: blocked1 } = await rateLimiter(request1);
 
       // Second identifier should still work
-      const allowed2 = await rateLimiter(request2);
+      const { response: allowed2 } = await rateLimiter(request2);
 
       // Assert
       expect(blocked1?.status).toBe(429);
@@ -271,14 +274,14 @@ describe('Rate Limiter - Core Logic', () => {
       // Act - Exhaust limit
       await rateLimiter(mockRequest);
       await rateLimiter(mockRequest);
-      const blocked = await rateLimiter(mockRequest);
+      const { response: blocked } = await rateLimiter(mockRequest);
       expect(blocked?.status).toBe(429);
 
       // Wait for interval to expire
       await new Promise(resolve => setTimeout(resolve, shortInterval + 10));
 
       // Try again after reset
-      const allowedAfterReset = await rateLimiter(mockRequest);
+      const { response: allowedAfterReset } = await rateLimiter(mockRequest);
 
       // Assert
       expect(allowedAfterReset).toBeNull(); // Should be allowed after reset
@@ -510,11 +513,11 @@ describe('Rate Limiter - Core Logic', () => {
       // Act
       await rateLimiter(mockRequest);
       await rateLimiter(mockRequest);
-      const blocked = await rateLimiter(mockRequest);
+      const { response: blocked } = await rateLimiter(mockRequest);
 
       // Wait for reset
       await new Promise(resolve => setTimeout(resolve, 15));
-      const allowed = await rateLimiter(mockRequest);
+      const { response: allowed } = await rateLimiter(mockRequest);
 
       // Assert
       expect(blocked?.status).toBe(429);
@@ -532,8 +535,8 @@ describe('Rate Limiter - Core Logic', () => {
       });
 
       // Act
-      const first = await rateLimiter(mockRequest);
-      const second = await rateLimiter(mockRequest);
+      const { response: first } = await rateLimiter(mockRequest);
+      const { response: second } = await rateLimiter(mockRequest);
 
       // Assert
       expect(first).toBeNull();
