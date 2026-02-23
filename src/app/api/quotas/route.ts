@@ -3,6 +3,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/server';
+import { GetQuotasSchema } from '@/lib/validations/quotas.schema';
 
 const MODELS_CONFIG = {
   'magistral-medium': { dailyQuota: 30 }, // Quota par utilisateur par jour (réduit de moitié)
@@ -23,17 +24,21 @@ export async function GET(req: NextRequest) {
       );
     }
 
+    // Validate query parameters with Zod schema
     const userId = req.nextUrl.searchParams.get('userId');
+    const validationResult = GetQuotasSchema.safeParse({ userId });
 
-    if (!userId) {
+    if (!validationResult.success) {
       return NextResponse.json(
-        { error: 'userId requis' },
+        { error: 'Invalid request data', details: validationResult.error.format() },
         { status: 400 }
       );
     }
 
+    const { userId: validatedUserId } = validationResult.data;
+
     // Vérifier que l'utilisateur accède uniquement à ses propres quotas
-    if (user.id !== userId) {
+    if (user.id !== validatedUserId) {
       return NextResponse.json(
         { error: 'Accès refusé' },
         { status: 403 }
@@ -44,7 +49,7 @@ export async function GET(req: NextRequest) {
 
     // Utiliser la fonction de base de données pour obtenir les quotas par utilisateur
     const { data: quotaStatus, error } = await adminSupabase
-      .rpc('get_user_quota_status', { p_user_id: userId });
+      .rpc('get_user_quota_status', { p_user_id: validatedUserId });
 
     if (error) {
       console.error('Erreur récupération quotas:', error);
@@ -59,7 +64,7 @@ export async function GET(req: NextRequest) {
     const { data: usage } = await adminSupabase
       .from('llm_usage')
       .select('model, total_tokens, total_cost')
-      .eq('user_id', userId)
+      .eq('user_id', validatedUserId)
       .eq('date', today);
     
     // Formater les quotas avec les données de la fonction + détails supplémentaires
