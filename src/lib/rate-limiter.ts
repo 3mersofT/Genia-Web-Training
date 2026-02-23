@@ -34,6 +34,43 @@ interface RateLimitStore {
   windowStart: number;
 }
 
+/**
+ * Rate limit headers to include in responses
+ */
+export interface RateLimitHeaders {
+  /** Maximum requests allowed */
+  'X-RateLimit-Limit': string;
+  /** Remaining requests in current window */
+  'X-RateLimit-Remaining': string;
+  /** Seconds until rate limit resets */
+  'Retry-After': string;
+}
+
+/**
+ * Error response structure when rate limit is exceeded
+ */
+export interface RateLimitErrorResponse {
+  /** Error type */
+  error: string;
+  /** Human-readable error message */
+  message: string;
+  /** Seconds until rate limit resets */
+  retryAfter: number;
+}
+
+/**
+ * API route handler function type
+ */
+export type RouteHandler = (req: NextRequest) => Promise<NextResponse>;
+
+/**
+ * Rate limiter middleware function type
+ * Returns null if request is allowed, or NextResponse with 429 status if blocked
+ */
+export type RateLimiterMiddleware = (
+  req: NextRequest
+) => Promise<NextResponse | null>;
+
 // Global Map to store rate limit data
 // Key: identifier (IP address or user ID)
 // Value: RateLimitStore
@@ -131,7 +168,7 @@ function checkRateLimit(
  * Creates a rate limiter middleware with the specified configuration
  * Returns an async function that can be used to check rate limits
  */
-export function createRateLimiter(config: RateLimitConfig) {
+export function createRateLimiter(config: RateLimitConfig): RateLimiterMiddleware {
   return async (req: NextRequest): Promise<NextResponse | null> => {
     try {
       // Clean up old entries periodically (every request for simplicity)
@@ -144,7 +181,7 @@ export function createRateLimiter(config: RateLimitConfig) {
       const result = checkRateLimit(identifier, config);
 
       // Prepare rate limit headers
-      const headers = {
+      const headers: RateLimitHeaders = {
         'X-RateLimit-Limit': result.limit.toString(),
         'X-RateLimit-Remaining': result.remaining.toString(),
         'Retry-After': Math.ceil((result.reset - Date.now()) / 1000).toString(),
@@ -152,12 +189,14 @@ export function createRateLimiter(config: RateLimitConfig) {
 
       // If rate limit exceeded, return 429 response
       if (!result.success) {
+        const errorResponse: RateLimitErrorResponse = {
+          error: 'Too many requests',
+          message: 'Rate limit exceeded. Please try again later.',
+          retryAfter: Math.ceil((result.reset - Date.now()) / 1000),
+        };
+
         return new NextResponse(
-          JSON.stringify({
-            error: 'Too many requests',
-            message: 'Rate limit exceeded. Please try again later.',
-            retryAfter: Math.ceil((result.reset - Date.now()) / 1000),
-          }),
+          JSON.stringify(errorResponse),
           {
             status: 429,
             headers: {
@@ -202,9 +241,9 @@ export function addRateLimitHeaders(
  * Returns a new handler that checks rate limits before calling the original handler
  */
 export function withRateLimit(
-  handler: (req: NextRequest) => Promise<NextResponse>,
+  handler: RouteHandler,
   config: RateLimitConfig
-) {
+): RouteHandler {
   const rateLimiter = createRateLimiter(config);
 
   return async (req: NextRequest): Promise<NextResponse> => {
