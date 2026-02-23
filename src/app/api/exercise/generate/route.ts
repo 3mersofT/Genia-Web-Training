@@ -5,6 +5,18 @@ import { createClient } from '@/lib/supabase/server';
 
 export async function POST(req: NextRequest) {
   try {
+    const supabase = await createClient();
+
+    // Vérifier l'authentification
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Non autorisé' },
+        { status: 401 }
+      );
+    }
+
     const body = await req.json();
     const {
       capsuleTitle,
@@ -12,12 +24,20 @@ export async function POST(req: NextRequest) {
       userLevel,
       userId
     } = body;
-    
+
     // Validation
     if (!capsuleTitle || !concepts || !userLevel || !userId) {
       return NextResponse.json(
         { error: 'Paramètres manquants' },
         { status: 400 }
+      );
+    }
+
+    // Vérifier que le userId correspond à l'utilisateur authentifié
+    if (userId !== user.id) {
+      return NextResponse.json(
+        { error: 'Accès refusé' },
+        { status: 403 }
       );
     }
     
@@ -75,9 +95,8 @@ Format de réponse :
     });
     
     const data = await response.json();
-    
+
     // Sauvegarder l'exercice généré
-    const supabase = await createClient();
     const { data: exercise } = await supabase
       .from('generated_exercises')
       .insert({

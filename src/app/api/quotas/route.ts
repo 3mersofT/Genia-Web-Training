@@ -12,21 +12,40 @@ const MODELS_CONFIG = {
 
 export async function GET(req: NextRequest) {
   try {
+    // Vérifier l'authentification
+    const supabase = await createClient();
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Non autorisé' },
+        { status: 401 }
+      );
+    }
+
     const userId = req.nextUrl.searchParams.get('userId');
-    
+
     if (!userId) {
       return NextResponse.json(
         { error: 'userId requis' },
         { status: 400 }
       );
     }
-    
-    const supabase = await createAdminClient();
-    
+
+    // Vérifier que l'utilisateur accède uniquement à ses propres quotas
+    if (user.id !== userId) {
+      return NextResponse.json(
+        { error: 'Accès refusé' },
+        { status: 403 }
+      );
+    }
+
+    const adminSupabase = await createAdminClient();
+
     // Utiliser la fonction de base de données pour obtenir les quotas par utilisateur
-    const { data: quotaStatus, error } = await supabase
+    const { data: quotaStatus, error } = await adminSupabase
       .rpc('get_user_quota_status', { p_user_id: userId });
-    
+
     if (error) {
       console.error('Erreur récupération quotas:', error);
       return NextResponse.json(
@@ -34,10 +53,10 @@ export async function GET(req: NextRequest) {
         { status: 500 }
       );
     }
-    
+
     // Récupérer les détails supplémentaires (tokens, coût) pour chaque modèle
     const today = new Date().toISOString().split('T')[0];
-    const { data: usage } = await supabase
+    const { data: usage } = await adminSupabase
       .from('llm_usage')
       .select('model, total_tokens, total_cost')
       .eq('user_id', userId)
