@@ -1,18 +1,41 @@
 // app/api/progress/complete-direct/route.ts
-// Direct API that bypasses RLS for testing
+// ADMIN-ONLY Direct API that bypasses RLS for testing purposes
+// This route intentionally uses service role key to bypass RLS,
+// but requires admin authentication to prevent unauthorized access
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { createAdminClient } from '@/lib/supabase/server';
 
 export async function POST(req: NextRequest) {
   try {
+    // 1. Verify admin authentication before allowing service-role operations
+    const adminSupabase = await createAdminClient();
+    const { data: { user } } = await adminSupabase.auth.getUser();
+
+    if (!user) {
+      return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
+    }
+
+    // 2. Verify user has admin role
+    const { data: profile } = await adminSupabase
+      .from('user_profiles')
+      .select('role')
+      .eq('user_id', user.id)
+      .single();
+
+    if (profile?.role !== 'admin') {
+      return NextResponse.json({ error: 'Accès interdit - admin requis' }, { status: 403 });
+    }
+
+    // 3. Parse request body (userId can be different from authenticated user for admin operations)
     const { userId, capsuleId, score } = await req.json();
 
     if (!userId || !capsuleId) {
       return NextResponse.json({ error: 'userId et capsuleId requis' }, { status: 400 });
     }
 
-    // Use direct Supabase client with service role key
+    // 4. Use direct Supabase client with service role key (admin-authorized operation)
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.SUPABASE_SERVICE_ROLE_KEY!,
@@ -24,7 +47,7 @@ export async function POST(req: NextRequest) {
       }
     );
 
-    // Direct upsert without RLS
+    // 5. Direct upsert without RLS (bypasses security for admin/testing purposes)
     const { error } = await supabase
       .from('user_progress')
       .upsert({

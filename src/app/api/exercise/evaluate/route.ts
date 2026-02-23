@@ -5,6 +5,18 @@ import { createClient } from '@/lib/supabase/server';
 
 export async function POST(req: NextRequest) {
   try {
+    const supabase = await createClient();
+
+    // Vérifier l'authentification
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Non autorisé' },
+        { status: 401 }
+      );
+    }
+
     const body = await req.json();
     const {
       exerciseId,
@@ -13,12 +25,20 @@ export async function POST(req: NextRequest) {
       userId,
       capsuleId
     } = body;
-    
+
     // Validation
     if (!userResponse || !expectedCriteria || !userId) {
       return NextResponse.json(
         { error: 'Paramètres manquants' },
         { status: 400 }
+      );
+    }
+
+    // Vérifier que l'utilisateur authentifié correspond au userId
+    if (user.id !== userId) {
+      return NextResponse.json(
+        { error: 'Accès refusé' },
+        { status: 403 }
       );
     }
     
@@ -77,9 +97,8 @@ Format :
     // Extraire le score
     const scoreMatch = feedbackContent.match(/Score\s*:\s*(\d+)/i);
     const score = scoreMatch ? parseInt(scoreMatch[1]) : 70;
-    
+
     // Mettre à jour l'exercice
-    const supabase = await createClient();
     if (exerciseId) {
       await supabase
         .from('generated_exercises')
