@@ -308,12 +308,12 @@ describe('Rate Limiting - Integration Tests', () => {
       // But we can verify the behavior by making requests until blocked
 
       // Act - make requests one by one
-      const r1 = await limiter(createMockRequest(url, ip)); // 1st - should pass
-      const r2 = await limiter(createMockRequest(url, ip)); // 2nd - should pass
-      const r3 = await limiter(createMockRequest(url, ip)); // 3rd - should pass
-      const r4 = await limiter(createMockRequest(url, ip)); // 4th - should pass
-      const r5 = await limiter(createMockRequest(url, ip)); // 5th - should pass
-      const r6 = await limiter(createMockRequest(url, ip)); // 6th - should be blocked
+      const { response: r1 } = await limiter(createMockRequest(url, ip)); // 1st - should pass
+      const { response: r2 } = await limiter(createMockRequest(url, ip)); // 2nd - should pass
+      const { response: r3 } = await limiter(createMockRequest(url, ip)); // 3rd - should pass
+      const { response: r4 } = await limiter(createMockRequest(url, ip)); // 4th - should pass
+      const { response: r5 } = await limiter(createMockRequest(url, ip)); // 5th - should pass
+      const { response: r6 } = await limiter(createMockRequest(url, ip)); // 6th - should be blocked
 
       // Assert
       expect(r1).toBeNull();
@@ -345,8 +345,8 @@ describe('Rate Limiting - Integration Tests', () => {
       const responses = await Promise.all(promises);
 
       // Assert - exactly 10 should be allowed (null), 5 should be blocked (429)
-      const allowedCount = responses.filter((r) => r === null).length;
-      const blockedCount = responses.filter((r) => r?.status === 429).length;
+      const allowedCount = responses.filter((r) => r.response === null).length;
+      const blockedCount = responses.filter((r) => r.response?.status === 429).length;
 
       expect(allowedCount).toBe(10);
       expect(blockedCount).toBe(5);
@@ -370,7 +370,7 @@ describe('Rate Limiting - Integration Tests', () => {
       const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
 
       // Act - even if there's an internal error, it should fail open (return null)
-      const response = await limiter(req);
+      const { response } = await limiter(req);
 
       // Assert - should allow request (fail open)
       // This tests that the try-catch in createRateLimiter works
@@ -468,7 +468,7 @@ describe('Rate Limiting - Integration Tests', () => {
 
       // Act - exceed limit
       await makeRequests(limiter, url, 2, ip);
-      const blockedResponse = await limiter(createMockRequest(url, ip));
+      const { response: blockedResponse } = await limiter(createMockRequest(url, ip));
 
       // Assert
       expect(blockedResponse).not.toBeNull();
@@ -490,7 +490,7 @@ describe('Rate Limiting - Integration Tests', () => {
 
       // Act
       await makeRequests(limiter, url, 1, ip);
-      const blockedResponse = await limiter(createMockRequest(url, ip));
+      const { response: blockedResponse } = await limiter(createMockRequest(url, ip));
 
       // Assert
       expect(blockedResponse?.headers.get('Content-Type')).toBe('application/json');
