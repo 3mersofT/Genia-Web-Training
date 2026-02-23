@@ -15,10 +15,18 @@ const rateLimiter = createRateLimiter({
 
 export async function POST(req: NextRequest) {
   // Apply rate limiting
-  const rateLimitResponse = await rateLimiter(req);
+  const { response: rateLimitResponse, result: rateLimitResult } = await rateLimiter(req);
   if (rateLimitResponse) {
     return rateLimitResponse;
   }
+
+  // Helper to add rate limit headers
+  const addHeaders = (response: NextResponse) => {
+    response.headers.set('X-RateLimit-Limit', rateLimitResult.limit.toString());
+    response.headers.set('X-RateLimit-Remaining', rateLimitResult.remaining.toString());
+    response.headers.set('Retry-After', Math.ceil((rateLimitResult.reset - Date.now()) / 1000).toString());
+    return response;
+  };
 
   try {
     const supabase = await createClient();
@@ -27,16 +35,16 @@ export async function POST(req: NextRequest) {
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {
-      return NextResponse.json(
+      return addHeaders(NextResponse.json(
         { error: 'Non autorisé' },
         { status: 401 }
-      );
+      ));
     }
 
     const { capsuleId, score } = await req.json();
 
     if (!capsuleId) {
-      return NextResponse.json({ error: 'capsuleId requis' }, { status: 400 });
+      return addHeaders(NextResponse.json({ error: 'capsuleId requis' }, { status: 400 }));
     }
 
     // Utiliser l'ID de l'utilisateur authentifié au lieu de faire confiance au client
@@ -115,13 +123,13 @@ export async function POST(req: NextRequest) {
     // 🏆 Vérifier et notifier pour les badges récemment gagnés
     await checkAndNotifyBadges(userId, supabase);
 
-    return NextResponse.json({
+    return addHeaders(NextResponse.json({
       ok: true,
       xpResult: xpResult || undefined
-    });
+    }));
   } catch (error) {
     console.error('Erreur completion capsule:', error);
-    return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 });
+    return addHeaders(NextResponse.json({ error: 'Erreur serveur' }, { status: 500 }));
   }
 }
 
