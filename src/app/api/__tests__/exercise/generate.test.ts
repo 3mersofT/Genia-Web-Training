@@ -1,4 +1,6 @@
 /**
+ * @jest-environment node
+ *
  * Unit Tests for /api/exercise/generate Authentication
  *
  * Tests verify that the exercise generation API route enforces proper authentication and authorization:

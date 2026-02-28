@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { CreateNotificationSchema, UpdateNotificationSchema } from '@/lib/validations/notifications.schema';
 
 export async function GET(request: NextRequest) {
   try {
@@ -83,28 +84,26 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
+
+    // Validation with Zod
+    const validationResult = CreateNotificationSchema.safeParse(body);
+
+    if (!validationResult.success) {
+      return NextResponse.json(
+        {
+          error: 'Validation failed',
+          details: validationResult.error.errors,
+        },
+        { status: 400 }
+      );
+    }
+
     const {
       type,
       title,
       message,
       data
-    } = body;
-
-    // Validation
-    if (!type || !title || !message) {
-      return NextResponse.json(
-        { error: 'Données manquantes' },
-        { status: 400 }
-      );
-    }
-
-    const validTypes = ['daily_challenge', 'streak_reminder', 'badge_earned', 'peer_review', 'new_module', 'ai_nudge'];
-    if (!validTypes.includes(type)) {
-      return NextResponse.json(
-        { error: 'Type de notification invalide' },
-        { status: 400 }
-      );
-    }
+    } = validationResult.data;
 
     // Insérer la notification
     const { data: notification, error } = await supabase
@@ -154,7 +153,21 @@ export async function PATCH(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { notificationId, markAllAsRead } = body;
+
+    // Validation with Zod
+    const validationResult = UpdateNotificationSchema.safeParse(body);
+
+    if (!validationResult.success) {
+      return NextResponse.json(
+        {
+          error: 'Validation failed',
+          details: validationResult.error.errors,
+        },
+        { status: 400 }
+      );
+    }
+
+    const { notificationId, markAllAsRead } = validationResult.data;
 
     // Marquer toutes les notifications comme lues
     if (markAllAsRead) {
@@ -178,13 +191,6 @@ export async function PATCH(request: NextRequest) {
     }
 
     // Marquer une notification spécifique comme lue
-    if (!notificationId) {
-      return NextResponse.json(
-        { error: 'ID de notification manquant' },
-        { status: 400 }
-      );
-    }
-
     const { data: notification, error } = await supabase
       .from('student_notifications')
       .update({ is_read: true })

@@ -1,0 +1,34 @@
+# Code Audit: Manual Validation Checks in API Routes
+
+## Summary
+This audit identifies remaining manual validation checks in API routes.
+
+## Routes with Manual INPUT Validation (NEEDS FIX)
+
+1. /api/exercise/generate/route.ts (Line 29-34)
+   - Validates: capsuleTitle, concepts, userLevel, userId
+   - Schema EXISTS: GenerateExerciseSchema
+   - Action: Route needs refactoring to use schema
+
+2. /api/notifications/route.ts
+   - POST (Line 94-107): Validates type, title, message
+   - PATCH (Line 181-186): Validates notificationId  
+   - Schema: MISSING
+   - Action: Create notifications.schema.ts
+
+3. /api/certificates/generate/route.ts (Line 9-14)
+   - Validates: certificateType enum
+   - Schema: MISSING
+   - Action: Create certificates.schema.ts
+
+4. /api/progress/complete-direct/route.ts (Line 34-36)
+   - Validates: userId, capsuleId
+   - Schema: PARTIAL (CompleteProgressSchema exists but doesn't cover this endpoint)
+   - Action: Add CompleteProgressDirectSchema
+
+## Count: 4 routes with manual validation remaining
+
+## Verification Result: FAILED
+Expected: 0 or only non-validation conditionals
+Actual: 4 routes with input validation using if-checks
+

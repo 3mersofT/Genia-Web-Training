@@ -1,20 +1,31 @@
 import { NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/server'
+import { ResolveIdentifierSchema } from '@/lib/validations/auth.schema'
 
 export async function POST(request: Request) {
   try {
-    const { identifier } = await request.json() as { identifier?: string }
-    const value = (identifier || '').trim()
-    if (!value) return NextResponse.json({ error: 'empty' }, { status: 400 })
+    const body = await request.json()
+
+    // Validate request body with Zod schema
+    const validationResult = ResolveIdentifierSchema.safeParse(body)
+
+    if (!validationResult.success) {
+      return NextResponse.json(
+        { error: 'Invalid request data', details: validationResult.error.format() },
+        { status: 400 }
+      )
+    }
+
+    const { identifier } = validationResult.data
 
     // If it looks like an email, return directly
-    if (value.includes('@')) return NextResponse.json({ email: value })
+    if (identifier.includes('@')) return NextResponse.json({ email: identifier })
 
     const supabase = await createAdminClient()
     const { data, error } = await supabase
       .from('user_profiles')
       .select('email')
-      .ilike('username', value)
+      .ilike('username', identifier)
       .maybeSingle()
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })

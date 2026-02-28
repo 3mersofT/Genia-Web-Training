@@ -1,4 +1,6 @@
 /**
+ * @jest-environment node
+ *
  * Unit Tests for /api/chat Authentication
  *
  * Tests verify that the chat API route enforces proper authentication:
@@ -193,7 +195,8 @@ describe('/api/chat - Authentication Tests', () => {
       const data = await response.json();
 
       expect(response.status).toBe(400);
-      expect(data.error).toBe('Messages requis');
+      expect(data.error).toBe('Validation failed');
+      expect(data.details).toBeDefined();
     });
 
     it('should use authenticated user.id for quota tracking', async () => {

@@ -5,8 +5,30 @@ import { createClient } from '@/lib/supabase/server';
 import { LevelProgressionService } from '@/services/levelProgressionService';
 import type { AwardXPResult } from '@/types/levels.types';
 import { studentNotificationService } from '@/lib/services/studentNotificationService';
+import { createRateLimiter } from '@/lib/rate-limiter';
+
+// Rate limiter: 30 requests per minute
+const rateLimiter = createRateLimiter({
+  interval: 60000, // 1 minute in milliseconds
+  limit: 30, // 30 requests per minute
+});
+import { CompleteProgressSchema } from '@/lib/validations/progress.schema';
 
 export async function POST(req: NextRequest) {
+  // Apply rate limiting
+  const { response: rateLimitResponse, result: rateLimitResult } = await rateLimiter(req);
+  if (rateLimitResponse) {
+    return rateLimitResponse;
+  }
+
+  // Helper to add rate limit headers
+  const addHeaders = (response: NextResponse) => {
+    response.headers.set('X-RateLimit-Limit', rateLimitResult.limit.toString());
+    response.headers.set('X-RateLimit-Remaining', rateLimitResult.remaining.toString());
+    response.headers.set('Retry-After', Math.ceil((rateLimitResult.reset - Date.now()) / 1000).toString());
+    return response;
+  };
+
   try {
     const supabase = await createClient();
 
@@ -14,17 +36,26 @@ export async function POST(req: NextRequest) {
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {
-      return NextResponse.json(
+      return addHeaders(NextResponse.json(
         { error: 'Non autorisé' },
         { status: 401 }
+      ));
+    }
+
+    // Valider les données de la requête
+    const body = await req.json();
+    const validation = CompleteProgressSchema.safeParse(body);
+
+    if (!capsuleId) {
+      return addHeaders(NextResponse.json({ error: 'capsuleId requis' }, { status: 400 }));
+    if (!validation.success) {
+      return NextResponse.json(
+        { error: 'Invalid request data', details: validation.error.errors },
+        { status: 400 }
       );
     }
 
-    const { capsuleId, score } = await req.json();
-
-    if (!capsuleId) {
-      return NextResponse.json({ error: 'capsuleId requis' }, { status: 400 });
-    }
+    const { capsuleId, score } = validation.data;
 
     // Utiliser l'ID de l'utilisateur authentifié au lieu de faire confiance au client
     const userId = user.id;
@@ -102,13 +133,13 @@ export async function POST(req: NextRequest) {
     // 🏆 Vérifier et notifier pour les badges récemment gagnés
     await checkAndNotifyBadges(userId, supabase);
 
-    return NextResponse.json({
+    return addHeaders(NextResponse.json({
       ok: true,
       xpResult: xpResult || undefined
-    });
+    }));
   } catch (error) {
     console.error('Erreur completion capsule:', error);
-    return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 });
+    return addHeaders(NextResponse.json({ error: 'Erreur serveur' }, { status: 500 }));
   }
 }
 
