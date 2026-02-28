@@ -6,6 +6,7 @@ import PWAProvider from '@/components/providers/PWAProvider'
 import { ToastProvider } from '@/components/ui/Toast'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import ErrorBoundary from '@/components/ErrorBoundary'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -144,7 +145,9 @@ export default function RootLayout({
           <GENIAProvider>
             <PWAProvider>
               <ToastProvider>
-                {children}
+                <ErrorBoundary>
+                  {children}
+                </ErrorBoundary>
               </ToastProvider>
             </PWAProvider>
           </GENIAProvider>
