@@ -1,8 +1,3 @@
 {
-  "extends": "next/core-web-vitals",
-  "rules": {
-    "react/no-unescaped-entities": "off",
-    "react-hooks/exhaustive-deps": "off",
-    "@next/next/no-assign-module-variable": "off"
-  }
+  "extends": "next/core-web-vitals"
 }
