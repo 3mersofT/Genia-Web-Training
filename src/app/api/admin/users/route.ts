@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/supabase/server';
+import { CreateUserSchema, DeleteUserSchema } from '@/lib/validations/admin.schema';
 
 export async function GET() {
   const supabase = await createAdminClient();
@@ -72,11 +73,16 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { email, password, display_name, role = 'student', username } = body;
 
-    if (!email || !password || !display_name) {
-      return NextResponse.json({ error: 'Email, mot de passe et nom requis' }, { status: 400 });
+    // Validate request body with Zod schema
+    const validation = CreateUserSchema.safeParse(body);
+
+    if (!validation.success) {
+      const errors = validation.error.errors.map(err => `${err.path.join('.')}: ${err.message}`);
+      return NextResponse.json({ error: errors.join(', ') }, { status: 400 });
     }
+
+    const { email, password, display_name, role, username } = validation.data;
 
     // Créer l'utilisateur dans auth.users
     const { data: authData, error: authCreateError } = await supabase.auth.admin.createUser({
@@ -90,7 +96,6 @@ export async function POST(request: Request) {
     });
 
     if (authCreateError) {
-      console.error('Erreur création auth:', authCreateError);
       return NextResponse.json({ error: 'Erreur création utilisateur' }, { status: 500 });
     }
 
@@ -107,7 +112,6 @@ export async function POST(request: Request) {
       });
 
     if (profileError) {
-      console.error('Erreur création profil:', profileError);
       // Nettoyer l'utilisateur auth si le profil échoue
       await supabase.auth.admin.deleteUser(authData.user.id);
       return NextResponse.json({ error: 'Erreur création profil' }, { status: 500 });
@@ -124,7 +128,6 @@ export async function POST(request: Request) {
     });
 
   } catch (error) {
-    console.error('Erreur API création utilisateur:', error);
     return NextResponse.json({ error: 'Erreur interne' }, { status: 500 });
   }
 }
@@ -151,11 +154,18 @@ export async function DELETE(request: Request) {
     }
 
     const { searchParams } = new URL(request.url);
-    const userId = searchParams.get('userId');
 
-    if (!userId) {
-      return NextResponse.json({ error: 'ID utilisateur requis' }, { status: 400 });
+    // Validate query parameters with Zod schema
+    const validation = DeleteUserSchema.safeParse({
+      userId: searchParams.get('userId')
+    });
+
+    if (!validation.success) {
+      const errors = validation.error.errors.map(err => `${err.path.join('.')}: ${err.message}`);
+      return NextResponse.json({ error: errors.join(', ') }, { status: 400 });
     }
+
+    const { userId } = validation.data;
 
     // Supprimer le profil utilisateur
     const { error: profileError } = await supabase
@@ -164,22 +174,19 @@ export async function DELETE(request: Request) {
       .eq('user_id', userId);
 
     if (profileError) {
-      console.error('Erreur suppression profil:', profileError);
       return NextResponse.json({ error: 'Erreur suppression profil' }, { status: 500 });
     }
 
     // Supprimer l'utilisateur de l'authentification
     const { error: deleteAuthError } = await supabase.auth.admin.deleteUser(userId);
-    
+
     if (deleteAuthError) {
-      console.error('Erreur suppression auth:', deleteAuthError);
       return NextResponse.json({ error: 'Erreur suppression authentification' }, { status: 500 });
     }
 
     return NextResponse.json({ success: true });
 
   } catch (error) {
-    console.error('Erreur API suppression utilisateur:', error);
     return NextResponse.json({ error: 'Erreur interne' }, { status: 500 });
   }
 }

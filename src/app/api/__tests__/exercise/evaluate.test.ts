@@ -127,7 +127,8 @@ describe('/api/exercise/evaluate - Authentication Tests', () => {
       const data = await response.json();
 
       expect(response.status).toBe(400);
-      expect(data.error).toBe('Paramètres manquants');
+      expect(data.error).toBe('Validation failed');
+      expect(data.details).toBeDefined();
     });
   });
 

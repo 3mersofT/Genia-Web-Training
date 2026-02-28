@@ -2,6 +2,8 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { ChatRequestSchema } from '@/lib/validations/chat.schema';
+import { z } from 'zod';
 
 // Configuration des modèles
 const MODELS_CONFIG = {
@@ -95,24 +97,30 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
+
+    // Validate request body with Zod
+    const validationResult = ChatRequestSchema.safeParse(body);
+
+    if (!validationResult.success) {
+      return NextResponse.json(
+        {
+          error: 'Validation failed',
+          details: validationResult.error.format()
+        },
+        { status: 400 }
+      );
+    }
+
     const {
       messages,
-      model = 'mistral-medium-3',
+      model,
       temperature,
       maxTokens,
       conversationId,
       capsuleId,
-      reasoning = 'implicit'
-    } = body;
+      reasoning
+    } = validationResult.data;
 
-    // Validation
-    if (!messages) {
-      return NextResponse.json(
-        { error: 'Messages requis' },
-        { status: 400 }
-      );
-    }
-    
     // Configuration du modèle
     const config = MODELS_CONFIG[model as keyof typeof MODELS_CONFIG];
     if (!config) {
