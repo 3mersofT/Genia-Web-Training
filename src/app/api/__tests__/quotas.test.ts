@@ -59,7 +59,7 @@ describe('/api/quotas - Authentication Tests', () => {
       });
 
       const request = new NextRequest(
-        'http://localhost:3000/api/quotas?userId=test-user-123'
+        'http://localhost:3000/api/quotas?userId=123e4567-e89b-12d3-a456-426614174000'
       );
 
       const response = await GET(request);
@@ -78,7 +78,7 @@ describe('/api/quotas - Authentication Tests', () => {
       });
 
       const request = new NextRequest(
-        'http://localhost:3000/api/quotas?userId=test-user-123'
+        'http://localhost:3000/api/quotas?userId=123e4567-e89b-12d3-a456-426614174000'
       );
 
       const response = await GET(request);
@@ -91,7 +91,7 @@ describe('/api/quotas - Authentication Tests', () => {
     it('should return 400 when userId is missing', async () => {
       // Mock: Authenticated user
       const mockUser = {
-        id: 'test-user-123',
+        id: '123e4567-e89b-12d3-a456-426614174000',
         email: 'test@example.com',
       };
 
@@ -106,15 +106,15 @@ describe('/api/quotas - Authentication Tests', () => {
       const data = await response.json();
 
       expect(response.status).toBe(400);
-      expect(data.error).toBe('userId requis');
+      expect(data.error).toBe('Invalid request data');
     });
   });
 
   describe('Authorization Verification (userId Mismatch)', () => {
     it('should return 403 when userId does not match authenticated user', async () => {
       // Mock: Authenticated user
-      const authenticatedUserId = 'user-123';
-      const requestedUserId = 'user-456'; // Different user!
+      const authenticatedUserId = '11111111-1111-1111-1111-111111111111';
+      const requestedUserId = '22222222-2222-2222-2222-222222222222'; // Different user!
 
       mockAuth.getUser.mockResolvedValue({
         data: {
@@ -142,8 +142,8 @@ describe('/api/quotas - Authentication Tests', () => {
     });
 
     it('should prevent IDOR attack - user cannot access another user quotas', async () => {
-      const attackerUserId = 'attacker-123';
-      const victimUserId = 'victim-456';
+      const attackerUserId = '33333333-3333-3333-3333-333333333333';
+      const victimUserId = '44444444-4444-4444-4444-444444444444';
 
       // Mock: Attacker is authenticated
       mockAuth.getUser.mockResolvedValue({
@@ -179,7 +179,7 @@ describe('/api/quotas - Authentication Tests', () => {
 
   describe('Successful Authorization', () => {
     it('should return 200 when userId matches authenticated user', async () => {
-      const userId = 'test-user-123';
+      const userId = '123e4567-e89b-12d3-a456-426614174000';
 
       // Mock: Authenticated user
       mockAuth.getUser.mockResolvedValue({
@@ -240,7 +240,7 @@ describe('/api/quotas - Authentication Tests', () => {
     });
 
     it('should only access data for the authenticated user', async () => {
-      const authenticatedUserId = 'auth-user-789';
+      const authenticatedUserId = '789e4567-e89b-12d3-a456-426614174000';
 
       // Mock: Authenticated user
       mockAuth.getUser.mockResolvedValue({
@@ -295,7 +295,7 @@ describe('/api/quotas - Authentication Tests', () => {
 
   describe('Edge Cases', () => {
     it('should handle database error gracefully', async () => {
-      const userId = 'test-user-123';
+      const userId = '456e4567-e89b-12d3-a456-426614174000';
 
       mockAuth.getUser.mockResolvedValue({
         data: {
@@ -341,7 +341,7 @@ describe('/api/quotas - Authentication Tests', () => {
       const data = await response.json();
 
       expect(response.status).toBe(400);
-      expect(data.error).toBe('userId requis');
+      expect(data.error).toBe('Invalid request data');
     });
   });
 });

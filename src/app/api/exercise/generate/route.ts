@@ -2,6 +2,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { GenerateExerciseSchema } from '@/lib/validations/exercise.schema';
 
 export async function POST(req: NextRequest) {
   try {
@@ -18,20 +19,26 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
+
+    // Validation with Zod
+    const validationResult = GenerateExerciseSchema.safeParse(body);
+
+    if (!validationResult.success) {
+      return NextResponse.json(
+        {
+          error: 'Validation failed',
+          details: validationResult.error.errors,
+        },
+        { status: 400 }
+      );
+    }
+
     const {
       capsuleTitle,
       concepts,
       userLevel,
       userId
-    } = body;
-
-    // Validation
-    if (!capsuleTitle || !concepts || !userLevel || !userId) {
-      return NextResponse.json(
-        { error: 'Paramètres manquants' },
-        { status: 400 }
-      );
-    }
+    } = validationResult.data;
 
     // Vérifier que le userId correspond à l'utilisateur authentifié
     if (userId !== user.id) {
