@@ -19,7 +19,7 @@ Documentation for end-users, testers, and feature-specific guides.
 ### Core User Guides
 - [Student Guide](guides/STUDENT_GUIDE.md) - Complete guide for students using the platform
 - [Beta Testers Setup](guides/BETA_TESTERS_SETUP.md) - Setup instructions for beta testers
-- [Feedback System Guide](FEEDBACK_SYSTEM_GUIDE.md) - How to use the feedback system
+- [Feedback System Guide](guides/FEEDBACK_SYSTEM_GUIDE.md) - How to use the feedback system
 
 ### Testing & Verification Guides
 - [Notification Testing Guide](guides/NOTIFICATION_TESTING_GUIDE.md) - Testing push notifications and alerts
