@@ -3,63 +3,89 @@
 // Désactiver le prerendering pour éviter l'erreur Supabase sur Vercel
 export const dynamic = 'force-dynamic'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { createClient } from '@/lib/supabase/client';
+import { registerSchema, type RegisterFormData } from '@/lib/validations/auth';
 import { Sparkles, Mail, Lock, User, ArrowRight, AlertCircle, AtSign, CheckCircle2, XCircle } from 'lucide-react';
 
 export default function RegisterPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [username, setUsername] = useState('');
   const [usernameOk, setUsernameOk] = useState<boolean | null>(null);
   const [isChecking, setIsChecking] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [info, setInfo] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const supabase = createClient();
 
-  const checkUsername = async (value: string) => {
-    const val = value.toLowerCase().trim();
-    setUsername(val);
-    setUsernameOk(null);
-    setIsChecking(true);
-    try {
-      if (!/^[a-z0-9_-]{3,20}$/.test(val)) {
-        setUsernameOk(false);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema),
+    mode: 'onBlur', // Validate on blur for better UX
+  });
+
+  const usernameValue = watch('username');
+
+  // Check username availability when it changes
+  useEffect(() => {
+    const checkUsername = async (value: string) => {
+      if (!value) {
+        setUsernameOk(null);
         return;
       }
-      const res = await fetch(`/api/auth/username-availability?username=${encodeURIComponent(val)}`);
-      const data = await res.json();
-      setUsernameOk(Boolean(data?.available));
-    } finally {
-      setIsChecking(false);
-    }
-  };
 
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
+      const val = value.toLowerCase().trim();
+      setUsernameOk(null);
+      setIsChecking(true);
+
+      try {
+        if (!/^[a-z0-9_-]{3,20}$/.test(val)) {
+          setUsernameOk(false);
+          return;
+        }
+        const res = await fetch(`/api/auth/username-availability?username=${encodeURIComponent(val)}`);
+        const data = await res.json();
+        setUsernameOk(Boolean(data?.available));
+      } finally {
+        setIsChecking(false);
+      }
+    };
+
+    if (usernameValue) {
+      const debounce = setTimeout(() => {
+        checkUsername(usernameValue);
+      }, 300);
+      return () => clearTimeout(debounce);
+    }
+  }, [usernameValue]);
+
+  const onSubmit = async (data: RegisterFormData) => {
     setError(null);
+    setInfo(null);
+    setLoading(true);
 
     try {
       if (!usernameOk) {
         setError("Nom d'utilisateur indisponible ou invalide");
-        setIsLoading(false);
+        setLoading(false);
         return;
       }
 
       // 1. Créer l'utilisateur
       const { data: authData, error: authError } = await supabase.auth.signUp({
-        email,
-        password,
+        email: data.email,
+        password: data.password,
         options: {
           data: {
-            full_name: fullName,
-            username, // picked by trigger to fill user_profiles.username
+            full_name: data.fullName,
+            username: data.username, // picked by trigger to fill user_profiles.username
           },
           emailRedirectTo: typeof window !== 'undefined' ? `${window.location.origin}/login` : undefined
         }
@@ -77,7 +103,7 @@ export default function RegisterPage() {
     } catch (err: any) {
       setError(err.message || "Une erreur est survenue lors de l'inscription");
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
@@ -99,40 +125,74 @@ export default function RegisterPage() {
         <div className="bg-white rounded-2xl shadow-xl p-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Inscription</h2>
 
-          {(error || info) && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700">
+          {error && (
+            <div
+              className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700"
+              role="alert"
+              aria-live="polite"
+            >
               <AlertCircle className="w-4 h-4" />
-              <span className="text-sm">{error || info}</span>
+              <span className="text-sm">{error}</span>
             </div>
           )}
 
-          <form onSubmit={handleRegister} className="space-y-4">
+          {info && (
+            <div
+              className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg flex items-center gap-2 text-green-700"
+              role="alert"
+              aria-live="polite"
+            >
+              <AlertCircle className="w-4 h-4" />
+              <span className="text-sm">{info}</span>
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Nom complet</label>
+              <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">Nom complet</label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
+                  id="fullName"
                   type="text"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  {...register('fullName')}
+                  aria-invalid={errors.fullName ? 'true' : 'false'}
+                  aria-describedby={errors.fullName ? 'fullName-error' : undefined}
+                  className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                    errors.fullName
+                      ? 'border-red-300 focus:ring-red-500'
+                      : 'border-gray-300'
+                  }`}
                   placeholder="Jean Dupont"
-                  required
                 />
               </div>
+              {errors.fullName && (
+                <p
+                  id="fullName-error"
+                  className="mt-1 text-sm text-red-600"
+                  role="alert"
+                >
+                  {errors.fullName.message}
+                </p>
+              )}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Nom d'utilisateur</label>
+              <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">Nom d'utilisateur</label>
               <div className="relative">
                 <AtSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
+                  id="username"
                   type="text"
-                  value={username}
-                  onChange={(e) => checkUsername(e.target.value)}
-                  className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  {...register('username')}
+                  aria-invalid={errors.username ? 'true' : 'false'}
+                  aria-describedby={errors.username ? 'username-error' : undefined}
+                  className={`w-full pl-10 pr-10 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                    errors.username
+                      ? 'border-red-300 focus:ring-red-500'
+                      : 'border-gray-300'
+                  }`}
                   placeholder="mon_username"
-                  required
                 />
                 <div className="absolute right-3 top-1/2 -translate-y-1/2">
                   {isChecking ? (
@@ -144,57 +204,119 @@ export default function RegisterPage() {
                   ) : null}
                 </div>
               </div>
-              <p className="text-xs text-gray-500 mt-1">3–20 caractères, a–z, 0–9, _ et -</p>
+              {errors.username && (
+                <p
+                  id="username-error"
+                  className="mt-1 text-sm text-red-600"
+                  role="alert"
+                >
+                  {errors.username.message}
+                </p>
+              )}
+              {!errors.username && (
+                <p className="text-xs text-gray-500 mt-1">3–20 caractères, a–z, 0–9, _ et -</p>
+              )}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
+                  id="email"
                   type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  {...register('email')}
+                  aria-invalid={errors.email ? 'true' : 'false'}
+                  aria-describedby={errors.email ? 'email-error' : undefined}
+                  className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                    errors.email
+                      ? 'border-red-300 focus:ring-red-500'
+                      : 'border-gray-300'
+                  }`}
                   placeholder="vous@exemple.com"
-                  required
                 />
               </div>
+              {errors.email && (
+                <p
+                  id="email-error"
+                  className="mt-1 text-sm text-red-600"
+                  role="alert"
+                >
+                  {errors.email.message}
+                </p>
+              )}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
+                  id="password"
                   type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  {...register('password')}
+                  aria-invalid={errors.password ? 'true' : 'false'}
+                  aria-describedby={errors.password ? 'password-error' : undefined}
+                  className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                    errors.password
+                      ? 'border-red-300 focus:ring-red-500'
+                      : 'border-gray-300'
+                  }`}
                   placeholder="••••••••"
-                  minLength={6}
-                  required
                 />
               </div>
-              <p className="text-xs text-gray-500 mt-1">Minimum 6 caractères</p>
+              {errors.password && (
+                <p
+                  id="password-error"
+                  className="mt-1 text-sm text-red-600"
+                  role="alert"
+                >
+                  {errors.password.message}
+                </p>
+              )}
+              {!errors.password && (
+                <p className="text-xs text-gray-500 mt-1">Minimum 6 caractères</p>
+              )}
             </div>
 
-            <div className="flex items-start">
-              <input type="checkbox" id="terms" className="mt-1 w-4 h-4 text-blue-600 border-gray-300 rounded" required />
-              <label htmlFor="terms" className="ml-2 text-sm text-gray-600">
-                J'accepte les{' '}
-                <Link href="#" className="text-blue-600 hover:underline">conditions d'utilisation</Link>{' '}
-                et la{' '}
-                <Link href="#" className="text-blue-600 hover:underline">politique de confidentialité</Link>
-              </label>
+            <div>
+              <div className="flex items-start">
+                <input
+                  type="checkbox"
+                  id="terms"
+                  {...register('terms')}
+                  aria-invalid={errors.terms ? 'true' : 'false'}
+                  aria-describedby={errors.terms ? 'terms-error' : undefined}
+                  className={`mt-1 w-4 h-4 text-blue-600 rounded ${
+                    errors.terms
+                      ? 'border-red-300 focus:ring-red-500'
+                      : 'border-gray-300'
+                  }`}
+                />
+                <label htmlFor="terms" className="ml-2 text-sm text-gray-600">
+                  J'accepte les{' '}
+                  <Link href="#" className="text-blue-600 hover:underline">conditions d'utilisation</Link>{' '}
+                  et la{' '}
+                  <Link href="#" className="text-blue-600 hover:underline">politique de confidentialité</Link>
+                </label>
+              </div>
+              {errors.terms && (
+                <p
+                  id="terms-error"
+                  className="mt-1 text-sm text-red-600"
+                  role="alert"
+                >
+                  {errors.terms.message}
+                </p>
+              )}
             </div>
 
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={loading}
               className="w-full py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              {isLoading ? (
+              {loading ? (
                 <>
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                   Inscription...
