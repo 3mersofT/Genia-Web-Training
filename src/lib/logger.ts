@@ -54,7 +54,10 @@ const SENSITIVE_FIELDS = [
   'private_key',
   'creditCard',
   'ssn',
-  'authorization'
+  'authorization',
+  'email',
+  'emailAddress',
+  'email_address'
 ]
 
 /**
