@@ -95,6 +95,62 @@ async function getModule3Metadata() {
   return data.default;
 }
 
+// Dynamic import helper functions for capsule files
+async function getModule1Capsules1_3() {
+  const data = await import('@/data/modules/module1_capsules_1_3.json');
+  return data.default;
+}
+
+async function getModule1Capsules4_7() {
+  const data = await import('@/data/modules/module1_capsules_4_7.json');
+  return data.default;
+}
+
+async function getModule1Capsules8_12() {
+  const data = await import('@/data/modules/module1_capsules_8_12.json');
+  return data.default;
+}
+
+async function getModule2Capsules13_15() {
+  const data = await import('@/data/modules/module2_capsules_13_15.json');
+  return data.default;
+}
+
+async function getModule2Capsules16_18() {
+  const data = await import('@/data/modules/module2_capsules_16_18.json');
+  return data.default;
+}
+
+async function getModule2Capsules19_21() {
+  const data = await import('@/data/modules/module2_capsules_19_21.json');
+  return data.default;
+}
+
+async function getModule2Capsules22_24() {
+  const data = await import('@/data/modules/module2_capsules_22_24.json');
+  return data.default;
+}
+
+async function getModule3Capsules25_27() {
+  const data = await import('@/data/modules/module3_capsules_25_27.json');
+  return data.default;
+}
+
+async function getModule3Capsules28_30() {
+  const data = await import('@/data/modules/module3_capsules_28_30.json');
+  return data.default;
+}
+
+async function getModule3Capsules31_33() {
+  const data = await import('@/data/modules/module3_capsules_31_33.json');
+  return data.default;
+}
+
+async function getModule3Capsules34_36() {
+  const data = await import('@/data/modules/module3_capsules_34_36.json');
+  return data.default;
+}
+
 // Combiner les données des capsules
 const allCapsules: Record<string, any> = {
   ...getCapsules(module1Capsules1_3).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
