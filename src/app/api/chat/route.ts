@@ -9,6 +9,8 @@ const rateLimiter = createRateLimiter({
   interval: 60000, // 1 minute in milliseconds
   limit: 10, // 10 requests per minute
 });
+import { ChatRequestSchema } from '@/lib/validations/chat.schema';
+import { z } from 'zod';
 
 // Configuration des modèles
 const MODELS_CONFIG = {
@@ -116,15 +118,29 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
+
+    // Validate request body with Zod
+    const validationResult = ChatRequestSchema.safeParse(body);
+
+    if (!validationResult.success) {
+      return NextResponse.json(
+        {
+          error: 'Validation failed',
+          details: validationResult.error.format()
+        },
+        { status: 400 }
+      );
+    }
+
     const {
       messages,
-      model = 'mistral-medium-3',
+      model,
       temperature,
       maxTokens,
       conversationId,
       capsuleId,
-      reasoning = 'implicit'
-    } = body;
+      reasoning
+    } = validationResult.data;
 
     // Validation
     if (!messages) {
