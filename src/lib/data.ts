@@ -314,10 +314,21 @@ function transformModule(config: any, index: number, allCapsules: Record<string,
 
 // Charger tous les modules (version asynchrone avec dynamic imports)
 export async function getAllModules(): Promise<Module[]> {
+  // Check cache first
+  if (moduleCache.has('all-modules')) {
+    return moduleCache.get('all-modules')!;
+  }
+
+  // Load data if not cached
   const modulesConfig = await getModulesConfig();
   const allCapsules = await getAllCapsules();
 
-  return modulesConfig.map((config, index) => transformModule(config, index, allCapsules));
+  const modules = modulesConfig.map((config, index) => transformModule(config, index, allCapsules));
+
+  // Store in cache
+  moduleCache.set('all-modules', modules);
+
+  return modules;
 }
 
 // Charger tous les modules avec progression réelle (version asynchrone)
