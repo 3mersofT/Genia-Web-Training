@@ -28,7 +28,7 @@ export class ContentSyncService {
   async getSyncStatus(): Promise<ContentSyncStatus> {
     try {
       // Charger les modules JSON
-      const jsonModules = getAllModules();
+      const jsonModules = await getAllModules();
       
       // Vérifier les configurations Supabase
       const { data: configData, error } = await this.supabase
@@ -64,7 +64,7 @@ export class ContentSyncService {
    */
   async syncJsonToSupabase(adminId: string): Promise<{ success: boolean; message: string }> {
     try {
-      const jsonModules = getAllModules();
+      const jsonModules = await getAllModules();
       
       // Préparer les données de configuration
       const configData: Partial<ContentConfig>[] = jsonModules.map((module) => ({

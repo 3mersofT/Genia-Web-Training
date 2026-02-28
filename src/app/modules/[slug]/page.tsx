@@ -20,7 +20,8 @@ export default function ModulePage() {
   useEffect(() => {
     const loadModule = async () => {
       if (!user) {
-        setModuleData(getModuleBySlug(slug));
+        const module = await getModuleBySlug(slug);
+        setModuleData(module);
         setLoading(false);
         return;
       }
@@ -31,7 +32,8 @@ export default function ModulePage() {
         setModuleData(module || null);
       } catch (error) {
         console.error('Erreur chargement module:', error);
-        setModuleData(getModuleBySlug(slug));
+        const module = await getModuleBySlug(slug);
+        setModuleData(module);
       } finally {
         setLoading(false);
       }

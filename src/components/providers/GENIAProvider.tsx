@@ -59,39 +59,40 @@ export default function GENIAProvider({ children }: { children: React.ReactNode 
 
   // Mettre à jour le contexte automatiquement selon la page
   useEffect(() => {
-    if (pathname.startsWith('/capsules/')) {
-      // Extraire l'ID de la capsule depuis l'URL
-      const capsuleId = pathname.split('/').pop();
-      if (capsuleId) {
-        try {
-          const capsule = getCapsuleById(capsuleId);
-          if (capsule) {
+    const loadCapsuleContext = async () => {
+      if (pathname.startsWith('/capsules/')) {
+        // Extraire l'ID de la capsule depuis l'URL
+        const capsuleId = pathname.split('/').pop();
+        if (capsuleId) {
+          try {
+            const capsule = await getCapsuleById(capsuleId);
+            if (capsule) {
+              setCurrentContext({
+                currentCapsule: {
+                  id: capsule.id,
+                  title: capsule.title,
+                  concepts: ['Prompt Engineering', 'Méthode GENIA'] // Fallback car pas de tags dans le type Capsule
+                },
+                userLevel: 'beginner', // TODO: Récupérer depuis le profil utilisateur
+                completedCapsules: 2,   // TODO: Calculer depuis les données
+                totalCapsules: 36
+              });
+            } else {
+              // Fallback si la capsule n'est pas trouvée
+              setCurrentContext({
+                currentCapsule: {
+                  id: capsuleId,
+                  title: 'Capsule en cours',
+                  concepts: ['Prompt Engineering']
+                },
+                userLevel: 'beginner',
+                completedCapsules: 2,
+                totalCapsules: 36
+              });
+            }
+          } catch (error) {
+            console.error('Erreur lors du chargement de la capsule:', error);
             setCurrentContext({
-              currentCapsule: {
-                id: capsule.id,
-                title: capsule.title,
-                concepts: ['Prompt Engineering', 'Méthode GENIA'] // Fallback car pas de tags dans le type Capsule
-              },
-              userLevel: 'beginner', // TODO: Récupérer depuis le profil utilisateur
-              completedCapsules: 2,   // TODO: Calculer depuis les données
-              totalCapsules: 36
-            });
-          } else {
-            // Fallback si la capsule n'est pas trouvée
-            setCurrentContext({
-              currentCapsule: {
-                id: capsuleId,
-                title: 'Capsule en cours',
-                concepts: ['Prompt Engineering']
-              },
-              userLevel: 'beginner',
-              completedCapsules: 2,
-              totalCapsules: 36
-            });
-          }
-        } catch (error) {
-          console.error('Erreur lors du chargement de la capsule:', error);
-          setCurrentContext({
             currentCapsule: {
               id: capsuleId,
               title: 'Capsule en cours',
@@ -102,38 +103,41 @@ export default function GENIAProvider({ children }: { children: React.ReactNode 
             totalCapsules: 36
           });
         }
-      }
-    } else if (pathname.startsWith('/modules/')) {
-      // Pour les pages de modules
-      const moduleSlug = pathname.split('/').pop();
-      if (moduleSlug) {
-        try {
-          const module = getModuleBySlug(moduleSlug);
-          if (module) {
-            setCurrentContext({
-              currentModule: {
-                id: module.id,
-                title: module.title,
-                difficulty: module.difficulty
-              },
-              userLevel: 'beginner',
-              completedCapsules: 2,
-              totalCapsules: 36
-            });
-          }
-        } catch (error) {
-          console.error('Erreur lors du chargement du module:', error);
         }
+      } else if (pathname.startsWith('/modules/')) {
+        // Pour les pages de modules
+        const moduleSlug = pathname.split('/').pop();
+        if (moduleSlug) {
+          try {
+            const module = await getModuleBySlug(moduleSlug);
+            if (module) {
+              setCurrentContext({
+                currentModule: {
+                  id: module.id,
+                  title: module.title,
+                  difficulty: module.difficulty
+                },
+                userLevel: 'beginner',
+                completedCapsules: 2,
+                totalCapsules: 36
+              });
+            }
+          } catch (error) {
+            console.error('Erreur lors du chargement du module:', error);
+          }
+        }
+      } else if (pathname.startsWith('/dashboard')) {
+        setCurrentContext({
+          userLevel: 'beginner',
+          completedCapsules: 2,
+          totalCapsules: 36
+        });
+      } else {
+        setCurrentContext({});
       }
-    } else if (pathname.startsWith('/dashboard')) {
-      setCurrentContext({
-        userLevel: 'beginner',
-        completedCapsules: 2,
-        totalCapsules: 36
-      });
-    } else {
-      setCurrentContext({});
-    }
+    };
+
+    loadCapsuleContext();
   }, [pathname]);
 
   const updateContext = (newContext: any) => {
