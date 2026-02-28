@@ -6,15 +6,25 @@ export const dynamic = 'force-dynamic'
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { createClient } from '@/lib/supabase/client'
+import { loginSchema, type LoginFormData } from '@/lib/validations/auth'
 
 export default function LoginPage() {
-  const [identifier, setIdentifier] = useState('') // email or username
-  const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const router = useRouter()
   const supabase = createClient()
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+    mode: 'onBlur', // Validate on blur for better UX
+  })
 
   const resolveIdentifierToEmail = async (value: string): Promise<string> => {
     if (value.includes('@')) return value
@@ -31,24 +41,23 @@ export default function LoginPage() {
     return data.email as string
   }
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const onSubmit = async (data: LoginFormData) => {
     setError(null)
     setLoading(true)
 
     try {
-      const email = await resolveIdentifierToEmail(identifier.trim().toLowerCase())
+      const email = await resolveIdentifierToEmail(data.identifier.trim().toLowerCase())
 
       const { error } = await supabase.auth.signInWithPassword({
         email,
-        password,
+        password: data.password,
       })
 
       if (error) throw error
 
       // Vérifier le rôle de l'utilisateur pour rediriger correctement
       const { data: { user } } = await supabase.auth.getUser()
-      
+
       if (user) {
         const { data: profile } = await supabase
           .from('user_profiles')
@@ -81,9 +90,13 @@ export default function LoginPage() {
           </div>
 
           {/* Form */}
-          <form onSubmit={handleLogin} className="space-y-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
             {error && (
-              <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+              <div
+                className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm"
+                role="alert"
+                aria-live="polite"
+              >
                 {error}
               </div>
             )}
@@ -95,12 +108,25 @@ export default function LoginPage() {
               <input
                 id="identifier"
                 type="text"
-                value={identifier}
-                onChange={(e) => setIdentifier(e.target.value)}
-                required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                {...register('identifier')}
+                aria-invalid={errors.identifier ? 'true' : 'false'}
+                aria-describedby={errors.identifier ? 'identifier-error' : undefined}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  errors.identifier
+                    ? 'border-red-300 focus:ring-red-500'
+                    : 'border-gray-300'
+                }`}
                 placeholder="vous@exemple.com ou mon_username"
               />
+              {errors.identifier && (
+                <p
+                  id="identifier-error"
+                  className="mt-1 text-sm text-red-600"
+                  role="alert"
+                >
+                  {errors.identifier.message}
+                </p>
+              )}
             </div>
 
             <div>
@@ -110,17 +136,30 @@ export default function LoginPage() {
               <input
                 id="password"
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                {...register('password')}
+                aria-invalid={errors.password ? 'true' : 'false'}
+                aria-describedby={errors.password ? 'password-error' : undefined}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  errors.password
+                    ? 'border-red-300 focus:ring-red-500'
+                    : 'border-gray-300'
+                }`}
                 placeholder="••••••••"
               />
+              {errors.password && (
+                <p
+                  id="password-error"
+                  className="mt-1 text-sm text-red-600"
+                  role="alert"
+                >
+                  {errors.password.message}
+                </p>
+              )}
             </div>
 
             <div className="flex items-center justify-between">
-              <label className="flex items-center">
-                <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
+              <label htmlFor="remember" className="flex items-center">
+                <input id="remember" type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
                 <span className="ml-2 text-sm text-gray-600">Se souvenir de moi</span>
               </label>
               <Link href="/forgot-password" className="text-sm text-blue-600 hover:underline">

@@ -64,7 +64,7 @@ export default function GENIAChat({ context: propContext, embedded = false }: GE
         <ChatMessageList messages={messages} isLoading={isLoading} loadingText="GENIA réfléchit..." />
         <SuggestionsBar />
         <div className="p-4 border-t bg-white space-y-3">
-          <ChatInput value={inputMessage} onChange={setInputMessage} onSend={handleSendMessage} disabled={isLoading} placeholder="Pose ta question..." />
+          <ChatInput value={inputMessage} onChange={setInputMessage} onSend={handleSendMessage} disabled={isLoading} placeholder="Pose ta question..." aria-label="Poser une question à GENIA" />
           <div className="flex items-center justify-between text-xs text-gray-500">
             <span>Modèle : {modelLabel}</span>
             <span>{quotaUsed}/{quotaDaily}</span>
@@ -150,7 +150,7 @@ export default function GENIAChat({ context: propContext, embedded = false }: GE
             <SuggestionsBar />
 
             <div className="p-4 border-t bg-white space-y-3">
-              <ChatInput value={inputMessage} onChange={setInputMessage} onSend={handleSendMessage} disabled={isLoading} placeholder="Pose ta question..." />
+              <ChatInput value={inputMessage} onChange={setInputMessage} onSend={handleSendMessage} disabled={isLoading} placeholder="Pose ta question..." aria-label="Poser une question à GENIA" />
               <div className="flex items-center justify-between text-xs text-gray-500">
                 <div className="flex items-center gap-2">
                   <span>Modèle :</span>
