@@ -14,14 +14,30 @@
  * ```
  */
 
+/**
+ * Log level type for categorizing log messages
+ */
 export type LogLevel = 'error' | 'warn' | 'info' | 'debug'
 
+/**
+ * Metadata structure for providing context to log messages
+ *
+ * @property component - The component/module where the log originated (e.g., 'DashboardPage', 'GENIAChat')
+ * @property action - The specific action being performed (e.g., 'loadProfile', 'refreshQuotas')
+ * @property userId - The ID of the user associated with the action (optional)
+ * @property [key: string] - Any additional context-specific metadata
+ */
 export interface LogMetadata {
   component?: string
   action?: string
   userId?: string
   [key: string]: any
 }
+
+/**
+ * Type for logger method signature
+ */
+export type LoggerMethod = (message: string, metadata?: LogMetadata) => void
 
 /**
  * Sensitive field names that should be redacted from logs
@@ -124,7 +140,12 @@ function log(level: LogLevel, message: string, metadata?: LogMetadata): void {
 /**
  * Centralized logger instance
  */
-export const logger = {
+export const logger: {
+  error: LoggerMethod
+  warn: LoggerMethod
+  info: LoggerMethod
+  debug: LoggerMethod
+} = {
   /**
    * Log error-level messages (e.g., exceptions, critical failures)
    */
