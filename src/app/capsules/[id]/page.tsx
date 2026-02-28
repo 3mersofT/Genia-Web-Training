@@ -2,20 +2,20 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useToast } from '@/components/ui/Toast';
 import { useAuth } from '@/hooks/useAuth';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { 
-  ArrowLeft, ArrowRight, Play, CheckCircle, Clock, 
-  BookOpen, Target, Lightbulb, Trophy, ChevronLeft, ChevronRight 
+import {
+  ArrowLeft, ArrowRight, Play, CheckCircle, Clock,
+  BookOpen, Target, Lightbulb, Trophy, ChevronLeft, ChevronRight
 } from 'lucide-react';
 import FeedbackButton from '@/components/feedback/FeedbackButton';
 import FeedbackStats from '@/components/feedback/FeedbackStats';
 import RichContentRenderer from '@/components/capsule/RichContentRenderer';
 import CodeBlock from '@/components/capsule/CodeBlock';
-import { getCapsuleContent, getCapsuleById, getNextCapsule, getPreviousCapsule, getModuleBySlug } from '@/lib/data';
+import { getCapsuleContent, getCapsuleById, getNextCapsule, getPreviousCapsule, getModuleBySlug, type Capsule, type Module } from '@/lib/data';
 
 export default function CapsulePage() {
   const params = useParams();
@@ -23,16 +23,62 @@ export default function CapsulePage() {
   const capsuleId = params.id as string;
   const { user } = useAuth();
   const toast = useToast();
-  
+
   const [activeSection, setActiveSection] = useState<'hook' | 'concept' | 'demo' | 'exercise' | 'recap'>('hook');
   const [exerciseAttempted, setExerciseAttempted] = useState(false);
   const [isCompleting, setIsCompleting] = useState(false);
-  
-  const capsuleData = getCapsuleById(capsuleId);
-  const capsuleContent = getCapsuleContent(capsuleId);
-  const nextCapsule = getNextCapsule(capsuleId);
-  const previousCapsule = getPreviousCapsule(capsuleId);
-  
+  const [capsuleData, setCapsuleData] = useState<Capsule | null>(null);
+  const [capsuleContent, setCapsuleContent] = useState<any | null>(null);
+  const [nextCapsule, setNextCapsule] = useState<Capsule | null>(null);
+  const [previousCapsule, setPreviousCapsule] = useState<Capsule | null>(null);
+  const [currentModule, setCurrentModule] = useState<Module | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadCapsuleData() {
+      try {
+        const [data, content, next, prev] = await Promise.all([
+          getCapsuleById(capsuleId),
+          getCapsuleContent(capsuleId),
+          getNextCapsule(capsuleId),
+          getPreviousCapsule(capsuleId)
+        ]);
+
+        setCapsuleData(data);
+        setCapsuleContent(content);
+        setNextCapsule(next);
+        setPreviousCapsule(prev);
+
+        // Find current module
+        const allModules = ['fondamentaux', 'techniques', 'pratique'];
+        for (const moduleSlug of allModules) {
+          const module = await getModuleBySlug(moduleSlug);
+          if (module?.capsules.find(cap => cap.id === capsuleId)) {
+            setCurrentModule(module);
+            break;
+          }
+        }
+      } catch (error) {
+        console.error('Error loading capsule data:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadCapsuleData();
+  }, [capsuleId]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Chargement...</p>
+        </div>
+      </div>
+    );
+  }
+
   if (!capsuleData || !capsuleContent) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -44,17 +90,6 @@ export default function CapsulePage() {
         </div>
       </div>
     );
-  }
-
-  // Obtenir le module pour la navigation
-  const allModules = ['fondamentaux', 'techniques', 'pratique'];
-  let currentModule = null;
-  for (const moduleSlug of allModules) {
-    const module = getModuleBySlug(moduleSlug);
-    if (module?.capsules.find(cap => cap.id === capsuleId)) {
-      currentModule = module;
-      break;
-    }
   }
 
   const sections = capsuleContent.sections || {};
