@@ -79,6 +79,22 @@ function getCapsules(data: any): any[] {
   return [];
 }
 
+// Dynamic import helper functions for metadata files
+async function getModule1Metadata() {
+  const data = await import('@/data/modules/module1_metadata_global.json');
+  return data.default;
+}
+
+async function getModule2Metadata() {
+  const data = await import('@/data/modules/module2_metadata_global.json');
+  return data.default;
+}
+
+async function getModule3Metadata() {
+  const data = await import('@/data/modules/module3_metadata_global_final.json');
+  return data.default;
+}
+
 // Combiner les données des capsules
 const allCapsules: Record<string, any> = {
   ...getCapsules(module1Capsules1_3).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
