@@ -147,77 +147,87 @@ async function getModule3Capsules34_36() {
 
 // Combiner les données des capsules (version asynchrone)
 async function getAllCapsules(): Promise<Record<string, any>> {
-  const [
-    module1Capsules1_3,
-    module1Capsules4_7,
-    module1Capsules8_12,
-    module2Capsules13_15,
-    module2Capsules16_18,
-    module2Capsules19_21,
-    module2Capsules22_24,
-    module3Capsules25_27,
-    module3Capsules28_30,
-    module3Capsules31_33,
-    module3Capsules34_36,
-  ] = await Promise.all([
-    getModule1Capsules1_3(),
-    getModule1Capsules4_7(),
-    getModule1Capsules8_12(),
-    getModule2Capsules13_15(),
-    getModule2Capsules16_18(),
-    getModule2Capsules19_21(),
-    getModule2Capsules22_24(),
-    getModule3Capsules25_27(),
-    getModule3Capsules28_30(),
-    getModule3Capsules31_33(),
-    getModule3Capsules34_36(),
-  ]);
+  try {
+    const [
+      module1Capsules1_3,
+      module1Capsules4_7,
+      module1Capsules8_12,
+      module2Capsules13_15,
+      module2Capsules16_18,
+      module2Capsules19_21,
+      module2Capsules22_24,
+      module3Capsules25_27,
+      module3Capsules28_30,
+      module3Capsules31_33,
+      module3Capsules34_36,
+    ] = await Promise.all([
+      getModule1Capsules1_3(),
+      getModule1Capsules4_7(),
+      getModule1Capsules8_12(),
+      getModule2Capsules13_15(),
+      getModule2Capsules16_18(),
+      getModule2Capsules19_21(),
+      getModule2Capsules22_24(),
+      getModule3Capsules25_27(),
+      getModule3Capsules28_30(),
+      getModule3Capsules31_33(),
+      getModule3Capsules34_36(),
+    ]);
 
-  return {
-    ...getCapsules(module1Capsules1_3).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
-    ...getCapsules(module1Capsules4_7).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
-    ...getCapsules(module1Capsules8_12).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
+    return {
+      ...getCapsules(module1Capsules1_3).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
+      ...getCapsules(module1Capsules4_7).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
+      ...getCapsules(module1Capsules8_12).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
 
-    ...getCapsules(module2Capsules13_15).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
-    ...getCapsules(module2Capsules16_18).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
-    ...getCapsules(module2Capsules19_21).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
-    ...getCapsules(module2Capsules22_24).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
+      ...getCapsules(module2Capsules13_15).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
+      ...getCapsules(module2Capsules16_18).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
+      ...getCapsules(module2Capsules19_21).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
+      ...getCapsules(module2Capsules22_24).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
 
-    ...getCapsules(module3Capsules25_27).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
-    ...getCapsules(module3Capsules28_30).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
-    ...getCapsules(module3Capsules31_33).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
-    ...getCapsules(module3Capsules34_36).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
-  };
+      ...getCapsules(module3Capsules25_27).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
+      ...getCapsules(module3Capsules28_30).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
+      ...getCapsules(module3Capsules31_33).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
+      ...getCapsules(module3Capsules34_36).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
+    };
+  } catch (error) {
+    console.error('Error loading capsule data files:', error);
+    return {};
+  }
 }
 
 // Configuration des modules avec mapping des slugs (version asynchrone)
 async function getModulesConfig() {
-  const [module1Metadata, module2Metadata, module3Metadata] = await Promise.all([
-    getModule1Metadata(),
-    getModule2Metadata(),
-    getModule3Metadata(),
-  ]);
+  try {
+    const [module1Metadata, module2Metadata, module3Metadata] = await Promise.all([
+      getModule1Metadata(),
+      getModule2Metadata(),
+      getModule3Metadata(),
+    ]);
 
-  return [
-    {
-      metadata: module1Metadata,
-      slug: 'fondamentaux',
-      color: 'from-blue-500 to-cyan-600',
-      progress: 0, // Sera calculé dynamiquement
-    },
-    {
-      metadata: module2Metadata,
-      slug: 'techniques',
-      color: 'from-purple-500 to-pink-600',
-      progress: 0, // Sera calculé dynamiquement
-    },
-    {
-      metadata: module3Metadata,
-      slug: 'pratique',
-      color: 'from-violet-500 to-purple-700',
-      progress: 0, // Sera calculé dynamiquement
-    }
-  ];
+    return [
+      {
+        metadata: module1Metadata,
+        slug: 'fondamentaux',
+        color: 'from-blue-500 to-cyan-600',
+        progress: 0, // Sera calculé dynamiquement
+      },
+      {
+        metadata: module2Metadata,
+        slug: 'techniques',
+        color: 'from-purple-500 to-pink-600',
+        progress: 0, // Sera calculé dynamiquement
+      },
+      {
+        metadata: module3Metadata,
+        slug: 'pratique',
+        color: 'from-violet-500 to-purple-700',
+        progress: 0, // Sera calculé dynamiquement
+      }
+    ];
+  } catch (error) {
+    console.error('Error loading module metadata files:', error);
+    return [];
+  }
 }
 
 // Transformer les métadonnées en format unifié
@@ -330,86 +340,97 @@ export async function getAllModules(): Promise<Module[]> {
     return moduleCache.get('all-modules')!;
   }
 
-  // Load data if not cached
-  const modulesConfig = await getModulesConfig();
-  const allCapsules = await getAllCapsules();
+  try {
+    // Load data if not cached
+    const modulesConfig = await getModulesConfig();
+    const allCapsules = await getAllCapsules();
 
-  const modules = modulesConfig.map((config, index) => transformModule(config, index, allCapsules));
+    const modules = modulesConfig.map((config, index) => transformModule(config, index, allCapsules));
 
-  // Store in cache
-  moduleCache.set('all-modules', modules);
+    // Store in cache
+    moduleCache.set('all-modules', modules);
 
-  return modules;
+    return modules;
+  } catch (error) {
+    console.error('Error loading modules:', error);
+    return [];
+  }
 }
 
 // Charger tous les modules avec progression réelle (version asynchrone)
 export async function getAllModulesWithProgress(userId: string): Promise<Module[]> {
-  const modulesConfig = await getModulesConfig();
-  const allCapsules = await getAllCapsules();
+  try {
+    const modulesConfig = await getModulesConfig();
+    const allCapsules = await getAllCapsules();
 
-  // Parallelize module progress fetching using Promise.all()
-  const modules = await Promise.all(
-    modulesConfig.map(async (config, i) => {
-      const metadata = config.metadata;
+    // Parallelize module progress fetching using Promise.all()
+    const modules = await Promise.all(
+      modulesConfig.map(async (config, i) => {
+        const metadata = config.metadata;
 
-      // Calculer la progression réelle
-      let realProgress = 0;
-      let capsuleProgress: Record<string, { completed: boolean; available: boolean }> = {};
+        // Calculer la progression réelle
+        let realProgress = 0;
+        let capsuleProgress: Record<string, { completed: boolean; available: boolean }> = {};
 
-      if (metadata.module?.id) {
-        // Créer le module temporaire pour obtenir les capsules
-        const tempModule = transformModule({ ...config, progress: 0 }, i, allCapsules);
-        const capsuleIds = tempModule.capsules.map(cap => cap.id);
+        if (metadata.module?.id) {
+          // Créer le module temporaire pour obtenir les capsules
+          const tempModule = transformModule({ ...config, progress: 0 }, i, allCapsules);
+          const capsuleIds = tempModule.capsules.map(cap => cap.id);
 
-        try {
-          const { createClient } = await import('@/lib/supabase/client');
-          const supabase = createClient();
+          try {
+            const { createClient } = await import('@/lib/supabase/client');
+            const supabase = createClient();
 
-          // Parallelize both database queries using Promise.all()
-          const [moduleProgressResult, capsuleProgressResult] = await Promise.all([
-            getModuleProgress(metadata.module.id, userId),
-            capsuleIds.length > 0
-              ? supabase
-                  .from('user_progress')
-                  .select('capsule_id, status')
-                  .eq('user_id', userId)
-                  .in('capsule_id', capsuleIds)
-              : Promise.resolve({ data: null })
-          ]);
+            // Parallelize both database queries using Promise.all()
+            const [moduleProgressResult, capsuleProgressResult] = await Promise.all([
+              getModuleProgress(metadata.module.id, userId),
+              capsuleIds.length > 0
+                ? supabase
+                    .from('user_progress')
+                    .select('capsule_id, status')
+                    .eq('user_id', userId)
+                    .in('capsule_id', capsuleIds)
+                : Promise.resolve({ data: null })
+            ]);
 
-          realProgress = moduleProgressResult;
+            realProgress = moduleProgressResult;
 
-          // Créer un mapping des statuts
-          if (capsuleProgressResult.data) {
-            capsuleProgress = {};
-            capsuleIds.forEach((capsuleId: string) => {
-              const userProgress = capsuleProgressResult.data?.find((p: any) => p.capsule_id === capsuleId);
-              capsuleProgress[capsuleId] = {
-                completed: userProgress?.status === 'completed' || false,
-                available: true // Pour l'instant, toutes les capsules sont disponibles
-              };
-            });
+            // Créer un mapping des statuts
+            if (capsuleProgressResult.data) {
+              capsuleProgress = {};
+              capsuleIds.forEach((capsuleId: string) => {
+                const userProgress = capsuleProgressResult.data?.find((p: any) => p.capsule_id === capsuleId);
+                capsuleProgress[capsuleId] = {
+                  completed: userProgress?.status === 'completed' || false,
+                  available: true // Pour l'instant, toutes les capsules sont disponibles
+                };
+              });
+            }
+          } catch (error) {
+            console.error('Error loading module progress for module:', metadata.module.id, error);
+            // Silent error handling - use default values
           }
-        } catch (error) {
-          // Silent error handling - use default values
         }
-      }
 
-      // Créer le module avec la vraie progression
-      const module = transformModule({ ...config, progress: realProgress }, i, allCapsules);
+        // Créer le module avec la vraie progression
+        const module = transformModule({ ...config, progress: realProgress }, i, allCapsules);
 
-      // Mettre à jour le statut des capsules
-      module.capsules = module.capsules.map(cap => ({
-        ...cap,
-        completed: capsuleProgress[cap.id]?.completed || false,
-        available: capsuleProgress[cap.id]?.available !== false
-      }));
+        // Mettre à jour le statut des capsules
+        module.capsules = module.capsules.map(cap => ({
+          ...cap,
+          completed: capsuleProgress[cap.id]?.completed || false,
+          available: capsuleProgress[cap.id]?.available !== false
+        }));
 
-      return module;
-    })
-  );
+        return module;
+      })
+    );
 
-  return modules;
+    return modules;
+  } catch (error) {
+    console.error('Error loading modules with progress:', error);
+    return [];
+  }
 }
 
 // Charger un module spécifique par slug
@@ -523,9 +544,12 @@ export async function getModuleProgress(moduleId: string, userId: string): Promi
     const { createClient } = await import('@/lib/supabase/client');
     const supabase = createClient();
 
-    // Trouver le module dans la configuration JSON
-    const modulesConfig = await getModulesConfig();
-    const allCapsules = await getAllCapsules();
+    // Trouver le module dans la configuration JSON - parallelize these queries
+    const [modulesConfig, allCapsules] = await Promise.all([
+      getModulesConfig(),
+      getAllCapsules()
+    ]);
+
     const moduleConfig = modulesConfig.find(config => config.metadata.module?.id === moduleId);
     if (!moduleConfig) return 0;
 
