@@ -48,6 +48,9 @@ export interface Capsule {
 
 // Module-level cache for memoization
 const moduleCache = new Map<string, Module[]>();
+const individualModuleCache = new Map<string, Module>();
+const capsuleCache = new Map<string, Capsule>();
+const capsuleContentCache = new Map<string, any>();
 
 // Fonction helper pour obtenir les capsules de chaque fichier JSON
 function getCapsules(data: any): any[] {
@@ -398,17 +401,36 @@ export async function getAllModulesWithProgress(userId: string): Promise<Module[
 
 // Charger un module spécifique par slug
 export async function getModuleBySlug(slug: string): Promise<Module | null> {
+  // Check individual module cache first
+  if (individualModuleCache.has(slug)) {
+    return individualModuleCache.get(slug)!;
+  }
+
   const modules = await getAllModules();
-  return modules.find(module => module.slug === slug) || null;
+  const module = modules.find(module => module.slug === slug) || null;
+
+  // Store in individual module cache
+  if (module) {
+    individualModuleCache.set(slug, module);
+  }
+
+  return module;
 }
 
 // Charger une capsule spécifique
 export async function getCapsuleById(capsuleId: string): Promise<Capsule | null> {
+  // Check capsule cache first
+  if (capsuleCache.has(capsuleId)) {
+    return capsuleCache.get(capsuleId)!;
+  }
+
   const modules = await getAllModules();
 
   for (const module of modules) {
     const capsule = module.capsules.find(cap => cap.id === capsuleId);
     if (capsule) {
+      // Store in capsule cache
+      capsuleCache.set(capsuleId, capsule);
       return capsule;
     }
   }
@@ -418,8 +440,20 @@ export async function getCapsuleById(capsuleId: string): Promise<Capsule | null>
 
 // Charger le contenu complet d'une capsule
 export async function getCapsuleContent(capsuleId: string): Promise<any | null> {
+  // Check capsule content cache first
+  if (capsuleContentCache.has(capsuleId)) {
+    return capsuleContentCache.get(capsuleId)!;
+  }
+
   const allCapsules = await getAllCapsules();
-  return allCapsules[capsuleId] || null;
+  const content = allCapsules[capsuleId] || null;
+
+  // Store in capsule content cache
+  if (content) {
+    capsuleContentCache.set(capsuleId, content);
+  }
+
+  return content;
 }
 
 // Obtenir la capsule suivante
