@@ -10,6 +10,7 @@ import { BookOpen, Trophy, Flame, Target, Clock, ChevronRight, BarChart3, Award 
 import Link from 'next/link'
 import { getAllModules, getAllModulesWithProgress, type Module } from '@/lib/data'
 import { createClient } from '@/lib/supabase/client'
+import { logger } from '@/lib/logger'
 import FeedbackButton from '@/components/feedback/FeedbackButton'
 import CertificateButton from '@/components/certificates/CertificateButton'
 import LevelBadge from '@/components/gamification/LevelBadge'
@@ -72,8 +73,14 @@ export default function DashboardPage() {
         if (profile?.display_name) {
           setDisplayName(profile.display_name)
         }
-      } catch (_) {
-        // silencieux: rester sur défauts à 0
+      } catch (error) {
+        logger.error('Failed to load profile data', {
+          component: 'DashboardPage',
+          action: 'loadProfile',
+          userId: user?.id,
+          error: error instanceof Error ? error.message : String(error)
+        })
+        // Keep default stats at 0
       }
     }
 

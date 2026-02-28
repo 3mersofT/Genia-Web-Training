@@ -16,6 +16,7 @@ import FeedbackStats from '@/components/feedback/FeedbackStats';
 import RichContentRenderer from '@/components/capsule/RichContentRenderer';
 import CodeBlock from '@/components/capsule/CodeBlock';
 import { getCapsuleContent, getCapsuleById, getNextCapsule, getPreviousCapsule, getModuleBySlug, type Capsule, type Module } from '@/lib/data';
+import { logger } from '@/lib/logger';
 
 export default function CapsulePage() {
   const params = useParams();
@@ -395,7 +396,14 @@ export default function CapsulePage() {
                         } else {
                           toast.showError('Impossible de marquer la leçon comme terminée.');
                         }
-                      } catch (_) {
+                      } catch (error) {
+                        logger.error('Failed to complete capsule', {
+                          component: 'CapsulePage',
+                          action: 'markComplete',
+                          userId: user?.id,
+                          capsuleId,
+                          error: error instanceof Error ? error.message : String(error)
+                        });
                         toast.showError('Erreur réseau temporaire. Réessayez.');
                       } finally {
                         setIsCompleting(false);
