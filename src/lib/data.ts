@@ -52,6 +52,14 @@ const individualModuleCache = new Map<string, Module>();
 const capsuleCache = new Map<string, Capsule>();
 const capsuleContentCache = new Map<string, any>();
 
+// Cache invalidation for future use
+export function clearModuleCache(): void {
+  moduleCache.clear();
+  individualModuleCache.clear();
+  capsuleCache.clear();
+  capsuleContentCache.clear();
+}
+
 // Fonction helper pour obtenir les capsules de chaque fichier JSON
 function getCapsules(data: any): any[] {
   // Structure module.capsules (module 1)
