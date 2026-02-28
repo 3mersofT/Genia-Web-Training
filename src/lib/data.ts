@@ -207,9 +207,9 @@ async function getModulesConfig() {
 }
 
 // Transformer les métadonnées en format unifié
-function transformModule(config: any, index: number): Module {
+function transformModule(config: any, index: number, allCapsules: Record<string, any>): Module {
   const metadata = config.metadata;
-  
+
   // Pour module 1, utiliser la structure standard
   if (metadata.module?.metadata) {
     return {
@@ -249,12 +249,12 @@ function transformModule(config: any, index: number): Module {
       }),
     };
   }
-  
+
   // Pour modules 2 et 3, utiliser la structure alternative
   if (metadata.module?.title) {
     const sections = metadata.sections || metadata.module?.sections || [];
     const capsules = metadata.capsules || metadata.module?.capsules_summary || [];
-    
+
     return {
       id: metadata.module.id,
       slug: config.slug,
@@ -292,7 +292,7 @@ function transformModule(config: any, index: number): Module {
       }),
     };
   }
-  
+
   // Fallback pour toute autre structure
   return {
     id: `module-${index + 1}`,
@@ -309,35 +309,40 @@ function transformModule(config: any, index: number): Module {
   };
 }
 
-// Charger tous les modules (version synchrone pour compatibilité)
-export function getAllModules(): Module[] {
-  return modulesConfig.map(transformModule);
+// Charger tous les modules (version asynchrone avec dynamic imports)
+export async function getAllModules(): Promise<Module[]> {
+  const modulesConfig = await getModulesConfig();
+  const allCapsules = await getAllCapsules();
+
+  return modulesConfig.map((config, index) => transformModule(config, index, allCapsules));
 }
 
 // Charger tous les modules avec progression réelle (version asynchrone)
 export async function getAllModulesWithProgress(userId: string): Promise<Module[]> {
+  const modulesConfig = await getModulesConfig();
+  const allCapsules = await getAllCapsules();
   const modules = [];
-  
+
   for (let i = 0; i < modulesConfig.length; i++) {
     const config = modulesConfig[i];
     const metadata = config.metadata;
-    
+
     // Calculer la progression réelle
     let realProgress = 0;
     let capsuleProgress: Record<string, { completed: boolean; available: boolean }> = {};
-    
+
     if (metadata.module?.id) {
       realProgress = await getModuleProgress(metadata.module.id, userId);
-      
+
       // Récupérer le statut de chaque capsule
       try {
         const { createClient } = await import('@/lib/supabase/client');
         const supabase = createClient();
-        
+
         // Créer le module temporaire pour obtenir les capsules
-        const tempModule = transformModule({ ...config, progress: 0 }, i);
+        const tempModule = transformModule({ ...config, progress: 0 }, i, allCapsules);
         const capsuleIds = tempModule.capsules.map(cap => cap.id);
-        
+
         if (capsuleIds.length > 0) {
           // Récupérer la progression de l'utilisateur pour ces capsules
           const { data: progress } = await supabase
@@ -345,7 +350,7 @@ export async function getAllModulesWithProgress(userId: string): Promise<Module[
             .select('capsule_id, status')
             .eq('user_id', userId)
             .in('capsule_id', capsuleIds);
-          
+
           // Créer un mapping des statuts
           capsuleProgress = {};
           capsuleIds.forEach((capsuleId: string) => {
@@ -360,52 +365,53 @@ export async function getAllModulesWithProgress(userId: string): Promise<Module[
         console.error('Erreur récupération progression capsules:', error);
       }
     }
-    
+
     // Créer le module avec la vraie progression
-    const module = transformModule({ ...config, progress: realProgress }, i);
-    
+    const module = transformModule({ ...config, progress: realProgress }, i, allCapsules);
+
     // Mettre à jour le statut des capsules
     module.capsules = module.capsules.map(cap => ({
       ...cap,
       completed: capsuleProgress[cap.id]?.completed || false,
       available: capsuleProgress[cap.id]?.available !== false
     }));
-    
+
     modules.push(module);
   }
-  
+
   return modules;
 }
 
 // Charger un module spécifique par slug
-export function getModuleBySlug(slug: string): Module | null {
-  const modules = getAllModules();
+export async function getModuleBySlug(slug: string): Promise<Module | null> {
+  const modules = await getAllModules();
   return modules.find(module => module.slug === slug) || null;
 }
 
 // Charger une capsule spécifique
-export function getCapsuleById(capsuleId: string): Capsule | null {
-  const modules = getAllModules();
-  
+export async function getCapsuleById(capsuleId: string): Promise<Capsule | null> {
+  const modules = await getAllModules();
+
   for (const module of modules) {
     const capsule = module.capsules.find(cap => cap.id === capsuleId);
     if (capsule) {
       return capsule;
     }
   }
-  
+
   return null;
 }
 
 // Charger le contenu complet d'une capsule
-export function getCapsuleContent(capsuleId: string): any | null {
+export async function getCapsuleContent(capsuleId: string): Promise<any | null> {
+  const allCapsules = await getAllCapsules();
   return allCapsules[capsuleId] || null;
 }
 
 // Obtenir la capsule suivante
-export function getNextCapsule(currentCapsuleId: string): Capsule | null {
-  const modules = getAllModules();
-  
+export async function getNextCapsule(currentCapsuleId: string): Promise<Capsule | null> {
+  const modules = await getAllModules();
+
   for (const module of modules) {
     const currentIndex = module.capsules.findIndex(cap => cap.id === currentCapsuleId);
     if (currentIndex !== -1) {
@@ -413,7 +419,7 @@ export function getNextCapsule(currentCapsuleId: string): Capsule | null {
       if (currentIndex + 1 < module.capsules.length) {
         return module.capsules[currentIndex + 1];
       }
-      
+
       // Première capsule du module suivant
       const moduleIndex = modules.findIndex(m => m.id === module.id);
       if (moduleIndex !== -1 && moduleIndex + 1 < modules.length) {
@@ -422,14 +428,14 @@ export function getNextCapsule(currentCapsuleId: string): Capsule | null {
       }
     }
   }
-  
+
   return null;
 }
 
 // Obtenir la capsule précédente
-export function getPreviousCapsule(currentCapsuleId: string): Capsule | null {
-  const modules = getAllModules();
-  
+export async function getPreviousCapsule(currentCapsuleId: string): Promise<Capsule | null> {
+  const modules = await getAllModules();
+
   for (const module of modules) {
     const currentIndex = module.capsules.findIndex(cap => cap.id === currentCapsuleId);
     if (currentIndex !== -1) {
@@ -437,7 +443,7 @@ export function getPreviousCapsule(currentCapsuleId: string): Capsule | null {
       if (currentIndex > 0) {
         return module.capsules[currentIndex - 1];
       }
-      
+
       // Dernière capsule du module précédent
       const moduleIndex = modules.findIndex(m => m.id === module.id);
       if (moduleIndex > 0) {
@@ -446,7 +452,7 @@ export function getPreviousCapsule(currentCapsuleId: string): Capsule | null {
       }
     }
   }
-  
+
   return null;
 }
 
@@ -455,30 +461,32 @@ export async function getModuleProgress(moduleId: string, userId: string): Promi
   try {
     const { createClient } = await import('@/lib/supabase/client');
     const supabase = createClient();
-    
+
     // Trouver le module dans la configuration JSON
+    const modulesConfig = await getModulesConfig();
+    const allCapsules = await getAllCapsules();
     const moduleConfig = modulesConfig.find(config => config.metadata.module?.id === moduleId);
     if (!moduleConfig) return 0;
-    
+
     // Créer le module temporaire pour obtenir les capsules
-    const tempModule = transformModule({ ...moduleConfig, progress: 0 }, 0);
+    const tempModule = transformModule({ ...moduleConfig, progress: 0 }, 0, allCapsules);
     const capsuleIds = tempModule.capsules.map(cap => cap.id);
-    
+
     if (capsuleIds.length === 0) return 0;
-    
+
     // Récupérer la progression de l'utilisateur pour ces capsules
     const { data: progress } = await supabase
       .from('user_progress')
       .select('capsule_id, status')
       .eq('user_id', userId)
       .in('capsule_id', capsuleIds);
-    
+
     if (!progress) return 0;
-    
+
     // Compter les capsules complétées
     const completedCount = progress.filter((p: any) => p.status === 'completed').length;
     const totalCount = capsuleIds.length;
-    
+
     return totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
   } catch (error) {
     console.error('Erreur calcul progression module:', error);
@@ -487,20 +495,20 @@ export async function getModuleProgress(moduleId: string, userId: string): Promi
 }
 
 // Calculer les statistiques de progression globale
-export function getProgressStats(): {
+export async function getProgressStats(): Promise<{
   totalCapsules: number;
   completedCapsules: number;
   progressPercentage: number;
-} {
-  const modules = getAllModules();
+}> {
+  const modules = await getAllModules();
   let totalCapsules = 0;
   let completedCapsules = 0;
-  
+
   modules.forEach(module => {
     totalCapsules += module.capsules.length;
     completedCapsules += module.capsules.filter(cap => cap.completed).length;
   });
-  
+
   return {
     totalCapsules,
     completedCapsules,
