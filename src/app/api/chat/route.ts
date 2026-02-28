@@ -2,6 +2,13 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { createRateLimiter } from '@/lib/rate-limiter';
+
+// Rate limiter: 10 requests per minute
+const rateLimiter = createRateLimiter({
+  interval: 60000, // 1 minute in milliseconds
+  limit: 10, // 10 requests per minute
+});
 import { ChatRequestSchema } from '@/lib/validations/chat.schema';
 import { z } from 'zod';
 
@@ -83,6 +90,20 @@ async function checkAndUpdateQuota(
 
 // Route principale du chat
 export async function POST(req: NextRequest) {
+  // Apply rate limiting
+  const { response: rateLimitResponse, result: rateLimitResult } = await rateLimiter(req);
+  if (rateLimitResponse) {
+    return rateLimitResponse;
+  }
+
+  // Helper to add rate limit headers
+  const addHeaders = (response: NextResponse) => {
+    response.headers.set('X-RateLimit-Limit', rateLimitResult.limit.toString());
+    response.headers.set('X-RateLimit-Remaining', rateLimitResult.remaining.toString());
+    response.headers.set('Retry-After', Math.ceil((rateLimitResult.reset - Date.now()) / 1000).toString());
+    return response;
+  };
+
   try {
     const supabase = await createClient();
 
@@ -90,10 +111,10 @@ export async function POST(req: NextRequest) {
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (!user) {
-      return NextResponse.json(
+      return addHeaders(NextResponse.json(
         { error: 'Non autorisé' },
         { status: 401 }
-      );
+      ));
     }
 
     const body = await req.json();
@@ -121,13 +142,21 @@ export async function POST(req: NextRequest) {
       reasoning
     } = validationResult.data;
 
+    // Validation
+    if (!messages) {
+      return addHeaders(NextResponse.json(
+        { error: 'Messages requis' },
+        { status: 400 }
+      ));
+    }
+    
     // Configuration du modèle
     const config = MODELS_CONFIG[model as keyof typeof MODELS_CONFIG];
     if (!config) {
-      return NextResponse.json(
+      return addHeaders(NextResponse.json(
         { error: 'Modèle invalide' },
         { status: 400 }
-      );
+      ));
     }
     
     // Préparer la requête Mistral
@@ -230,7 +259,7 @@ export async function POST(req: NextRequest) {
       reasoningContent = match ? match[1].trim() : undefined;
     }
     
-    return NextResponse.json({
+    const successResponse = NextResponse.json({
       content: data.choices[0].message.content,
       model,
       usage: {
@@ -244,12 +273,18 @@ export async function POST(req: NextRequest) {
       quotaUsed: quotaInfo,
       conversationId: returnedConversationId
     });
+
+    // Add rate limit headers to success response
+    return addHeaders(successResponse);
     
   } catch (error) {
     console.error('Erreur API chat:', error);
-    return NextResponse.json(
+    const errorResponse = NextResponse.json(
       { error: error instanceof Error ? error.message : 'Erreur serveur' },
       { status: 500 }
     );
+
+    // Add rate limit headers to error response
+    return addHeaders(errorResponse);
   }
 }
