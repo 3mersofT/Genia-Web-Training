@@ -302,13 +302,24 @@ npm run lint
 
 ## 📚 Documentation
 
+### Documentation externe
+
 - [Documentation Mistral AI](https://docs.mistral.ai)
 - [Documentation Supabase](https://supabase.com/docs)
 - [Documentation Next.js](https://nextjs.org/docs)
 
+### Documentation du projet
+
+- **Guide utilisateur** : [Guide étudiant](docs/guides/STUDENT_GUIDE.md) - Guide complet pour les étudiants
+- **Guide administrateur** : [Fonctionnalités admin](docs/admin/ADMIN_FEATURES_GUIDE.md) - Documentation des fonctionnalités d'administration
+- **Déploiement** : [Guide de déploiement](docs/DEPLOYMENT.md) - Instructions de déploiement production
+- **PWA** : [Guide PWA](docs/PWA_IMPLEMENTATION_GUIDE.md) - Implémentation Progressive Web App
+- **Système de feedback** : [Guide feedback](docs/guides/FEEDBACK_SYSTEM_GUIDE.md) - Système de retours utilisateurs
+- **Toute la documentation** : Voir le répertoire [docs/](docs/) pour la documentation complète
+
 ## 🤝 Contribution
 
-Les contributions sont les bienvenues ! Voir [CONTRIBUTING.md](CONTRIBUTING.md)
+Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou une pull request.
 
 ## 📄 Licence
 
