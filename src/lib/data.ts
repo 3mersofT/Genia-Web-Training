@@ -46,6 +46,9 @@ export interface Capsule {
   available?: boolean;
 }
 
+// Module-level cache for memoization
+const moduleCache = new Map<string, Module[]>();
+
 // Fonction helper pour obtenir les capsules de chaque fichier JSON
 function getCapsules(data: any): any[] {
   // Structure module.capsules (module 1)
