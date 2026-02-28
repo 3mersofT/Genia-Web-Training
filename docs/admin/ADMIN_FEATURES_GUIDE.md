@@ -492,7 +492,7 @@
 ### **🆘 En Cas de Problème**
 1. **F12** → Console → Screenshot erreurs
 2. **Reproduire** le problème étape par étape
-3. **Vérifier** `DEBUG_HISTORY.md` pour solutions connues  
+3. **Vérifier** [DEBUG_HISTORY.md](../debug/DEBUG_HISTORY.md) pour solutions connues  
 4. **Contacter** l'équipe technique avec détails
 
 ### **🔧 Maintenance Préventive**
