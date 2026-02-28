@@ -1,4 +1,6 @@
 /**
+ * @jest-environment node
+ *
  * Unit Tests for /api/quotas Authentication
  *
  * Tests verify that the quotas API route enforces proper authentication and authorization:

@@ -1,4 +1,6 @@
 /**
+ * @jest-environment node
+ *
  * Unit Tests for /api/exercise/evaluate Authentication
  *
  * Tests verify that the exercise evaluation API route enforces proper authentication and authorization:
