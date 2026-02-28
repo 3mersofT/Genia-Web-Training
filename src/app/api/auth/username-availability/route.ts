@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/server'
 import { createRateLimiter } from '@/lib/rate-limiter'
+import { UsernameAvailabilitySchema } from '@/lib/validations/auth.schema'
 
 // Rate limiter: 5 requests per minute
 const rateLimiter = createRateLimiter({
@@ -22,18 +23,11 @@ export async function GET(request: NextRequest) {
     response.headers.set('Retry-After', Math.ceil((rateLimitResult.reset - Date.now()) / 1000).toString())
     return response
   }
-import { UsernameAvailabilitySchema } from '@/lib/validations/auth.schema'
 
   try {
     const url = new URL(request.url)
     const rawUsername = url.searchParams.get('username')
 
-    if (!username) {
-      return addHeaders(NextResponse.json({ available: false, reason: 'empty' }, { status: 400 }))
-    }
-    // Simple format guard mirroring DB constraint
-    if (!/^[a-z0-9_-]{3,20}$/.test(username)) {
-      return addHeaders(NextResponse.json({ available: false, reason: 'format' }, { status: 200 }))
     // Validate query parameters with Zod schema
     const validationResult = UsernameAvailabilitySchema.safeParse({ username: rawUsername })
 

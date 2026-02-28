@@ -46,13 +46,11 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const validation = CompleteProgressSchema.safeParse(body);
 
-    if (!capsuleId) {
-      return addHeaders(NextResponse.json({ error: 'capsuleId requis' }, { status: 400 }));
     if (!validation.success) {
-      return NextResponse.json(
+      return addHeaders(NextResponse.json(
         { error: 'Invalid request data', details: validation.error.errors },
         { status: 400 }
-      );
+      ));
     }
 
     const { capsuleId, score } = validation.data;

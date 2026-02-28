@@ -1,0 +1,251 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - img "GENIA Logo" [ref=e7]
+        - text: GENIA Web Training
+      - generic [ref=e8]:
+        - link "Connexion" [ref=e9] [cursor=pointer]:
+          - /url: /login
+          - img [ref=e10]
+          - text: Connexion
+        - link "Inscription" [ref=e13] [cursor=pointer]:
+          - /url: /register
+          - img [ref=e14]
+          - text: Inscription
+  - generic [ref=e21]:
+    - img "GENIA Logo" [ref=e23]
+    - heading "Maîtrisez le Prompt Engineering avec la Méthode GENIA" [level=1] [ref=e24]:
+      - text: Maîtrisez le Prompt Engineering
+      - text: avec la Méthode GENIA
+    - paragraph [ref=e25]: Formation complète et structurée pour devenir expert en intelligence artificielle générative
+    - generic [ref=e26]:
+      - link "Commencer la Formation" [ref=e27] [cursor=pointer]:
+        - /url: /register
+        - img [ref=e28]
+        - text: Commencer la Formation
+        - img [ref=e30]
+      - link "Découvrir la Méthode" [ref=e32] [cursor=pointer]:
+        - /url: "#method"
+        - img [ref=e33]
+        - text: Découvrir la Méthode
+    - generic [ref=e35]:
+      - generic [ref=e36]:
+        - img [ref=e37]
+        - generic [ref=e40]: "3"
+        - generic [ref=e41]: Modules complets
+      - generic [ref=e42]:
+        - img [ref=e43]
+        - generic [ref=e45]: "36"
+        - generic [ref=e46]: Capsules
+      - generic [ref=e47]:
+        - img [ref=e48]
+        - generic [ref=e51]: 3h
+        - generic [ref=e52]: De formation
+      - generic [ref=e53]:
+        - img [ref=e54]
+        - generic [ref=e57]: "1"
+        - generic [ref=e58]: Certificat
+  - generic [ref=e60]:
+    - generic [ref=e61]:
+      - heading "Une plateforme pensée pour votre réussite" [level=2] [ref=e62]
+      - paragraph [ref=e63]: Tous les outils pour devenir expert en Prompt Engineering
+    - generic [ref=e64]:
+      - generic [ref=e66]:
+        - img [ref=e68]
+        - heading "IA Française Mistral" [level=3] [ref=e71]
+        - paragraph [ref=e72]: Technologie de pointe française pour votre apprentissage
+      - generic [ref=e74]:
+        - img [ref=e76]
+        - heading "Méthode GENIA" [level=3] [ref=e79]
+        - paragraph [ref=e80]: 5 piliers pédagogiques pour maîtriser le prompting
+      - generic [ref=e82]:
+        - img [ref=e84]
+        - heading "Formation Certifiante" [level=3] [ref=e87]
+        - paragraph [ref=e88]: Obtenez votre certificat de compétence reconnu
+      - generic [ref=e90]:
+        - img [ref=e92]
+        - heading "Gamification" [level=3] [ref=e98]
+        - paragraph [ref=e99]: Badges, points et défis pour rester motivé
+  - generic [ref=e102]:
+    - generic [ref=e103]:
+      - heading "La Méthode GENIA" [level=2] [ref=e104]
+      - paragraph [ref=e105]: Une approche pédagogique unique en 5 piliers
+    - generic [ref=e106]:
+      - button "G" [ref=e107]:
+        - generic [ref=e108]: G
+      - button "E" [ref=e109]:
+        - generic [ref=e110]: E
+      - button "N" [ref=e111]:
+        - generic [ref=e112]: "N"
+      - button "I" [ref=e113]:
+        - generic [ref=e114]: I
+      - button "A" [ref=e115]:
+        - generic [ref=e116]: A
+    - generic [ref=e117]:
+      - heading "Guide progressif" [level=3] [ref=e118]
+      - paragraph [ref=e119]: Apprentissage structuré étape par étape
+      - paragraph [ref=e120]: Chaque concept est décomposé en étapes simples et progressives pour une compréhension optimale.
+    - generic [ref=e122]:
+      - img [ref=e123]
+      - text: Méthode développée par Hemerson KOFFI, expert en pédagogie IA
+  - generic [ref=e127]:
+    - generic [ref=e128]:
+      - heading "Investissez dans votre avenir professionnel" [level=2] [ref=e129]
+      - paragraph [ref=e130]: Une formation d'exception à un prix accessible
+    - generic [ref=e132]:
+      - generic [ref=e133]:
+        - heading "Formation Complète" [level=3] [ref=e134]
+        - generic [ref=e135]: 🎉 Lancement Bientôt
+        - paragraph [ref=e136]: Le tarif sera communiqué lors du lancement officiel
+      - list [ref=e137]:
+        - listitem [ref=e138]:
+          - img [ref=e139]
+          - text: Accès illimité à la plateforme
+        - listitem [ref=e142]:
+          - img [ref=e143]
+          - text: Assistant pédagogique GENIA
+        - listitem [ref=e146]:
+          - img [ref=e147]
+          - text: 3 modules complets (36 capsules)
+        - listitem [ref=e150]:
+          - img [ref=e151]
+          - text: Certificat de réussite officiel
+        - listitem [ref=e154]:
+          - img [ref=e155]
+          - text: Mises à jour régulières
+        - listitem [ref=e158]:
+          - img [ref=e159]
+          - text: Support technique par email
+      - link "S'inscrire à la liste d'attente" [ref=e162] [cursor=pointer]:
+        - /url: /register
+      - paragraph [ref=e163]: Soyez parmi les premiers informés du lancement
+  - generic [ref=e165]:
+    - generic [ref=e166]:
+      - heading "Ils ont transformé leur carrière" [level=2] [ref=e167]
+      - paragraph [ref=e168]: Rejoignez nos apprenants satisfaits
+    - generic [ref=e169]:
+      - generic [ref=e170]:
+        - generic [ref=e171]:
+          - img [ref=e172]
+          - img [ref=e174]
+          - img [ref=e176]
+          - img [ref=e178]
+          - img [ref=e180]
+        - paragraph [ref=e182]: "\"GENIA m'a permis de passer de novice à experte en prompt engineering en seulement 3 mois !\""
+        - generic [ref=e184]:
+          - generic [ref=e185]: Marie L.
+          - generic [ref=e186]: Product Manager
+      - generic [ref=e187]:
+        - generic [ref=e188]:
+          - img [ref=e189]
+          - img [ref=e191]
+          - img [ref=e193]
+          - img [ref=e195]
+          - img [ref=e197]
+        - paragraph [ref=e199]: "\"La méthode pédagogique est brillante. J'utilise maintenant l'IA 10x plus efficacement.\""
+        - generic [ref=e201]:
+          - generic [ref=e202]: Thomas D.
+          - generic [ref=e203]: Développeur
+      - generic [ref=e204]:
+        - generic [ref=e205]:
+          - img [ref=e206]
+          - img [ref=e208]
+          - img [ref=e210]
+          - img [ref=e212]
+          - img [ref=e214]
+        - paragraph [ref=e216]: "\"Une formation complète et structurée, avec un accompagnement personnalisé exceptionnel.\""
+        - generic [ref=e218]:
+          - generic [ref=e219]: Sophie M.
+          - generic [ref=e220]: Consultante
+  - generic [ref=e222]:
+    - heading "Questions Fréquentes" [level=2] [ref=e224]
+    - generic [ref=e225]:
+      - button "Qu'est-ce que GENIA Web Training ?" [ref=e227]:
+        - text: Qu'est-ce que GENIA Web Training ?
+        - img [ref=e228]
+      - button "Comment fonctionne l'assistant GENIA ?" [ref=e231]:
+        - text: Comment fonctionne l'assistant GENIA ?
+        - img [ref=e232]
+      - button "À qui s'adresse cette formation ?" [ref=e235]:
+        - text: À qui s'adresse cette formation ?
+        - img [ref=e236]
+      - button "Quelle est la durée de la formation ?" [ref=e239]:
+        - text: Quelle est la durée de la formation ?
+        - img [ref=e240]
+      - button "Qu'est-ce que la méthode GENIA ?" [ref=e243]:
+        - text: Qu'est-ce que la méthode GENIA ?
+        - img [ref=e244]
+      - button "Quel est le prix de la formation ?" [ref=e247]:
+        - text: Quel est le prix de la formation ?
+        - img [ref=e248]
+  - generic [ref=e251]:
+    - heading "Des questions ? Contactez-nous" [level=3] [ref=e252]
+    - generic [ref=e253]:
+      - link "LinkedIn" [ref=e254] [cursor=pointer]:
+        - /url: https://www.linkedin.com/in/hemersonkoffi
+        - img [ref=e255]
+        - text: LinkedIn
+      - link "Email" [ref=e259] [cursor=pointer]:
+        - /url: mailto:contact@geniawebtraining.com
+        - img [ref=e260]
+        - text: Email
+  - generic [ref=e264]:
+    - heading "Prêt à devenir expert en Prompt Engineering ?" [level=2] [ref=e265]
+    - paragraph [ref=e266]: Rejoignez GENIA Web Training aujourd'hui
+    - generic [ref=e267]:
+      - link "S'inscrire maintenant" [ref=e268] [cursor=pointer]:
+        - /url: /register
+        - img [ref=e269]
+        - text: S'inscrire maintenant
+        - img [ref=e271]
+      - link "Voir la méthode" [ref=e273] [cursor=pointer]:
+        - /url: "#method"
+        - img [ref=e274]
+        - text: Voir la méthode
+  - contentinfo [ref=e277]:
+    - generic [ref=e278]:
+      - generic [ref=e279]:
+        - generic [ref=e280]:
+          - img "GENIA Logo" [ref=e281]
+          - text: GENIA Web Training
+        - paragraph [ref=e282]: Plateforme de formation au Prompt Engineering
+      - generic [ref=e284]:
+        - generic [ref=e285]:
+          - heading "Formation" [level=4] [ref=e286]
+          - generic [ref=e287]:
+            - link "Programme" [ref=e288] [cursor=pointer]:
+              - /url: /dashboard
+            - text: "|"
+            - link "Méthode" [ref=e289] [cursor=pointer]:
+              - /url: "#method"
+            - text: "|"
+            - link "Certificats" [ref=e290] [cursor=pointer]:
+              - /url: /dashboard/achievements
+        - generic [ref=e291]:
+          - heading "Ressources" [level=4] [ref=e292]
+          - generic [ref=e293]:
+            - link "Blog" [ref=e294] [cursor=pointer]:
+              - /url: "#"
+            - text: "|"
+            - link "Documentation" [ref=e295] [cursor=pointer]:
+              - /url: "#"
+            - text: "|"
+            - link "Support" [ref=e296] [cursor=pointer]:
+              - /url: "#"
+        - generic [ref=e297]:
+          - heading "Informations" [level=4] [ref=e298]
+          - generic [ref=e299]:
+            - link "CGU" [ref=e300] [cursor=pointer]:
+              - /url: "#"
+            - text: "|"
+            - link "Contact" [ref=e301] [cursor=pointer]:
+              - /url: "#"
+            - text: "|"
+            - link "À propos" [ref=e302] [cursor=pointer]:
+              - /url: "#"
+      - paragraph [ref=e304]: © 2025 GENIA Web Training. Créé par Hemerson KOFFI. Tous droits réservés.
+```

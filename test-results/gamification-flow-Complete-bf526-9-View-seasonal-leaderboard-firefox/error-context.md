@@ -1,0 +1,44 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - navigation [ref=e3]:
+    - generic [ref=e4]:
+      - heading "GENIA Web Training" [level=1] [ref=e6]
+      - generic [ref=e7]:
+        - button "Accueil" [ref=e8]:
+          - img [ref=e9]
+          - text: Accueil
+        - button "Modules" [ref=e12]:
+          - img [ref=e13]
+          - text: Modules
+        - button "GENIA" [ref=e16]:
+          - img [ref=e17]
+          - text: GENIA
+        - button "Progrès" [ref=e19]:
+          - img [ref=e20]
+          - text: Progrès
+        - button "Tournois" [ref=e27]:
+          - img [ref=e28]
+          - text: Tournois
+        - button "Équipes" [ref=e37]:
+          - img [ref=e38]
+          - text: Équipes
+        - button "Arbre de Compétences" [ref=e43]:
+          - img [ref=e44]
+          - text: Arbre de Compétences
+      - generic [ref=e50]:
+        - button "Profil" [ref=e51]:
+          - img [ref=e52]
+          - text: Profil
+        - button [ref=e56]:
+          - img [ref=e57]
+        - button "U Utilisateur" [ref=e68]:
+          - generic [ref=e69]: U
+          - generic [ref=e70]:
+            - paragraph [ref=e71]: Utilisateur
+            - paragraph
+          - img [ref=e72]
+  - main [ref=e74]:
+    - paragraph [ref=e78]: Chargement...
+```
