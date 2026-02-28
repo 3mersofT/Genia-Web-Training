@@ -1,60 +1,41 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { CreateFeedbackSchema } from '@/lib/validations/feedback.schema';
 
 export async function POST(request: NextRequest) {
   try {
     const supabase = await createClient();
-    
+
     // Vérifier l'authentification (optionnel pour les feedbacks anonymes)
     const { data: { user }, error: authError } = await supabase.auth.getUser();
-    
+
     const body = await request.json();
-    const {
-      feedbackType,
-      targetId,
-      rating,
-      comment,
-      categories,
-      isAnonymous,
-      userName,
-      userEmail
-    } = body;
 
-    // Validation
-    if (!feedbackType || !targetId || !rating || !categories || categories.length === 0) {
+    // Validate request body with Zod schema
+    const validationResult = CreateFeedbackSchema.safeParse(body);
+
+    if (!validationResult.success) {
       return NextResponse.json(
-        { error: 'Données manquantes' },
+        { error: 'Invalid request data', details: validationResult.error.format() },
         { status: 400 }
       );
     }
 
-    if (rating < 1 || rating > 5) {
-      return NextResponse.json(
-        { error: 'Note invalide' },
-        { status: 400 }
-      );
-    }
-
-    if (!['module', 'capsule', 'platform'].includes(feedbackType)) {
-      return NextResponse.json(
-        { error: 'Type de feedback invalide' },
-        { status: 400 }
-      );
-    }
+    const validatedData = validationResult.data;
 
     // Insérer le feedback
     const { data: feedback, error } = await supabase
       .from('feedbacks')
       .insert({
         user_id: user?.id || null,
-        feedback_type: feedbackType,
-        target_id: targetId,
-        rating,
-        comment: comment || null,
-        categories,
-        is_anonymous: isAnonymous,
-        user_name: isAnonymous ? null : userName || null,
-        user_email: isAnonymous ? null : userEmail || null,
+        feedback_type: validatedData.feedbackType,
+        target_id: validatedData.targetId,
+        rating: validatedData.rating,
+        comment: validatedData.comment || null,
+        categories: validatedData.categories,
+        is_anonymous: validatedData.isAnonymous,
+        user_name: validatedData.isAnonymous ? null : validatedData.userName || null,
+        user_email: validatedData.isAnonymous ? null : validatedData.userEmail || null,
         status: 'pending' // En attente de modération
       })
       .select()
