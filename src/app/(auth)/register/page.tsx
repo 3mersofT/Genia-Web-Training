@@ -108,13 +108,15 @@ export default function RegisterPage() {
 
           <form onSubmit={handleRegister} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Nom complet</label>
+              <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">Nom complet</label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
+                  id="fullName"
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
+                  aria-label="Nom complet"
                   className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="Jean Dupont"
                   required
@@ -123,13 +125,15 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Nom d'utilisateur</label>
+              <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">Nom d'utilisateur</label>
               <div className="relative">
                 <AtSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
+                  id="username"
                   type="text"
                   value={username}
                   onChange={(e) => checkUsername(e.target.value)}
+                  aria-label="Nom d'utilisateur"
                   className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="mon_username"
                   required
@@ -148,13 +152,15 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
+                  id="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  aria-label="Email"
                   className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="vous@exemple.com"
                   required
@@ -163,13 +169,15 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
+                  id="password"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  aria-label="Mot de passe"
                   className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="••••••••"
                   minLength={6}
@@ -180,7 +188,7 @@ export default function RegisterPage() {
             </div>
 
             <div className="flex items-start">
-              <input type="checkbox" id="terms" className="mt-1 w-4 h-4 text-blue-600 border-gray-300 rounded" required />
+              <input type="checkbox" id="terms" aria-label="J'accepte les conditions d'utilisation et la politique de confidentialité" className="mt-1 w-4 h-4 text-blue-600 border-gray-300 rounded" required />
               <label htmlFor="terms" className="ml-2 text-sm text-gray-600">
                 J'accepte les{' '}
                 <Link href="#" className="text-blue-600 hover:underline">conditions d'utilisation</Link>{' '}
