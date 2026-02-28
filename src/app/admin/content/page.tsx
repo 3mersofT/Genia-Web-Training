@@ -91,7 +91,7 @@ export default function ContentManagementPage() {
     try {
       // Charger les modules depuis les fichiers JSON locaux
       const { getAllModules } = await import('@/lib/data');
-      const jsonModules = getAllModules();
+      const jsonModules = await getAllModules();
 
       // Chargement des données réelles; valeurs neutres si aucune donnée
       console.log('🔄 Chargement des données de contenu (réelles) ...');

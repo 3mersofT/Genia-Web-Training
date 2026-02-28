@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 import { useAuth } from '@/hooks/useAuth'
 import { BookOpen, Trophy, Flame, Target, Clock, ChevronRight, BarChart3, Award } from 'lucide-react'
 import Link from 'next/link'
-import { getAllModules, getAllModulesWithProgress } from '@/lib/data'
+import { getAllModules, getAllModulesWithProgress, type Module } from '@/lib/data'
 import { createClient } from '@/lib/supabase/client'
 import FeedbackButton from '@/components/feedback/FeedbackButton'
 import CertificateButton from '@/components/certificates/CertificateButton'
@@ -24,7 +24,7 @@ export default function DashboardPage() {
   const router = useRouter()
   const supabase = createClient()
   const [displayName, setDisplayName] = useState<string>('')
-  const [modules, setModules] = useState(getAllModules()) // État local pour les modules
+  const [modules, setModules] = useState<Module[]>([]) // État local pour les modules
   
   const [stats, setStats] = useState({
     totalPoints: 0,

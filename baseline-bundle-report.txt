@@ -1,0 +1,253 @@
+
+> genia-web-training@3.1.1 analyze
+> cross-env ANALYZE=true next build
+
+  ▲ Next.js 14.2.35
+  - Environments: .env.local
+
+   Creating an optimized production build ...
+> [PWA] Compile server
+> [PWA] Compile server
+> [PWA] Compile client (static)
+> [PWA] Auto register service worker with: F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\node_modules\next-pwa\register.js
+> [PWA] Service worker: F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\public\sw.js
+> [PWA]   url: /sw.js
+> [PWA]   scope: /
+> [PWA] Fallback to precache routes when fetch failed from cache or network:
+> [PWA]   document (page): /offline
+[1mWebpack Bundle Analyzer[22m saved report to [1mF:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\.next\analyze\nodejs.html[22m
+[1mWebpack Bundle Analyzer[22m saved report to [1mF:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\.next\analyze\edge.html[22m
+[1mWebpack Bundle Analyzer[22m saved report to [1mF:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\.next\analyze\client.html[22m
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+
+./src/components/admin/ContentPreview.tsx
+38:9  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/certificates/CertificatePreview.tsx
+143:23  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/gamification/TeamLeaderboard.tsx
+179:29  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+   Collecting page data ...
+   Generating static pages (0/43) ...
+Erreur API feedback stats: n [Error]: Dynamic server usage: Route /api/feedback/stats couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\.next\server\chunks\9276.js:1:56329)
+    at d (F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\.next\server\chunks\9706.js:1:3701)
+    at i (F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\.next\server\app\api\notifications\subscribe-push\route.js:1:3778)
+    at u (F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\.next\server\app\api\feedback\stats\route.js:1:837)
+    at F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:38417
+    at F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\node_modules\next\dist\server\lib\trace\tracer.js:140:36
+    at NoopContextManager.with (F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\node_modules\@opentelemetry\api\build\src\context\NoopContextManager.js:25:19)
+    at ContextAPI.with (F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\node_modules\@opentelemetry\api\build\src\api\context.js:60:46)
+    at NoopTracer.startActiveSpan (F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\node_modules\@opentelemetry\api\build\src\trace\NoopTracer.js:65:31)
+    at ProxyTracer.startActiveSpan (F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\node_modules\@opentelemetry\api\build\src\trace\ProxyTracer.js:36:24) {
+  description: "Route /api/feedback/stats couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Rate limiter error: B [Error]: Dynamic server usage: Route /api/auth/username-availability couldn't be rendered statically because it used `request.headers`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at V (F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:21778)
+    at Object.get (F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:29465)
+    at F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\.next\server\app\api\auth\username-availability\route.js:1:2556
+    at F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\.next\server\app\api\auth\username-availability\route.js:1:2657
+    at d (F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\.next\server\app\api\auth\username-availability\route.js:1:906)
+    at F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:38417
+    at F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\node_modules\next\dist\server\lib\trace\tracer.js:140:36
+    at NoopContextManager.with (F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\node_modules\@opentelemetry\api\build\src\context\NoopContextManager.js:25:19)
+    at ContextAPI.with (F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\node_modules\@opentelemetry\api\build\src\api\context.js:60:46)
+    at NoopTracer.startActiveSpan (F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\node_modules\@opentelemetry\api\build\src\trace\NoopTracer.js:65:31) {
+  description: "Route /api/auth/username-availability couldn't be rendered statically because it used `request.headers`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+   Generating static pages (10/43) 
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /_not-found. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /_not-found. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /register. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /register. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /skill-tree. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /skill-tree. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /admin/feedback. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /admin/feedback. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /login. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /login. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /level-test. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /level-test. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /admin/content. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /admin/content. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /leaderboards. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /leaderboards. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /tournaments. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /tournaments. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /offline. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /offline. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+   Generating static pages (21/43) 
+Erreur récupération quotas: n [Error]: Dynamic server usage: Route /api/quotas couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at l (F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\.next\server\chunks\9276.js:1:56329)
+    at d (F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\.next\server\chunks\9706.js:1:3701)
+    at i (F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\.next\server\app\api\admin\users\resend-verification\route.js:1:3250)
+    at d (F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\.next\server\app\api\quotas\route.js:1:942)
+    at F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\node_modules\next\dist\compiled\next-server\app-route.runtime.prod.js:6:38417
+    at F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\node_modules\next\dist\server\lib\trace\tracer.js:140:36
+    at NoopContextManager.with (F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\node_modules\@opentelemetry\api\build\src\context\NoopContextManager.js:25:19)
+    at ContextAPI.with (F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\node_modules\@opentelemetry\api\build\src\api\context.js:60:46)
+    at NoopTracer.startActiveSpan (F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\node_modules\@opentelemetry\api\build\src\trace\NoopTracer.js:65:31)
+    at ProxyTracer.startActiveSpan (F:\GitHub\Claude\genia-web-training\.auto-claude\worktrees\tasks\011-optimiser-le-chargement-des-donn-es-json-lazy-load\node_modules\@opentelemetry\api\build\src\trace\ProxyTracer.js:36:24) {
+  description: "Route /api/quotas couldn't be rendered statically because it used `cookies`. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /pwa-test. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /pwa-test. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /admin/users. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /admin/users. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /analytics. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /analytics. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /admin/analytics. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /admin/analytics. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /admin/settings. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /admin/settings. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /profile. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /profile. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /teams. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /teams. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /dashboard. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /dashboard. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+   Generating static pages (32/43) 
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /forgot-password. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /forgot-password. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /challenges. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /challenges. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /admin. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /admin. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /debug-admin. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ Unsupported metadata themeColor is configured in metadata export in /debug-admin. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ✓ Generating static pages (43/43)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                               Size     First Load JS
+┌ ○ /                                     12.1 kB         109 kB
+├ ○ /_not-found                           880 B          89.2 kB
+├ ƒ /admin                                5.69 kB         146 kB
+├ ƒ /admin/analytics                      4.93 kB         215 kB
+├ ƒ /admin/content                        8.56 kB         285 kB
+├ ƒ /admin/feedback                       3.66 kB        91.9 kB
+├ ƒ /admin/settings                       5.62 kB         146 kB
+├ ƒ /admin/users                          7.61 kB         148 kB
+├ ○ /analytics                            21.6 kB         278 kB
+├ ƒ /api/admin/users                      0 B                0 B
+├ ƒ /api/admin/users/resend-verification  0 B                0 B
+├ ƒ /api/admin/users/reset-password       0 B                0 B
+├ ƒ /api/admin/users/suspend              0 B                0 B
+├ ƒ /api/analytics/student                0 B                0 B
+├ ƒ /api/auth/resolve-identifier          0 B                0 B
+├ ƒ /api/auth/username-availability       0 B                0 B
+├ ƒ /api/certificates/generate            0 B                0 B
+├ ƒ /api/certificates/verify/[id]         0 B                0 B
+├ ƒ /api/chat                             0 B                0 B
+├ ƒ /api/exercise/evaluate                0 B                0 B
+├ ƒ /api/exercise/generate                0 B                0 B
+├ ƒ /api/feedback                         0 B                0 B
+├ ƒ /api/feedback/stats                   0 B                0 B
+├ ƒ /api/notifications                    0 B                0 B
+├ ƒ /api/notifications/preferences        0 B                0 B
+├ ƒ /api/notifications/subscribe-push     0 B                0 B
+├ ƒ /api/progress/complete                0 B                0 B
+├ ƒ /api/progress/complete-direct         0 B                0 B
+├ ƒ /api/quotas                           0 B                0 B
+├ ƒ /capsules/[id]                        230 kB          597 kB
+├ ƒ /certificates/[id]                    3.36 kB         100 kB
+├ ○ /challenges                           4.8 kB          134 kB
+├ ○ /dashboard                            5.71 kB         478 kB
+├ ○ /debug-admin                          1.68 kB         142 kB
+├ ○ /forgot-password                      2.97 kB         152 kB
+├ ○ /leaderboards                         2.35 kB         138 kB
+├ ○ /level-test                           3.02 kB         124 kB
+├ ○ /login                                2.15 kB         152 kB
+├ ƒ /modules/[slug]                       2.7 kB          469 kB
+├ ○ /offline                              2.16 kB        90.4 kB
+├ ○ /profile                              7.49 kB         152 kB
+├ ○ /pwa-test                             4.73 kB          93 kB
+├ ○ /register                             3.73 kB         153 kB
+├ ○ /skill-tree                           5.71 kB         130 kB
+├ ○ /teams                                8.25 kB         141 kB
+└ ○ /tournaments                          4.41 kB         137 kB
++ First Load JS shared by all             88.3 kB
+  ├ chunks/2117-6bb1cd3d075149d1.js       31.9 kB
+  ├ chunks/fd9d1056-d9d19d994be79023.js   53.6 kB
+  └ other shared chunks (total)           2.73 kB
+
+
+ƒ Middleware                              70.6 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

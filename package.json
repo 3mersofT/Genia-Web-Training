@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "analyze": "cross-env ANALYZE=true next build",
     "test": "jest",
     "test:unit": "jest tests/unit",
     "test:integration": "jest tests/integration",
@@ -70,6 +71,7 @@
   "devDependencies": {
     "@eslint/config-array": "^0.21.0",
     "@eslint/object-schema": "^2.1.6",
+    "@next/bundle-analyzer": "^16.1.6",
     "@playwright/test": "^1.58.2",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
@@ -80,6 +82,7 @@
     "@types/react-syntax-highlighter": "^15.5.13",
     "autoprefixer": "^10.4.16",
     "chrome-launcher": "^1.2.1",
+    "cross-env": "^10.1.0",
     "dotenv-cli": "^10.0.0",
     "eslint": "^8.57.1",
     "eslint-config-next": "14.0.4",
