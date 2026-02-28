@@ -346,63 +346,68 @@ export async function getAllModules(): Promise<Module[]> {
 export async function getAllModulesWithProgress(userId: string): Promise<Module[]> {
   const modulesConfig = await getModulesConfig();
   const allCapsules = await getAllCapsules();
-  const modules = [];
 
-  for (let i = 0; i < modulesConfig.length; i++) {
-    const config = modulesConfig[i];
-    const metadata = config.metadata;
+  // Parallelize module progress fetching using Promise.all()
+  const modules = await Promise.all(
+    modulesConfig.map(async (config, i) => {
+      const metadata = config.metadata;
 
-    // Calculer la progression réelle
-    let realProgress = 0;
-    let capsuleProgress: Record<string, { completed: boolean; available: boolean }> = {};
+      // Calculer la progression réelle
+      let realProgress = 0;
+      let capsuleProgress: Record<string, { completed: boolean; available: boolean }> = {};
 
-    if (metadata.module?.id) {
-      realProgress = await getModuleProgress(metadata.module.id, userId);
-
-      // Récupérer le statut de chaque capsule
-      try {
-        const { createClient } = await import('@/lib/supabase/client');
-        const supabase = createClient();
-
+      if (metadata.module?.id) {
         // Créer le module temporaire pour obtenir les capsules
         const tempModule = transformModule({ ...config, progress: 0 }, i, allCapsules);
         const capsuleIds = tempModule.capsules.map(cap => cap.id);
 
-        if (capsuleIds.length > 0) {
-          // Récupérer la progression de l'utilisateur pour ces capsules
-          const { data: progress } = await supabase
-            .from('user_progress')
-            .select('capsule_id, status')
-            .eq('user_id', userId)
-            .in('capsule_id', capsuleIds);
+        try {
+          const { createClient } = await import('@/lib/supabase/client');
+          const supabase = createClient();
+
+          // Parallelize both database queries using Promise.all()
+          const [moduleProgressResult, capsuleProgressResult] = await Promise.all([
+            getModuleProgress(metadata.module.id, userId),
+            capsuleIds.length > 0
+              ? supabase
+                  .from('user_progress')
+                  .select('capsule_id, status')
+                  .eq('user_id', userId)
+                  .in('capsule_id', capsuleIds)
+              : Promise.resolve({ data: null })
+          ]);
+
+          realProgress = moduleProgressResult;
 
           // Créer un mapping des statuts
-          capsuleProgress = {};
-          capsuleIds.forEach((capsuleId: string) => {
-            const userProgress = progress?.find((p: any) => p.capsule_id === capsuleId);
-            capsuleProgress[capsuleId] = {
-              completed: userProgress?.status === 'completed' || false,
-              available: true // Pour l'instant, toutes les capsules sont disponibles
-            };
-          });
+          if (capsuleProgressResult.data) {
+            capsuleProgress = {};
+            capsuleIds.forEach((capsuleId: string) => {
+              const userProgress = capsuleProgressResult.data?.find((p: any) => p.capsule_id === capsuleId);
+              capsuleProgress[capsuleId] = {
+                completed: userProgress?.status === 'completed' || false,
+                available: true // Pour l'instant, toutes les capsules sont disponibles
+              };
+            });
+          }
+        } catch (error) {
+          // Silent error handling - use default values
         }
-      } catch (error) {
-        console.error('Erreur récupération progression capsules:', error);
       }
-    }
 
-    // Créer le module avec la vraie progression
-    const module = transformModule({ ...config, progress: realProgress }, i, allCapsules);
+      // Créer le module avec la vraie progression
+      const module = transformModule({ ...config, progress: realProgress }, i, allCapsules);
 
-    // Mettre à jour le statut des capsules
-    module.capsules = module.capsules.map(cap => ({
-      ...cap,
-      completed: capsuleProgress[cap.id]?.completed || false,
-      available: capsuleProgress[cap.id]?.available !== false
-    }));
+      // Mettre à jour le statut des capsules
+      module.capsules = module.capsules.map(cap => ({
+        ...cap,
+        completed: capsuleProgress[cap.id]?.completed || false,
+        available: capsuleProgress[cap.id]?.available !== false
+      }));
 
-    modules.push(module);
-  }
+      return module;
+    })
+  );
 
   return modules;
 }
