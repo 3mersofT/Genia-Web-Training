@@ -1,25 +1,5 @@
 // Service pour charger et gérer les données des modules
 import type { MultimediaBlock } from '@/types/multimedia.types';
-import module1Metadata from '@/data/modules/module1_metadata_global.json';
-import module2Metadata from '@/data/modules/module2_metadata_global.json';
-import module3Metadata from '@/data/modules/module3_metadata_global_final.json';
-
-// Import des capsules Module 1
-import module1Capsules1_3 from '@/data/modules/module1_capsules_1_3.json';
-import module1Capsules4_7 from '@/data/modules/module1_capsules_4_7.json';
-import module1Capsules8_12 from '@/data/modules/module1_capsules_8_12.json';
-
-// Import des capsules Module 2
-import module2Capsules13_15 from '@/data/modules/module2_capsules_13_15.json';
-import module2Capsules16_18 from '@/data/modules/module2_capsules_16_18.json';
-import module2Capsules19_21 from '@/data/modules/module2_capsules_19_21.json';
-import module2Capsules22_24 from '@/data/modules/module2_capsules_22_24.json';
-
-// Import des capsules Module 3
-import module3Capsules25_27 from '@/data/modules/module3_capsules_25_27.json';
-import module3Capsules28_30 from '@/data/modules/module3_capsules_28_30.json';
-import module3Capsules31_33 from '@/data/modules/module3_capsules_31_33.json';
-import module3Capsules34_36 from '@/data/modules/module3_capsules_34_36.json';
 
 export interface Module {
   id: string;
@@ -151,44 +131,80 @@ async function getModule3Capsules34_36() {
   return data.default;
 }
 
-// Combiner les données des capsules
-const allCapsules: Record<string, any> = {
-  ...getCapsules(module1Capsules1_3).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
-  ...getCapsules(module1Capsules4_7).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
-  ...getCapsules(module1Capsules8_12).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
-  
-  ...getCapsules(module2Capsules13_15).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
-  ...getCapsules(module2Capsules16_18).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
-  ...getCapsules(module2Capsules19_21).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
-  ...getCapsules(module2Capsules22_24).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
-  
-  ...getCapsules(module3Capsules25_27).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
-  ...getCapsules(module3Capsules28_30).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
-  ...getCapsules(module3Capsules31_33).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
-  ...getCapsules(module3Capsules34_36).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
-};
+// Combiner les données des capsules (version asynchrone)
+async function getAllCapsules(): Promise<Record<string, any>> {
+  const [
+    module1Capsules1_3,
+    module1Capsules4_7,
+    module1Capsules8_12,
+    module2Capsules13_15,
+    module2Capsules16_18,
+    module2Capsules19_21,
+    module2Capsules22_24,
+    module3Capsules25_27,
+    module3Capsules28_30,
+    module3Capsules31_33,
+    module3Capsules34_36,
+  ] = await Promise.all([
+    getModule1Capsules1_3(),
+    getModule1Capsules4_7(),
+    getModule1Capsules8_12(),
+    getModule2Capsules13_15(),
+    getModule2Capsules16_18(),
+    getModule2Capsules19_21(),
+    getModule2Capsules22_24(),
+    getModule3Capsules25_27(),
+    getModule3Capsules28_30(),
+    getModule3Capsules31_33(),
+    getModule3Capsules34_36(),
+  ]);
 
-// Configuration des modules avec mapping des slugs
-const modulesConfig = [
-  {
-    metadata: module1Metadata,
-    slug: 'fondamentaux',
-    color: 'from-blue-500 to-cyan-600',
-    progress: 0, // Sera calculé dynamiquement
-  },
-  {
-    metadata: module2Metadata,
-    slug: 'techniques', 
-    color: 'from-purple-500 to-pink-600',
-    progress: 0, // Sera calculé dynamiquement
-  },
-  {
-    metadata: module3Metadata,
-    slug: 'pratique',
-    color: 'from-violet-500 to-purple-700', 
-    progress: 0, // Sera calculé dynamiquement
-  }
-];
+  return {
+    ...getCapsules(module1Capsules1_3).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
+    ...getCapsules(module1Capsules4_7).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
+    ...getCapsules(module1Capsules8_12).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
+
+    ...getCapsules(module2Capsules13_15).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
+    ...getCapsules(module2Capsules16_18).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
+    ...getCapsules(module2Capsules19_21).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
+    ...getCapsules(module2Capsules22_24).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
+
+    ...getCapsules(module3Capsules25_27).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
+    ...getCapsules(module3Capsules28_30).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
+    ...getCapsules(module3Capsules31_33).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
+    ...getCapsules(module3Capsules34_36).reduce((acc: any, cap: any) => ({ ...acc, [cap.id]: cap }), {}),
+  };
+}
+
+// Configuration des modules avec mapping des slugs (version asynchrone)
+async function getModulesConfig() {
+  const [module1Metadata, module2Metadata, module3Metadata] = await Promise.all([
+    getModule1Metadata(),
+    getModule2Metadata(),
+    getModule3Metadata(),
+  ]);
+
+  return [
+    {
+      metadata: module1Metadata,
+      slug: 'fondamentaux',
+      color: 'from-blue-500 to-cyan-600',
+      progress: 0, // Sera calculé dynamiquement
+    },
+    {
+      metadata: module2Metadata,
+      slug: 'techniques',
+      color: 'from-purple-500 to-pink-600',
+      progress: 0, // Sera calculé dynamiquement
+    },
+    {
+      metadata: module3Metadata,
+      slug: 'pratique',
+      color: 'from-violet-500 to-purple-700',
+      progress: 0, // Sera calculé dynamiquement
+    }
+  ];
+}
 
 // Transformer les métadonnées en format unifié
 function transformModule(config: any, index: number): Module {
