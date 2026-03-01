@@ -2,9 +2,22 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { createRateLimiter } from '@/lib/rate-limiter';
 import { EvaluateExerciseSchema } from '@/lib/validations/exercise.schema';
 
+// Rate limiter: 10 requests per minute (strict - calls Mistral AI)
+const rateLimiter = createRateLimiter({
+  interval: 60000,
+  limit: 10,
+});
+
 export async function POST(req: NextRequest) {
+  // Apply rate limiting
+  const { response: rateLimitResponse } = await rateLimiter(req);
+  if (rateLimitResponse) {
+    return rateLimitResponse;
+  }
+
   try {
     const supabase = await createClient();
 
