@@ -1,6 +1,7 @@
 // src/services/mistralService.ts
 
 import { createClient } from '@/lib/supabase/client';
+import { MODELS_CONFIG, type ModelKey } from '@/lib/ai-models.config';
 
 // ============================================
 // TYPES ET INTERFACES
@@ -38,46 +39,6 @@ export interface UserQuota {
   used: number;
   limit: number;
 }
-
-// ============================================
-// CONFIGURATION DES MODÈLES
-// ============================================
-
-const MODELS_CONFIG = {
-  'magistral-medium': {
-    endpoint: 'https://api.mistral.ai/v1/chat/completions',
-    modelName: 'mistral-large-latest',
-    costPerMillionInput: 2.0,
-    costPerMillionOutput: 6.0,
-    maxTokens: 3000,
-    defaultTemperature: 0.2,
-    features: ['reasoning', 'cot', 'complex-analysis'],
-    dailyQuota: 60, // Doublé avec nouveau budget
-    description: 'Modèle expert pour démonstrations et raisonnement complexe'
-  },
-  'mistral-medium-3': {
-    endpoint: 'https://api.mistral.ai/v1/chat/completions',
-    modelName: 'mistral-medium-latest',
-    costPerMillionInput: 1.5,
-    costPerMillionOutput: 4.5,
-    maxTokens: 1500,
-    defaultTemperature: 0.4,
-    features: ['general', 'exercises', 'quick-answers'],
-    dailyQuota: 300, // Doublé avec nouveau budget
-    description: 'Modèle polyvalent pour pratique quotidienne'
-  },
-  'mistral-small': {
-    endpoint: 'https://api.mistral.ai/v1/chat/completions',
-    modelName: 'mistral-small-latest',
-    costPerMillionInput: 0.25,
-    costPerMillionOutput: 0.25,
-    maxTokens: 1000,
-    defaultTemperature: 0.5,
-    features: ['basic', 'quick'],
-    dailyQuota: 1000, // Doublé avec nouveau budget
-    description: 'Modèle rapide pour questions simples'
-  }
-};
 
 // ============================================
 // PERSONA GENIA COMPLET
@@ -383,4 +344,4 @@ Fournis :
   };
 }
 
-export { MODELS_CONFIG, GENIA_FULL_PERSONA };
+export { GENIA_FULL_PERSONA };
