@@ -1,17 +1,24 @@
 // app/api/quotas/route.ts
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
-import { createAdminClient } from '@/lib/supabase/server';
+import { createClient, createAdminClient } from '@/lib/supabase/server';
+import { createRateLimiter } from '@/lib/rate-limiter';
+import { MODELS_CONFIG } from '@/lib/ai-models.config';
 import { GetQuotasSchema } from '@/lib/validations/quotas.schema';
 
-const MODELS_CONFIG = {
-  'magistral-medium': { dailyQuota: 30 }, // Quota par utilisateur par jour (réduit de moitié)
-  'mistral-medium-3': { dailyQuota: 150 }, // Quota par utilisateur par jour (réduit de moitié)
-  'mistral-small': { dailyQuota: 500 } // Quota par utilisateur par jour (réduit de moitié)
-};
+// Rate limiter: 30 requests per minute
+const rateLimiter = createRateLimiter({
+  interval: 60000,
+  limit: 30,
+});
 
 export async function GET(req: NextRequest) {
+  // Apply rate limiting
+  const { response: rateLimitResponse } = await rateLimiter(req);
+  if (rateLimitResponse) {
+    return rateLimitResponse;
+  }
+
   try {
     // Vérifier l'authentification
     const supabase = await createClient();

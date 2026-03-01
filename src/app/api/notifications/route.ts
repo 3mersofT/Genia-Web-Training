@@ -1,8 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { createRateLimiter } from '@/lib/rate-limiter';
 import { CreateNotificationSchema, UpdateNotificationSchema } from '@/lib/validations/notifications.schema';
 
+// Rate limiter: 30 requests per minute
+const rateLimiter = createRateLimiter({
+  interval: 60000,
+  limit: 30,
+});
+
 export async function GET(request: NextRequest) {
+  // Apply rate limiting
+  const { response: rateLimitResponse } = await rateLimiter(request);
+  if (rateLimitResponse) {
+    return rateLimitResponse;
+  }
+
   try {
     const supabase = await createClient();
     const { searchParams } = new URL(request.url);
@@ -70,6 +83,12 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  // Apply rate limiting
+  const { response: rateLimitResponse } = await rateLimiter(request);
+  if (rateLimitResponse) {
+    return rateLimitResponse;
+  }
+
   try {
     const supabase = await createClient();
 
@@ -139,6 +158,12 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PATCH(request: NextRequest) {
+  // Apply rate limiting
+  const { response: rateLimitResponse } = await rateLimiter(request);
+  if (rateLimitResponse) {
+    return rateLimitResponse;
+  }
+
   try {
     const supabase = await createClient();
 

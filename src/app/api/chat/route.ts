@@ -3,6 +3,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { createRateLimiter } from '@/lib/rate-limiter';
+import { MODELS_CONFIG, type ModelKey } from '@/lib/ai-models.config';
 
 // Rate limiter: 10 requests per minute
 const rateLimiter = createRateLimiter({
@@ -12,38 +13,10 @@ const rateLimiter = createRateLimiter({
 import { ChatRequestSchema } from '@/lib/validations/chat.schema';
 import { z } from 'zod';
 
-// Configuration des modèles
-const MODELS_CONFIG = {
-  'magistral-medium': {
-    modelName: 'mistral-large-latest',
-    costPerMillionInput: 2.0,
-    costPerMillionOutput: 6.0,
-    maxTokens: 3000,
-    defaultTemperature: 0.2,
-    dailyQuota: 30 // Quota par utilisateur par jour (réduit de moitié)
-  },
-  'mistral-medium-3': {
-    modelName: 'mistral-medium-latest',
-    costPerMillionInput: 1.5,
-    costPerMillionOutput: 4.5,
-    maxTokens: 1500,
-    defaultTemperature: 0.4,
-    dailyQuota: 150 // Quota par utilisateur par jour (réduit de moitié)
-  },
-  'mistral-small': {
-    modelName: 'mistral-small-latest',
-    costPerMillionInput: 0.25,
-    costPerMillionOutput: 0.25,
-    maxTokens: 1000,
-    defaultTemperature: 0.5,
-    dailyQuota: 500 // Quota par utilisateur par jour (réduit de moitié)
-  }
-};
-
 // Vérifier et mettre à jour les quotas
 async function checkAndUpdateQuota(
-  userId: string, 
-  model: keyof typeof MODELS_CONFIG,
+  userId: string,
+  model: ModelKey,
   tokens: number,
   cost: number
 ) {
@@ -151,7 +124,7 @@ export async function POST(req: NextRequest) {
     }
     
     // Configuration du modèle
-    const config = MODELS_CONFIG[model as keyof typeof MODELS_CONFIG];
+    const config = MODELS_CONFIG[model as ModelKey];
     if (!config) {
       return addHeaders(NextResponse.json(
         { error: 'Modèle invalide' },

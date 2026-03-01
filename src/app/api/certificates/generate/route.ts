@@ -1,8 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { createRateLimiter } from '@/lib/rate-limiter';
 import { GenerateCertificateSchema } from '@/lib/validations/certificates.schema';
 
+// Rate limiter: 30 requests per minute
+const rateLimiter = createRateLimiter({
+  interval: 60000,
+  limit: 30,
+});
+
 export async function POST(req: NextRequest) {
+  // Apply rate limiting
+  const { response: rateLimitResponse } = await rateLimiter(req);
+  if (rateLimitResponse) {
+    return rateLimitResponse;
+  }
+
   try {
     const body = await req.json();
 
