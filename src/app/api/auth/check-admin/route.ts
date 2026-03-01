@@ -12,12 +12,15 @@ export async function GET() {
       return NextResponse.json({ isAdmin: false }, { status: 401 });
     }
 
-    // Verifier le role admin dans les metadata du user
-    const isAdmin =
-      user.app_metadata?.role === 'admin' ||
-      user.user_metadata?.role === 'admin';
+    // Verifier le role admin via user_profiles (source de verite unique,
+    // coherent avec le middleware qui utilise la meme table)
+    const { data: profile } = await supabase
+      .from('user_profiles')
+      .select('role')
+      .eq('user_id', user.id)
+      .single();
 
-    if (!isAdmin) {
+    if (profile?.role !== 'admin') {
       return NextResponse.json({ isAdmin: false }, { status: 403 });
     }
 

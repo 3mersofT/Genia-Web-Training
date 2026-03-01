@@ -7,6 +7,7 @@ import { useToast } from '@/components/ui/Toast';
 import { useAuth } from '@/hooks/useAuth';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeSanitize from 'rehype-sanitize';
 import {
   ArrowLeft, ArrowRight, Play, CheckCircle, Clock,
   BookOpen, Target, Lightbulb, Trophy, ChevronLeft, ChevronRight
@@ -160,6 +161,7 @@ export default function CapsulePage() {
                   <div className="text-gray-700 leading-relaxed prose max-w-none">
                     <ReactMarkdown
                       remarkPlugins={[remarkGfm]}
+                      rehypePlugins={[rehypeSanitize]}
                       components={{
                         // Personnaliser le rendu des éléments
                         h1: ({node, ...props}) => <h1 className="text-2xl font-bold text-gray-800 mb-4" {...props} />,
