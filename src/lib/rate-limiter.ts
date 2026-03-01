@@ -1,3 +1,9 @@
+// TODO: This rate limiter uses an in-memory Map which resets on every cold start
+// in Vercel serverless. For production, migrate to @upstash/ratelimit with Redis.
+// To enable: set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN env vars,
+// install @upstash/ratelimit and @upstash/redis, then update createRateLimiter()
+// to use the Upstash Ratelimit class when those env vars are present.
+
 import { NextRequest, NextResponse } from 'next/server';
 
 /**
@@ -175,10 +181,32 @@ function checkRateLimit(
 }
 
 /**
- * Creates a rate limiter middleware with the specified configuration
- * Returns an async function that can be used to check rate limits
+ * Creates a rate limiter middleware with the specified configuration.
+ * Returns an async function that can be used to check rate limits.
+ *
+ * When UPSTASH_REDIS_REST_URL is set, this should be replaced with
+ * @upstash/ratelimit for distributed rate limiting across serverless instances.
  */
 export function createRateLimiter(config: RateLimitConfig): RateLimiterMiddleware {
+  if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+    // TODO: Replace this block with @upstash/ratelimit implementation:
+    //
+    // import { Ratelimit } from '@upstash/ratelimit';
+    // import { Redis } from '@upstash/redis';
+    //
+    // const redis = new Redis({
+    //   url: process.env.UPSTASH_REDIS_REST_URL,
+    //   token: process.env.UPSTASH_REDIS_REST_TOKEN,
+    // });
+    // const ratelimit = new Ratelimit({
+    //   redis,
+    //   limiter: Ratelimit.slidingWindow(config.limit, `${config.interval}ms`),
+    // });
+    //
+    // For now, fall through to in-memory implementation.
+    console.info('Rate limiter: Upstash Redis env vars detected but @upstash/ratelimit not installed. Using in-memory fallback.');
+  }
+
   return async (req: NextRequest): Promise<RateLimitCheckResult> => {
     try {
       // Clean up old entries periodically (every request for simplicity)
