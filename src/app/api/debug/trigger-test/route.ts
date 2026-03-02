@@ -7,64 +7,74 @@ export async function GET() {
   try {
     const supabase = await createAdminClient()
 
-    // 1. Test select on user_profiles
-    const { data: profiles, error: profilesErr } = await supabase
-      .from('user_profiles')
-      .select('id')
-      .limit(1)
-    results.profiles_select = profilesErr ? { error: profilesErr.message } : { ok: true, count: profiles?.length }
+    // 1. Get the ACTUAL function source code from pg_proc
+    const { data: funcDef, error: funcErr } = await supabase.rpc('get_trigger_source')
+    if (funcErr) {
+      // Function doesn't exist yet, try raw query approach
+      results.func_source = { error: funcErr.message }
+    } else {
+      results.func_source = funcDef
+    }
 
-    // 2. Test select on user_points
-    const { data: points, error: pointsErr } = await supabase
-      .from('user_points')
-      .select('id')
-      .limit(1)
-    results.points_select = pointsErr ? { error: pointsErr.message } : { ok: true, count: points?.length }
+    // 2. Check user_profiles columns
+    const { data: cols, error: colsErr } = await supabase.rpc('get_profile_columns')
+    results.columns = colsErr ? { error: colsErr.message } : cols
 
-    // 3. Test insert into user_profiles (with fake uuid, will fail FK but shows other errors)
-    const { error: insertProfileErr } = await supabase
-      .from('user_profiles')
-      .insert({
-        user_id: '00000000-0000-0000-0000-000000000099',
-        email: 'diagtest@test.com',
-        display_name: 'Diag Test',
-        role: 'student',
-        username: 'diagtest99',
-      })
-    results.profiles_insert = insertProfileErr
-      ? { error: insertProfileErr.message, code: insertProfileErr.code, details: insertProfileErr.details }
-      : { ok: true }
-
-    // 4. Try actual signup via auth
+    // 3. Try signup and capture the EXACT error from auth logs
     const { data: signupData, error: signupErr } = await supabase.auth.admin.createUser({
-      email: 'trigger_diag_test@debug-test.com',
+      email: 'trigger_diag_002@debug-test.com',
       password: 'TestDiag123456',
-      user_metadata: { full_name: 'Trigger Diag', username: 'trigdiag' },
+      user_metadata: { full_name: 'Trigger Diag 2', username: 'trigdiag002' },
       email_confirm: true,
     })
     if (signupErr) {
       results.signup = { error: signupErr.message, status: signupErr.status }
+
+      // Check if user was partially created
+      const { data: authUsers } = await supabase.auth.admin.listUsers()
+      const partialUser = authUsers?.users?.find(u => u.email === 'trigger_diag_002@debug-test.com')
+      if (partialUser) {
+        results.partial_user = { id: partialUser.id, created: true }
+        // Check if profile exists
+        const { data: prof } = await supabase
+          .from('user_profiles')
+          .select('*')
+          .eq('user_id', partialUser.id)
+          .maybeSingle()
+        results.partial_profile = prof || 'no profile'
+        // Cleanup
+        await supabase.auth.admin.deleteUser(partialUser.id)
+        results.partial_cleanup = 'done'
+      }
     } else {
       results.signup = { ok: true, user_id: signupData.user?.id }
 
-      // 5. Check if trigger created the profile
-      const { data: profile, error: profileCheckErr } = await supabase
+      // Check trigger result
+      const { data: profile } = await supabase
         .from('user_profiles')
         .select('*')
         .eq('user_id', signupData.user!.id)
         .maybeSingle()
-      results.trigger_profile = profileCheckErr
-        ? { error: profileCheckErr.message }
-        : profile
-          ? { ok: true, username: profile.username, display_name: profile.display_name }
-          : { error: 'NO PROFILE CREATED - trigger failed silently' }
+      results.trigger_profile = profile || 'NO PROFILE'
 
-      // 6. Cleanup test user
+      const { data: pts } = await supabase
+        .from('user_points')
+        .select('*')
+        .eq('user_id', signupData.user!.id)
+        .maybeSingle()
+      results.trigger_points = pts || 'NO POINTS'
+
+      // Cleanup
       await supabase.auth.admin.deleteUser(signupData.user!.id)
-      results.cleanup = 'done'
     }
+
+    // 4. Check auth.users for orphaned entries from previous failed attempts
+    const { data: allUsers } = await supabase.auth.admin.listUsers()
+    results.auth_users_count = allUsers?.users?.length || 0
+    results.auth_users = allUsers?.users?.map(u => ({ id: u.id, email: u.email, created: u.created_at })) || []
+
   } catch (e: any) {
-    results.fatal = e.message
+    results.fatal = e.message + ' | ' + e.stack
   }
 
   return NextResponse.json(results, { status: 200 })
