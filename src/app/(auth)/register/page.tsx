@@ -52,6 +52,11 @@ export default function RegisterPage() {
         }
         const res = await fetch(`/api/auth/username-availability?username=${encodeURIComponent(val)}`);
         const data = await res.json();
+        if (!res.ok) {
+          console.error('Username check failed:', data?.error || res.statusText);
+          setUsernameOk(null); // null = unknown, not false
+          return;
+        }
         setUsernameOk(Boolean(data?.available));
       } finally {
         setIsChecking(false);
@@ -72,7 +77,12 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-      if (!usernameOk) {
+      if (usernameOk === null) {
+        setError("Impossible de vérifier le nom d'utilisateur. Veuillez réessayer.");
+        setLoading(false);
+        return;
+      }
+      if (usernameOk === false) {
         setError("Nom d'utilisateur indisponible ou invalide");
         setLoading(false);
         return;
