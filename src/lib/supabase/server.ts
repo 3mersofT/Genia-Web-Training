@@ -1,6 +1,7 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { cookies } from 'next/headers'
-import type { Database } from '@/types/database.types'
+// TODO: Re-enable Database generic once types are regenerated with `supabase gen types`
+// import type { Database } from '@/types/database.types'
 
 // Browser/SSR-safe client using ANON key (respects RLS). Keep signature stable.
 export async function createClient() {
@@ -39,7 +40,7 @@ export async function createClient() {
 
   const cookieStore = await cookies()
 
-  return createServerClient<Database>(url, key, {
+  return createServerClient(url, key, {
     cookies: {
       get(name: string) {
         return cookieStore.get(name)?.value
@@ -68,7 +69,7 @@ export async function createAdminClient() {
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
   const cookieStore = await cookies()
 
-  return createServerClient<Database>(url, serviceKey, {
+  return createServerClient(url, serviceKey, {
     cookies: {
       get(name: string) {
         return cookieStore.get(name)?.value

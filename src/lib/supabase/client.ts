@@ -1,5 +1,6 @@
 import { createBrowserClient } from '@supabase/ssr'
-import type { Database } from '@/types/database.types'
+// TODO: Re-enable Database generic once types are regenerated with `supabase gen types`
+// import type { Database } from '@/types/database.types'
 
 export function createClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -23,5 +24,5 @@ export function createClient() {
     } as any
   }
   
-  return createBrowserClient<Database>(url, key)
+  return createBrowserClient(url, key)
 }

@@ -31,38 +31,49 @@ export interface Database {
           created_at?: string
           updated_at?: string
         }
+        Relationships: []
       }
       user_profiles: {
         Row: {
           id: string
+          user_id: string
           email: string
           display_name: string | null
+          username: string | null
           bio: string | null
-          role: 'student' | 'admin'
+          role: 'student' | 'admin' | 'teacher'
           onboarding_completed: boolean
+          preferences: Json | null
           created_at: string
           updated_at: string
         }
         Insert: {
-          id: string
+          id?: string
+          user_id: string
           email: string
           display_name?: string | null
+          username?: string | null
           bio?: string | null
-          role?: 'student' | 'admin'
+          role?: 'student' | 'admin' | 'teacher'
           onboarding_completed?: boolean
+          preferences?: Json | null
           created_at?: string
           updated_at?: string
         }
         Update: {
           id?: string
+          user_id?: string
           email?: string
           display_name?: string | null
+          username?: string | null
           bio?: string | null
-          role?: 'student' | 'admin'
+          role?: 'student' | 'admin' | 'teacher'
           onboarding_completed?: boolean
+          preferences?: Json | null
           created_at?: string
           updated_at?: string
         }
+        Relationships: []
       }
       modules: {
         Row: {
@@ -104,6 +115,7 @@ export interface Database {
           created_at?: string
           updated_at?: string
         }
+        Relationships: []
       }
       capsules: {
         Row: {
@@ -145,6 +157,15 @@ export interface Database {
           created_at?: string
           updated_at?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "capsules_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "modules"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       user_progress: {
         Row: {
@@ -189,6 +210,7 @@ export interface Database {
           created_at?: string
           updated_at?: string
         }
+        Relationships: []
       }
       chat_conversations: {
         Row: {
@@ -215,6 +237,7 @@ export interface Database {
           created_at?: string
           updated_at?: string
         }
+        Relationships: []
       }
       chat_messages: {
         Row: {
@@ -238,6 +261,7 @@ export interface Database {
           content?: string
           created_at?: string
         }
+        Relationships: []
       }
       llm_usage: {
         Row: {
@@ -273,6 +297,55 @@ export interface Database {
           created_at?: string
           updated_at?: string
         }
+        Relationships: []
+      }
+      feedbacks: {
+        Row: {
+          id: string
+          user_id: string | null
+          feedback_type: string
+          target_id: string | null
+          rating: number | null
+          comment: string | null
+          categories: Json | null
+          is_anonymous: boolean
+          user_name: string | null
+          user_email: string | null
+          status: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id?: string | null
+          feedback_type: string
+          target_id?: string | null
+          rating?: number | null
+          comment?: string | null
+          categories?: Json | null
+          is_anonymous?: boolean
+          user_name?: string | null
+          user_email?: string | null
+          status?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string | null
+          feedback_type?: string
+          target_id?: string | null
+          rating?: number | null
+          comment?: string | null
+          categories?: Json | null
+          is_anonymous?: boolean
+          user_name?: string | null
+          user_email?: string | null
+          status?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       generated_exercises: {
         Row: {
@@ -314,6 +387,7 @@ export interface Database {
           created_at?: string
           updated_at?: string
         }
+        Relationships: []
       }
     }
     Views: {
