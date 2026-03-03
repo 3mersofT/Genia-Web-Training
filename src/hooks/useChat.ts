@@ -3,7 +3,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import type { User, AuthChangeEvent, Session } from '@supabase/supabase-js';
 import { createClient } from '@/lib/supabase/client';
-import type { Message, ChatContext, QuotaInfo } from '@/types/chat.types';
+import type { Message, ChatContext, QuotaInfo, StreamEvent, SmartSuggestion } from '@/types/chat.types';
+import { generateSmartSuggestions } from '@/lib/smart-suggestions';
 
 /**
  * Options de configuration pour le hook useChat
@@ -13,6 +14,7 @@ export interface UseChatOptions {
   conversationId?: string;
   autoLoadQuotas?: boolean;
   enableEnhancedGENIA?: boolean;
+  enableStreaming?: boolean;
 }
 
 /**
@@ -28,6 +30,7 @@ export interface UseChatReturn {
   context: ChatContext;
   quota: QuotaInfo;
   currentModel: 'magistral-medium' | 'mistral-medium-3';
+  suggestions: SmartSuggestion[];
 
   // Actions
   sendMessage: (content: string) => Promise<void>;
@@ -35,6 +38,8 @@ export interface UseChatReturn {
   loadQuotas: () => Promise<void>;
   clearError: () => void;
   resetConversation: () => void;
+  sendFeedback: (messageId: string, feedback: 'up' | 'down') => Promise<void>;
+  exportChat: (format: 'markdown' | 'pdf') => void;
 }
 
 /**
@@ -81,7 +86,7 @@ export function useChat(options: UseChatOptions = {}): UseChatReturn {
     initialContext,
     conversationId: initialConversationId,
     autoLoadQuotas = true,
-    enableEnhancedGENIA = false
+    enableStreaming = true
   } = options;
 
   // ============================================
@@ -101,6 +106,7 @@ export function useChat(options: UseChatOptions = {}): UseChatReturn {
     magistralMedium: { used: 0, daily: 0 },
     mistralMedium3: { used: 0, daily: 0 }
   });
+  const [suggestions, setSuggestions] = useState<SmartSuggestion[]>([]);
 
   // Contexte combinant le contexte par défaut et celui fourni
   const [context] = useState<ChatContext>({
@@ -123,12 +129,10 @@ export function useChat(options: UseChatOptions = {}): UseChatReturn {
   useEffect(() => {
     const supabase = createClient();
 
-    // Charger l'utilisateur actuel
     supabase.auth.getUser().then(({ data: { user } }: { data: { user: User | null } }) => {
       setUser(user);
     });
 
-    // Écouter les changements d'état d'authentification
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (_event: AuthChangeEvent, session: Session | null) => {
         setUser(session?.user ?? null);
@@ -166,7 +170,6 @@ export function useChat(options: UseChatOptions = {}): UseChatReturn {
     }
   }, [user?.id]);
 
-  // Charger les quotas au montage si option activée
   useEffect(() => {
     if (autoLoadQuotas) {
       loadQuotas();
@@ -181,7 +184,7 @@ export function useChat(options: UseChatOptions = {}): UseChatReturn {
     if (query.includes('exercice') || query.includes('pratique')) return 'I';
     if (query.includes('évalue') || query.includes('correct')) return 'A';
     if (query.includes('niveau') || query.includes('difficile')) return 'N';
-    return 'G'; // Guide par défaut
+    return 'G';
   }, []);
 
   // ============================================
@@ -196,7 +199,6 @@ export function useChat(options: UseChatOptions = {}): UseChatReturn {
         query.includes('complexe') ||
         (context.userLevel === 'beginner' && query.includes('comprends pas'));
 
-      // Vérifier les quotas
       if (needsExpertModel && quota.magistralMedium.used < quota.magistralMedium.daily) {
         return 'magistral-medium';
       }
@@ -204,6 +206,248 @@ export function useChat(options: UseChatOptions = {}): UseChatReturn {
       return 'mistral-medium-3';
     },
     [context.userLevel, quota.magistralMedium]
+  );
+
+  // ============================================
+  // UPDATE SUGGESTIONS AFTER EACH RESPONSE
+  // ============================================
+  const updateSuggestions = useCallback(
+    (lastAssistantContent: string, userQuery: string) => {
+      const newSuggestions = generateSmartSuggestions(
+        lastAssistantContent,
+        userQuery,
+        context.userLevel,
+        context.currentCapsule.concepts
+      );
+      setSuggestions(newSuggestions);
+    },
+    [context.userLevel, context.currentCapsule.concepts]
+  );
+
+  // ============================================
+  // STREAMING MESSAGE HANDLER
+  // ============================================
+  const sendMessageStreaming = useCallback(
+    async (content: string, model: string) => {
+      const assistantMsgId = (Date.now() + 1).toString();
+
+      // Add placeholder assistant message
+      const assistantMessage: Message = {
+        id: assistantMsgId,
+        role: 'assistant',
+        content: '',
+        timestamp: new Date(),
+        model: model as any,
+        isStreaming: true,
+      };
+      setMessages(prev => [...prev, assistantMessage]);
+
+      const systemPrompt = `Tu es GENIA, formateur senior en Prompt Engineering utilisant la méthode GENIA.
+
+Contexte actuel :
+- Capsule : ${context.currentCapsule?.title || 'Formation GENIA'}
+- Concepts : ${context.currentCapsule?.concepts?.join(', ') || 'Prompt Engineering'}
+- Niveau : ${context.userLevel || 'beginner'}
+- Progression : ${context.completedCapsules || 0}/${context.totalCapsules || 36} capsules
+
+IMPORTANT: Identifie TOUJOURS quel pilier GENIA tu utilises dans ta réponse :
+[G - Guide] [E - Exemple] [N - Niveau] [I - Interaction] [A - Assessment]
+
+Applique la méthode GENIA et adapte ton niveau au contexte utilisateur.`;
+
+      const apiMessages = [
+        { role: 'system' as const, content: systemPrompt },
+        ...messages.slice(-6).map(m => ({
+          role: m.role as 'user' | 'assistant' | 'system',
+          content: m.content,
+        })),
+        { role: 'user' as const, content },
+      ];
+
+      const response = await fetch('/api/chat/stream', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: apiMessages,
+          model,
+          conversationId: conversationId || 'new',
+          capsuleId: context.currentCapsule?.id,
+          reasoning: model === 'magistral-medium' ? 'explicit' : 'implicit',
+        }),
+        signal: abortController.current?.signal,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Erreur lors de l'envoi du message");
+      }
+
+      const reader = response.body?.getReader();
+      if (!reader) throw new Error('No response body');
+
+      const decoder = new TextDecoder();
+      let buffer = '';
+      let fullContent = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop() || '';
+
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (!trimmed || !trimmed.startsWith('data: ')) continue;
+
+          try {
+            const event: StreamEvent = JSON.parse(trimmed.slice(6));
+
+            if (event.type === 'content' && event.content) {
+              fullContent += event.content;
+              setMessages(prev =>
+                prev.map(m =>
+                  m.id === assistantMsgId
+                    ? { ...m, content: fullContent }
+                    : m
+                )
+              );
+            } else if (event.type === 'metadata') {
+              setMessages(prev =>
+                prev.map(m =>
+                  m.id === assistantMsgId
+                    ? {
+                        ...m,
+                        isStreaming: false,
+                        methodStep: (event.methodStep as Message['methodStep']) || detectGENIAStep(fullContent),
+                        provider: event.provider,
+                      }
+                    : m
+                )
+              );
+
+              if (!conversationId && event.conversationId) {
+                setConversationId(event.conversationId);
+              }
+
+              if (event.quotaUsed) {
+                if (model === 'magistral-medium') {
+                  setQuota(prev => ({
+                    ...prev,
+                    magistralMedium: { ...prev.magistralMedium, used: event.quotaUsed!.used },
+                  }));
+                } else {
+                  setQuota(prev => ({
+                    ...prev,
+                    mistralMedium3: { ...prev.mistralMedium3, used: event.quotaUsed!.used },
+                  }));
+                }
+              }
+            } else if (event.type === 'done') {
+              setMessages(prev =>
+                prev.map(m =>
+                  m.id === assistantMsgId
+                    ? { ...m, isStreaming: false }
+                    : m
+                )
+              );
+            }
+          } catch {
+            // ignore parse errors
+          }
+        }
+      }
+
+      // Update suggestions based on response
+      updateSuggestions(fullContent, content);
+      await loadQuotas();
+    },
+    [messages, conversationId, context, detectGENIAStep, loadQuotas, updateSuggestions]
+  );
+
+  // ============================================
+  // NON-STREAMING MESSAGE HANDLER (fallback)
+  // ============================================
+  const sendMessageNonStreaming = useCallback(
+    async (content: string, model: string) => {
+      const systemPrompt = `Tu es GENIA, formateur senior en Prompt Engineering utilisant la méthode GENIA.
+
+Contexte actuel :
+- Capsule : ${context.currentCapsule?.title || 'Formation GENIA'}
+- Concepts : ${context.currentCapsule?.concepts?.join(', ') || 'Prompt Engineering'}
+- Niveau : ${context.userLevel || 'beginner'}
+- Progression : ${context.completedCapsules || 0}/${context.totalCapsules || 36} capsules
+
+IMPORTANT: Identifie TOUJOURS quel pilier GENIA tu utilises dans ta réponse :
+[G - Guide] [E - Exemple] [N - Niveau] [I - Interaction] [A - Assessment]
+
+Applique la méthode GENIA et adapte ton niveau au contexte utilisateur.`;
+
+      const apiMessages = [
+        { role: 'system' as const, content: systemPrompt },
+        ...messages.slice(-6).map(m => ({
+          role: m.role as 'user' | 'assistant' | 'system',
+          content: m.content,
+        })),
+        { role: 'user' as const, content },
+      ];
+
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: apiMessages,
+          model,
+          userId: user?.id,
+          conversationId: conversationId || 'new',
+          capsuleId: context.currentCapsule?.id,
+          reasoning: model === 'magistral-medium' ? 'explicit' : 'implicit',
+        }),
+        signal: abortController.current?.signal,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Erreur lors de l'envoi du message");
+      }
+
+      const data = await response.json();
+
+      if (!conversationId && data.conversationId) {
+        setConversationId(data.conversationId);
+      }
+
+      const assistantMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: data.content,
+        timestamp: new Date(),
+        model: data.model || model,
+        methodStep: data.methodStep || detectGENIAStep(data.content),
+        reasoning: data.reasoning,
+      };
+
+      setMessages(prev => [...prev, assistantMessage]);
+
+      if (data.quotaUsed) {
+        if (model === 'magistral-medium') {
+          setQuota(prev => ({
+            ...prev,
+            magistralMedium: { ...prev.magistralMedium, used: data.quotaUsed.used },
+          }));
+        } else {
+          setQuota(prev => ({
+            ...prev,
+            mistralMedium3: { ...prev.mistralMedium3, used: data.quotaUsed.used },
+          }));
+        }
+      }
+
+      updateSuggestions(data.content, content);
+      await loadQuotas();
+    },
+    [user?.id, messages, conversationId, context, detectGENIAStep, loadQuotas, updateSuggestions]
   );
 
   // ============================================
@@ -218,151 +462,97 @@ export function useChat(options: UseChatOptions = {}): UseChatReturn {
 
       if (!content.trim()) return;
 
-      // Annuler la requête précédente si elle existe
       if (abortController.current) {
         abortController.current.abort();
       }
-
-      // Créer un nouveau contrôleur d'annulation
       abortController.current = new AbortController();
 
-      // Ajouter le message utilisateur
       const userMessage: Message = {
         id: Date.now().toString(),
         role: 'user',
         content,
-        timestamp: new Date()
+        timestamp: new Date(),
       };
 
-      setMessages((prev) => [...prev, userMessage]);
+      setMessages(prev => [...prev, userMessage]);
       setIsLoading(true);
       setError(null);
 
       try {
-        // Déterminer le modèle optimal
         const model = selectOptimalModel(content);
 
-        // Préparer le contexte système GENIA
-        const systemPrompt = `Tu es GENIA, formateur senior en Prompt Engineering utilisant la méthode GENIA.
-
-Contexte actuel :
-- Capsule : ${context.currentCapsule?.title || 'Formation GENIA'}
-- Concepts : ${context.currentCapsule?.concepts?.join(', ') || 'Prompt Engineering'}
-- Niveau : ${context.userLevel || 'beginner'}
-- Progression : ${context.completedCapsules || 0}/${context.totalCapsules || 36} capsules
-
-IMPORTANT: Identifie TOUJOURS quel pilier GENIA tu utilises dans ta réponse :
-[G - Guide] [E - Exemple] [N - Niveau] [I - Interaction] [A - Assessment]
-
-Applique la méthode GENIA et adapte ton niveau au contexte utilisateur.`;
-
-        // Construire l'historique des messages
-        const apiMessages = [
-          { role: 'system', content: systemPrompt },
-          ...messages.slice(-6).map((m) => ({
-            // Garder les 6 derniers pour contexte
-            role: m.role,
-            content: m.content
-          })),
-          { role: 'user', content }
-        ];
-
-        // Appel à l'API Mistral via notre endpoint
-        const response = await fetch('/api/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            messages: apiMessages,
-            model,
-            userId: user.id,
-            conversationId: conversationId || 'new',
-            capsuleId: context.currentCapsule?.id,
-            reasoning: model === 'magistral-medium' ? 'explicit' : 'implicit'
-          }),
-          signal: abortController.current.signal
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error || "Erreur lors de l'envoi du message");
+        if (enableStreaming) {
+          await sendMessageStreaming(content, model);
+        } else {
+          await sendMessageNonStreaming(content, model);
         }
-
-        const data = await response.json();
-
-        // Sauvegarder conversationId si nouvelle conversation
-        if (!conversationId && data.conversationId) {
-          setConversationId(data.conversationId);
-        }
-
-        // Créer le message de réponse
-        const assistantMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          role: 'assistant',
-          content: data.content,
-          timestamp: new Date(),
-          model: data.model || model,
-          methodStep: data.methodStep || detectGENIAStep(data.content),
-          reasoning: data.reasoning
-        };
-
-        setMessages((prev) => [...prev, assistantMessage]);
-
-        // Mettre à jour les quotas basés sur la réponse réelle
-        if (data.quotaUsed) {
-          if (model === 'magistral-medium') {
-            setQuota((prev) => ({
-              ...prev,
-              magistralMedium: {
-                ...prev.magistralMedium,
-                used: data.quotaUsed.used
-              }
-            }));
-          } else {
-            setQuota((prev) => ({
-              ...prev,
-              mistralMedium3: {
-                ...prev.mistralMedium3,
-                used: data.quotaUsed.used
-              }
-            }));
-          }
-        }
-
-        // Recharger quotas depuis la source après envoi pour cohérence
-        await loadQuotas();
       } catch (error: any) {
-        // Ignorer les erreurs d'annulation
-        if (error.name === 'AbortError') {
-          return;
-        }
+        if (error.name === 'AbortError') return;
 
         console.error('Erreur chat GENIA:', error);
         setError(error.message || 'Une erreur est survenue');
 
-        // Message d'erreur pour l'utilisateur
         const errorMessage: Message = {
           id: (Date.now() + 1).toString(),
           role: 'assistant',
           content: `Désolé, une erreur est survenue : ${error.message || 'Impossible de traiter votre demande'}. Veuillez réessayer.`,
           timestamp: new Date(),
-          methodStep: 'G'
+          methodStep: 'G',
         };
 
-        setMessages((prev) => [...prev, errorMessage]);
+        setMessages(prev => [...prev, errorMessage]);
       } finally {
         setIsLoading(false);
         abortController.current = null;
       }
     },
-    [
-      user?.id,
-      messages,
-      conversationId,
-      context,
-      selectOptimalModel,
-      detectGENIAStep,
-      loadQuotas
-    ]
+    [user?.id, selectOptimalModel, enableStreaming, sendMessageStreaming, sendMessageNonStreaming]
+  );
+
+  // ============================================
+  // FEEDBACK
+  // ============================================
+  const sendFeedback = useCallback(
+    async (messageId: string, feedback: 'up' | 'down') => {
+      // Update local state
+      setMessages(prev =>
+        prev.map(m =>
+          m.id === messageId ? { ...m, feedback } : m
+        )
+      );
+
+      // Send to server
+      try {
+        await fetch('/api/chat/feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            messageId,
+            feedback,
+            conversationId,
+          }),
+        });
+      } catch (err) {
+        console.error('Error sending feedback:', err);
+      }
+    },
+    [conversationId]
+  );
+
+  // ============================================
+  // EXPORT
+  // ============================================
+  const exportChat = useCallback(
+    (format: 'markdown' | 'pdf') => {
+      import('@/lib/chat-export').then(({ exportToMarkdown, exportToPdf }) => {
+        if (format === 'markdown') {
+          exportToMarkdown(messages, context);
+        } else {
+          exportToPdf(messages, context);
+        }
+      });
+    },
+    [messages, context]
   );
 
   // ============================================
@@ -376,6 +566,7 @@ Applique la méthode GENIA et adapte ton niveau au contexte utilisateur.`;
     setMessages([INITIAL_SYSTEM_MESSAGE]);
     setConversationId(null);
     setError(null);
+    setSuggestions([]);
   }, []);
 
   // ============================================
@@ -383,7 +574,6 @@ Applique la méthode GENIA et adapte ton niveau au contexte utilisateur.`;
   // ============================================
   useEffect(() => {
     return () => {
-      // Annuler toute requête en cours lors du démontage
       if (abortController.current) {
         abortController.current.abort();
       }
@@ -394,7 +584,6 @@ Applique la méthode GENIA et adapte ton niveau au contexte utilisateur.`;
   // RETOUR
   // ============================================
   return {
-    // État
     user,
     messages,
     isLoading,
@@ -403,12 +592,14 @@ Applique la méthode GENIA et adapte ton niveau au contexte utilisateur.`;
     context,
     quota,
     currentModel,
+    suggestions,
 
-    // Actions
     sendMessage,
     setCurrentModel,
     loadQuotas,
     clearError,
-    resetConversation
+    resetConversation,
+    sendFeedback,
+    exportChat,
   };
 }

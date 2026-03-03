@@ -14,6 +14,9 @@ export interface Message {
   methodStep?: 'G' | 'E' | 'N' | 'I' | 'A';
   tokens?: number;
   reasoning?: string; // Pour CoT avec Magistral
+  isStreaming?: boolean; // True while streaming content
+  provider?: string; // AI provider used (mistral, openai, anthropic, deepseek)
+  feedback?: 'up' | 'down' | null; // User feedback on message
 }
 
 /**
@@ -39,4 +42,32 @@ export interface ChatContext {
 export interface QuotaInfo {
   magistralMedium: { used: number; daily: number; };
   mistralMedium3: { used: number; daily: number; };
+}
+
+/**
+ * SSE stream event types
+ */
+export interface StreamEvent {
+  type: 'start' | 'content' | 'done' | 'metadata' | 'error';
+  content?: string;
+  provider?: string;
+  methodStep?: string;
+  quotaUsed?: { used: number; limit: number };
+  conversationId?: string;
+  usage?: {
+    promptTokens: number;
+    completionTokens: number;
+    totalTokens: number;
+    cost: number;
+  };
+  error?: string;
+}
+
+/**
+ * Smart suggestion type
+ */
+export interface SmartSuggestion {
+  text: string;
+  category: 'explore' | 'practice' | 'deepen' | 'assess';
+  icon: string;
 }
