@@ -87,6 +87,14 @@ jest.mock('@/lib/supabase/server', () => ({
   createAdminClient: jest.fn(() => mockSupabaseClient),
 }));
 
+// Mock rate-limiter to avoid 429 in tests
+jest.mock('@/lib/rate-limiter', () => ({
+  createRateLimiter: () => async () => ({
+    response: null,
+    result: { success: true, limit: 100, remaining: 99, reset: Date.now() + 60000 },
+  }),
+}));
+
 // Mock fetch for external API calls
 global.fetch = jest.fn(() =>
   Promise.resolve({

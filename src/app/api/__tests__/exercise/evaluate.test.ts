@@ -18,6 +18,14 @@ jest.mock('@/lib/supabase/server', () => ({
   createClient: jest.fn(),
 }));
 
+// Mock rate-limiter to avoid 429 in tests
+jest.mock('@/lib/rate-limiter', () => ({
+  createRateLimiter: () => async () => ({
+    response: null,
+    result: { success: true, limit: 100, remaining: 99, reset: Date.now() + 60000 },
+  }),
+}));
+
 // Mock fetch for Mistral API calls
 global.fetch = jest.fn();
 

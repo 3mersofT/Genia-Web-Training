@@ -1,4 +1,7 @@
 /**
+ * @jest-environment node
+ */
+/**
  * Unit Tests for /api/chat Route
  *
  * Tests verify that the chat API route:
@@ -17,6 +20,14 @@ import { POST } from '@/app/api/chat/route';
 // Mock Supabase client
 jest.mock('@/lib/supabase/server', () => ({
   createClient: jest.fn(),
+}));
+
+// Mock rate-limiter to avoid 429 in tests
+jest.mock('@/lib/rate-limiter', () => ({
+  createRateLimiter: () => async () => ({
+    response: null,
+    result: { success: true, limit: 100, remaining: 99, reset: Date.now() + 60000 },
+  }),
 }));
 
 // Mock fetch for Mistral API calls
@@ -146,7 +157,7 @@ describe('/api/chat - Unit Tests', () => {
       const data = await response.json();
 
       expect(response.status).toBe(400);
-      expect(data.error).toBe('Messages requis');
+      expect(data.error).toBe('Validation failed');
     });
 
     it('should return 400 when model is invalid', async () => {
@@ -165,7 +176,7 @@ describe('/api/chat - Unit Tests', () => {
       const data = await response.json();
 
       expect(response.status).toBe(400);
-      expect(data.error).toBe('Modèle invalide');
+      expect(data.error).toBe('Validation failed');
     });
 
     it('should accept valid model names', async () => {
@@ -529,7 +540,7 @@ describe('/api/chat - Unit Tests', () => {
       );
       expect(data.quotaUsed).toEqual({
         used: 6,
-        limit: 150,
+        limit: 300,
       });
     });
 
@@ -544,7 +555,7 @@ describe('/api/chat - Unit Tests', () => {
               eq: jest.fn(() => ({
                 single: jest.fn().mockResolvedValue({
                   data: {
-                    request_count: 150, // At quota limit for mistral-medium-3
+                    request_count: 300, // At quota limit for mistral-medium-3
                     total_tokens: 5000,
                     total_cost: 0.5,
                   },
