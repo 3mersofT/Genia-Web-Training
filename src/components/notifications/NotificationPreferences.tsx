@@ -101,17 +101,24 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
         throw new Error('Erreur lors du chargement des préférences');
       }
 
-      const data: NotificationPrefsType = await response.json();
+      const responseData = await response.json();
+      const data: NotificationPrefsType = responseData.preferences || responseData;
 
       if (data) {
-        setPreferences(data.notification_types_enabled);
-        setEmailDigest(data.email_digest_frequency);
-        // Convertir HH:MM:SS en HH:MM pour l'input
+        setPreferences(data.notification_types_enabled || {
+          daily_challenge: true,
+          streak_reminder: true,
+          badge_earned: true,
+          peer_review: true,
+          new_module: true,
+          ai_nudge: true
+        });
+        setEmailDigest(data.email_digest_frequency || 'daily');
         setPreferredTime(data.preferred_notification_time?.substring(0, 5) || '09:00');
       }
     } catch (error) {
-      console.error('Erreur chargement préférences:', error);
-      setMessage({ type: 'error', text: 'Erreur lors du chargement des préférences' });
+      console.error('[NotificationPreferences] Failed to load preferences:', error);
+      // Keep default values, don't crash the ErrorBoundary
     } finally {
       setLoading(false);
     }
@@ -200,12 +207,21 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
         throw new Error('Erreur lors de la sauvegarde');
       }
 
+      const responseData = await response.json();
+      const saved: NotificationPrefsType = responseData.preferences || responseData;
+
+      if (saved) {
+        setPreferences(saved.notification_types_enabled || preferences);
+        setEmailDigest(saved.email_digest_frequency || emailDigest);
+        setPreferredTime(saved.preferred_notification_time?.substring(0, 5) || preferredTime);
+      }
+
       setMessage({ type: 'success', text: 'Préférences sauvegardées avec succès!' });
 
       // Effacer le message après 3 secondes
       setTimeout(() => setMessage(null), 3000);
     } catch (error) {
-      console.error('Erreur sauvegarde préférences:', error);
+      console.error('[NotificationPreferences] Failed to save preferences:', error);
       setMessage({ type: 'error', text: 'Erreur lors de la sauvegarde des préférences' });
     } finally {
       setSaving(false);
