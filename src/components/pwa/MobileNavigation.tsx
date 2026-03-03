@@ -88,9 +88,9 @@ export default function MobileNavigation() {
 
       {/* Navigation mobile en bas */}
       <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden">
-        <div className="bg-white/95 backdrop-blur-lg border-t border-gray-200">
+        <div className="bg-white/95 dark:bg-card/95 backdrop-blur-lg border-t border-border">
           {/* Indicateur de swipe */}
-          <div className="h-1 bg-gray-100 relative overflow-hidden">
+          <div className="h-1 bg-muted relative overflow-hidden">
             <motion.div
               className="absolute h-full bg-gradient-to-r from-blue-600 to-purple-600"
               initial={false}
@@ -117,7 +117,7 @@ export default function MobileNavigation() {
                   {isActive && (
                     <motion.div
                       layoutId="nav-indicator"
-                      className="absolute inset-0 bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg"
+                      className="absolute inset-0 bg-gradient-to-r from-blue-100 dark:from-blue-900/30 to-purple-100 dark:to-purple-900/30 rounded-lg"
                       transition={{ type: 'spring', damping: 30 }}
                     />
                   )}
@@ -128,7 +128,7 @@ export default function MobileNavigation() {
                       className={`w-6 h-6 transition-all duration-200 relative z-10 ${
                         isActive 
                           ? 'text-blue-600 scale-110' 
-                          : 'text-gray-500 group-active:scale-95'
+                          : 'text-muted-foreground group-active:scale-95'
                       }`}
                     />
                     
@@ -149,7 +149,7 @@ export default function MobileNavigation() {
                     className={`text-[10px] mt-1 transition-all duration-200 relative z-10 ${
                       isActive 
                         ? 'text-blue-600 font-medium' 
-                        : 'text-gray-500'
+                        : 'text-muted-foreground'
                     }`}
                   >
                     {item.label}
@@ -173,7 +173,7 @@ export default function MobileNavigation() {
         </div>
 
         {/* Safe area for iPhone notch */}
-        <div className="h-safe-area-bottom bg-white" />
+        <div className="h-safe-area-bottom bg-card" />
       </div>
 
       {/* Indicateur de geste (affiché brièvement au premier chargement) */}

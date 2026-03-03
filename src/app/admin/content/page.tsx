@@ -457,10 +457,10 @@ export default function ContentManagementPage() {
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'beginner': return 'bg-green-100 text-green-800';
-      case 'intermediate': return 'bg-yellow-100 text-yellow-800';
-      case 'advanced': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'beginner': return 'bg-green-100 dark:bg-green-900/30 text-green-800';
+      case 'intermediate': return 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800';
+      case 'advanced': return 'bg-red-100 dark:bg-red-900/30 text-red-800';
+      default: return 'bg-muted text-foreground';
     }
   };
 
@@ -474,26 +474,26 @@ export default function ContentManagementPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Navigation Header */}
-      <div className="bg-white shadow-sm border-b">
+      <div className="bg-card shadow-sm border-b">
         <div className="px-6 py-4">
           <div className="flex items-center gap-4 mb-2">
-            <a href="/admin" className="text-blue-600 hover:text-blue-800 font-medium">← Dashboard Admin</a>
-            <span className="text-gray-300">|</span>
-            <h1 className="text-xl font-bold text-gray-900">Gestion du Contenu</h1>
+            <a href="/admin" className="text-primary hover:text-primary/80 font-medium">← Dashboard Admin</a>
+            <span className="text-muted-foreground">|</span>
+            <h1 className="text-xl font-bold text-foreground">Gestion du Contenu</h1>
           </div>
-          <p className="text-gray-600">Gérez les modules, capsules et contenus pédagogiques</p>
+          <p className="text-muted-foreground">Gérez les modules, capsules et contenus pédagogiques</p>
         </div>
         
         {/* Quick Navigation */}
         <div className="px-6 pb-2">
           <nav className="flex gap-4 text-sm">
-            <a href="/admin" className="text-gray-500 hover:text-gray-700">Dashboard</a>
-            <a href="/admin/users" className="text-gray-500 hover:text-gray-700">Utilisateurs</a>
-            <a href="/admin/analytics" className="text-gray-500 hover:text-gray-700">Analytics</a>
-            <a href="/admin/content" className="text-blue-600 font-medium">Contenu</a>
-            <a href="/admin/settings" className="text-gray-500 hover:text-gray-700">Paramètres</a>
+            <a href="/admin" className="text-muted-foreground hover:text-foreground">Dashboard</a>
+            <a href="/admin/users" className="text-muted-foreground hover:text-foreground">Utilisateurs</a>
+            <a href="/admin/analytics" className="text-muted-foreground hover:text-foreground">Analytics</a>
+            <a href="/admin/content" className="text-primary font-medium">Contenu</a>
+            <a href="/admin/settings" className="text-muted-foreground hover:text-foreground">Paramètres</a>
           </nav>
         </div>
       </div>
@@ -502,15 +502,15 @@ export default function ContentManagementPage() {
 
       {/* Panneau de synchronisation */}
       {showSyncPanel && (
-        <div className="bg-white rounded-xl shadow-sm p-6 mb-8 border-l-4 border-blue-500">
+        <div className="bg-card rounded-xl shadow-sm p-6 mb-8 border-l-4 border-blue-500">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold text-gray-900 flex items-center">
+            <h3 className="text-lg font-semibold text-foreground flex items-center">
               <RefreshCcw className="w-5 h-5 mr-2" />
               Synchronisation JSON ↔ Supabase
             </h3>
             <button
               onClick={() => setShowSyncPanel(false)}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-muted-foreground hover:text-muted-foreground"
             >
               <X className="w-5 h-5" />
             </button>
@@ -521,21 +521,21 @@ export default function ContentManagementPage() {
               <div className="flex items-center p-3 bg-blue-50 rounded-lg">
                 <HardDrive className="w-5 h-5 text-blue-600 mr-2" />
                 <div>
-                  <p className="text-sm text-gray-600">Modules JSON</p>
+                  <p className="text-sm text-muted-foreground">Modules JSON</p>
                   <p className="font-semibold">{syncStatus.jsonModules}</p>
                 </div>
               </div>
-              <div className="flex items-center p-3 bg-green-50 rounded-lg">
-                <Database className="w-5 h-5 text-green-600 mr-2" />
+              <div className="flex items-center p-3 bg-green-50 dark:bg-green-950/30 rounded-lg">
+                <Database className="w-5 h-5 text-green-600 dark:text-green-400 mr-2" />
                 <div>
-                  <p className="text-sm text-gray-600">Config Supabase</p>
+                  <p className="text-sm text-muted-foreground">Config Supabase</p>
                   <p className="font-semibold">{syncStatus.supabaseModules}</p>
                 </div>
               </div>
               <div className="flex items-center p-3 bg-yellow-50 rounded-lg">
                 <Clock className="w-5 h-5 text-yellow-600 mr-2" />
                 <div>
-                  <p className="text-sm text-gray-600">Dernière sync</p>
+                  <p className="text-sm text-muted-foreground">Dernière sync</p>
                   <p className="font-semibold text-xs">
                     {syncStatus.lastSync 
                       ? new Date(syncStatus.lastSync).toLocaleString('fr-FR')
@@ -558,7 +558,7 @@ export default function ContentManagementPage() {
             </button>
             <button
               onClick={checkSyncStatus}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
+              className="flex items-center gap-2 px-4 py-2 bg-muted-foreground text-white rounded-lg hover:bg-accent"
             >
               <RefreshCw className="w-4 h-4" />
               Vérifier statut
@@ -566,12 +566,12 @@ export default function ContentManagementPage() {
           </div>
 
           {syncStatus?.conflicts && syncStatus.conflicts.length > 0 && (
-            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+            <div className="mt-4 p-3 bg-red-50 dark:bg-red-950/30 border border-red-200 rounded-lg">
               <div className="flex items-center">
-                <AlertTriangle className="w-5 h-5 text-red-500 mr-2" />
-                <p className="text-red-700 font-semibold">Conflits détectés</p>
+                <AlertTriangle className="w-5 h-5 text-red-500 dark:text-red-400 mr-2" />
+                <p className="text-red-700 dark:text-red-300 font-semibold">Conflits détectés</p>
               </div>
-              <ul className="mt-2 text-sm text-red-600">
+              <ul className="mt-2 text-sm text-red-600 dark:text-red-400">
                 {syncStatus.conflicts.map((conflict, index) => (
                   <li key={index}>• {conflict}</li>
                 ))}
@@ -587,7 +587,7 @@ export default function ContentManagementPage() {
           <button
             onClick={() => setShowSyncPanel(!showSyncPanel)}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
-              showSyncPanel ? 'bg-blue-600 text-white' : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+              showSyncPanel ? 'bg-blue-600 text-white' : 'bg-card border border-input text-foreground hover:bg-accent'
             }`}
           >
             <RefreshCcw className="w-4 h-4" />
@@ -635,11 +635,11 @@ export default function ContentManagementPage() {
 
       {/* Statistiques globales */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <div className="bg-white rounded-lg shadow p-4">
+        <div className="bg-card rounded-lg shadow p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Modules actifs</p>
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-sm text-muted-foreground">Modules actifs</p>
+              <p className="text-2xl font-bold text-foreground">
                 {modules.filter(m => m.is_published).length} / {modules.length}
               </p>
             </div>
@@ -647,23 +647,23 @@ export default function ContentManagementPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow p-4">
+        <div className="bg-card rounded-lg shadow p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Capsules totales</p>
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-sm text-muted-foreground">Capsules totales</p>
+              <p className="text-2xl font-bold text-foreground">
                 {modules.reduce((sum, m) => sum + m.capsules.length, 0)}
               </p>
             </div>
-            <FileText className="w-8 h-8 text-green-500" />
+            <FileText className="w-8 h-8 text-green-500 dark:text-green-400" />
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow p-4">
+        <div className="bg-card rounded-lg shadow p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Complétions totales</p>
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-sm text-muted-foreground">Complétions totales</p>
+              <p className="text-2xl font-bold text-foreground">
                 {modules.reduce((sum, m) => sum + m.stats.completions, 0)}
               </p>
             </div>
@@ -671,11 +671,11 @@ export default function ContentManagementPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow p-4">
+        <div className="bg-card rounded-lg shadow p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Score moyen</p>
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-sm text-muted-foreground">Score moyen</p>
+              <p className="text-2xl font-bold text-foreground">
                 {Math.round(modules.reduce((sum, m) => sum + m.stats.avgScore, 0) / (modules.length || 1))}%
               </p>
             </div>
@@ -685,27 +685,27 @@ export default function ContentManagementPage() {
       </div>
 
       {/* 🌟 Panneau Données Réelles */}
-      <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-4 mb-6">
+      <div className="bg-gradient-to-r from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] border border-blue-200 rounded-lg p-4 mb-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-blue-100 rounded-lg">
+            <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
               <RefreshCw className="w-5 h-5 text-blue-600" />
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900">Statistiques basées sur les données réelles</h3>
-              <p className="text-sm text-gray-600">Données réelles uniquement.</p>
+              <h3 className="font-semibold text-foreground">Statistiques basées sur les données réelles</h3>
+              <p className="text-sm text-muted-foreground">Données réelles uniquement.</p>
             </div>
           </div>
           <div />
         </div>
-        <div className="mt-3 text-xs text-gray-500">
+        <div className="mt-3 text-xs text-muted-foreground">
           💡 Les statistiques se mettront à jour automatiquement lorsque des apprenants progressent.
         </div>
       </div>
 
       {/* Actions */}
       <div className="mb-6 flex justify-between items-center">
-        <h2 className="text-lg font-semibold text-gray-900">Structure des modules</h2>
+        <h2 className="text-lg font-semibold text-foreground">Structure des modules</h2>
         <button
           onClick={() => setShowAddModule(true)}
           className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
@@ -718,16 +718,16 @@ export default function ContentManagementPage() {
       {/* Liste des modules */}
       <div className="space-y-4">
         {loading ? (
-          <div className="bg-white rounded-lg shadow p-8 text-center text-gray-500">
+          <div className="bg-card rounded-lg shadow p-8 text-center text-muted-foreground">
             Chargement...
           </div>
         ) : modules.length === 0 ? (
-          <div className="bg-white rounded-lg shadow p-8 text-center text-gray-500">
+          <div className="bg-card rounded-lg shadow p-8 text-center text-muted-foreground">
             Aucun module trouvé
           </div>
         ) : (
           modules.map(module => (
-            <div key={module.id} className="bg-white rounded-lg shadow">
+            <div key={module.id} className="bg-card rounded-lg shadow">
               {/* Header du module */}
               <div className="p-4 border-b">
                 <div className="flex items-center justify-between">
@@ -745,20 +745,20 @@ export default function ContentManagementPage() {
                         }
                         setSelectedModules(newSelected);
                       }}
-                      className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                      className="w-4 h-4 text-blue-600 border-input rounded focus-visible:ring-ring"
                     />
                     <button
                       onClick={() => toggleModule(module.id)}
-                      className="p-1 hover:bg-gray-100 rounded"
+                      className="p-1 hover:bg-accent rounded"
                     >
                       {expandedModules.has(module.id) ? (
-                        <ChevronDown className="w-5 h-5 text-gray-500" />
+                        <ChevronDown className="w-5 h-5 text-muted-foreground" />
                       ) : (
-                        <ChevronRight className="w-5 h-5 text-gray-500" />
+                        <ChevronRight className="w-5 h-5 text-muted-foreground" />
                       )}
                     </button>
                     
-                    <GripVertical className="w-5 h-5 text-gray-400" />
+                    <GripVertical className="w-5 h-5 text-muted-foreground" />
                     
                     {editingModule === module.id ? (
                       <input
@@ -774,10 +774,10 @@ export default function ContentManagementPage() {
                       />
                     ) : (
                       <div className="flex-1">
-                        <h3 className="font-semibold text-gray-900">
+                        <h3 className="font-semibold text-foreground">
                           Module {module.order_index}: {module.title}
                         </h3>
-                        <p className="text-sm text-gray-500">{module.description}</p>
+                        <p className="text-sm text-muted-foreground">{module.description}</p>
                       </div>
                     )}
                   </div>
@@ -786,28 +786,28 @@ export default function ContentManagementPage() {
                     {/* Statistiques */}
                     <div className="flex items-center gap-4 mr-4">
                       <div className="text-center">
-                        <p className="text-xs text-gray-500">Vues</p>
+                        <p className="text-xs text-muted-foreground">Vues</p>
                         <p className="text-sm font-bold">{module.stats.totalViews}</p>
                       </div>
                       <div className="text-center">
-                        <p className="text-xs text-gray-500">Complétions</p>
+                        <p className="text-xs text-muted-foreground">Complétions</p>
                         <p className="text-sm font-bold">{module.stats.completions}</p>
                       </div>
                       <div className="text-center">
-                        <p className="text-xs text-gray-500">Score moy.</p>
+                        <p className="text-xs text-muted-foreground">Score moy.</p>
                         <p className="text-sm font-bold">{Math.round(module.stats.avgScore)}%</p>
                       </div>
                       
                       {/* 📊 Indicateur qualité des données du module */}
                       <div className="text-center ml-3">
-                        <p className="text-xs text-gray-500">Données</p>
+                        <p className="text-xs text-muted-foreground">Données</p>
                         <div 
                           className={`px-2 py-1 rounded-full text-xs font-medium ${
                             (module.stats as any).dataQuality === 'mostly-real' 
-                              ? 'bg-green-100 text-green-700' 
+                              ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300' 
                               : (module.stats as any).dataQuality === 'hybrid'
-                              ? 'bg-yellow-100 text-yellow-700'
-                              : 'bg-blue-100 text-blue-700'
+                              ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700'
+                              : 'bg-blue-100 dark:bg-blue-900/30 text-blue-700'
                           }`}
                           title={`${(module.stats as any).realDataCount || 0} données réelles`}
                         >
@@ -823,7 +823,7 @@ export default function ContentManagementPage() {
                       <>
                         <button
                           onClick={() => handleModuleUpdate(module)}
-                          className="p-2 text-green-600 hover:bg-green-50 rounded"
+                          className="p-2 text-green-600 dark:text-green-400 hover:bg-green-50 dark:bg-green-950/30 rounded"
                         >
                           <Save className="w-4 h-4" />
                         </button>
@@ -832,7 +832,7 @@ export default function ContentManagementPage() {
                             setEditingModule(null);
                             fetchContent();
                           }}
-                          className="p-2 text-red-600 hover:bg-red-50 rounded"
+                          className="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:bg-red-950/30 rounded"
                         >
                           <X className="w-4 h-4" />
                         </button>
@@ -849,8 +849,8 @@ export default function ContentManagementPage() {
                           onClick={() => handleTogglePublish('module', module.id, module.is_published)}
                           className={`p-2 rounded ${
                             module.is_published
-                              ? 'text-green-600 hover:bg-green-50'
-                              : 'text-gray-400 hover:bg-gray-50'
+                              ? 'text-green-600 dark:text-green-400 hover:bg-green-50 dark:bg-green-950/30'
+                              : 'text-muted-foreground hover:bg-accent'
                           }`}
                         >
                           {module.is_published ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
@@ -863,14 +863,14 @@ export default function ContentManagementPage() {
 
               {/* Capsules du module */}
               {expandedModules.has(module.id) && (
-                <div className="p-4 bg-gray-50">
+                <div className="p-4 bg-muted">
                   <div className="mb-3 flex justify-between items-center">
-                    <h4 className="text-sm font-semibold text-gray-700">
+                    <h4 className="text-sm font-semibold text-foreground">
                       Capsules ({module.capsules.length})
                     </h4>
                     <button
                       onClick={() => setShowAddCapsule(module.id)}
-                      className="text-sm text-blue-600 hover:text-blue-800"
+                      className="text-sm text-primary hover:text-primary/80"
                     >
                       + Ajouter une capsule
                     </button>
@@ -878,10 +878,10 @@ export default function ContentManagementPage() {
 
                   <div className="space-y-2">
                     {module.capsules.map(capsule => (
-                      <div key={capsule.id} className="bg-white rounded-lg p-3 flex items-center justify-between">
+                      <div key={capsule.id} className="bg-card rounded-lg p-3 flex items-center justify-between">
                         <div className="flex items-center gap-3 flex-1">
-                          <GripVertical className="w-4 h-4 text-gray-400" />
-                          <span className="text-sm text-gray-500">#{capsule.order_index}</span>
+                          <GripVertical className="w-4 h-4 text-muted-foreground" />
+                          <span className="text-sm text-muted-foreground">#{capsule.order_index}</span>
                           
                           {editingCapsule === capsule.id ? (
                             <input
@@ -900,12 +900,12 @@ export default function ContentManagementPage() {
                             />
                           ) : (
                             <div className="flex-1">
-                              <p className="text-sm font-medium text-gray-900">{capsule.title}</p>
+                              <p className="text-sm font-medium text-foreground">{capsule.title}</p>
                               <div className="flex items-center gap-2 mt-1">
                                 <span className={`text-xs px-2 py-0.5 rounded-full ${getDifficultyColor(capsule.difficulty)}`}>
                                   {getDifficultyLabel(capsule.difficulty)}
                                 </span>
-                                <span className="text-xs text-gray-500">
+                                <span className="text-xs text-muted-foreground">
                                   <Clock className="w-3 h-3 inline mr-1" />
                                   {capsule.duration_minutes} min
                                 </span>
@@ -917,15 +917,15 @@ export default function ContentManagementPage() {
                         {/* Stats de la capsule */}
                         <div className="flex items-center gap-3 mr-3">
                           <div className="text-center">
-                            <p className="text-xs text-gray-500">Vues</p>
+                            <p className="text-xs text-muted-foreground">Vues</p>
                             <p className="text-xs font-bold">{capsule.stats.views}</p>
                           </div>
                           <div className="text-center">
-                            <p className="text-xs text-gray-500">Complété</p>
+                            <p className="text-xs text-muted-foreground">Complété</p>
                             <p className="text-xs font-bold">{capsule.stats.completions}</p>
                           </div>
                           <div className="text-center">
-                            <p className="text-xs text-gray-500">Score</p>
+                            <p className="text-xs text-muted-foreground">Score</p>
                             <p className="text-xs font-bold">{capsule.stats.avgScore}%</p>
                           </div>
                           
@@ -934,8 +934,8 @@ export default function ContentManagementPage() {
                             <div 
                               className={`px-1.5 py-0.5 rounded-full text-xs font-medium ${
                                 (capsule.stats as any).isRealData 
-                                  ? 'bg-green-100 text-green-700' 
-                                  : 'bg-blue-100 text-blue-700'
+                                  ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300' 
+                                  : 'bg-blue-100 dark:bg-blue-900/30 text-blue-700'
                               }`}
                               title={
                                 (capsule.stats as any).isRealData 
@@ -953,7 +953,7 @@ export default function ContentManagementPage() {
                           <div className="flex gap-1">
                             <button
                               onClick={() => handleCapsuleUpdate(capsule)}
-                              className="p-1 text-green-600 hover:bg-green-50 rounded"
+                              className="p-1 text-green-600 dark:text-green-400 hover:bg-green-50 dark:bg-green-950/30 rounded"
                             >
                               <Save className="w-3 h-3" />
                             </button>
@@ -962,7 +962,7 @@ export default function ContentManagementPage() {
                                 setEditingCapsule(null);
                                 fetchContent();
                               }}
-                              className="p-1 text-red-600 hover:bg-red-50 rounded"
+                              className="p-1 text-red-600 dark:text-red-400 hover:bg-red-50 dark:bg-red-950/30 rounded"
                             >
                               <X className="w-3 h-3" />
                             </button>
@@ -979,8 +979,8 @@ export default function ContentManagementPage() {
                               onClick={() => handleTogglePublish('capsule', capsule.id, capsule.is_published)}
                               className={`p-1 rounded ${
                                 capsule.is_published
-                                  ? 'text-green-600 hover:bg-green-50'
-                                  : 'text-gray-400 hover:bg-gray-50'
+                                  ? 'text-green-600 dark:text-green-400 hover:bg-green-50 dark:bg-green-950/30'
+                                  : 'text-muted-foreground hover:bg-accent'
                               }`}
                             >
                               {capsule.is_published ? <Eye className="w-3 h-3" /> : <EyeOff className="w-3 h-3" />}
@@ -1013,7 +1013,7 @@ export default function ContentManagementPage() {
       {/* Modal de création de module */}
       {showAddModule && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
+          <div className="bg-card rounded-lg shadow-xl w-full max-w-md">
             <div className="p-6 border-b">
               <h3 className="text-lg font-semibold">Nouveau Module</h3>
             </div>
@@ -1021,35 +1021,35 @@ export default function ContentManagementPage() {
             <div className="p-6">
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-foreground mb-1">
                     Titre *
                   </label>
                   <input
                     type="text"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus-visible:ring-ring"
                     value={newModuleForm.title}
                     onChange={(e) => setNewModuleForm(prev => ({ ...prev, title: e.target.value }))}
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-foreground mb-1">
                     Titre court *
                   </label>
                   <input
                     type="text"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus-visible:ring-ring"
                     value={newModuleForm.short_title}
                     onChange={(e) => setNewModuleForm(prev => ({ ...prev, short_title: e.target.value }))}
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-foreground mb-1">
                     Description
                   </label>
                   <textarea
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus-visible:ring-ring"
                     rows={3}
                     value={newModuleForm.description}
                     onChange={(e) => setNewModuleForm(prev => ({ ...prev, description: e.target.value }))}
@@ -1057,11 +1057,11 @@ export default function ContentManagementPage() {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-foreground mb-1">
                     Difficulté
                   </label>
                   <select
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus-visible:ring-ring"
                     value={newModuleForm.difficulty}
                     onChange={(e) => setNewModuleForm(prev => ({ ...prev, difficulty: e.target.value }))}
                   >
@@ -1072,12 +1072,12 @@ export default function ContentManagementPage() {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-foreground mb-1">
                     Icône
                   </label>
                   <input
                     type="text"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus-visible:ring-ring"
                     value={newModuleForm.icon}
                     onChange={(e) => setNewModuleForm(prev => ({ ...prev, icon: e.target.value }))}
                     placeholder="📚"
@@ -1089,7 +1089,7 @@ export default function ContentManagementPage() {
             <div className="p-6 border-t flex justify-between">
               <button
                 onClick={() => setShowAddModule(false)}
-                className="px-4 py-2 text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50"
+                className="px-4 py-2 text-foreground border border-input rounded-md hover:bg-accent"
               >
                 Annuler
               </button>

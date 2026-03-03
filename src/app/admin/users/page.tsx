@@ -555,27 +555,27 @@ export default function UsersManagementPage() {
   const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Navigation Header */}
-      <div className="bg-white shadow-sm border-b">
+      <div className="bg-card shadow-sm border-b">
         <div className="px-6 py-4">
           <div className="flex items-center gap-4 mb-2">
-            <a href="/admin" className="text-blue-600 hover:text-blue-800 font-medium">← Dashboard Admin</a>
-            <span className="text-gray-300">|</span>
-            <h1 className="text-xl font-bold text-gray-900">Gestion des Utilisateurs</h1>
+            <a href="/admin" className="text-primary hover:text-primary/80 font-medium">← Dashboard Admin</a>
+            <span className="text-muted-foreground">|</span>
+            <h1 className="text-xl font-bold text-foreground">Gestion des Utilisateurs</h1>
           </div>
-          <p className="text-gray-600">Gérez les comptes et permissions des utilisateurs</p>
+          <p className="text-muted-foreground">Gérez les comptes et permissions des utilisateurs</p>
         </div>
         
         
         {/* Quick Navigation */}
         <div className="px-6 pb-2">
           <nav className="flex gap-4 text-sm">
-            <a href="/admin" className="text-gray-500 hover:text-gray-700">Dashboard</a>
-            <a href="/admin/users" className="text-blue-600 font-medium">Utilisateurs</a>
-            <a href="/admin/analytics" className="text-gray-500 hover:text-gray-700">Analytics</a>
-            <a href="/admin/content" className="text-gray-500 hover:text-gray-700">Contenu</a>
-            <a href="/admin/settings" className="text-gray-500 hover:text-gray-700">Paramètres</a>
+            <a href="/admin" className="text-muted-foreground hover:text-foreground">Dashboard</a>
+            <a href="/admin/users" className="text-primary font-medium">Utilisateurs</a>
+            <a href="/admin/analytics" className="text-muted-foreground hover:text-foreground">Analytics</a>
+            <a href="/admin/content" className="text-muted-foreground hover:text-foreground">Contenu</a>
+            <a href="/admin/settings" className="text-muted-foreground hover:text-foreground">Paramètres</a>
           </nav>
         </div>
       </div>
@@ -584,21 +584,21 @@ export default function UsersManagementPage() {
 
       {/* Statistiques */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <div className="bg-white rounded-lg shadow p-4">
+        <div className="bg-card rounded-lg shadow p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Total utilisateurs</p>
-              <p className="text-2xl font-bold text-gray-900">{users.length}</p>
+              <p className="text-sm text-muted-foreground">Total utilisateurs</p>
+              <p className="text-2xl font-bold text-foreground">{users.length}</p>
             </div>
             <Users className="w-8 h-8 text-blue-500" />
           </div>
         </div>
         
-        <div className="bg-white rounded-lg shadow p-4">
+        <div className="bg-card rounded-lg shadow p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Administrateurs</p>
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-sm text-muted-foreground">Administrateurs</p>
+              <p className="text-2xl font-bold text-foreground">
                 {users.filter(u => u.role === 'admin').length}
               </p>
             </div>
@@ -606,23 +606,23 @@ export default function UsersManagementPage() {
           </div>
         </div>
         
-        <div className="bg-white rounded-lg shadow p-4">
+        <div className="bg-card rounded-lg shadow p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Étudiants</p>
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-sm text-muted-foreground">Étudiants</p>
+              <p className="text-2xl font-bold text-foreground">
                 {users.filter(u => u.role === 'student').length}
               </p>
             </div>
-            <UserCheck className="w-8 h-8 text-green-500" />
+            <UserCheck className="w-8 h-8 text-green-500 dark:text-green-400" />
           </div>
         </div>
         
-        <div className="bg-white rounded-lg shadow p-4">
+        <div className="bg-card rounded-lg shadow p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Actifs (30j)</p>
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-sm text-muted-foreground">Actifs (30j)</p>
+              <p className="text-2xl font-bold text-foreground">
                 {users.filter(u => {
                   const thirtyDaysAgo = new Date();
                   thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
@@ -636,22 +636,22 @@ export default function UsersManagementPage() {
       </div>
 
       {/* Filtres et recherche */}
-      <div className="bg-white rounded-lg shadow mb-6">
+      <div className="bg-card rounded-lg shadow mb-6">
         <div className="p-4 border-b">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
               <input
                 type="text"
                 placeholder="Rechercher par email ou nom..."
-                className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus-visible:ring-ring"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
             
             <select
-              className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus-visible:ring-ring"
               value={filterRole}
               onChange={(e) => setFilterRole(e.target.value as any)}
             >
@@ -661,7 +661,7 @@ export default function UsersManagementPage() {
             </select>
             
             <select
-              className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus-visible:ring-ring"
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value as any)}
             >
@@ -690,7 +690,7 @@ export default function UsersManagementPage() {
               className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
                 selectedUserIds.size > 0
                   ? 'bg-red-600 text-white hover:bg-red-700'
-                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  : 'bg-muted text-muted-foreground cursor-not-allowed'
               }`}
               disabled={selectedUserIds.size === 0}
               title={`Supprimer les ${selectedUserIds.size} utilisateur(s) sélectionné(s)`}
@@ -719,7 +719,7 @@ export default function UsersManagementPage() {
               </div>
               <button
                 onClick={() => setSelectedUserIds(new Set())}
-                className="text-blue-600 hover:text-blue-800 text-sm underline"
+                className="text-primary hover:text-primary/80 text-sm underline"
               >
                 Tout désélectionner
               </button>
@@ -730,52 +730,52 @@ export default function UsersManagementPage() {
         {/* Table des utilisateurs */}
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50">
+            <thead className="bg-muted">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                   <div className="flex items-center">
                     <input
                       type="checkbox"
                       checked={currentUsers.length > 0 && currentUsers.every(user => selectedUserIds.has(user.id))}
                       onChange={handleSelectAll}
-                      className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                      className="rounded border-input text-blue-600 focus-visible:ring-ring"
                     />
                     <span className="ml-2">Sélection</span>
                   </div>
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                   Utilisateur
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                   Nom d'utilisateur
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                   Rôle
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                   Inscription
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                   Points
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                   Statut
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-card divide-y divide-border">
               {loading ? (
                 <tr>
-                  <td colSpan={7} className="px-6 py-4 text-center text-gray-500">
+                  <td colSpan={7} className="px-6 py-4 text-center text-muted-foreground">
                     Chargement...
                   </td>
                 </tr>
               ) : currentUsers.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="px-6 py-4 text-center text-gray-500">
+                  <td colSpan={7} className="px-6 py-4 text-center text-muted-foreground">
                     Aucun utilisateur trouvé
                   </td>
                 </tr>
@@ -785,19 +785,19 @@ export default function UsersManagementPage() {
                   const isEmailConfirmed = user.email_confirmed;
                   
                   return (
-                    <tr key={user.id} className="hover:bg-gray-50">
+                    <tr key={user.id} className="hover:bg-accent">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <input
                           type="checkbox"
                           checked={selectedUserIds.has(user.id)}
                           onChange={(e) => handleSelectUser(user.id, e.target.checked)}
                           disabled={user.email === 'admin@geniawebtraining.com'}
-                          className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                          className="rounded border-input text-blue-600 focus-visible:ring-ring"
                         />
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div>
-                          <div className="text-sm font-medium text-gray-900 flex items-center gap-2">
+                          <div className="text-sm font-medium text-foreground flex items-center gap-2">
                             {user.display_name}
                             {!isEmailConfirmed && (
                               <span className="text-xs text-orange-600 bg-orange-100 px-2 py-1 rounded-full">
@@ -805,36 +805,36 @@ export default function UsersManagementPage() {
                               </span>
                             )}
                           </div>
-                          <div className="text-sm text-gray-500">{user.email}</div>
+                          <div className="text-sm text-muted-foreground">{user.email}</div>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-foreground">
                         @{(user as any).username || '—'}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`px-2 py-1 text-xs rounded-full ${
                           user.role === 'admin' 
                             ? 'bg-purple-100 text-purple-800' 
-                            : 'bg-blue-100 text-blue-800'
+                            : 'bg-blue-100 dark:bg-blue-900/30 text-blue-800'
                         }`}>
                           {user.role === 'admin' ? 'Admin' : 'Étudiant'}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
                         {new Date(user.created_at).toLocaleDateString('fr-FR')}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">{user.total_points} pts</div>
+                        <div className="text-sm text-foreground">{user.total_points} pts</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`px-2 py-1 text-xs rounded-full ${
                           user.preferences?.suspended 
-                            ? 'bg-red-100 text-red-800' 
+                            ? 'bg-red-100 dark:bg-red-900/30 text-red-800' 
                             : !isEmailConfirmed
                               ? 'bg-orange-100 text-orange-800'
                               : isActive 
-                                ? 'bg-green-100 text-green-800' 
-                                : 'bg-gray-100 text-gray-800'
+                                ? 'bg-green-100 dark:bg-green-900/30 text-green-800' 
+                                : 'bg-muted text-foreground'
                         }`}>
                           {user.preferences?.suspended 
                             ? 'Suspendu' 
@@ -844,14 +844,14 @@ export default function UsersManagementPage() {
                           }
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
                         <div className="flex items-center gap-2">
                           <button
                             onClick={() => {
                               setSelectedUser(user);
                               setShowUserModal(true);
                             }}
-                            className="text-blue-600 hover:text-blue-800"
+                            className="text-primary hover:text-primary/80"
                             title="Voir détails"
                           >
                             <Eye className="w-4 h-4" />
@@ -859,7 +859,7 @@ export default function UsersManagementPage() {
                           {!isEmailConfirmed && (
                             <button
                               onClick={() => handleResendVerificationEmail(user.email)}
-                              className="text-blue-600 hover:text-blue-800"
+                              className="text-primary hover:text-primary/80"
                               title="Renvoyer email de vérification"
                             >
                               <Mail className="w-4 h-4" />
@@ -882,7 +882,7 @@ export default function UsersManagementPage() {
                           <button
                             onClick={() => handleSuspendUser(user.id)}
                             className={user.preferences?.suspended 
-                              ? "text-green-600 hover:text-green-800" 
+                              ? "text-green-600 dark:text-green-400 hover:text-green-800" 
                               : "text-yellow-600 hover:text-yellow-800"
                             }
                             title={user.preferences?.suspended ? "Réactiver utilisateur" : "Suspendre utilisateur"}
@@ -895,7 +895,7 @@ export default function UsersManagementPage() {
                           </button>
                           <button
                             onClick={() => handleDeleteUser(user.id)}
-                            className="text-red-600 hover:text-red-800"
+                            className="text-red-600 dark:text-red-400 hover:text-red-800"
                             title="Supprimer définitivement"
                             disabled={user.email === 'admin@geniawebtraining.com'}
                           >
@@ -914,14 +914,14 @@ export default function UsersManagementPage() {
         {/* Pagination */}
         {totalPages > 1 && (
           <div className="px-6 py-3 border-t flex items-center justify-between">
-            <div className="text-sm text-gray-700">
+            <div className="text-sm text-foreground">
               Affichage de {indexOfFirstUser + 1} à {Math.min(indexOfLastUser, filteredUsers.length)} sur {filteredUsers.length} utilisateurs
             </div>
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-                className="p-2 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="p-2 rounded-lg hover:bg-accent disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
@@ -933,7 +933,7 @@ export default function UsersManagementPage() {
                   className={`px-3 py-1 rounded-lg ${
                     currentPage === i + 1
                       ? 'bg-blue-600 text-white'
-                      : 'hover:bg-gray-100'
+                      : 'hover:bg-accent'
                   }`}
                 >
                   {i + 1}
@@ -943,7 +943,7 @@ export default function UsersManagementPage() {
               <button
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
-                className="p-2 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="p-2 rounded-lg hover:bg-accent disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
@@ -955,39 +955,39 @@ export default function UsersManagementPage() {
       {/* Modal détails utilisateur */}
       {showUserModal && selectedUser && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+          <div className="bg-card rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
             <div className="p-6 border-b">
-              <h2 className="text-xl font-bold text-gray-900">Détails de l'utilisateur</h2>
+              <h2 className="text-xl font-bold text-foreground">Détails de l'utilisateur</h2>
             </div>
             
             <div className="p-6">
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <div>
-                  <p className="text-sm text-gray-600">Email</p>
+                  <p className="text-sm text-muted-foreground">Email</p>
                   <p className="font-medium">{selectedUser.email}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">Nom d'utilisateur</p>
+                  <p className="text-sm text-muted-foreground">Nom d'utilisateur</p>
                   <p className="font-medium">@{(selectedUser as any).username}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">Nom d'affichage</p>
+                  <p className="text-sm text-muted-foreground">Nom d'affichage</p>
                   <p className="font-medium">{selectedUser.display_name}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">Rôle</p>
+                  <p className="text-sm text-muted-foreground">Rôle</p>
                   <p className="font-medium">{selectedUser.role === 'admin' ? 'Administrateur' : 'Étudiant'}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">Date d'inscription</p>
+                  <p className="text-sm text-muted-foreground">Date d'inscription</p>
                   <p className="font-medium">{new Date(selectedUser.created_at).toLocaleDateString('fr-FR')}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">Dernière activité</p>
+                  <p className="text-sm text-muted-foreground">Dernière activité</p>
                   <p className="font-medium">{new Date(selectedUser.last_activity).toLocaleDateString('fr-FR')}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">Points totaux</p>
+                  <p className="text-sm text-muted-foreground">Points totaux</p>
                   <p className="font-medium">{selectedUser.total_points}</p>
                 </div>
               </div>
@@ -1003,7 +1003,7 @@ export default function UsersManagementPage() {
                 </div>
                 <button
                   onClick={() => setShowUserModal(false)}
-                  className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300"
+                  className="px-4 py-2 bg-muted text-foreground rounded-lg hover:bg-accent"
                 >
                   Fermer
                 </button>
@@ -1016,7 +1016,7 @@ export default function UsersManagementPage() {
       {/* Modal de création d'utilisateur */}
       {showCreateUserModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
+          <div className="bg-card rounded-lg shadow-xl w-full max-w-md">
             <div className="p-6 border-b">
               <h3 className="text-lg font-semibold">Nouvel Utilisateur</h3>
             </div>
@@ -1024,12 +1024,12 @@ export default function UsersManagementPage() {
             <div className="p-6">
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-foreground mb-1">
                     Email *
                   </label>
                   <input
                     type="email"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus-visible:ring-ring"
                     value={newUserForm.email}
                     onChange={(e) => setNewUserForm(prev => ({ ...prev, email: e.target.value }))}
                     placeholder="utilisateur@example.com"
@@ -1037,12 +1037,12 @@ export default function UsersManagementPage() {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-foreground mb-1">
                     Nom d'affichage *
                   </label>
                   <input
                     type="text"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus-visible:ring-ring"
                     value={newUserForm.display_name}
                     onChange={(e) => setNewUserForm(prev => ({ ...prev, display_name: e.target.value }))}
                     placeholder="Nom et Prénom"
@@ -1050,11 +1050,11 @@ export default function UsersManagementPage() {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-foreground mb-1">
                     Rôle
                   </label>
                   <select
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus-visible:ring-ring"
                     value={newUserForm.role}
                     onChange={(e) => setNewUserForm(prev => ({ ...prev, role: e.target.value as 'admin' | 'student' }))}
                   >
@@ -1068,7 +1068,7 @@ export default function UsersManagementPage() {
             <div className="p-6 border-t flex justify-between">
               <button
                 onClick={() => setShowCreateUserModal(false)}
-                className="px-4 py-2 text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50"
+                className="px-4 py-2 text-foreground border border-input rounded-md hover:bg-accent"
               >
                 Annuler
               </button>

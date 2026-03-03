@@ -123,9 +123,9 @@ export default function SocialShareButton({
       case 'badge':
         return 'text-orange-600'
       case 'team':
-        return 'text-green-600'
+        return 'text-green-600 dark:text-green-400'
       default:
-        return 'text-gray-600'
+        return 'text-muted-foreground'
     }
   }
 
@@ -135,7 +135,7 @@ export default function SocialShareButton({
       <div className="relative inline-block">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`p-2 rounded-lg bg-white border border-gray-300 hover:bg-gray-50 transition-colors ${getTypeColor()}`}
+          className={`p-2 rounded-lg bg-card border border-input hover:bg-accent transition-colors ${getTypeColor()}`}
           aria-label="Share"
         >
           <Share2 className="w-4 h-4" />
@@ -150,46 +150,46 @@ export default function SocialShareButton({
             />
 
             {/* Dropdown Menu */}
-            <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50 overflow-hidden">
+            <div className="absolute right-0 mt-2 w-48 bg-card rounded-lg shadow-lg border border-border z-50 overflow-hidden">
               <button
                 onClick={() => handleShare('twitter')}
-                className="w-full flex items-center gap-3 px-4 py-3 hover:bg-blue-50 transition-colors text-left"
+                className="w-full flex items-center gap-3 px-4 py-3 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-colors text-left"
               >
-                <Twitter className="w-5 h-5 text-blue-500" />
-                <span className="text-sm font-medium text-gray-700">Twitter</span>
+                <Twitter className="w-5 h-5 text-blue-500 dark:text-blue-400" />
+                <span className="text-sm font-medium text-foreground">Twitter</span>
               </button>
 
               <button
                 onClick={() => handleShare('linkedin')}
-                className="w-full flex items-center gap-3 px-4 py-3 hover:bg-blue-50 transition-colors text-left"
+                className="w-full flex items-center gap-3 px-4 py-3 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-colors text-left"
               >
                 <Linkedin className="w-5 h-5 text-blue-700" />
-                <span className="text-sm font-medium text-gray-700">LinkedIn</span>
+                <span className="text-sm font-medium text-foreground">LinkedIn</span>
               </button>
 
               <button
                 onClick={() => handleShare('facebook')}
-                className="w-full flex items-center gap-3 px-4 py-3 hover:bg-blue-50 transition-colors text-left"
+                className="w-full flex items-center gap-3 px-4 py-3 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-colors text-left"
               >
                 <Facebook className="w-5 h-5 text-blue-600" />
-                <span className="text-sm font-medium text-gray-700">Facebook</span>
+                <span className="text-sm font-medium text-foreground">Facebook</span>
               </button>
 
-              <div className="border-t border-gray-200" />
+              <div className="border-t border-border" />
 
               <button
                 onClick={handleCopyLink}
-                className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors text-left"
+                className="w-full flex items-center gap-3 px-4 py-3 hover:bg-accent transition-colors text-left"
               >
                 {copied ? (
                   <>
-                    <Check className="w-5 h-5 text-green-500" />
-                    <span className="text-sm font-medium text-green-600">Copié!</span>
+                    <Check className="w-5 h-5 text-green-500 dark:text-green-400" />
+                    <span className="text-sm font-medium text-green-600 dark:text-green-400">Copié!</span>
                   </>
                 ) : (
                   <>
-                    <Copy className="w-5 h-5 text-gray-500" />
-                    <span className="text-sm font-medium text-gray-700">Copier le texte</span>
+                    <Copy className="w-5 h-5 text-muted-foreground" />
+                    <span className="text-sm font-medium text-foreground">Copier le texte</span>
                   </>
                 )}
               </button>
@@ -220,75 +220,75 @@ export default function SocialShareButton({
           />
 
           {/* Share Dialog */}
-          <div className="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-xl border border-gray-200 z-50 overflow-hidden">
+          <div className="absolute right-0 mt-2 w-80 bg-card rounded-xl shadow-xl border border-border z-50 overflow-hidden">
             {/* Header */}
             <div className="px-4 py-3 bg-gradient-to-r from-blue-50 to-blue-100 border-b border-blue-200">
               <div className="flex items-center gap-2">
                 <Share2 className={`w-5 h-5 ${getTypeColor()}`} />
-                <h3 className="font-semibold text-gray-900">Partager votre succès</h3>
+                <h3 className="font-semibold text-foreground">Partager votre succès</h3>
               </div>
-              <p className="text-xs text-gray-600 mt-1">{title}</p>
+              <p className="text-xs text-muted-foreground mt-1">{title}</p>
             </div>
 
             {/* Social Platforms */}
             <div className="p-2">
               <button
                 onClick={() => handleShare('twitter')}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-blue-50 transition-colors text-left group"
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-colors text-left group"
               >
-                <div className="p-2 bg-blue-100 rounded-lg group-hover:bg-blue-200 transition-colors">
-                  <Twitter className="w-5 h-5 text-blue-500" />
+                <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg group-hover:bg-blue-200 transition-colors">
+                  <Twitter className="w-5 h-5 text-blue-500 dark:text-blue-400" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900">Twitter</p>
-                  <p className="text-xs text-gray-500">Partagez avec vos followers</p>
+                  <p className="text-sm font-medium text-foreground">Twitter</p>
+                  <p className="text-xs text-muted-foreground">Partagez avec vos followers</p>
                 </div>
               </button>
 
               <button
                 onClick={() => handleShare('linkedin')}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-blue-50 transition-colors text-left group"
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-colors text-left group"
               >
-                <div className="p-2 bg-blue-100 rounded-lg group-hover:bg-blue-200 transition-colors">
+                <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg group-hover:bg-blue-200 transition-colors">
                   <Linkedin className="w-5 h-5 text-blue-700" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900">LinkedIn</p>
-                  <p className="text-xs text-gray-500">Partagez sur votre réseau professionnel</p>
+                  <p className="text-sm font-medium text-foreground">LinkedIn</p>
+                  <p className="text-xs text-muted-foreground">Partagez sur votre réseau professionnel</p>
                 </div>
               </button>
 
               <button
                 onClick={() => handleShare('facebook')}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-blue-50 transition-colors text-left group"
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-colors text-left group"
               >
-                <div className="p-2 bg-blue-100 rounded-lg group-hover:bg-blue-200 transition-colors">
+                <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg group-hover:bg-blue-200 transition-colors">
                   <Facebook className="w-5 h-5 text-blue-600" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900">Facebook</p>
-                  <p className="text-xs text-gray-500">Partagez avec vos amis</p>
+                  <p className="text-sm font-medium text-foreground">Facebook</p>
+                  <p className="text-xs text-muted-foreground">Partagez avec vos amis</p>
                 </div>
               </button>
 
-              <div className="border-t border-gray-200 my-2" />
+              <div className="border-t border-border my-2" />
 
               <button
                 onClick={handleCopyLink}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-50 transition-colors text-left group"
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-accent transition-colors text-left group"
               >
-                <div className={`p-2 ${copied ? 'bg-green-100' : 'bg-gray-100'} rounded-lg group-hover:bg-gray-200 transition-colors`}>
+                <div className={`p-2 ${copied ? 'bg-green-100 dark:bg-green-900/30' : 'bg-muted'} rounded-lg group-hover:bg-accent transition-colors`}>
                   {copied ? (
-                    <Check className="w-5 h-5 text-green-500" />
+                    <Check className="w-5 h-5 text-green-500 dark:text-green-400" />
                   ) : (
-                    <Copy className="w-5 h-5 text-gray-500" />
+                    <Copy className="w-5 h-5 text-muted-foreground" />
                   )}
                 </div>
                 <div className="flex-1">
-                  <p className={`text-sm font-medium ${copied ? 'text-green-600' : 'text-gray-900'}`}>
+                  <p className={`text-sm font-medium ${copied ? 'text-green-600 dark:text-green-400' : 'text-foreground'}`}>
                     {copied ? 'Copié!' : 'Copier le texte'}
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-muted-foreground">
                     {copied ? 'Le texte a été copié' : 'Copiez le texte de partage'}
                   </p>
                 </div>

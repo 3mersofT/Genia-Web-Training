@@ -152,36 +152,36 @@ export default function SkillRadarChart({ skills, loading = false }: SkillRadarC
   // Loading skeleton
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+      <div className="bg-card rounded-xl shadow-sm border border-border p-6">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+            <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
               <Target className="w-6 h-6 text-indigo-600" />
               Skill Competency Radar
             </h2>
-            <p className="text-sm text-gray-600 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               Your proficiency across different prompt engineering skills
             </p>
           </div>
         </div>
 
         {/* Loading Skeleton */}
-        <div className="h-80 mb-6 flex items-center justify-center bg-gray-50 rounded-lg">
+        <div className="h-80 mb-6 flex items-center justify-center bg-muted rounded-lg">
           <div className="text-center">
             <Loader2 className="w-12 h-12 text-indigo-600 animate-spin mx-auto mb-3" />
-            <p className="text-sm text-gray-600">Loading skill data...</p>
+            <p className="text-sm text-muted-foreground">Loading skill data...</p>
           </div>
         </div>
 
         {/* Loading Stats Skeleton */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-gray-200">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-border">
           {[1, 2, 3].map((i) => (
             <div key={i} className="flex items-start gap-3 animate-pulse">
-              <div className="p-2 bg-gray-200 rounded-lg w-9 h-9" />
+              <div className="p-2 bg-muted rounded-lg w-9 h-9" />
               <div className="flex-1">
-                <div className="h-4 bg-gray-200 rounded w-24 mb-2" />
-                <div className="h-6 bg-gray-200 rounded w-16 mb-1" />
-                <div className="h-3 bg-gray-200 rounded w-20" />
+                <div className="h-4 bg-muted rounded w-24 mb-2" />
+                <div className="h-6 bg-muted rounded w-16 mb-1" />
+                <div className="h-3 bg-muted rounded w-20" />
               </div>
             </div>
           ))}
@@ -191,14 +191,14 @@ export default function SkillRadarChart({ skills, loading = false }: SkillRadarC
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+    <div className="bg-card rounded-xl shadow-sm border border-border p-6">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+          <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
             <Target className="w-6 h-6 text-indigo-600" />
             Skill Competency Radar
           </h2>
-          <p className="text-sm text-gray-600 mt-1">
+          <p className="text-sm text-muted-foreground mt-1">
             Your proficiency across different prompt engineering skills
           </p>
         </div>
@@ -211,15 +211,15 @@ export default function SkillRadarChart({ skills, loading = false }: SkillRadarC
 
       {/* Skill Statistics */}
       {skills && skills.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-gray-200">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-border">
           {/* Average Competency */}
           <div className="flex items-start gap-3">
-            <div className="p-2 bg-blue-100 rounded-lg">
+            <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
               <TrendingUp className="w-5 h-5 text-blue-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Average Competency</p>
-              <p className="text-lg font-bold text-gray-900">
+              <p className="text-sm text-muted-foreground">Average Competency</p>
+              <p className="text-lg font-bold text-foreground">
                 {skillStats.averageCompetency.toFixed(1)}%
               </p>
             </div>
@@ -228,15 +228,15 @@ export default function SkillRadarChart({ skills, loading = false }: SkillRadarC
           {/* Strongest Skill */}
           {skillStats.strongestSkill && (
             <div className="flex items-start gap-3">
-              <div className="p-2 bg-green-100 rounded-lg">
-                <Award className="w-5 h-5 text-green-600" />
+              <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
+                <Award className="w-5 h-5 text-green-600 dark:text-green-400" />
               </div>
               <div>
-                <p className="text-sm text-gray-600">Strongest Skill</p>
-                <p className="text-sm font-bold text-gray-900 truncate">
+                <p className="text-sm text-muted-foreground">Strongest Skill</p>
+                <p className="text-sm font-bold text-foreground truncate">
                   {skillStats.strongestSkill.skill_name}
                 </p>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-muted-foreground">
                   {skillStats.strongestSkill.competency_level}% proficiency
                 </p>
               </div>
@@ -250,11 +250,11 @@ export default function SkillRadarChart({ skills, loading = false }: SkillRadarC
                 <Target className="w-5 h-5 text-orange-600" />
               </div>
               <div>
-                <p className="text-sm text-gray-600">Growth Area</p>
-                <p className="text-sm font-bold text-gray-900 truncate">
+                <p className="text-sm text-muted-foreground">Growth Area</p>
+                <p className="text-sm font-bold text-foreground truncate">
                   {skillStats.weakestSkill.skill_name}
                 </p>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-muted-foreground">
                   {skillStats.weakestSkill.competency_level}% proficiency
                 </p>
               </div>
@@ -266,9 +266,9 @@ export default function SkillRadarChart({ skills, loading = false }: SkillRadarC
       {/* Empty State */}
       {(!skills || skills.length === 0) && (
         <div className="text-center py-8">
-          <Target className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-          <p className="text-gray-600 font-medium">No skill data available yet</p>
-          <p className="text-sm text-gray-500 mt-1">
+          <Target className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+          <p className="text-muted-foreground font-medium">No skill data available yet</p>
+          <p className="text-sm text-muted-foreground mt-1">
             Complete more capsules to see your skill competencies
           </p>
         </div>

@@ -44,7 +44,7 @@ export default function LinkedInShareButton({
   const getVariantClasses = () => {
     switch (variant) {
       case 'icon':
-        return 'p-2 rounded-full hover:bg-gray-100 transition-colors';
+        return 'p-2 rounded-full hover:bg-accent transition-colors';
       case 'inline':
         return 'text-[#0077B5] hover:text-[#006399] hover:underline transition-colors';
       default:

@@ -57,7 +57,7 @@ const MediaRenderer = ({ content, type }: { content: string; type: 'video' | 'im
     );
   }
 
-  return <p className="text-gray-700 whitespace-pre-wrap">{content}</p>;
+  return <p className="text-foreground whitespace-pre-wrap">{content}</p>;
 };
 
 // Parse content to detect multimedia elements
@@ -132,32 +132,32 @@ export default function ContentPreview({ module, capsule, isOpen, onClose }: Con
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-xl shadow-2xl max-w-7xl w-full h-[90vh] flex flex-col">
+      <div className="bg-card rounded-xl shadow-2xl max-w-7xl w-full h-[90vh] flex flex-col">
         
         {/* Header de prévisualisation */}
-        <div className="flex justify-between items-center p-4 border-b bg-gray-50">
+        <div className="flex justify-between items-center p-4 border-b bg-muted">
           <div className="flex items-center gap-4">
-            <h3 className="text-lg font-semibold text-gray-900">
+            <h3 className="text-lg font-semibold text-foreground">
               📱 Preview : {previewContent.title}
             </h3>
             
             {/* Contrôles de taille d'écran */}
-            <div className="flex gap-2 bg-white rounded-lg p-1 border">
+            <div className="flex gap-2 bg-card rounded-lg p-1 border">
               <button
                 onClick={() => setPreviewMode('desktop')}
-                className={`p-2 rounded ${previewMode === 'desktop' ? 'bg-blue-100 text-blue-600' : 'text-gray-500'}`}
+                className={`p-2 rounded ${previewMode === 'desktop' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600' : 'text-muted-foreground'}`}
               >
                 <Monitor className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setPreviewMode('tablet')}
-                className={`p-2 rounded ${previewMode === 'tablet' ? 'bg-blue-100 text-blue-600' : 'text-gray-500'}`}
+                className={`p-2 rounded ${previewMode === 'tablet' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600' : 'text-muted-foreground'}`}
               >
                 <Tablet className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setPreviewMode('mobile')}
-                className={`p-2 rounded ${previewMode === 'mobile' ? 'bg-blue-100 text-blue-600' : 'text-gray-500'}`}
+                className={`p-2 rounded ${previewMode === 'mobile' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600' : 'text-muted-foreground'}`}
               >
                 <Smartphone className="w-4 h-4" />
               </button>
@@ -166,15 +166,15 @@ export default function ContentPreview({ module, capsule, isOpen, onClose }: Con
           
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 p-2"
+            className="text-muted-foreground hover:text-muted-foreground p-2"
           >
             <EyeOff className="w-5 h-5" />
           </button>
         </div>
 
         {/* Zone de prévisualisation */}
-        <div className="flex-1 bg-gray-100 flex items-center justify-center p-4">
-          <div className={`${getPreviewWidth()} h-full bg-white rounded-lg shadow-lg flex flex-col transition-all duration-300`}>
+        <div className="flex-1 bg-muted flex items-center justify-center p-4">
+          <div className={`${getPreviewWidth()} h-full bg-card rounded-lg shadow-lg flex flex-col transition-all duration-300`}>
             
             {/* Header étudiant simulé */}
             <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-t-lg">
@@ -200,11 +200,11 @@ export default function ContentPreview({ module, capsule, isOpen, onClose }: Con
                   <div className="flex items-center gap-3">
                     <BookOpen className="w-5 h-5 text-blue-600" />
                     <div>
-                      <h3 className="font-semibold text-gray-900">{capsule.title}</h3>
-                      <p className="text-sm text-gray-600">Module {module.order_index} • Capsule {capsule.order_index}</p>
+                      <h3 className="font-semibold text-foreground">{capsule.title}</h3>
+                      <p className="text-sm text-muted-foreground">Module {module.order_index} • Capsule {capsule.order_index}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-500">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
                     <Clock className="w-4 h-4" />
                     {capsule.duration_minutes} min
                   </div>
@@ -212,21 +212,21 @@ export default function ContentPreview({ module, capsule, isOpen, onClose }: Con
                 
                 {/* Barre de progression simulée */}
                 <div className="mt-3">
-                  <div className="flex justify-between text-xs text-gray-600 mb-1">
+                  <div className="flex justify-between text-xs text-muted-foreground mb-1">
                     <span>Progression</span>
                     <span>65%</span>
                   </div>
-                  <div className="bg-gray-200 rounded-full h-2">
+                  <div className="bg-muted rounded-full h-2">
                     <div className="bg-blue-600 h-2 rounded-full w-2/3"></div>
                   </div>
                 </div>
               </div>
             ) : (
-              <div className="bg-green-50 p-4 border-b">
+              <div className="bg-green-50 dark:bg-green-950/30 p-4 border-b">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="font-semibold text-gray-900">{module.title}</h3>
-                    <p className="text-sm text-gray-600">{module.description}</p>
+                    <h3 className="font-semibold text-foreground">{module.title}</h3>
+                    <p className="text-sm text-muted-foreground">{module.description}</p>
                   </div>
                   <div className="text-2xl">{module.icon}</div>
                 </div>
@@ -246,7 +246,7 @@ export default function ContentPreview({ module, capsule, isOpen, onClose }: Con
                         className={`px-3 py-1.5 text-sm rounded-full transition-colors ${
                           currentSection === section
                             ? 'bg-blue-600 text-white'
-                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                            : 'bg-muted text-muted-foreground hover:bg-muted'
                         }`}
                       >
                         {section === 'hook' && '🎯 Hook'}
@@ -270,7 +270,7 @@ export default function ContentPreview({ module, capsule, isOpen, onClose }: Con
                             ))}
                           </div>
                         ) : (
-                          <p className="text-gray-700">
+                          <p className="text-foreground">
                             Imaginez pouvoir créer des prompts qui génèrent exactement ce que vous voulez,
                             à chaque fois. Dans cette capsule, vous allez découvrir les secrets des experts...
                           </p>
@@ -280,7 +280,7 @@ export default function ContentPreview({ module, capsule, isOpen, onClose }: Con
 
                     {currentSection === 'concept' && (
                       <div className="space-y-4">
-                        <h3 className="text-xl font-semibold text-gray-900">💡 Concept Clé</h3>
+                        <h3 className="text-xl font-semibold text-foreground">💡 Concept Clé</h3>
                         <div className="bg-blue-50 p-4 rounded-lg">
                           {capsule.concept_content ? (
                             <div className="space-y-3">
@@ -291,7 +291,7 @@ export default function ContentPreview({ module, capsule, isOpen, onClose }: Con
                           ) : (
                             <>
                               <h4 className="font-semibold text-blue-900 mb-2">Principe RCTF</h4>
-                              <ul className="list-disc list-inside text-gray-700 space-y-1">
+                              <ul className="list-disc list-inside text-foreground space-y-1">
                                 <li><strong>Rôle</strong> : Définir le persona de l'IA</li>
                                 <li><strong>Contexte</strong> : Donner les informations nécessaires</li>
                                 <li><strong>Tâche</strong> : Préciser l'action attendue</li>
@@ -305,7 +305,7 @@ export default function ContentPreview({ module, capsule, isOpen, onClose }: Con
 
                     {currentSection === 'demo' && (
                       <div className="space-y-4">
-                        <h3 className="text-xl font-semibold text-gray-900">🎬 Démonstration</h3>
+                        <h3 className="text-xl font-semibold text-foreground">🎬 Démonstration</h3>
                         {capsule.demo_content ? (
                           <div className="space-y-3">
                             {parseContent(capsule.demo_content).map((element, idx) => (
@@ -330,7 +330,7 @@ export default function ContentPreview({ module, capsule, isOpen, onClose }: Con
 
                     {currentSection === 'exercise' && (
                       <div className="space-y-4">
-                        <h3 className="text-xl font-semibold text-gray-900">✏️ À Votre Tour !</h3>
+                        <h3 className="text-xl font-semibold text-foreground">✏️ À Votre Tour !</h3>
                         {capsule.exercise_content && (
                           <div className="mb-4 space-y-3">
                             {parseContent(capsule.exercise_content).map((element, idx) => (
@@ -350,7 +350,7 @@ export default function ContentPreview({ module, capsule, isOpen, onClose }: Con
                             <button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
                               Tester le prompt
                             </button>
-                            <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
+                            <button className="px-4 py-2 bg-muted text-foreground rounded-lg hover:bg-accent">
                               Indice
                             </button>
                           </div>
@@ -360,7 +360,7 @@ export default function ContentPreview({ module, capsule, isOpen, onClose }: Con
 
                     {currentSection === 'recap' && (
                       <div className="space-y-4">
-                        <h3 className="text-xl font-semibold text-gray-900">📋 Points Clés</h3>
+                        <h3 className="text-xl font-semibold text-foreground">📋 Points Clés</h3>
                         {capsule.recap_content ? (
                           <div className="space-y-3">
                             {parseContent(capsule.recap_content).map((element, idx) => (
@@ -369,9 +369,9 @@ export default function ContentPreview({ module, capsule, isOpen, onClose }: Con
                           </div>
                         ) : (
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div className="bg-green-50 p-4 rounded-lg">
+                            <div className="bg-green-50 dark:bg-green-950/30 p-4 rounded-lg">
                               <h4 className="font-semibold text-green-800 mb-2">✅ Acquis</h4>
-                              <ul className="text-sm text-green-700 space-y-1">
+                              <ul className="text-sm text-green-700 dark:text-green-300 space-y-1">
                                 <li>• Structure RCTF maîtrisée</li>
                                 <li>• Exemples pratiques testés</li>
                                 <li>• Exercice complété</li>
@@ -396,20 +396,20 @@ export default function ContentPreview({ module, capsule, isOpen, onClose }: Con
                 <div className="space-y-6">
                   <div className="text-center">
                     <div className="text-6xl mb-4">{module.icon}</div>
-                    <h2 className="text-2xl font-bold text-gray-900 mb-2">{module.title}</h2>
-                    <p className="text-gray-600">{module.description}</p>
+                    <h2 className="text-2xl font-bold text-foreground mb-2">{module.title}</h2>
+                    <p className="text-muted-foreground">{module.description}</p>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {module.capsules?.slice(0, 6).map((cap: any, index: number) => (
-                      <div key={cap.id} className="bg-white border rounded-lg p-4 hover:shadow-md transition-shadow">
+                      <div key={cap.id} className="bg-card border rounded-lg p-4 hover:shadow-md transition-shadow">
                         <div className="flex items-center justify-between mb-2">
                           <span className="text-sm text-blue-600 font-semibold">Capsule {index + 1}</span>
-                          <Clock className="w-4 h-4 text-gray-400" />
+                          <Clock className="w-4 h-4 text-muted-foreground" />
                         </div>
-                        <h4 className="font-semibold text-gray-900 mb-1">{cap.title}</h4>
-                        <p className="text-sm text-gray-600">{cap.duration_minutes} min</p>
-                        <div className="mt-2 bg-gray-200 rounded-full h-1">
+                        <h4 className="font-semibold text-foreground mb-1">{cap.title}</h4>
+                        <p className="text-sm text-muted-foreground">{cap.duration_minutes} min</p>
+                        <div className="mt-2 bg-muted rounded-full h-1">
                           <div className={`bg-green-500 h-1 rounded-full w-${Math.random() > 0.5 ? 'full' : '2/3'}`}></div>
                         </div>
                       </div>
@@ -420,22 +420,22 @@ export default function ContentPreview({ module, capsule, isOpen, onClose }: Con
             </div>
 
             {/* Footer avec actions */}
-            <div className="border-t p-4 bg-gray-50 rounded-b-lg">
+            <div className="border-t p-4 bg-muted rounded-b-lg">
               <div className="flex justify-between items-center">
                 <div className="flex gap-2">
-                  <button className="p-2 text-gray-500 hover:text-gray-700">
+                  <button className="p-2 text-muted-foreground hover:text-foreground">
                     <SkipBack className="w-5 h-5" />
                   </button>
-                  <button className="p-2 text-gray-500 hover:text-gray-700">
+                  <button className="p-2 text-muted-foreground hover:text-foreground">
                     <Play className="w-5 h-5" />
                   </button>
-                  <button className="p-2 text-gray-500 hover:text-gray-700">
+                  <button className="p-2 text-muted-foreground hover:text-foreground">
                     <SkipForward className="w-5 h-5" />
                   </button>
                 </div>
                 
                 <div className="flex gap-2">
-                  <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
+                  <button className="px-4 py-2 bg-muted text-foreground rounded-lg hover:bg-accent">
                     Marquer comme lu
                   </button>
                   <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center gap-2">

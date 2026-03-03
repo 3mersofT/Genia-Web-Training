@@ -16,7 +16,7 @@ export default function NotificationBell({ userId, onClick, className = '' }: No
   return (
     <button
       onClick={onClick}
-      className={`relative p-2 text-gray-600 hover:text-gray-800 transition-colors ${className}`}
+      className={`relative p-2 text-muted-foreground hover:text-foreground transition-colors ${className}`}
       aria-label={`Notifications${unreadCount > 0 ? ` (${unreadCount} non lues)` : ''}`}
       disabled={loading}
     >

@@ -52,7 +52,7 @@ export default function FeedbackButton({
   const getVariantClasses = () => {
     switch (variant) {
       case 'icon':
-        return 'p-2 rounded-full hover:bg-gray-100 transition-colors';
+        return 'p-2 rounded-full hover:bg-accent transition-colors';
       case 'inline':
         return 'text-blue-600 hover:text-blue-700 hover:underline transition-colors';
       default:

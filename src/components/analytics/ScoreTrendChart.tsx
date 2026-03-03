@@ -227,35 +227,35 @@ export default function ScoreTrendChart({ scoreTrend, loading = false }: ScoreTr
   // Loading skeleton
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+      <div className="bg-card rounded-xl shadow-sm border border-border p-6">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+            <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
               <BarChart3 className="w-6 h-6 text-indigo-600" />
               Score Trend Over Time
             </h2>
-            <p className="text-sm text-gray-600 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               Your exercise performance progression
             </p>
           </div>
         </div>
 
         {/* Loading Skeleton */}
-        <div className="h-80 mb-6 flex items-center justify-center bg-gray-50 rounded-lg">
+        <div className="h-80 mb-6 flex items-center justify-center bg-muted rounded-lg">
           <div className="text-center">
             <Loader2 className="w-12 h-12 text-indigo-600 animate-spin mx-auto mb-3" />
-            <p className="text-sm text-gray-600">Loading score data...</p>
+            <p className="text-sm text-muted-foreground">Loading score data...</p>
           </div>
         </div>
 
         {/* Loading Stats Skeleton */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-4 border-t border-gray-200">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-4 border-t border-border">
           {[1, 2, 3, 4].map((i) => (
             <div key={i} className="flex items-start gap-3 animate-pulse">
-              <div className="p-2 bg-gray-200 rounded-lg w-9 h-9" />
+              <div className="p-2 bg-muted rounded-lg w-9 h-9" />
               <div className="flex-1">
-                <div className="h-4 bg-gray-200 rounded w-20 mb-2" />
-                <div className="h-6 bg-gray-200 rounded w-12" />
+                <div className="h-4 bg-muted rounded w-20 mb-2" />
+                <div className="h-6 bg-muted rounded w-12" />
               </div>
             </div>
           ))}
@@ -265,14 +265,14 @@ export default function ScoreTrendChart({ scoreTrend, loading = false }: ScoreTr
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+    <div className="bg-card rounded-xl shadow-sm border border-border p-6">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+          <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
             <BarChart3 className="w-6 h-6 text-indigo-600" />
             Score Trend Over Time
           </h2>
-          <p className="text-sm text-gray-600 mt-1">
+          <p className="text-sm text-muted-foreground mt-1">
             Your exercise performance progression
           </p>
         </div>
@@ -285,15 +285,15 @@ export default function ScoreTrendChart({ scoreTrend, loading = false }: ScoreTr
 
       {/* Score Statistics */}
       {scoreTrend && scoreTrend.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-4 border-t border-gray-200">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-4 border-t border-border">
           {/* Average Score */}
           <div className="flex items-start gap-3">
-            <div className="p-2 bg-blue-100 rounded-lg">
+            <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
               <Target className="w-5 h-5 text-blue-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Average Score</p>
-              <p className="text-lg font-bold text-gray-900">
+              <p className="text-sm text-muted-foreground">Average Score</p>
+              <p className="text-lg font-bold text-foreground">
                 {scoreStats.averageScore.toFixed(1)}%
               </p>
             </div>
@@ -301,12 +301,12 @@ export default function ScoreTrendChart({ scoreTrend, loading = false }: ScoreTr
 
           {/* Highest Score */}
           <div className="flex items-start gap-3">
-            <div className="p-2 bg-green-100 rounded-lg">
-              <TrendingUp className="w-5 h-5 text-green-600" />
+            <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
+              <TrendingUp className="w-5 h-5 text-green-600 dark:text-green-400" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Highest Score</p>
-              <p className="text-lg font-bold text-gray-900">
+              <p className="text-sm text-muted-foreground">Highest Score</p>
+              <p className="text-lg font-bold text-foreground">
                 {scoreStats.highestScore}%
               </p>
             </div>
@@ -315,25 +315,25 @@ export default function ScoreTrendChart({ scoreTrend, loading = false }: ScoreTr
           {/* Performance Trend */}
           <div className="flex items-start gap-3">
             <div className={`p-2 rounded-lg ${
-              scoreStats.trend === 'improving' ? 'bg-green-100' :
+              scoreStats.trend === 'improving' ? 'bg-green-100 dark:bg-green-900/30' :
               scoreStats.trend === 'declining' ? 'bg-orange-100' :
-              'bg-gray-100'
+              'bg-muted'
             }`}>
               {scoreStats.trend === 'improving' ? (
-                <TrendingUp className="w-5 h-5 text-green-600" />
+                <TrendingUp className="w-5 h-5 text-green-600 dark:text-green-400" />
               ) : scoreStats.trend === 'declining' ? (
                 <TrendingDown className="w-5 h-5 text-orange-600" />
               ) : (
-                <BarChart3 className="w-5 h-5 text-gray-600" />
+                <BarChart3 className="w-5 h-5 text-muted-foreground" />
               )}
             </div>
             <div>
-              <p className="text-sm text-gray-600">Trend</p>
-              <p className="text-sm font-bold text-gray-900 capitalize">
+              <p className="text-sm text-muted-foreground">Trend</p>
+              <p className="text-sm font-bold text-foreground capitalize">
                 {scoreStats.trend}
               </p>
               {scoreStats.trend !== 'neutral' && (
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-muted-foreground">
                   {scoreStats.trend === 'improving' ? '+' : '-'}
                   {scoreStats.trendPercentage.toFixed(1)}%
                 </p>
@@ -343,12 +343,12 @@ export default function ScoreTrendChart({ scoreTrend, loading = false }: ScoreTr
 
           {/* Total Exercises */}
           <div className="flex items-start gap-3">
-            <div className="p-2 bg-purple-100 rounded-lg">
+            <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
               <BarChart3 className="w-5 h-5 text-purple-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Total Exercises</p>
-              <p className="text-lg font-bold text-gray-900">
+              <p className="text-sm text-muted-foreground">Total Exercises</p>
+              <p className="text-lg font-bold text-foreground">
                 {scoreStats.totalExercises}
               </p>
             </div>
@@ -359,9 +359,9 @@ export default function ScoreTrendChart({ scoreTrend, loading = false }: ScoreTr
       {/* Empty State */}
       {(!scoreTrend || scoreTrend.length === 0) && (
         <div className="text-center py-8">
-          <BarChart3 className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-          <p className="text-gray-600 font-medium">No score data available yet</p>
-          <p className="text-sm text-gray-500 mt-1">
+          <BarChart3 className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+          <p className="text-muted-foreground font-medium">No score data available yet</p>
+          <p className="text-sm text-muted-foreground mt-1">
             Complete exercises to see your performance trend
           </p>
         </div>

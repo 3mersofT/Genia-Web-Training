@@ -14,10 +14,10 @@ const HOUR_LABELS = ['0h', '', '', '3h', '', '', '6h', '', '', '9h', '', '', '12
 export default function ActivityHeatmap({ data, isLoading }: ActivityHeatmapProps) {
   if (isLoading) {
     return (
-      <div className="bg-white rounded-xl p-6 shadow-sm border">
+      <div className="bg-card rounded-xl p-6 shadow-sm border">
         <div className="animate-pulse space-y-4">
-          <div className="h-6 bg-gray-200 rounded w-44" />
-          <div className="h-40 bg-gray-100 rounded" />
+          <div className="h-6 bg-muted rounded w-44" />
+          <div className="h-40 bg-muted rounded" />
         </div>
       </div>
     );
@@ -26,7 +26,7 @@ export default function ActivityHeatmap({ data, isLoading }: ActivityHeatmapProp
   const maxCount = Math.max(...data.map(d => d.count), 1);
 
   const getColor = (count: number): string => {
-    if (count === 0) return 'bg-gray-100';
+    if (count === 0) return 'bg-muted';
     const intensity = count / maxCount;
     if (intensity > 0.75) return 'bg-green-600';
     if (intensity > 0.5) return 'bg-green-400';
@@ -35,14 +35,14 @@ export default function ActivityHeatmap({ data, isLoading }: ActivityHeatmapProp
   };
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm border">
+    <div className="bg-card rounded-xl p-6 shadow-sm border">
       <div className="flex items-center gap-2 mb-4">
-        <Activity className="w-5 h-5 text-green-500" />
-        <h3 className="text-lg font-semibold text-gray-900">Activité par créneau</h3>
+        <Activity className="w-5 h-5 text-green-500 dark:text-green-400" />
+        <h3 className="text-lg font-semibold text-foreground">Activité par créneau</h3>
       </div>
 
       {data.length === 0 ? (
-        <p className="text-gray-500 text-sm">Pas encore de données d'activité.</p>
+        <p className="text-muted-foreground text-sm">Pas encore de données d'activité.</p>
       ) : (
         <>
           <div className="overflow-x-auto">
@@ -50,7 +50,7 @@ export default function ActivityHeatmap({ data, isLoading }: ActivityHeatmapProp
               {/* Labels des heures */}
               <div className="flex mb-1 ml-10">
                 {HOUR_LABELS.map((label, i) => (
-                  <div key={i} className="flex-1 text-center text-xs text-gray-400">
+                  <div key={i} className="flex-1 text-center text-xs text-muted-foreground">
                     {label}
                   </div>
                 ))}
@@ -59,7 +59,7 @@ export default function ActivityHeatmap({ data, isLoading }: ActivityHeatmapProp
               {/* Grid */}
               {DAY_LABELS.map((dayLabel, day) => (
                 <div key={day} className="flex items-center gap-1 mb-1">
-                  <span className="w-8 text-xs text-gray-500 text-right">{dayLabel}</span>
+                  <span className="w-8 text-xs text-muted-foreground text-right">{dayLabel}</span>
                   <div className="flex-1 flex gap-0.5">
                     {Array.from({ length: 24 }, (_, hour) => {
                       const cell = data.find(d => d.day === day && d.hour === hour);
@@ -79,10 +79,10 @@ export default function ActivityHeatmap({ data, isLoading }: ActivityHeatmapProp
           </div>
 
           {/* Légende */}
-          <div className="flex items-center justify-end gap-2 mt-3 text-xs text-gray-500">
+          <div className="flex items-center justify-end gap-2 mt-3 text-xs text-muted-foreground">
             <span>Moins</span>
             <div className="flex gap-0.5">
-              <div className="w-3 h-3 rounded-sm bg-gray-100" />
+              <div className="w-3 h-3 rounded-sm bg-muted" />
               <div className="w-3 h-3 rounded-sm bg-green-200" />
               <div className="w-3 h-3 rounded-sm bg-green-300" />
               <div className="w-3 h-3 rounded-sm bg-green-400" />

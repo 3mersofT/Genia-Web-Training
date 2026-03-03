@@ -108,11 +108,11 @@ export default function FeedbackManagementPage() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'pending': return 'bg-yellow-100 text-yellow-800';
-      case 'approved': return 'bg-green-100 text-green-800';
-      case 'rejected': return 'bg-red-100 text-red-800';
-      case 'archived': return 'bg-gray-100 text-gray-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'pending': return 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800';
+      case 'approved': return 'bg-green-100 dark:bg-green-900/30 text-green-800';
+      case 'rejected': return 'bg-red-100 dark:bg-red-900/30 text-red-800';
+      case 'archived': return 'bg-muted text-foreground';
+      default: return 'bg-muted text-foreground';
     }
   };
 
@@ -134,7 +134,7 @@ export default function FeedbackManagementPage() {
             className={`w-4 h-4 ${
               star <= rating
                 ? 'text-yellow-400 fill-current'
-                : 'text-gray-300'
+                : 'text-muted-foreground'
             }`}
           />
         ))}
@@ -147,62 +147,62 @@ export default function FeedbackManagementPage() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-600">Chargement des feedbacks...</p>
+          <p className="text-muted-foreground">Chargement des feedbacks...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl font-bold text-foreground mb-2">
             Gestion des Feedbacks
           </h1>
-          <p className="text-gray-600">
+          <p className="text-muted-foreground">
             Gérez et modérez les retours des apprenants
           </p>
         </div>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-lg p-6 shadow-sm">
+          <div className="bg-card rounded-lg p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Total</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.total}</p>
+                <p className="text-sm font-medium text-muted-foreground">Total</p>
+                <p className="text-2xl font-bold text-foreground">{stats.total}</p>
               </div>
               <MessageSquare className="w-8 h-8 text-blue-600" />
             </div>
           </div>
 
-          <div className="bg-white rounded-lg p-6 shadow-sm">
+          <div className="bg-card rounded-lg p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">En attente</p>
+                <p className="text-sm font-medium text-muted-foreground">En attente</p>
                 <p className="text-2xl font-bold text-yellow-600">{stats.pending}</p>
               </div>
               <AlertCircle className="w-8 h-8 text-yellow-600" />
             </div>
           </div>
 
-          <div className="bg-white rounded-lg p-6 shadow-sm">
+          <div className="bg-card rounded-lg p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Approuvés</p>
-                <p className="text-2xl font-bold text-green-600">{stats.approved}</p>
+                <p className="text-sm font-medium text-muted-foreground">Approuvés</p>
+                <p className="text-2xl font-bold text-green-600 dark:text-green-400">{stats.approved}</p>
               </div>
-              <CheckCircle className="w-8 h-8 text-green-600" />
+              <CheckCircle className="w-8 h-8 text-green-600 dark:text-green-400" />
             </div>
           </div>
 
-          <div className="bg-white rounded-lg p-6 shadow-sm">
+          <div className="bg-card rounded-lg p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Note moyenne</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.average_rating.toFixed(1)}</p>
+                <p className="text-sm font-medium text-muted-foreground">Note moyenne</p>
+                <p className="text-2xl font-bold text-foreground">{stats.average_rating.toFixed(1)}</p>
               </div>
               <Star className="w-8 h-8 text-yellow-600" />
             </div>
@@ -210,32 +210,32 @@ export default function FeedbackManagementPage() {
         </div>
 
         {/* Filters */}
-        <div className="bg-white rounded-lg p-6 shadow-sm mb-6">
+        <div className="bg-card rounded-lg p-6 shadow-sm mb-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-foreground mb-2">
                 Recherche
               </label>
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <input
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Rechercher dans les feedbacks..."
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2 border border-input rounded-lg focus:ring-2 focus-visible:ring-ring focus:border-transparent"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-foreground mb-2">
                 Statut
               </label>
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-input rounded-lg focus:ring-2 focus-visible:ring-ring focus:border-transparent"
               >
                 <option value="all">Tous les statuts</option>
                 <option value="pending">En attente</option>
@@ -246,13 +246,13 @@ export default function FeedbackManagementPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-foreground mb-2">
                 Type
               </label>
               <select
                 value={typeFilter}
                 onChange={(e) => setTypeFilter(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-input rounded-lg focus:ring-2 focus-visible:ring-ring focus:border-transparent"
               >
                 <option value="all">Tous les types</option>
                 <option value="module">Modules</option>
@@ -264,28 +264,28 @@ export default function FeedbackManagementPage() {
         </div>
 
         {/* Feedbacks List */}
-        <div className="bg-white rounded-lg shadow-sm">
-          <div className="p-6 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">
+        <div className="bg-card rounded-lg shadow-sm">
+          <div className="p-6 border-b border-border">
+            <h2 className="text-lg font-semibold text-foreground">
               Feedbacks ({filteredFeedbacks.length})
             </h2>
           </div>
 
-          <div className="divide-y divide-gray-200">
+          <div className="divide-y divide-border">
             {filteredFeedbacks.map((feedback) => (
-              <div key={feedback.id} className="p-6 hover:bg-gray-50">
+              <div key={feedback.id} className="p-6 hover:bg-accent">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
                       <span className="text-2xl">{getTypeIcon(feedback.feedback_type)}</span>
                       <div>
-                        <h3 className="font-medium text-gray-900">
+                        <h3 className="font-medium text-foreground">
                           {feedback.feedback_type === 'platform' 
                             ? 'Plateforme GENIA' 
                             : `Target: ${feedback.target_id}`
                           }
                         </h3>
-                        <div className="flex items-center gap-2 text-sm text-gray-500">
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
                           <Calendar className="w-4 h-4" />
                           <span>{new Date(feedback.created_at).toLocaleDateString('fr-FR')}</span>
                           {!feedback.is_anonymous && feedback.user_name && (
@@ -301,7 +301,7 @@ export default function FeedbackManagementPage() {
 
                     <div className="flex items-center gap-4 mb-3">
                       {renderStars(feedback.rating)}
-                      <span className="text-sm font-medium text-gray-700">
+                      <span className="text-sm font-medium text-foreground">
                         {feedback.rating}/5
                       </span>
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(feedback.status)}`}>
@@ -310,17 +310,17 @@ export default function FeedbackManagementPage() {
                     </div>
 
                     {feedback.comment && (
-                      <p className="text-gray-700 mb-3">{feedback.comment}</p>
+                      <p className="text-foreground mb-3">{feedback.comment}</p>
                     )}
 
                     {feedback.categories.length > 0 && (
                       <div className="flex items-center gap-2 mb-3">
-                        <Tag className="w-4 h-4 text-gray-400" />
+                        <Tag className="w-4 h-4 text-muted-foreground" />
                         <div className="flex gap-1">
                           {feedback.categories.map((category) => (
                             <span
                               key={category}
-                              className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full"
+                              className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 text-xs rounded-full"
                             >
                               {category}
                             </span>
@@ -335,14 +335,14 @@ export default function FeedbackManagementPage() {
                       <>
                         <button
                           onClick={() => updateFeedbackStatus(feedback.id, 'approved')}
-                          className="p-2 text-green-600 hover:bg-green-100 rounded-lg transition-colors"
+                          className="p-2 text-green-600 dark:text-green-400 hover:bg-green-100 dark:bg-green-900/30 rounded-lg transition-colors"
                           title="Approuver"
                         >
                           <CheckCircle className="w-5 h-5" />
                         </button>
                         <button
                           onClick={() => updateFeedbackStatus(feedback.id, 'rejected')}
-                          className="p-2 text-red-600 hover:bg-red-100 rounded-lg transition-colors"
+                          className="p-2 text-red-600 dark:text-red-400 hover:bg-red-100 dark:bg-red-900/30 rounded-lg transition-colors"
                           title="Rejeter"
                         >
                           <XCircle className="w-5 h-5" />
@@ -352,7 +352,7 @@ export default function FeedbackManagementPage() {
                     
                     <button
                       onClick={() => setSelectedFeedback(feedback)}
-                      className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                      className="p-2 text-muted-foreground hover:bg-accent rounded-lg transition-colors"
                       title="Voir détails"
                     >
                       <Eye className="w-5 h-5" />
@@ -365,11 +365,11 @@ export default function FeedbackManagementPage() {
 
           {filteredFeedbacks.length === 0 && (
             <div className="p-12 text-center">
-              <MessageSquare className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
+              <MessageSquare className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-foreground mb-2">
                 Aucun feedback trouvé
               </h3>
-              <p className="text-gray-500">
+              <p className="text-muted-foreground">
                 Aucun feedback ne correspond à vos critères de recherche.
               </p>
             </div>

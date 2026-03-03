@@ -30,7 +30,7 @@ export default function ReviewDashboard({
           {dueCount > 0 && (
             <button
               onClick={onStartReview}
-              className="px-6 py-3 bg-white text-blue-600 font-bold rounded-lg hover:bg-blue-50 transition-colors"
+              className="px-6 py-3 bg-card text-blue-600 font-bold rounded-lg hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-colors"
             >
               Commencer
             </button>
@@ -40,38 +40,38 @@ export default function ReviewDashboard({
 
       {/* Statistiques */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-xl p-4 shadow-sm border">
+        <div className="bg-card rounded-xl p-4 shadow-sm border">
           <div className="flex items-center gap-2 mb-2">
             <Brain className="w-5 h-5 text-purple-500" />
-            <span className="text-sm text-gray-600">Cartes totales</span>
+            <span className="text-sm text-muted-foreground">Cartes totales</span>
           </div>
-          <p className="text-2xl font-bold text-gray-900">{stats.totalCards}</p>
+          <p className="text-2xl font-bold text-foreground">{stats.totalCards}</p>
         </div>
 
-        <div className="bg-white rounded-xl p-4 shadow-sm border">
+        <div className="bg-card rounded-xl p-4 shadow-sm border">
           <div className="flex items-center gap-2 mb-2">
-            <BarChart3 className="w-5 h-5 text-blue-500" />
-            <span className="text-sm text-gray-600">Révisions</span>
+            <BarChart3 className="w-5 h-5 text-blue-500 dark:text-blue-400" />
+            <span className="text-sm text-muted-foreground">Révisions</span>
           </div>
-          <p className="text-2xl font-bold text-gray-900">{stats.totalReviews}</p>
+          <p className="text-2xl font-bold text-foreground">{stats.totalReviews}</p>
         </div>
 
-        <div className="bg-white rounded-xl p-4 shadow-sm border">
+        <div className="bg-card rounded-xl p-4 shadow-sm border">
           <div className="flex items-center gap-2 mb-2">
-            <Target className="w-5 h-5 text-green-500" />
-            <span className="text-sm text-gray-600">Rétention</span>
+            <Target className="w-5 h-5 text-green-500 dark:text-green-400" />
+            <span className="text-sm text-muted-foreground">Rétention</span>
           </div>
-          <p className="text-2xl font-bold text-gray-900">
+          <p className="text-2xl font-bold text-foreground">
             {stats.retentionRate > 0 ? `${stats.retentionRate}%` : '-'}
           </p>
         </div>
 
-        <div className="bg-white rounded-xl p-4 shadow-sm border">
+        <div className="bg-card rounded-xl p-4 shadow-sm border">
           <div className="flex items-center gap-2 mb-2">
             <TrendingUp className="w-5 h-5 text-orange-500" />
-            <span className="text-sm text-gray-600">Facilité moy.</span>
+            <span className="text-sm text-muted-foreground">Facilité moy.</span>
           </div>
-          <p className="text-2xl font-bold text-gray-900">
+          <p className="text-2xl font-bold text-foreground">
             {stats.averageEasiness.toFixed(1)}
           </p>
         </div>
@@ -79,7 +79,7 @@ export default function ReviewDashboard({
 
       {/* Info SM-2 */}
       {stats.totalCards === 0 && (
-        <div className="bg-blue-50 rounded-xl p-6 border border-blue-200">
+        <div className="bg-blue-50 dark:bg-blue-950/30 rounded-xl p-6 border border-blue-200">
           <h3 className="font-semibold text-blue-900 mb-2">Comment ça marche ?</h3>
           <ul className="text-sm text-blue-800 space-y-2">
             <li>1. Complétez des capsules pour les ajouter à vos révisions</li>

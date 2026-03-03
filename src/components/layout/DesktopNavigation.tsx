@@ -50,11 +50,11 @@ export default function DesktopNavigation() {
   }
 
   return (
-    <nav className="bg-white border-b border-gray-200 px-6 py-4">
+    <nav className="bg-card border-b border-border px-6 py-4">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center">
-          <h1 className="text-xl font-bold text-gray-900">GENIA Web Training</h1>
+          <h1 className="text-xl font-bold text-foreground">GENIA Web Training</h1>
         </div>
 
         {/* Navigation principale */}
@@ -69,8 +69,8 @@ export default function DesktopNavigation() {
                 onClick={() => router.push(item.href)}
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors relative ${
                   isActive
-                    ? 'text-blue-600 bg-blue-50'
-                    : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'
+                    ? 'text-primary bg-primary/10'
+                    : 'text-foreground hover:text-foreground hover:bg-accent'
                 }`}
               >
                 <Icon className="w-4 h-4" />
@@ -90,7 +90,7 @@ export default function DesktopNavigation() {
           {/* Quick Profile button */}
           <button
             onClick={() => router.push('/profile')}
-            className="hidden md:inline-flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg"
+            className="hidden md:inline-flex items-center gap-2 px-3 py-2 text-sm text-foreground hover:text-foreground hover:bg-accent rounded-lg"
             title="Mon profil"
           >
             <User className="w-4 h-4" />
@@ -100,17 +100,17 @@ export default function DesktopNavigation() {
           <div className="relative">
             <button
               onClick={() => setShowThemeMenu(!showThemeMenu)}
-              className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-50"
+              className="p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-accent"
             >
               {resolvedTheme === 'dark' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
             </button>
 
             {showThemeMenu && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+              <div className="absolute right-0 mt-2 w-48 bg-popover text-popover-foreground rounded-lg shadow-lg border py-2 z-50">
                 <button
                   onClick={() => { setTheme('light'); setShowThemeMenu(false); }}
-                  className={`w-full text-left px-4 py-2 text-sm flex items-center gap-3 hover:bg-gray-50 ${
-                    theme === 'light' ? 'text-blue-600 bg-blue-50' : 'text-gray-700'
+                  className={`w-full text-left px-4 py-2 text-sm flex items-center gap-3 hover:bg-accent ${
+                    theme === 'light' ? 'text-primary bg-primary/10' : 'text-foreground'
                   }`}
                 >
                   <Sun className="w-4 h-4" />
@@ -118,8 +118,8 @@ export default function DesktopNavigation() {
                 </button>
                 <button
                   onClick={() => { setTheme('dark'); setShowThemeMenu(false); }}
-                  className={`w-full text-left px-4 py-2 text-sm flex items-center gap-3 hover:bg-gray-50 ${
-                    theme === 'dark' ? 'text-blue-600 bg-blue-50' : 'text-gray-700'
+                  className={`w-full text-left px-4 py-2 text-sm flex items-center gap-3 hover:bg-accent ${
+                    theme === 'dark' ? 'text-primary bg-primary/10' : 'text-foreground'
                   }`}
                 >
                   <Moon className="w-4 h-4" />
@@ -127,8 +127,8 @@ export default function DesktopNavigation() {
                 </button>
                 <button
                   onClick={() => { setTheme('system'); setShowThemeMenu(false); }}
-                  className={`w-full text-left px-4 py-2 text-sm flex items-center gap-3 hover:bg-gray-50 ${
-                    theme === 'system' ? 'text-blue-600 bg-blue-50' : 'text-gray-700'
+                  className={`w-full text-left px-4 py-2 text-sm flex items-center gap-3 hover:bg-accent ${
+                    theme === 'system' ? 'text-primary bg-primary/10' : 'text-foreground'
                   }`}
                 >
                   <Monitor className="w-4 h-4" />
@@ -145,29 +145,29 @@ export default function DesktopNavigation() {
           <div className="relative">
             <button
               onClick={() => setShowUserMenu(!showUserMenu)}
-              className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50"
+              className="flex items-center gap-3 p-2 rounded-lg hover:bg-accent"
             >
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-sm font-semibold">
                 {user?.email?.charAt(0)?.toUpperCase() || 'U'}
               </div>
               <div className="hidden md:block text-left">
-                <p className="text-sm font-medium text-gray-900">
+                <p className="text-sm font-medium text-foreground">
                   {user?.user_metadata?.full_name || 'Utilisateur'}
                 </p>
-                <p className="text-xs text-gray-500">{user?.email}</p>
+                <p className="text-xs text-muted-foreground">{user?.email}</p>
               </div>
-              <ChevronDown className="w-4 h-4 text-gray-400" />
+              <ChevronDown className="w-4 h-4 text-muted-foreground" />
             </button>
 
             {/* Dropdown menu */}
             {showUserMenu && (
-              <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+              <div className="absolute right-0 mt-2 w-56 bg-popover text-popover-foreground rounded-lg shadow-lg border py-2 z-50">
                 <button
                   onClick={() => {
                     router.push('/profile');
                     setShowUserMenu(false);
                   }}
-                  className="flex items-center gap-3 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                  className="flex items-center gap-3 w-full px-4 py-2 text-sm text-foreground hover:bg-accent"
                 >
                   <User className="w-4 h-4" />
                   Mon Profil
@@ -177,15 +177,15 @@ export default function DesktopNavigation() {
                     router.push('/profile?tab=preferences');
                     setShowUserMenu(false);
                   }}
-                  className="flex items-center gap-3 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                  className="flex items-center gap-3 w-full px-4 py-2 text-sm text-foreground hover:bg-accent"
                 >
                   <Settings className="w-4 h-4" />
                   Préférences
                 </button>
-                <div className="border-t border-gray-200 my-1"></div>
+                <div className="border-t border-border my-1"></div>
                 <button
                   onClick={handleSignOut}
-                  className="flex items-center gap-3 w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                  className="flex items-center gap-3 w-full px-4 py-2 text-sm text-destructive hover:bg-destructive/10"
                 >
                   <LogOut className="w-4 h-4" />
                   Se déconnecter

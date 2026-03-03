@@ -160,7 +160,7 @@ export default function DailyChallengeCard({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-2xl shadow-lg overflow-hidden"
+      className="bg-card rounded-2xl shadow-lg overflow-hidden"
     >
       {/* Header avec gradient */}
       <div className={`bg-gradient-to-r ${getDifficultyColor()} p-6 text-white`}>
@@ -184,7 +184,7 @@ export default function DailyChallengeCard({
 
           <div className="flex flex-col items-end gap-2">
             {/* Timer */}
-            <div className="bg-white/20 backdrop-blur rounded-full px-3 py-1 flex items-center gap-1">
+            <div className="bg-card/20 backdrop-blur rounded-full px-3 py-1 flex items-center gap-1">
               <Clock className="w-4 h-4" />
               <span className="text-sm font-medium">{timeRemaining}</span>
             </div>
@@ -196,7 +196,7 @@ export default function DailyChallengeCard({
                 <span className="text-sm font-medium">Complété</span>
               </div>
             ) : (
-              <div className="bg-white/20 backdrop-blur rounded-full px-3 py-1">
+              <div className="bg-card/20 backdrop-blur rounded-full px-3 py-1">
                 <span className="text-sm font-medium">En cours</span>
               </div>
             )}
@@ -206,7 +206,7 @@ export default function DailyChallengeCard({
         {/* Bouton d'expansion */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="mt-4 w-full flex items-center justify-center gap-2 bg-white/20 backdrop-blur rounded-lg py-2 hover:bg-white/30 transition-colors"
+          className="mt-4 w-full flex items-center justify-center gap-2 bg-card/20 backdrop-blur rounded-lg py-2 hover:bg-card/30 transition-colors"
         >
           <span className="font-medium">
             {isExpanded ? 'Masquer' : 'Participer'}
@@ -218,14 +218,14 @@ export default function DailyChallengeCard({
       </div>
 
       {/* Mini leaderboard toujours visible */}
-      <div className="p-4 bg-gray-50 border-b">
+      <div className="p-4 bg-muted border-b">
         <div className="flex items-center justify-between mb-2">
-          <h4 className="text-sm font-semibold text-gray-700 flex items-center gap-1">
+          <h4 className="text-sm font-semibold text-foreground flex items-center gap-1">
             <Trophy className="w-4 h-4 text-yellow-500" />
             Top participants
           </h4>
           {userRank && (
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-muted-foreground">
               Votre rang : #{userRank}
             </span>
           )}
@@ -235,26 +235,26 @@ export default function DailyChallengeCard({
           {leaderboard.slice(0, 3).map((entry, index) => (
             <div
               key={entry.user_id}
-              className="flex items-center gap-2 bg-white rounded-lg px-2 py-1"
+              className="flex items-center gap-2 bg-card rounded-lg px-2 py-1"
             >
               <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                index === 0 ? 'bg-yellow-100 text-yellow-600' :
-                index === 1 ? 'bg-gray-100 text-gray-600' :
+                index === 0 ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600' :
+                index === 1 ? 'bg-muted text-muted-foreground' :
                 'bg-orange-100 text-orange-600'
               }`}>
                 {index + 1}
               </div>
-              <span className="text-sm text-gray-700">
+              <span className="text-sm text-foreground">
                 {entry.user_profiles?.full_name || 'Anonyme'}
               </span>
-              <span className="text-xs text-gray-500">
+              <span className="text-xs text-muted-foreground">
                 {entry.score}pts
               </span>
             </div>
           ))}
           
           {leaderboard.length === 0 && (
-            <span className="text-sm text-gray-500 italic">
+            <span className="text-sm text-muted-foreground italic">
               Soyez le premier à participer !
             </span>
           )}
@@ -275,10 +275,10 @@ export default function DailyChallengeCard({
               {/* Instructions détaillées */}
               {challenge.base_prompt && (
                 <div className="mb-6">
-                  <h4 className="text-sm font-semibold text-gray-700 mb-2">
+                  <h4 className="text-sm font-semibold text-foreground mb-2">
                     📋 Instructions
                   </h4>
-                  <div className="bg-gray-50 rounded-lg p-4 font-mono text-sm">
+                  <div className="bg-muted rounded-lg p-4 font-mono text-sm">
                     {challenge.base_prompt}
                   </div>
                 </div>
@@ -287,13 +287,13 @@ export default function DailyChallengeCard({
               {/* Critères de succès */}
               {challenge.success_criteria && (
                 <div className="mb-6">
-                  <h4 className="text-sm font-semibold text-gray-700 mb-2">
+                  <h4 className="text-sm font-semibold text-foreground mb-2">
                     ✅ Critères de réussite
                   </h4>
                   <ul className="space-y-1">
                     {Object.entries(challenge.success_criteria as Record<string, any>).map(([key, value]) => (
-                      <li key={key} className="flex items-start gap-2 text-sm text-gray-600">
-                        <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                      <li key={key} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <CheckCircle className="w-4 h-4 text-green-500 dark:text-green-400 mt-0.5 flex-shrink-0" />
                         <span>{value}</span>
                       </li>
                     ))}
@@ -304,19 +304,19 @@ export default function DailyChallengeCard({
               {/* Zone de soumission */}
               {!isCompleted ? (
                 <div>
-                  <h4 className="text-sm font-semibold text-gray-700 mb-2">
+                  <h4 className="text-sm font-semibold text-foreground mb-2">
                     💡 Votre réponse
                   </h4>
                   <textarea
                     value={submission}
                     onChange={(e) => setSubmission(e.target.value)}
                     placeholder="Écrivez votre prompt transformé ici..."
-                    className="w-full h-32 p-4 border border-gray-200 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full h-32 p-4 border border-border rounded-lg resize-none focus:ring-2 focus-visible:ring-ring focus:border-transparent"
                     disabled={isSubmitting}
                   />
                   
                   <div className="mt-4 flex items-center justify-between">
-                    <div className="flex items-center gap-4 text-sm text-gray-500">
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
                       <span className="flex items-center gap-1">
                         <Timer className="w-4 h-4" />
                         {Math.floor((Date.now() - startTime) / 60000)} min
@@ -348,16 +348,16 @@ export default function DailyChallengeCard({
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Trophy className="w-8 h-8 text-green-600" />
+                  <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Trophy className="w-8 h-8 text-green-600 dark:text-green-400" />
                   </div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">
+                  <h4 className="text-lg font-semibold text-foreground mb-2">
                     Défi complété !
                   </h4>
-                  <p className="text-gray-600 mb-1">
+                  <p className="text-muted-foreground mb-1">
                     Score : {participation?.score || 0} points
                   </p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-muted-foreground">
                     Temps : {participation?.time_spent ? Math.floor(participation.time_spent / 60) : 0} minutes
                   </p>
                 </div>

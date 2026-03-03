@@ -18,11 +18,11 @@ export default function ChallengePage() {
 
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50">
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 dark:from-purple-950/30 via-background to-pink-50 dark:to-pink-950/30">
         <div className="container mx-auto px-4 py-8">
           <div className="text-center">
             <div className="w-8 h-8 border-4 border-purple-600 border-t-transparent rounded-full mx-auto mb-4 animate-spin"></div>
-            <p className="text-gray-600">Chargement...</p>
+            <p className="text-muted-foreground">Chargement...</p>
           </div>
         </div>
       </div>
@@ -30,21 +30,21 @@ export default function ChallengePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 dark:from-purple-950/30 via-background to-pink-50 dark:to-pink-950/30">
       {/* Header */}
-      <div className="bg-white border-b">
+      <div className="bg-card border-b">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Link 
                 href="/dashboard" 
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                className="p-2 hover:bg-accent rounded-lg transition-colors"
               >
                 <ChevronLeft className="w-5 h-5" />
               </Link>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Défis Quotidiens</h1>
-                <p className="text-gray-600">Relevez le défi du jour et grimpez dans le classement !</p>
+                <h1 className="text-2xl font-bold text-foreground">Défis Quotidiens</h1>
+                <p className="text-muted-foreground">Relevez le défi du jour et grimpez dans le classement !</p>
               </div>
             </div>
             <div className="hidden md:flex items-center gap-6">
@@ -53,21 +53,21 @@ export default function ChallengePage() {
                   <Flame className="w-5 h-5" />
                   <span className="text-2xl font-bold">0</span>
                 </div>
-                <p className="text-xs text-gray-500">Série actuelle</p>
+                <p className="text-xs text-muted-foreground">Série actuelle</p>
               </div>
               <div className="text-center">
                 <div className="flex items-center gap-1 text-blue-500">
                   <Trophy className="w-5 h-5" />
                   <span className="text-2xl font-bold">0</span>
                 </div>
-                <p className="text-xs text-gray-500">Victoires</p>
+                <p className="text-xs text-muted-foreground">Victoires</p>
               </div>
               <div className="text-center">
-                <div className="flex items-center gap-1 text-green-500">
+                <div className="flex items-center gap-1 text-green-500 dark:text-green-400">
                   <Star className="w-5 h-5" />
                   <span className="text-2xl font-bold">0</span>
                 </div>
-                <p className="text-xs text-gray-500">Score moyen</p>
+                <p className="text-xs text-muted-foreground">Score moyen</p>
               </div>
             </div>
           </div>
@@ -75,14 +75,14 @@ export default function ChallengePage() {
       </div>
 
       {/* Navigation */}
-      <div className="bg-white border-b sticky top-0 z-10">
+      <div className="bg-card border-b sticky top-0 z-10">
         <div className="container mx-auto px-4">
           <div className="flex gap-1">
             <button 
               className={`px-6 py-3 font-medium transition-all relative ${
                 activeTab === 'today' 
                   ? 'text-purple-600' 
-                  : 'text-gray-600 hover:text-gray-900'
+                  : 'text-muted-foreground hover:text-accent-foreground'
               }`}
               onClick={() => setActiveTab('today')}
             >
@@ -95,7 +95,7 @@ export default function ChallengePage() {
               className={`px-6 py-3 font-medium transition-all relative ${
                 activeTab === 'leaderboard' 
                   ? 'text-purple-600' 
-                  : 'text-gray-600 hover:text-gray-900'
+                  : 'text-muted-foreground hover:text-accent-foreground'
               }`}
               onClick={() => setActiveTab('leaderboard')}
             >
@@ -108,7 +108,7 @@ export default function ChallengePage() {
               className={`px-6 py-3 font-medium transition-all relative ${
                 activeTab === 'history' 
                   ? 'text-purple-600' 
-                  : 'text-gray-600 hover:text-gray-900'
+                  : 'text-muted-foreground hover:text-accent-foreground'
               }`}
               onClick={() => setActiveTab('history')}
             >
@@ -137,23 +137,23 @@ export default function ChallengePage() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
-                className="bg-white rounded-xl shadow-lg p-8"
+                className="bg-card rounded-xl shadow-lg p-8"
               >
                 <div className="text-center mb-6">
                   <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
                     <Trophy className="w-8 h-8 text-white" />
                   </div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                  <h2 className="text-2xl font-bold text-foreground mb-2">
                     Transforme ce prompt vague en version RCTF
                   </h2>
-                  <p className="text-gray-600">
+                  <p className="text-muted-foreground">
                     Améliore ce prompt pour e-commerce : "Écris-moi un article"
                   </p>
                 </div>
 
-                <div className="bg-gray-50 rounded-lg p-6 mb-6">
-                  <h3 className="font-semibold text-gray-900 mb-3">Instructions :</h3>
-                  <ul className="space-y-2 text-gray-700">
+                <div className="bg-muted rounded-lg p-6 mb-6">
+                  <h3 className="font-semibold text-foreground mb-3">Instructions :</h3>
+                  <ul className="space-y-2 text-foreground">
                     <li className="flex items-start gap-2">
                       <Target className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
                       <span>Utilisez la méthode RCTF (Rôle, Contexte, Tâche, Format)</span>
@@ -171,11 +171,11 @@ export default function ChallengePage() {
 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-foreground mb-2">
                       Votre réponse :
                     </label>
                     <textarea
-                      className="w-full h-32 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      className="w-full h-32 px-3 py-2 border border-input rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                       placeholder="Écrivez votre prompt amélioré ici..."
                     />
                   </div>
@@ -185,7 +185,7 @@ export default function ChallengePage() {
                       <Send className="w-4 h-4 inline mr-2" />
                       Soumettre ma réponse
                     </button>
-                    <button className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                    <button className="px-6 py-3 border border-input text-foreground rounded-lg hover:bg-accent transition-colors">
                       <RefreshCw className="w-4 h-4 inline mr-2" />
                       Nouveau défi
                     </button>
@@ -204,14 +204,14 @@ export default function ChallengePage() {
               transition={{ duration: 0.3 }}
               className="max-w-4xl mx-auto"
             >
-              <div className="bg-white rounded-xl shadow-lg p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Classement</h2>
+              <div className="bg-card rounded-xl shadow-lg p-8">
+                <h2 className="text-2xl font-bold text-foreground mb-6">Classement</h2>
                 <div className="text-center py-12">
-                  <Trophy className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  <Trophy className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold text-foreground mb-2">
                     Aucun classement disponible
                   </h3>
-                  <p className="text-gray-600">
+                  <p className="text-muted-foreground">
                     Participez aux défis pour apparaître dans le classement !
                   </p>
                 </div>
@@ -228,14 +228,14 @@ export default function ChallengePage() {
               transition={{ duration: 0.3 }}
               className="max-w-4xl mx-auto"
             >
-              <div className="bg-white rounded-xl shadow-lg p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Historique</h2>
+              <div className="bg-card rounded-xl shadow-lg p-8">
+                <h2 className="text-2xl font-bold text-foreground mb-6">Historique</h2>
                 <div className="text-center py-12">
-                  <Calendar className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  <Calendar className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold text-foreground mb-2">
                     Aucun historique disponible
                   </h3>
-                  <p className="text-gray-600">
+                  <p className="text-muted-foreground">
                     Vos participations aux défis apparaîtront ici.
                   </p>
                 </div>

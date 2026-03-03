@@ -29,11 +29,11 @@ export default function LeaderboardsPage() {
 
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50">
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 dark:from-purple-950/30 via-background to-pink-50 dark:to-pink-950/30">
         <div className="container mx-auto px-4 py-8">
           <div className="text-center">
             <div className="w-8 h-8 border-4 border-purple-600 border-t-transparent rounded-full mx-auto mb-4 animate-spin"></div>
-            <p className="text-gray-600">Chargement...</p>
+            <p className="text-muted-foreground">Chargement...</p>
           </div>
         </div>
       </div>
@@ -41,21 +41,21 @@ export default function LeaderboardsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 dark:from-purple-950/30 via-background to-pink-50 dark:to-pink-950/30">
       {/* Header */}
-      <div className="bg-white border-b">
+      <div className="bg-card border-b">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Link
                 href="/dashboard"
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                className="p-2 hover:bg-accent rounded-lg transition-colors"
               >
                 <ChevronLeft className="w-5 h-5" />
               </Link>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Classements Saisonniers</h1>
-                <p className="text-gray-600">Comparez vos performances avec les meilleurs joueurs !</p>
+                <h1 className="text-2xl font-bold text-foreground">Classements Saisonniers</h1>
+                <p className="text-muted-foreground">Comparez vos performances avec les meilleurs joueurs !</p>
               </div>
             </div>
             {currentSeason && (
@@ -65,14 +65,14 @@ export default function LeaderboardsPage() {
                     <Trophy className="w-5 h-5" />
                     <span className="text-2xl font-bold">{currentSeason.total_participants}</span>
                   </div>
-                  <p className="text-xs text-gray-500">Participants</p>
+                  <p className="text-xs text-muted-foreground">Participants</p>
                 </div>
                 <div className="text-center">
                   <div className="flex items-center gap-1 text-blue-500">
                     <Calendar className="w-5 h-5" />
                     <span className="text-2xl font-bold">{currentSeason.season_name}</span>
                   </div>
-                  <p className="text-xs text-gray-500">Saison actuelle</p>
+                  <p className="text-xs text-muted-foreground">Saison actuelle</p>
                 </div>
               </div>
             )}
@@ -81,14 +81,14 @@ export default function LeaderboardsPage() {
       </div>
 
       {/* Navigation */}
-      <div className="bg-white border-b sticky top-0 z-10">
+      <div className="bg-card border-b sticky top-0 z-10">
         <div className="container mx-auto px-4">
           <div className="flex gap-1">
             <button
               className={`px-6 py-3 font-medium transition-all relative ${
                 activeTab === 'individual'
                   ? 'text-purple-600'
-                  : 'text-gray-600 hover:text-gray-900'
+                  : 'text-muted-foreground hover:text-accent-foreground'
               }`}
               onClick={() => setActiveTab('individual')}
             >
@@ -101,7 +101,7 @@ export default function LeaderboardsPage() {
               className={`px-6 py-3 font-medium transition-all relative ${
                 activeTab === 'team'
                   ? 'text-purple-600'
-                  : 'text-gray-600 hover:text-gray-900'
+                  : 'text-muted-foreground hover:text-accent-foreground'
               }`}
               onClick={() => setActiveTab('team')}
             >
@@ -124,10 +124,10 @@ export default function LeaderboardsPage() {
             transition={{ duration: 0.3 }}
           >
             {!currentSeason && leaderboard.length === 0 ? (
-              <div className="bg-white rounded-xl shadow-lg p-8 text-center">
-                <Trophy className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Classement Individuel</h3>
-                <p className="text-gray-600">
+              <div className="bg-card rounded-xl shadow-lg p-8 text-center">
+                <Trophy className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-foreground mb-2">Classement Individuel</h3>
+                <p className="text-muted-foreground">
                   Le classement sera disponible quand des étudiants auront complété des capsules.
                 </p>
               </div>
@@ -149,11 +149,11 @@ export default function LeaderboardsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="bg-white rounded-xl shadow-lg p-8 text-center"
+            className="bg-card rounded-xl shadow-lg p-8 text-center"
           >
-            <Users className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Classement Équipes</h3>
-            <p className="text-gray-600">Le classement des équipes sera bientôt disponible.</p>
+            <Users className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+            <h3 className="text-xl font-bold text-foreground mb-2">Classement Équipes</h3>
+            <p className="text-muted-foreground">Le classement des équipes sera bientôt disponible.</p>
           </motion.div>
         )}
       </div>

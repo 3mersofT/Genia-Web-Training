@@ -14,8 +14,8 @@ export default function ProgressOverview({ stats }: ProgressOverviewProps) {
     : 'N/A'
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm">
-      <h3 className="text-xl font-bold text-gray-800 mb-6">Vue d'ensemble de la progression</h3>
+    <div className="bg-card rounded-xl p-6 shadow-sm">
+      <h3 className="text-xl font-bold text-foreground mb-6">Vue d'ensemble de la progression</h3>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -27,8 +27,8 @@ export default function ProgressOverview({ stats }: ProgressOverviewProps) {
               {stats.overall_completion_percentage}%
             </span>
           </div>
-          <p className="text-gray-700 font-medium">Progression globale</p>
-          <p className="text-sm text-gray-600 mt-1">
+          <p className="text-foreground font-medium">Progression globale</p>
+          <p className="text-sm text-muted-foreground mt-1">
             {stats.completed_capsules} / {stats.total_capsules} capsules
           </p>
         </div>
@@ -36,13 +36,13 @@ export default function ProgressOverview({ stats }: ProgressOverviewProps) {
         {/* Modules Progress */}
         <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 border border-green-200">
           <div className="flex items-center justify-between mb-2">
-            <BookOpen className="w-8 h-8 text-green-600" />
-            <span className="text-3xl font-bold text-green-700">
+            <BookOpen className="w-8 h-8 text-green-600 dark:text-green-400" />
+            <span className="text-3xl font-bold text-green-700 dark:text-green-300">
               {stats.completed_modules}/{stats.total_modules}
             </span>
           </div>
-          <p className="text-gray-700 font-medium">Modules terminés</p>
-          <p className="text-sm text-gray-600 mt-1">
+          <p className="text-foreground font-medium">Modules terminés</p>
+          <p className="text-sm text-muted-foreground mt-1">
             {stats.in_progress_modules} en cours
           </p>
         </div>
@@ -55,8 +55,8 @@ export default function ProgressOverview({ stats }: ProgressOverviewProps) {
               {avgScore}
             </span>
           </div>
-          <p className="text-gray-700 font-medium">Score moyen</p>
-          <p className="text-sm text-gray-600 mt-1">
+          <p className="text-foreground font-medium">Score moyen</p>
+          <p className="text-sm text-muted-foreground mt-1">
             Sur tous les exercices
           </p>
         </div>
@@ -69,8 +69,8 @@ export default function ProgressOverview({ stats }: ProgressOverviewProps) {
               {stats.total_exercises_completed}
             </span>
           </div>
-          <p className="text-gray-700 font-medium">Exercices réussis</p>
-          <p className="text-sm text-gray-600 mt-1">
+          <p className="text-foreground font-medium">Exercices réussis</p>
+          <p className="text-sm text-muted-foreground mt-1">
             {stats.total_exercises_attempted} tentés
           </p>
         </div>
@@ -83,8 +83,8 @@ export default function ProgressOverview({ stats }: ProgressOverviewProps) {
               {stats.in_progress_capsules}
             </span>
           </div>
-          <p className="text-gray-700 font-medium">Capsules en cours</p>
-          <p className="text-sm text-gray-600 mt-1">
+          <p className="text-foreground font-medium">Capsules en cours</p>
+          <p className="text-sm text-muted-foreground mt-1">
             À compléter
           </p>
         </div>
@@ -99,8 +99,8 @@ export default function ProgressOverview({ stats }: ProgressOverviewProps) {
                 : 0}%
             </span>
           </div>
-          <p className="text-gray-700 font-medium">Taux de réussite</p>
-          <p className="text-sm text-gray-600 mt-1">
+          <p className="text-foreground font-medium">Taux de réussite</p>
+          <p className="text-sm text-muted-foreground mt-1">
             Exercices réussis
           </p>
         </div>
@@ -109,12 +109,12 @@ export default function ProgressOverview({ stats }: ProgressOverviewProps) {
       {/* Progress Bar */}
       <div className="mt-6">
         <div className="flex justify-between items-center mb-2">
-          <span className="text-sm font-medium text-gray-700">Progression du parcours</span>
+          <span className="text-sm font-medium text-foreground">Progression du parcours</span>
           <span className="text-sm font-bold text-blue-600">
             {stats.completed_capsules} / {stats.total_capsules}
           </span>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-3">
+        <div className="w-full bg-muted rounded-full h-3">
           <div
             className="bg-gradient-to-r from-blue-500 to-purple-600 h-3 rounded-full transition-all duration-500"
             style={{ width: `${stats.overall_completion_percentage}%` }}

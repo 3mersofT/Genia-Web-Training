@@ -40,8 +40,8 @@ export default function FeedbackStats({ targetType, targetId, showDetails = fals
 
   if (loading) {
     return (
-      <div className="flex items-center gap-2 text-gray-500">
-        <div className="w-4 h-4 border-2 border-gray-300 border-t-blue-600 rounded-full animate-spin" />
+      <div className="flex items-center gap-2 text-muted-foreground">
+        <div className="w-4 h-4 border-2 border-muted-foreground border-t-blue-600 rounded-full animate-spin" />
         <span className="text-sm">Chargement...</span>
       </div>
     );
@@ -49,7 +49,7 @@ export default function FeedbackStats({ targetType, targetId, showDetails = fals
 
   if (!stats || stats.total_feedbacks === 0) {
     return (
-      <div className="flex items-center gap-2 text-gray-400">
+      <div className="flex items-center gap-2 text-muted-foreground">
         <Star className="w-4 h-4" />
         <span className="text-sm">Aucun feedback</span>
       </div>
@@ -65,7 +65,7 @@ export default function FeedbackStats({ targetType, targetId, showDetails = fals
             className={`w-4 h-4 ${
               star <= rating
                 ? 'text-yellow-400 fill-current'
-                : 'text-gray-300'
+                : 'text-muted-foreground'
             }`}
           />
         ))}
@@ -90,7 +90,7 @@ export default function FeedbackStats({ targetType, targetId, showDetails = fals
             {stats.average_rating.toFixed(1)}
           </span>
         </div>
-        <div className="flex items-center gap-1 text-gray-500">
+        <div className="flex items-center gap-1 text-muted-foreground">
           <MessageSquare className="w-4 h-4" />
           <span className="text-sm">{stats.total_feedbacks} feedback{stats.total_feedbacks > 1 ? 's' : ''}</span>
         </div>
@@ -100,7 +100,7 @@ export default function FeedbackStats({ targetType, targetId, showDetails = fals
         <div className="space-y-3">
           {/* Distribution des notes */}
           <div>
-            <h4 className="text-sm font-medium text-gray-700 mb-2">Distribution des notes</h4>
+            <h4 className="text-sm font-medium text-foreground mb-2">Distribution des notes</h4>
             <div className="space-y-1">
               {[5, 4, 3, 2, 1].map((rating) => {
                 const count = stats.rating_distribution[rating.toString()] || 0;
@@ -108,15 +108,15 @@ export default function FeedbackStats({ targetType, targetId, showDetails = fals
                 
                 return (
                   <div key={rating} className="flex items-center gap-2">
-                    <span className="text-sm text-gray-600 w-3">{rating}</span>
+                    <span className="text-sm text-muted-foreground w-3">{rating}</span>
                     <Star className="w-3 h-3 text-yellow-400 fill-current" />
-                    <div className="flex-1 bg-gray-200 rounded-full h-2">
+                    <div className="flex-1 bg-muted rounded-full h-2">
                       <div
                         className="bg-yellow-400 h-2 rounded-full transition-all duration-300"
                         style={{ width: `${percentage}%` }}
                       />
                     </div>
-                    <span className="text-xs text-gray-500 w-8">{count}</span>
+                    <span className="text-xs text-muted-foreground w-8">{count}</span>
                   </div>
                 );
               })}
@@ -126,12 +126,12 @@ export default function FeedbackStats({ targetType, targetId, showDetails = fals
           {/* Stats par catégorie */}
           {Object.keys(stats.category_stats).length > 0 && (
             <div>
-              <h4 className="text-sm font-medium text-gray-700 mb-2">Par catégorie</h4>
+              <h4 className="text-sm font-medium text-foreground mb-2">Par catégorie</h4>
               <div className="grid grid-cols-2 gap-2">
                 {Object.entries(stats.category_stats).map(([category, count]) => (
-                  <div key={category} className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                    <span className="text-sm text-gray-600 capitalize">{category}</span>
-                    <span className="text-sm font-medium text-gray-900">{count}</span>
+                  <div key={category} className="flex items-center justify-between p-2 bg-muted rounded">
+                    <span className="text-sm text-muted-foreground capitalize">{category}</span>
+                    <span className="text-sm font-medium text-foreground">{count}</span>
                   </div>
                 ))}
               </div>

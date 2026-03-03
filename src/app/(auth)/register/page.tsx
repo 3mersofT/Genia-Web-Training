@@ -118,7 +118,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-[hsl(var(--gradient-start))] via-[hsl(var(--gradient-end))] to-[hsl(var(--gradient-start))] flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
@@ -128,16 +128,16 @@ export default function RegisterPage() {
               GENIA Web Training
             </span>
           </Link>
-          <p className="text-gray-600 mt-2">Créez votre compte pour commencer</p>
+          <p className="text-muted-foreground mt-2">Créez votre compte pour commencer</p>
         </div>
 
         {/* Formulaire */}
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Inscription</h2>
+        <div className="bg-card text-card-foreground rounded-2xl shadow-xl border p-8">
+          <h2 className="text-2xl font-bold text-foreground mb-6">Inscription</h2>
 
           {error && (
             <div
-              className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700"
+              className="mb-4 p-3 bg-destructive/10 border border-destructive/20 rounded-lg flex items-center gap-2 text-destructive"
               role="alert"
               aria-live="polite"
             >
@@ -148,7 +148,7 @@ export default function RegisterPage() {
 
           {info && (
             <div
-              className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg flex items-center gap-2 text-green-700"
+              className="mb-4 p-3 bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg flex items-center gap-2 text-green-700 dark:text-green-300"
               role="alert"
               aria-live="polite"
             >
@@ -159,19 +159,19 @@ export default function RegisterPage() {
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
             <div>
-              <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">Nom complet</label>
+              <label htmlFor="fullName" className="block text-sm font-medium text-foreground mb-1">Nom complet</label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <input
                   id="fullName"
                   type="text"
                   {...register('fullName')}
                   aria-invalid={errors.fullName ? 'true' : 'false'}
                   aria-describedby={errors.fullName ? 'fullName-error' : undefined}
-                  className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus-visible:ring-ring focus:border-transparent ${
                     errors.fullName
                       ? 'border-red-300 focus:ring-red-500'
-                      : 'border-gray-300'
+                      : 'border-input'
                   }`}
                   placeholder="Jean Dupont"
                 />
@@ -179,7 +179,7 @@ export default function RegisterPage() {
               {errors.fullName && (
                 <p
                   id="fullName-error"
-                  className="mt-1 text-sm text-red-600"
+                  className="mt-1 text-sm text-destructive"
                   role="alert"
                 >
                   {errors.fullName.message}
@@ -188,25 +188,25 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">Nom d'utilisateur</label>
+              <label htmlFor="username" className="block text-sm font-medium text-foreground mb-1">Nom d'utilisateur</label>
               <div className="relative">
-                <AtSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <AtSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <input
                   id="username"
                   type="text"
                   {...register('username')}
                   aria-invalid={errors.username ? 'true' : 'false'}
                   aria-describedby={errors.username ? 'username-error' : undefined}
-                  className={`w-full pl-10 pr-10 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  className={`w-full pl-10 pr-10 py-2 border rounded-lg focus:ring-2 focus-visible:ring-ring focus:border-transparent ${
                     errors.username
                       ? 'border-red-300 focus:ring-red-500'
-                      : 'border-gray-300'
+                      : 'border-input'
                   }`}
                   placeholder="mon_username"
                 />
                 <div className="absolute right-3 top-1/2 -translate-y-1/2">
                   {isChecking ? (
-                    <div className="w-4 h-4 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin" />
+                    <div className="w-4 h-4 border-2 border-border border-t-blue-500 rounded-full animate-spin" />
                   ) : usernameOk === true ? (
                     <CheckCircle2 className="w-5 h-5 text-green-600" />
                   ) : usernameOk === false ? (
@@ -217,31 +217,31 @@ export default function RegisterPage() {
               {errors.username && (
                 <p
                   id="username-error"
-                  className="mt-1 text-sm text-red-600"
+                  className="mt-1 text-sm text-destructive"
                   role="alert"
                 >
                   {errors.username.message}
                 </p>
               )}
               {!errors.username && (
-                <p className="text-xs text-gray-500 mt-1">3–20 caractères, a–z, 0–9, _ et -</p>
+                <p className="text-xs text-muted-foreground mt-1">3–20 caractères, a–z, 0–9, _ et -</p>
               )}
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <label htmlFor="email" className="block text-sm font-medium text-foreground mb-1">Email</label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <input
                   id="email"
                   type="email"
                   {...register('email')}
                   aria-invalid={errors.email ? 'true' : 'false'}
                   aria-describedby={errors.email ? 'email-error' : undefined}
-                  className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus-visible:ring-ring focus:border-transparent ${
                     errors.email
                       ? 'border-red-300 focus:ring-red-500'
-                      : 'border-gray-300'
+                      : 'border-input'
                   }`}
                   placeholder="vous@exemple.com"
                 />
@@ -249,7 +249,7 @@ export default function RegisterPage() {
               {errors.email && (
                 <p
                   id="email-error"
-                  className="mt-1 text-sm text-red-600"
+                  className="mt-1 text-sm text-destructive"
                   role="alert"
                 >
                   {errors.email.message}
@@ -258,19 +258,19 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
+              <label htmlFor="password" className="block text-sm font-medium text-foreground mb-1">Mot de passe</label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <input
                   id="password"
                   type="password"
                   {...register('password')}
                   aria-invalid={errors.password ? 'true' : 'false'}
                   aria-describedby={errors.password ? 'password-error' : undefined}
-                  className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus-visible:ring-ring focus:border-transparent ${
                     errors.password
                       ? 'border-red-300 focus:ring-red-500'
-                      : 'border-gray-300'
+                      : 'border-input'
                   }`}
                   placeholder="••••••••"
                 />
@@ -278,14 +278,14 @@ export default function RegisterPage() {
               {errors.password && (
                 <p
                   id="password-error"
-                  className="mt-1 text-sm text-red-600"
+                  className="mt-1 text-sm text-destructive"
                   role="alert"
                 >
                   {errors.password.message}
                 </p>
               )}
               {!errors.password && (
-                <p className="text-xs text-gray-500 mt-1">Minimum 6 caractères</p>
+                <p className="text-xs text-muted-foreground mt-1">Minimum 6 caractères</p>
               )}
             </div>
 
@@ -300,20 +300,20 @@ export default function RegisterPage() {
                   className={`mt-1 w-4 h-4 text-blue-600 rounded ${
                     errors.terms
                       ? 'border-red-300 focus:ring-red-500'
-                      : 'border-gray-300'
+                      : 'border-input'
                   }`}
                 />
-                <label htmlFor="terms" className="ml-2 text-sm text-gray-600">
+                <label htmlFor="terms" className="ml-2 text-sm text-muted-foreground">
                   J'accepte les{' '}
-                  <Link href="#" className="text-blue-600 hover:underline">conditions d'utilisation</Link>{' '}
+                  <Link href="#" className="text-primary hover:underline">conditions d'utilisation</Link>{' '}
                   et la{' '}
-                  <Link href="#" className="text-blue-600 hover:underline">politique de confidentialité</Link>
+                  <Link href="#" className="text-primary hover:underline">politique de confidentialité</Link>
                 </label>
               </div>
               {errors.terms && (
                 <p
                   id="terms-error"
-                  className="mt-1 text-sm text-red-600"
+                  className="mt-1 text-sm text-destructive"
                   role="alert"
                 >
                   {errors.terms.message}
@@ -341,9 +341,9 @@ export default function RegisterPage() {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-muted-foreground">
               Déjà un compte ?{' '}
-              <Link href="/login" className="text-blue-600 hover:underline font-medium">
+              <Link href="/login" className="text-primary hover:underline font-medium">
                 Se connecter
               </Link>
             </p>
@@ -351,7 +351,7 @@ export default function RegisterPage() {
         </div>
 
         {/* Footer */}
-        <p className="text-center text-sm text-gray-500 mt-8">© 2025 GENIA Web Training. Créé par Hemerson KOFFI.</p>
+        <p className="text-center text-sm text-muted-foreground mt-8">© 2025 GENIA Web Training. Créé par Hemerson KOFFI.</p>
       </div>
     </div>
   );

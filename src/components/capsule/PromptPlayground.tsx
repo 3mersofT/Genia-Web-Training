@@ -189,11 +189,11 @@ export default function PromptPlayground({
         <div className="p-6 space-y-4">
           {/* Textarea */}
           <div className="relative">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-foreground mb-2">
               <div className="flex items-center gap-2">
                 <Edit3 className="w-4 h-4" />
                 <span>Votre prompt</span>
-                <span className="text-xs text-gray-500 dark:text-gray-400 ml-auto">
+                <span className="text-xs text-muted-foreground ml-auto">
                   {charCount} caractères
                 </span>
               </div>
@@ -208,14 +208,14 @@ export default function PromptPlayground({
                 w-full min-h-[150px] px-4 py-3
                 bg-white dark:bg-slate-800
                 border-2 rounded-lg
-                text-gray-900 dark:text-gray-100
+                text-foreground
                 placeholder-gray-400 dark:placeholder-gray-500
                 resize-y
                 transition-all duration-200
-                focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                focus:outline-none focus:ring-2 focus-visible:ring-ring focus:border-transparent
                 ${isEditing
                   ? 'border-blue-400 dark:border-blue-600 shadow-md'
-                  : 'border-gray-300 dark:border-gray-600'
+                  : 'border-input'
                 }
               `}
               placeholder="Écrivez ou modifiez votre prompt ici..."
@@ -259,7 +259,7 @@ export default function PromptPlayground({
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={handleReset}
-                className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 hover:bg-gray-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-gray-700 dark:text-gray-200 font-medium rounded-lg transition-colors duration-200"
+                className="flex items-center justify-center gap-2 px-4 py-3 bg-muted hover:bg-accent dark:bg-slate-700 dark:hover:bg-slate-600 text-foreground font-medium rounded-lg transition-colors duration-200"
               >
                 <RotateCcw className="w-4 h-4" />
                 <span className="hidden sm:inline">Réinitialiser</span>

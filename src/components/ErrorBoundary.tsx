@@ -54,11 +54,11 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBo
 
       // Default fallback UI
       return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50">
-          <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-6">
-            <div className="flex items-center justify-center w-12 h-12 mx-auto bg-red-100 rounded-full">
+        <div className="min-h-screen flex items-center justify-center bg-background">
+          <div className="max-w-md w-full bg-card shadow-lg rounded-lg p-6">
+            <div className="flex items-center justify-center w-12 h-12 mx-auto bg-red-100 dark:bg-red-900/30 rounded-full">
               <svg
-                className="w-6 h-6 text-red-600"
+                className="w-6 h-6 text-red-600 dark:text-red-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -72,16 +72,16 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBo
                 />
               </svg>
             </div>
-            <h2 className="mt-4 text-xl font-semibold text-center text-gray-900">
+            <h2 className="mt-4 text-xl font-semibold text-center text-foreground">
               Une erreur est survenue
             </h2>
-            <p className="mt-2 text-sm text-center text-gray-600">
+            <p className="mt-2 text-sm text-center text-muted-foreground">
               Nous sommes désolés, une erreur inattendue s'est produite. Veuillez rafraîchir la page ou réessayer plus tard.
             </p>
             <div className="mt-6">
               <button
                 onClick={() => window.location.reload()}
-                className="w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus-visible:ring-ring"
               >
                 Rafraîchir la page
               </button>

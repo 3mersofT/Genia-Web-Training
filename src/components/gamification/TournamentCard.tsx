@@ -44,7 +44,7 @@ export default function TournamentCard({
         return {
           bg: 'from-green-50 to-green-100',
           border: 'border-green-300',
-          text: 'text-green-700',
+          text: 'text-green-700 dark:text-green-300',
           badge: 'bg-green-500'
         }
       case 'active':
@@ -56,23 +56,23 @@ export default function TournamentCard({
         }
       case 'completed':
         return {
-          bg: 'from-gray-50 to-gray-100',
-          border: 'border-gray-300',
-          text: 'text-gray-700',
+          bg: 'from-muted to-muted/80',
+          border: 'border-input',
+          text: 'text-foreground',
           badge: 'bg-gray-500'
         }
       case 'cancelled':
         return {
           bg: 'from-red-50 to-red-100',
           border: 'border-red-300',
-          text: 'text-red-700',
+          text: 'text-red-700 dark:text-red-300',
           badge: 'bg-red-500'
         }
       default:
         return {
-          bg: 'from-gray-50 to-gray-100',
-          border: 'border-gray-300',
-          text: 'text-gray-700',
+          bg: 'from-muted to-muted/80',
+          border: 'border-input',
+          text: 'text-foreground',
           badge: 'bg-gray-500'
         }
     }
@@ -82,17 +82,17 @@ export default function TournamentCard({
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case 'beginner':
-        return 'bg-green-100 text-green-700 border-green-300'
+        return 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 border-green-300'
       case 'intermediate':
-        return 'bg-blue-100 text-blue-700 border-blue-300'
+        return 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 border-blue-300'
       case 'advanced':
         return 'bg-orange-100 text-orange-700 border-orange-300'
       case 'expert':
-        return 'bg-red-100 text-red-700 border-red-300'
+        return 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 border-red-300'
       case 'mixed':
-        return 'bg-purple-100 text-purple-700 border-purple-300'
+        return 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 border-purple-300'
       default:
-        return 'bg-gray-100 text-gray-700 border-gray-300'
+        return 'bg-muted text-foreground border-input'
     }
   }
 
@@ -159,10 +159,10 @@ export default function TournamentCard({
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-2">
             <Trophy className={`w-6 h-6 ${colors.text}`} />
-            <h3 className="text-xl font-bold text-gray-900">{tournament.title}</h3>
+            <h3 className="text-xl font-bold text-foreground">{tournament.title}</h3>
           </div>
           {tournament.description && (
-            <p className="text-sm text-gray-600 line-clamp-2">{tournament.description}</p>
+            <p className="text-sm text-muted-foreground line-clamp-2">{tournament.description}</p>
           )}
         </div>
         <div className="flex flex-col gap-2 items-end ml-4">
@@ -182,10 +182,10 @@ export default function TournamentCard({
       <div className="grid grid-cols-2 gap-4 mb-4">
         {/* Tournament Type */}
         <div className="flex items-center gap-2">
-          <Award className="w-4 h-4 text-gray-500" />
+          <Award className="w-4 h-4 text-muted-foreground" />
           <div>
-            <p className="text-xs text-gray-500">Type</p>
-            <p className="text-sm font-semibold text-gray-900">
+            <p className="text-xs text-muted-foreground">Type</p>
+            <p className="text-sm font-semibold text-foreground">
               {getTypeLabel(tournament.tournament_type)}
             </p>
           </div>
@@ -193,9 +193,9 @@ export default function TournamentCard({
 
         {/* Difficulty */}
         <div className="flex items-center gap-2">
-          <Target className="w-4 h-4 text-gray-500" />
+          <Target className="w-4 h-4 text-muted-foreground" />
           <div>
-            <p className="text-xs text-gray-500">Difficulté</p>
+            <p className="text-xs text-muted-foreground">Difficulté</p>
             <span className={`text-xs font-semibold px-2 py-0.5 rounded-full border ${getDifficultyColor(tournament.difficulty)}`}>
               {tournament.difficulty}
             </span>
@@ -204,10 +204,10 @@ export default function TournamentCard({
 
         {/* Start Date */}
         <div className="flex items-center gap-2">
-          <Calendar className="w-4 h-4 text-gray-500" />
+          <Calendar className="w-4 h-4 text-muted-foreground" />
           <div>
-            <p className="text-xs text-gray-500">Début</p>
-            <p className="text-sm font-semibold text-gray-900">
+            <p className="text-xs text-muted-foreground">Début</p>
+            <p className="text-sm font-semibold text-foreground">
               {formatDate(tournament.start_date)}
             </p>
           </div>
@@ -215,10 +215,10 @@ export default function TournamentCard({
 
         {/* End Date */}
         <div className="flex items-center gap-2">
-          <Clock className="w-4 h-4 text-gray-500" />
+          <Clock className="w-4 h-4 text-muted-foreground" />
           <div>
-            <p className="text-xs text-gray-500">Fin</p>
-            <p className="text-sm font-semibold text-gray-900">
+            <p className="text-xs text-muted-foreground">Fin</p>
+            <p className="text-sm font-semibold text-foreground">
               {formatDate(tournament.end_date)}
             </p>
           </div>
@@ -244,14 +244,14 @@ export default function TournamentCard({
       <div className="mb-4">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
-            <Users className="w-4 h-4 text-gray-500" />
-            <span className="text-sm font-semibold text-gray-700">Participants</span>
+            <Users className="w-4 h-4 text-muted-foreground" />
+            <span className="text-sm font-semibold text-foreground">Participants</span>
           </div>
-          <span className="text-sm text-gray-600">
+          <span className="text-sm text-muted-foreground">
             {tournament.participant_count} / {tournament.max_participants}
           </span>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+        <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
           <div
             className={`h-full ${
               registrationProgress >= 100
@@ -264,7 +264,7 @@ export default function TournamentCard({
           />
         </div>
         {tournament.status === 'registration' && (
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-muted-foreground mt-1">
             {isRegistrationFull
               ? 'Tournoi complet'
               : `${spotsRemaining} place${spotsRemaining > 1 ? 's' : ''} restante${spotsRemaining > 1 ? 's' : ''}`}
@@ -276,26 +276,26 @@ export default function TournamentCard({
       <div className="mb-4 p-3 bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-lg">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs text-gray-600 mb-1">Prix</p>
+            <p className="text-xs text-muted-foreground mb-1">Prix</p>
             <div className="flex items-center gap-3">
               <div className="text-center">
                 <Trophy className="w-5 h-5 text-yellow-600 mx-auto mb-1" />
-                <p className="text-xs font-semibold text-gray-900">{tournament.prize_pool.first} pts</p>
+                <p className="text-xs font-semibold text-foreground">{tournament.prize_pool.first} pts</p>
               </div>
               <div className="text-center">
-                <Award className="w-4 h-4 text-gray-500 mx-auto mb-1" />
-                <p className="text-xs font-semibold text-gray-700">{tournament.prize_pool.second} pts</p>
+                <Award className="w-4 h-4 text-muted-foreground mx-auto mb-1" />
+                <p className="text-xs font-semibold text-foreground">{tournament.prize_pool.second} pts</p>
               </div>
               <div className="text-center">
                 <Award className="w-4 h-4 text-orange-400 mx-auto mb-1" />
-                <p className="text-xs font-semibold text-gray-700">{tournament.prize_pool.third} pts</p>
+                <p className="text-xs font-semibold text-foreground">{tournament.prize_pool.third} pts</p>
               </div>
             </div>
           </div>
           <div className="text-right">
-            <p className="text-xs text-gray-600">XP Bonus</p>
+            <p className="text-xs text-muted-foreground">XP Bonus</p>
             <p className="text-lg font-bold text-yellow-700">+{tournament.xp_rewards.first}</p>
-            <p className="text-xs text-gray-500">pour le vainqueur</p>
+            <p className="text-xs text-muted-foreground">pour le vainqueur</p>
           </div>
         </div>
       </div>
@@ -329,7 +329,7 @@ export default function TournamentCard({
               canRegister || (isRegistered && tournament.status === 'registration')
                 ? 'flex-none px-4'
                 : 'flex-1'
-            } bg-white border-2 ${colors.border} ${colors.text} font-semibold py-2 rounded-lg hover:bg-gray-50 transition-all flex items-center justify-center gap-2`}
+            } bg-card border-2 ${colors.border} ${colors.text} font-semibold py-2 rounded-lg hover:bg-accent transition-all flex items-center justify-center gap-2`}
           >
             Détails
             <ChevronRight className="w-4 h-4" />
@@ -339,9 +339,9 @@ export default function TournamentCard({
 
       {/* Current Round Info (for active tournaments) */}
       {tournament.status === 'active' && tournament.current_round > 0 && (
-        <div className="mt-4 pt-4 border-t border-gray-300">
+        <div className="mt-4 pt-4 border-t border-input">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-gray-600">Tour actuel</span>
+            <span className="text-xs text-muted-foreground">Tour actuel</span>
             <span className="text-sm font-bold text-purple-700">
               Round {tournament.current_round}
               {tournament.total_rounds && ` / ${tournament.total_rounds}`}
@@ -352,12 +352,12 @@ export default function TournamentCard({
 
       {/* Tags (if available) */}
       {tournament.tags && tournament.tags.length > 0 && (
-        <div className="mt-4 pt-4 border-t border-gray-300">
+        <div className="mt-4 pt-4 border-t border-input">
           <div className="flex flex-wrap gap-2">
             {tournament.tags.map((tag, index) => (
               <span
                 key={index}
-                className="px-2 py-1 text-xs font-medium bg-white text-gray-700 border border-gray-300 rounded-full"
+                className="px-2 py-1 text-xs font-medium bg-card text-foreground border border-input rounded-full"
               >
                 {tag}
               </span>

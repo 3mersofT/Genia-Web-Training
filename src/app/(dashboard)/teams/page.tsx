@@ -62,11 +62,11 @@ export default function TeamsPage() {
 
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      <div className="min-h-screen bg-gradient-to-br from-[hsl(var(--gradient-start))] via-background to-[hsl(var(--gradient-end))]">
         <div className="container mx-auto px-4 py-8">
           <div className="text-center">
             <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full mx-auto mb-4 animate-spin"></div>
-            <p className="text-gray-600">Chargement...</p>
+            <p className="text-muted-foreground">Chargement...</p>
           </div>
         </div>
       </div>
@@ -74,20 +74,20 @@ export default function TeamsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-[hsl(var(--gradient-start))] via-background to-[hsl(var(--gradient-end))]">
       {/* Header */}
-      <div className="bg-white border-b">
+      <div className="bg-card border-b">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center gap-3">
             <Link
               href="/dashboard"
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-2 hover:bg-accent rounded-lg transition-colors"
             >
               <ChevronLeft className="w-5 h-5" />
             </Link>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Équipes</h1>
-              <p className="text-gray-600">Collaborez avec d&apos;autres apprenants et relevez des défis ensemble</p>
+              <h1 className="text-2xl font-bold text-foreground">Équipes</h1>
+              <p className="text-muted-foreground">Collaborez avec d&apos;autres apprenants et relevez des défis ensemble</p>
             </div>
           </div>
         </div>

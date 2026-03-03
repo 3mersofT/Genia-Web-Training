@@ -163,26 +163,26 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Navigation Header */}
-      <div className="bg-white shadow-sm border-b">
+      <div className="bg-card shadow-sm border-b">
         <div className="px-6 py-4">
           <div className="flex items-center gap-4 mb-2">
-            <a href="/admin" className="text-blue-600 hover:text-blue-800 font-medium">← Dashboard Admin</a>
-            <span className="text-gray-300">|</span>
-            <h1 className="text-xl font-bold text-gray-900">Paramètres Système</h1>
+            <a href="/admin" className="text-primary hover:text-primary/80 font-medium">← Dashboard Admin</a>
+            <span className="text-muted-foreground">|</span>
+            <h1 className="text-xl font-bold text-foreground">Paramètres Système</h1>
           </div>
-          <p className="text-gray-600">Configuration générale de la plateforme GENIA Web Training</p>
+          <p className="text-muted-foreground">Configuration générale de la plateforme GENIA Web Training</p>
         </div>
         
         {/* Quick Navigation */}
         <div className="px-6 pb-2">
           <nav className="flex gap-4 text-sm">
-            <a href="/admin" className="text-gray-500 hover:text-gray-700">Dashboard</a>
-            <a href="/admin/users" className="text-gray-500 hover:text-gray-700">Utilisateurs</a>
-            <a href="/admin/analytics" className="text-gray-500 hover:text-gray-700">Analytics</a>
-            <a href="/admin/content" className="text-gray-500 hover:text-gray-700">Contenu</a>
-            <a href="/admin/settings" className="text-blue-600 font-medium">Paramètres</a>
+            <a href="/admin" className="text-muted-foreground hover:text-foreground">Dashboard</a>
+            <a href="/admin/users" className="text-muted-foreground hover:text-foreground">Utilisateurs</a>
+            <a href="/admin/analytics" className="text-muted-foreground hover:text-foreground">Analytics</a>
+            <a href="/admin/content" className="text-muted-foreground hover:text-foreground">Contenu</a>
+            <a href="/admin/settings" className="text-primary font-medium">Paramètres</a>
           </nav>
         </div>
       </div>
@@ -192,7 +192,7 @@ export default function SettingsPage() {
       {/* Message de notification */}
       {message && (
         <div className={`mb-6 p-4 rounded-lg flex items-center gap-2 ${
-          message.type === 'success' ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'
+          message.type === 'success' ? 'bg-green-50 dark:bg-green-950/30 text-green-800' : 'bg-red-50 dark:bg-red-950/30 text-red-800'
         }`}>
           {message.type === 'success' ? <Check className="w-5 h-5" /> : <AlertCircle className="w-5 h-5" />}
           <span>{message.text}</span>
@@ -200,7 +200,7 @@ export default function SettingsPage() {
       )}
 
       {/* Actions bar */}
-      <div className="mb-6 flex justify-between items-center bg-white rounded-lg shadow p-4">
+      <div className="mb-6 flex justify-between items-center bg-card rounded-lg shadow p-4">
         <div className="flex items-center gap-2">
           {hasChanges && (
             <span className="text-sm text-orange-600 flex items-center gap-1">
@@ -212,7 +212,7 @@ export default function SettingsPage() {
         <div className="flex gap-2">
           <button
             onClick={exportSettings}
-            className="px-4 py-2 text-gray-700 border rounded-lg hover:bg-gray-50"
+            className="px-4 py-2 text-foreground border rounded-lg hover:bg-accent"
           >
             <Download className="w-4 h-4 inline mr-2" />
             Exporter
@@ -221,7 +221,7 @@ export default function SettingsPage() {
             <>
               <button
                 onClick={resetSettings}
-                className="px-4 py-2 text-gray-700 border rounded-lg hover:bg-gray-50"
+                className="px-4 py-2 text-foreground border rounded-lg hover:bg-accent"
               >
                 Annuler
               </button>
@@ -240,9 +240,9 @@ export default function SettingsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Section Général */}
-        <div className="bg-white rounded-lg shadow">
+        <div className="bg-card rounded-lg shadow">
           <div className="p-4 border-b">
-            <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+            <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
               <Settings className="w-5 h-5" />
               Paramètres Généraux
             </h2>
@@ -251,16 +251,16 @@ export default function SettingsPage() {
             {/* Mode maintenance */}
             <div className="flex items-center justify-between">
               <div>
-                <label className="font-medium text-gray-700">Mode maintenance</label>
-                <p className="text-sm text-gray-500">Fermer temporairement la plateforme</p>
+                <label className="font-medium text-foreground">Mode maintenance</label>
+                <p className="text-sm text-muted-foreground">Fermer temporairement la plateforme</p>
               </div>
               <button
                 onClick={() => setSettings(prev => ({ ...prev, maintenance_mode: !prev.maintenance_mode }))}
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                  settings.maintenance_mode ? 'bg-red-600' : 'bg-gray-200'
+                  settings.maintenance_mode ? 'bg-red-600' : 'bg-muted'
                 }`}
               >
-                <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                <span className={`inline-block h-4 w-4 transform rounded-full bg-card transition-transform ${
                   settings.maintenance_mode ? 'translate-x-6' : 'translate-x-1'
                 }`} />
               </button>
@@ -268,13 +268,13 @@ export default function SettingsPage() {
 
             {settings.maintenance_mode && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-foreground mb-1">
                   Message de maintenance
                 </label>
                 <textarea
                   value={settings.maintenance_message}
                   onChange={(e) => setSettings(prev => ({ ...prev, maintenance_message: e.target.value }))}
-                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus-visible:ring-ring"
                   rows={2}
                 />
               </div>
@@ -283,16 +283,16 @@ export default function SettingsPage() {
             {/* Inscriptions */}
             <div className="flex items-center justify-between">
               <div>
-                <label className="font-medium text-gray-700">Autoriser les inscriptions</label>
-                <p className="text-sm text-gray-500">Permettre aux nouveaux utilisateurs de s'inscrire</p>
+                <label className="font-medium text-foreground">Autoriser les inscriptions</label>
+                <p className="text-sm text-muted-foreground">Permettre aux nouveaux utilisateurs de s'inscrire</p>
               </div>
               <button
                 onClick={() => setSettings(prev => ({ ...prev, allow_registrations: !prev.allow_registrations }))}
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                  settings.allow_registrations ? 'bg-green-600' : 'bg-gray-200'
+                  settings.allow_registrations ? 'bg-green-600' : 'bg-muted'
                 }`}
               >
-                <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                <span className={`inline-block h-4 w-4 transform rounded-full bg-card transition-transform ${
                   settings.allow_registrations ? 'translate-x-6' : 'translate-x-1'
                 }`} />
               </button>
@@ -300,30 +300,30 @@ export default function SettingsPage() {
 
             {/* Limite d'utilisateurs */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-foreground mb-1">
                 Limite d'utilisateurs
               </label>
               <input
                 type="number"
                 value={settings.max_users_limit}
                 onChange={(e) => setSettings(prev => ({ ...prev, max_users_limit: parseInt(e.target.value) || 0 }))}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus-visible:ring-ring"
               />
             </div>
 
             {/* Vérification email */}
             <div className="flex items-center justify-between">
               <div>
-                <label className="font-medium text-gray-700">Vérification email requise</label>
-                <p className="text-sm text-gray-500">Les utilisateurs doivent confirmer leur email</p>
+                <label className="font-medium text-foreground">Vérification email requise</label>
+                <p className="text-sm text-muted-foreground">Les utilisateurs doivent confirmer leur email</p>
               </div>
               <button
                 onClick={() => setSettings(prev => ({ ...prev, require_email_verification: !prev.require_email_verification }))}
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                  settings.require_email_verification ? 'bg-blue-600' : 'bg-gray-200'
+                  settings.require_email_verification ? 'bg-blue-600' : 'bg-muted'
                 }`}
               >
-                <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                <span className={`inline-block h-4 w-4 transform rounded-full bg-card transition-transform ${
                   settings.require_email_verification ? 'translate-x-6' : 'translate-x-1'
                 }`} />
               </button>
@@ -332,9 +332,9 @@ export default function SettingsPage() {
         </div>
 
         {/* Section Quotas IA */}
-        <div className="bg-white rounded-lg shadow">
+        <div className="bg-card rounded-lg shadow">
           <div className="p-4 border-b">
-            <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+            <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
               <Brain className="w-5 h-5" />
               Quotas IA & Budget
             </h2>
@@ -342,56 +342,56 @@ export default function SettingsPage() {
           <div className="p-4 space-y-4">
             {/* Budget mensuel */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-foreground mb-1">
                 Budget mensuel (€)
               </label>
               <div className="relative">
-                <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <input
                   type="number"
                   value={settings.monthly_budget_limit}
                   onChange={(e) => setSettings(prev => ({ ...prev, monthly_budget_limit: parseInt(e.target.value) || 0 }))}
-                  className="w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus-visible:ring-ring"
                 />
               </div>
             </div>
 
             {/* Quota Magistral */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-foreground mb-1">
                 Magistral Medium (requêtes/jour/utilisateur)
               </label>
               <input
                 type="number"
                 value={settings.magistral_daily_quota}
                 onChange={(e) => setSettings(prev => ({ ...prev, magistral_daily_quota: parseInt(e.target.value) || 0 }))}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus-visible:ring-ring"
               />
             </div>
 
             {/* Quota Mistral Medium */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-foreground mb-1">
                 Mistral Medium 3 (requêtes/jour/utilisateur)
               </label>
               <input
                 type="number"
                 value={settings.mistral_medium_daily_quota}
                 onChange={(e) => setSettings(prev => ({ ...prev, mistral_medium_daily_quota: parseInt(e.target.value) || 0 }))}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus-visible:ring-ring"
               />
             </div>
 
             {/* Quota Mistral Small */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-foreground mb-1">
                 Mistral Small (requêtes/jour/utilisateur)
               </label>
               <input
                 type="number"
                 value={settings.mistral_small_daily_quota}
                 onChange={(e) => setSettings(prev => ({ ...prev, mistral_small_daily_quota: parseInt(e.target.value) || 0 }))}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus-visible:ring-ring"
               />
             </div>
 
@@ -406,9 +406,9 @@ export default function SettingsPage() {
         </div>
 
         {/* Section Notifications */}
-        <div className="bg-white rounded-lg shadow">
+        <div className="bg-card rounded-lg shadow">
           <div className="p-4 border-b">
-            <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+            <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
               <Bell className="w-5 h-5" />
               Notifications & Emails
             </h2>
@@ -417,16 +417,16 @@ export default function SettingsPage() {
             {/* Email de bienvenue */}
             <div className="flex items-center justify-between">
               <div>
-                <label className="font-medium text-gray-700">Email de bienvenue</label>
-                <p className="text-sm text-gray-500">Envoyer un email aux nouveaux inscrits</p>
+                <label className="font-medium text-foreground">Email de bienvenue</label>
+                <p className="text-sm text-muted-foreground">Envoyer un email aux nouveaux inscrits</p>
               </div>
               <button
                 onClick={() => setSettings(prev => ({ ...prev, send_welcome_email: !prev.send_welcome_email }))}
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                  settings.send_welcome_email ? 'bg-green-600' : 'bg-gray-200'
+                  settings.send_welcome_email ? 'bg-green-600' : 'bg-muted'
                 }`}
               >
-                <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                <span className={`inline-block h-4 w-4 transform rounded-full bg-card transition-transform ${
                   settings.send_welcome_email ? 'translate-x-6' : 'translate-x-1'
                 }`} />
               </button>
@@ -435,16 +435,16 @@ export default function SettingsPage() {
             {/* Certificats */}
             <div className="flex items-center justify-between">
               <div>
-                <label className="font-medium text-gray-700">Certificats de complétion</label>
-                <p className="text-sm text-gray-500">Envoyer automatiquement les certificats</p>
+                <label className="font-medium text-foreground">Certificats de complétion</label>
+                <p className="text-sm text-muted-foreground">Envoyer automatiquement les certificats</p>
               </div>
               <button
                 onClick={() => setSettings(prev => ({ ...prev, send_completion_certificates: !prev.send_completion_certificates }))}
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                  settings.send_completion_certificates ? 'bg-green-600' : 'bg-gray-200'
+                  settings.send_completion_certificates ? 'bg-green-600' : 'bg-muted'
                 }`}
               >
-                <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                <span className={`inline-block h-4 w-4 transform rounded-full bg-card transition-transform ${
                   settings.send_completion_certificates ? 'translate-x-6' : 'translate-x-1'
                 }`} />
               </button>
@@ -453,16 +453,16 @@ export default function SettingsPage() {
             {/* Notifications admin */}
             <div className="flex items-center justify-between">
               <div>
-                <label className="font-medium text-gray-700">Notifications admin</label>
-                <p className="text-sm text-gray-500">Recevoir les alertes système</p>
+                <label className="font-medium text-foreground">Notifications admin</label>
+                <p className="text-sm text-muted-foreground">Recevoir les alertes système</p>
               </div>
               <button
                 onClick={() => setSettings(prev => ({ ...prev, admin_email_notifications: !prev.admin_email_notifications }))}
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                  settings.admin_email_notifications ? 'bg-green-600' : 'bg-gray-200'
+                  settings.admin_email_notifications ? 'bg-green-600' : 'bg-muted'
                 }`}
               >
-                <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                <span className={`inline-block h-4 w-4 transform rounded-full bg-card transition-transform ${
                   settings.admin_email_notifications ? 'translate-x-6' : 'translate-x-1'
                 }`} />
               </button>
@@ -470,14 +470,14 @@ export default function SettingsPage() {
 
             {settings.admin_email_notifications && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-foreground mb-1">
                   Email de notification admin
                 </label>
                 <input
                   type="email"
                   value={settings.admin_notification_email}
                   onChange={(e) => setSettings(prev => ({ ...prev, admin_notification_email: e.target.value }))}
-                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus-visible:ring-ring"
                 />
               </div>
             )}
@@ -485,9 +485,9 @@ export default function SettingsPage() {
         </div>
 
         {/* Section Sécurité */}
-        <div className="bg-white rounded-lg shadow">
+        <div className="bg-card rounded-lg shadow">
           <div className="p-4 border-b">
-            <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+            <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
               <Shield className="w-5 h-5" />
               Sécurité
             </h2>
@@ -495,56 +495,56 @@ export default function SettingsPage() {
           <div className="p-4 space-y-4">
             {/* Timeout session */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-foreground mb-1">
                 Timeout de session (minutes)
               </label>
               <input
                 type="number"
                 value={settings.session_timeout_minutes}
                 onChange={(e) => setSettings(prev => ({ ...prev, session_timeout_minutes: parseInt(e.target.value) || 0 }))}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus-visible:ring-ring"
               />
             </div>
 
             {/* Tentatives de connexion */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-foreground mb-1">
                 Tentatives de connexion max
               </label>
               <input
                 type="number"
                 value={settings.max_login_attempts}
                 onChange={(e) => setSettings(prev => ({ ...prev, max_login_attempts: parseInt(e.target.value) || 0 }))}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus-visible:ring-ring"
               />
             </div>
 
             {/* Longueur mot de passe */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-foreground mb-1">
                 Longueur minimale du mot de passe
               </label>
               <input
                 type="number"
                 value={settings.password_min_length}
                 onChange={(e) => setSettings(prev => ({ ...prev, password_min_length: parseInt(e.target.value) || 0 }))}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus-visible:ring-ring"
               />
             </div>
 
             {/* Mot de passe fort */}
             <div className="flex items-center justify-between">
               <div>
-                <label className="font-medium text-gray-700">Mot de passe fort requis</label>
-                <p className="text-sm text-gray-500">Majuscules, minuscules, chiffres, symboles</p>
+                <label className="font-medium text-foreground">Mot de passe fort requis</label>
+                <p className="text-sm text-muted-foreground">Majuscules, minuscules, chiffres, symboles</p>
               </div>
               <button
                 onClick={() => setSettings(prev => ({ ...prev, require_strong_password: !prev.require_strong_password }))}
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                  settings.require_strong_password ? 'bg-green-600' : 'bg-gray-200'
+                  settings.require_strong_password ? 'bg-green-600' : 'bg-muted'
                 }`}
               >
-                <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                <span className={`inline-block h-4 w-4 transform rounded-full bg-card transition-transform ${
                   settings.require_strong_password ? 'translate-x-6' : 'translate-x-1'
                 }`} />
               </button>
@@ -553,9 +553,9 @@ export default function SettingsPage() {
         </div>
 
         {/* Section Backup */}
-        <div className="bg-white rounded-lg shadow lg:col-span-2">
+        <div className="bg-card rounded-lg shadow lg:col-span-2">
           <div className="p-4 border-b">
-            <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+            <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
               <Database className="w-5 h-5" />
               Sauvegarde & Restauration
             </h2>
@@ -565,16 +565,16 @@ export default function SettingsPage() {
               {/* Backup automatique */}
               <div className="flex items-center justify-between">
                 <div>
-                  <label className="font-medium text-gray-700">Backup automatique</label>
-                  <p className="text-sm text-gray-500">Sauvegarder régulièrement</p>
+                  <label className="font-medium text-foreground">Backup automatique</label>
+                  <p className="text-sm text-muted-foreground">Sauvegarder régulièrement</p>
                 </div>
                 <button
                   onClick={() => setSettings(prev => ({ ...prev, auto_backup_enabled: !prev.auto_backup_enabled }))}
                   className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                    settings.auto_backup_enabled ? 'bg-green-600' : 'bg-gray-200'
+                    settings.auto_backup_enabled ? 'bg-green-600' : 'bg-muted'
                   }`}
                 >
-                  <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                  <span className={`inline-block h-4 w-4 transform rounded-full bg-card transition-transform ${
                     settings.auto_backup_enabled ? 'translate-x-6' : 'translate-x-1'
                   }`} />
                 </button>
@@ -582,7 +582,7 @@ export default function SettingsPage() {
 
               {/* Fréquence */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-foreground mb-1">
                   Fréquence (jours)
                 </label>
                 <input
@@ -590,13 +590,13 @@ export default function SettingsPage() {
                   value={settings.backup_frequency_days}
                   onChange={(e) => setSettings(prev => ({ ...prev, backup_frequency_days: parseInt(e.target.value) || 0 }))}
                   disabled={!settings.auto_backup_enabled}
-                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus-visible:ring-ring disabled:bg-muted"
                 />
               </div>
 
               {/* Rétention */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-foreground mb-1">
                   Rétention (jours)
                 </label>
                 <input
@@ -604,17 +604,17 @@ export default function SettingsPage() {
                   value={settings.backup_retention_days}
                   onChange={(e) => setSettings(prev => ({ ...prev, backup_retention_days: parseInt(e.target.value) || 0 }))}
                   disabled={!settings.auto_backup_enabled}
-                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus-visible:ring-ring disabled:bg-muted"
                 />
               </div>
             </div>
 
             {/* Dernière sauvegarde */}
-            <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+            <div className="mt-6 p-4 bg-muted rounded-lg">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-700">Dernière sauvegarde</p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm font-medium text-foreground">Dernière sauvegarde</p>
+                  <p className="text-sm text-muted-foreground">
                     {settings.last_backup_date 
                       ? new Date(settings.last_backup_date).toLocaleString('fr-FR')
                       : 'Aucune sauvegarde'
@@ -630,7 +630,7 @@ export default function SettingsPage() {
                     Sauvegarder maintenant
                   </button>
                   <button
-                    className="px-4 py-2 text-gray-700 border rounded-lg hover:bg-gray-50"
+                    className="px-4 py-2 text-foreground border rounded-lg hover:bg-accent"
                   >
                     <Upload className="w-4 h-4 inline mr-2" />
                     Restaurer

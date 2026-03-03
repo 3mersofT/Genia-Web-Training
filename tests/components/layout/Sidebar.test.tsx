@@ -81,8 +81,8 @@ describe('DesktopNavigation (Sidebar)', () => {
 
     // The Accueil button should be active since pathname is /dashboard
     const accueilButton = screen.getByText('Accueil').closest('button')!;
-    expect(accueilButton).toHaveClass('text-blue-600');
-    expect(accueilButton).toHaveClass('bg-blue-50');
+    expect(accueilButton).toHaveClass('text-primary');
+    expect(accueilButton).toHaveClass('bg-primary/10');
   });
 
   it('shows user menu with profile info', () => {

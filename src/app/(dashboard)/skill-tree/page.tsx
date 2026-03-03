@@ -31,23 +31,23 @@ export default function SkillTreePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 dark:from-indigo-950/30 via-background to-purple-50 dark:to-purple-950/30 p-6">
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-card rounded-xl shadow-sm border border-border p-6">
           <div className="flex items-start justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
+              <h1 className="text-3xl font-bold text-foreground flex items-center gap-3">
                 <Target className="w-8 h-8 text-indigo-600" />
                 Arbre de Compétences
               </h1>
-              <p className="text-gray-600 mt-2">
+              <p className="text-muted-foreground mt-2">
                 Progressez dans votre maîtrise du prompt engineering en débloquant de nouvelles compétences
               </p>
             </div>
             <div className="flex items-center gap-2">
               <Trophy className="w-6 h-6 text-yellow-500" />
-              <span className="text-2xl font-bold text-gray-900">
+              <span className="text-2xl font-bold text-foreground">
                 {stats.mastered}/{stats.total}
               </span>
             </div>
@@ -55,22 +55,22 @@ export default function SkillTreePage() {
 
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
-            <div className="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-lg p-4">
+            <div className="bg-gradient-to-br from-indigo-50 dark:from-indigo-950/30 to-indigo-100 dark:to-indigo-950/20 rounded-lg p-4">
               <div className="text-sm text-indigo-600 font-medium mb-1">Total</div>
               <div className="text-3xl font-bold text-indigo-900">{stats.total}</div>
               <div className="text-xs text-indigo-600 mt-1">Compétences disponibles</div>
             </div>
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4">
+            <div className="bg-gradient-to-br from-blue-50 dark:from-blue-950/30 to-blue-100 dark:to-blue-950/20 rounded-lg p-4">
               <div className="text-sm text-blue-600 font-medium mb-1">Débloquées</div>
               <div className="text-3xl font-bold text-blue-900">{stats.unlocked}</div>
               <div className="text-xs text-blue-600 mt-1">En cours ou terminées</div>
             </div>
-            <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4">
-              <div className="text-sm text-green-600 font-medium mb-1">Complétées</div>
+            <div className="bg-gradient-to-br from-green-50 dark:from-green-950/30 to-green-100 dark:to-green-950/20 rounded-lg p-4">
+              <div className="text-sm text-green-600 dark:text-green-400 font-medium mb-1">Complétées</div>
               <div className="text-3xl font-bold text-green-900">{stats.completed}</div>
-              <div className="text-xs text-green-600 mt-1">Prêtes à utiliser</div>
+              <div className="text-xs text-green-600 dark:text-green-400 mt-1">Prêtes à utiliser</div>
             </div>
-            <div className="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg p-4">
+            <div className="bg-gradient-to-br from-yellow-50 dark:from-yellow-950/30 to-yellow-100 dark:to-yellow-950/20 rounded-lg p-4">
               <div className="text-sm text-yellow-600 font-medium mb-1">Maîtrisées</div>
               <div className="text-3xl font-bold text-yellow-900">{stats.mastered}</div>
               <div className="text-xs text-yellow-600 mt-1">Expertise atteinte</div>
@@ -80,10 +80,10 @@ export default function SkillTreePage() {
 
         {/* Skill Tree Visualization */}
         {nodes.length === 0 ? (
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-12 text-center">
-            <Target className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-700 mb-2">Aucune comp&eacute;tence disponible</h3>
-            <p className="text-gray-500">L&apos;arbre de comp&eacute;tences sera affich&eacute; ici lorsque les donn&eacute;es seront disponibles.</p>
+          <div className="bg-card rounded-xl shadow-sm border border-border p-12 text-center">
+            <Target className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-foreground mb-2">Aucune comp&eacute;tence disponible</h3>
+            <p className="text-muted-foreground">L&apos;arbre de comp&eacute;tences sera affich&eacute; ici lorsque les donn&eacute;es seront disponibles.</p>
           </div>
         ) : (
           <SkillTreeVisualization

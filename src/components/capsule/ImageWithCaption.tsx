@@ -80,7 +80,7 @@ export default function ImageWithCaption({
           </div>
         </div>
         {caption && (
-          <p className="mt-3 text-sm text-gray-600 dark:text-gray-400 text-center italic">
+          <p className="mt-3 text-sm text-muted-foreground text-center italic">
             {caption}
           </p>
         )}
@@ -98,7 +98,7 @@ export default function ImageWithCaption({
           </div>
         </div>
         {caption && (
-          <p className="mt-3 text-sm text-gray-600 dark:text-gray-400 text-center italic">
+          <p className="mt-3 text-sm text-muted-foreground text-center italic">
             {caption}
           </p>
         )}
@@ -148,7 +148,7 @@ export default function ImageWithCaption({
               className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             >
               <div className="bg-white dark:bg-slate-800 rounded-full p-3 shadow-lg">
-                <ZoomIn className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+                <ZoomIn className="w-6 h-6 text-foreground" />
               </div>
             </motion.div>
           </div>
@@ -175,7 +175,7 @@ export default function ImageWithCaption({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.3 }}
-          className="mt-3 text-sm text-gray-600 dark:text-gray-400 text-center italic"
+          className="mt-3 text-sm text-muted-foreground text-center italic"
         >
           {caption}
         </motion.p>

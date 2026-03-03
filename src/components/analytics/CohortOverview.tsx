@@ -13,9 +13,9 @@ export default function CohortOverview({ data, isLoading }: CohortOverviewProps)
     return (
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         {[1, 2, 3, 4, 5, 6].map(i => (
-          <div key={i} className="bg-white rounded-xl p-4 shadow-sm border animate-pulse">
-            <div className="h-4 bg-gray-200 rounded w-20 mb-2" />
-            <div className="h-8 bg-gray-200 rounded w-12" />
+          <div key={i} className="bg-card rounded-xl p-4 shadow-sm border animate-pulse">
+            <div className="h-4 bg-muted rounded w-20 mb-2" />
+            <div className="h-8 bg-muted rounded w-12" />
           </div>
         ))}
       </div>
@@ -27,15 +27,15 @@ export default function CohortOverview({ data, isLoading }: CohortOverviewProps)
       label: 'Étudiants inscrits',
       value: data.totalStudents,
       icon: Users,
-      color: 'text-blue-500',
-      bg: 'bg-blue-50'
+      color: 'text-blue-500 dark:text-blue-400',
+      bg: 'bg-blue-50 dark:bg-blue-950/30'
     },
     {
       label: 'Actifs (7j)',
       value: data.activeStudents,
       icon: TrendingUp,
-      color: 'text-green-500',
-      bg: 'bg-green-50'
+      color: 'text-green-500 dark:text-green-400',
+      bg: 'bg-green-50 dark:bg-green-950/30'
     },
     {
       label: 'Taux complétion',
@@ -77,9 +77,9 @@ export default function CohortOverview({ data, isLoading }: CohortOverviewProps)
           <div key={stat.label} className={`${stat.bg} rounded-xl p-4 shadow-sm border`}>
             <div className="flex items-center gap-2 mb-2">
               <Icon className={`w-4 h-4 ${stat.color}`} />
-              <span className="text-xs text-gray-600">{stat.label}</span>
+              <span className="text-xs text-muted-foreground">{stat.label}</span>
             </div>
-            <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+            <p className="text-2xl font-bold text-foreground">{stat.value}</p>
           </div>
         );
       })}

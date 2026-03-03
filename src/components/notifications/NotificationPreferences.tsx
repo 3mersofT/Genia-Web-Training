@@ -225,7 +225,7 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
       {/* Message de notification */}
       {message && (
         <div className={`p-4 rounded-lg flex items-center gap-2 ${
-          message.type === 'success' ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'
+          message.type === 'success' ? 'bg-green-50 dark:bg-green-950/30 text-green-800' : 'bg-red-50 dark:bg-red-950/30 text-red-800'
         }`}>
           {message.type === 'success' ? <Check className="w-5 h-5" /> : <AlertCircle className="w-5 h-5" />}
           <span>{message.text}</span>
@@ -233,12 +233,12 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
       )}
 
       {/* Types de notifications */}
-      <div className="bg-white rounded-lg shadow-sm border p-6">
+      <div className="bg-card rounded-lg shadow-sm border p-6">
         <div className="flex items-center gap-2 mb-4">
           <Bell className="w-5 h-5 text-blue-600" />
-          <h3 className="text-lg font-semibold text-gray-900">Types de notifications</h3>
+          <h3 className="text-lg font-semibold text-foreground">Types de notifications</h3>
         </div>
-        <p className="text-sm text-gray-600 mb-6">
+        <p className="text-sm text-muted-foreground mb-6">
           Choisissez les types de notifications que vous souhaitez recevoir
         </p>
 
@@ -246,20 +246,20 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
           {notificationTypes.map((type) => (
             <div key={type.key} className="flex items-start justify-between py-3 border-b last:border-b-0">
               <div className="flex-1">
-                <label htmlFor={type.key} className="font-medium text-gray-900 cursor-pointer">
+                <label htmlFor={type.key} className="font-medium text-foreground cursor-pointer">
                   {type.label}
                 </label>
-                <p className="text-sm text-gray-600 mt-1">{type.description}</p>
+                <p className="text-sm text-muted-foreground mt-1">{type.description}</p>
               </div>
               <button
                 id={type.key}
                 onClick={() => handleToggle(type.key)}
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                  preferences[type.key] ? 'bg-blue-600' : 'bg-gray-200'
+                  preferences[type.key] ? 'bg-blue-600' : 'bg-muted'
                 }`}
               >
                 <span
-                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                  className={`inline-block h-4 w-4 transform rounded-full bg-card transition-transform ${
                     preferences[type.key] ? 'translate-x-6' : 'translate-x-1'
                   }`}
                 />
@@ -270,12 +270,12 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
       </div>
 
       {/* Push Notifications */}
-      <div className="bg-white rounded-lg shadow-sm border p-6">
+      <div className="bg-card rounded-lg shadow-sm border p-6">
         <div className="flex items-center gap-2 mb-4">
           <Smartphone className="w-5 h-5 text-blue-600" />
-          <h3 className="text-lg font-semibold text-gray-900">Notifications Push</h3>
+          <h3 className="text-lg font-semibold text-foreground">Notifications Push</h3>
         </div>
-        <p className="text-sm text-gray-600 mb-6">
+        <p className="text-sm text-muted-foreground mb-6">
           Recevez des notifications instantanées sur votre appareil
         </p>
 
@@ -290,14 +290,14 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
           <div>
             <div className="flex items-start justify-between py-3">
               <div className="flex-1">
-                <label htmlFor="pushNotifications" className="font-medium text-gray-900 cursor-pointer">
+                <label htmlFor="pushNotifications" className="font-medium text-foreground cursor-pointer">
                   Activer les notifications push
                 </label>
-                <p className="text-sm text-gray-600 mt-1">
+                <p className="text-sm text-muted-foreground mt-1">
                   Recevoir des notifications en temps réel même quand l'application n'est pas ouverte
                 </p>
                 {pushPermission === 'denied' && (
-                  <p className="text-sm text-red-600 mt-2">
+                  <p className="text-sm text-red-600 dark:text-red-400 mt-2">
                     ⚠️ Permission refusée. Veuillez autoriser les notifications dans les paramètres de votre navigateur.
                   </p>
                 )}
@@ -307,11 +307,11 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
                 onClick={handlePushToggle}
                 disabled={pushPermission === 'denied'}
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                  pushEnabled ? 'bg-blue-600' : 'bg-gray-200'
+                  pushEnabled ? 'bg-blue-600' : 'bg-muted'
                 } ${pushPermission === 'denied' ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
                 <span
-                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                  className={`inline-block h-4 w-4 transform rounded-full bg-card transition-transform ${
                     pushEnabled ? 'translate-x-6' : 'translate-x-1'
                   }`}
                 />
@@ -322,12 +322,12 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
       </div>
 
       {/* Fréquence des emails */}
-      <div className="bg-white rounded-lg shadow-sm border p-6">
+      <div className="bg-card rounded-lg shadow-sm border p-6">
         <div className="flex items-center gap-2 mb-4">
           <Mail className="w-5 h-5 text-blue-600" />
-          <h3 className="text-lg font-semibold text-gray-900">Notifications par email</h3>
+          <h3 className="text-lg font-semibold text-foreground">Notifications par email</h3>
         </div>
-        <p className="text-sm text-gray-600 mb-6">
+        <p className="text-sm text-muted-foreground mb-6">
           Choisissez la fréquence des emails de notification
         </p>
 
@@ -338,7 +338,7 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
               className={`flex items-start p-4 rounded-lg border-2 cursor-pointer transition-colors ${
                 emailDigest === option.value
                   ? 'border-blue-600 bg-blue-50'
-                  : 'border-gray-200 hover:border-gray-300'
+                  : 'border-border hover:border-input'
               }`}
             >
               <input
@@ -347,11 +347,11 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
                 value={option.value}
                 checked={emailDigest === option.value}
                 onChange={(e) => setEmailDigest(e.target.value as EmailDigestFrequency)}
-                className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500"
+                className="mt-1 h-4 w-4 text-blue-600 focus-visible:ring-ring"
               />
               <div className="ml-3">
-                <div className="font-medium text-gray-900">{option.label}</div>
-                <div className="text-sm text-gray-600">{option.description}</div>
+                <div className="font-medium text-foreground">{option.label}</div>
+                <div className="text-sm text-muted-foreground">{option.description}</div>
               </div>
             </label>
           ))}
@@ -359,17 +359,17 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
       </div>
 
       {/* Heure préférée pour les rappels */}
-      <div className="bg-white rounded-lg shadow-sm border p-6">
+      <div className="bg-card rounded-lg shadow-sm border p-6">
         <div className="flex items-center gap-2 mb-4">
           <Clock className="w-5 h-5 text-blue-600" />
-          <h3 className="text-lg font-semibold text-gray-900">Heure des rappels</h3>
+          <h3 className="text-lg font-semibold text-foreground">Heure des rappels</h3>
         </div>
-        <p className="text-sm text-gray-600 mb-6">
+        <p className="text-sm text-muted-foreground mb-6">
           Choisissez l'heure à laquelle vous souhaitez recevoir vos rappels de série
         </p>
 
         <div className="flex items-center gap-4">
-          <label htmlFor="preferredTime" className="text-sm font-medium text-gray-700">
+          <label htmlFor="preferredTime" className="text-sm font-medium text-foreground">
             Heure préférée :
           </label>
           <input
@@ -377,7 +377,7 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
             id="preferredTime"
             value={preferredTime}
             onChange={(e) => setPreferredTime(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="px-4 py-2 border border-input rounded-lg focus:ring-2 focus-visible:ring-ring focus:border-transparent"
           />
         </div>
       </div>

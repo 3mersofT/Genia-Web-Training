@@ -30,22 +30,22 @@ export default function QuotaDisplay({
       return {
         bar: 'bg-red-500',
         gradient: 'from-red-500 to-red-600',
-        text: 'text-red-600',
-        bg: 'bg-red-50'
+        text: 'text-red-600 dark:text-red-400',
+        bg: 'bg-red-50 dark:bg-red-950/30'
       };
     } else if (percentage >= 70) {
       return {
         bar: 'bg-yellow-500',
         gradient: 'from-yellow-500 to-yellow-600',
-        text: 'text-yellow-600',
-        bg: 'bg-yellow-50'
+        text: 'text-yellow-600 dark:text-yellow-400',
+        bg: 'bg-yellow-50 dark:bg-yellow-950/30'
       };
     } else {
       return {
         bar: 'bg-green-500',
         gradient: 'from-green-500 to-green-600',
-        text: 'text-green-600',
-        bg: 'bg-green-50'
+        text: 'text-green-600 dark:text-green-400',
+        bg: 'bg-green-50 dark:bg-green-950/30'
       };
     }
   };
@@ -75,7 +75,7 @@ export default function QuotaDisplay({
           {showIcon && status === 'healthy' && (
             <CheckCircle className="w-3 h-3 text-green-500" />
           )}
-          <span className="text-gray-600 font-medium">{label}</span>
+          <span className="text-muted-foreground font-medium">{label}</span>
         </div>
         <span className={`font-semibold ${colors.text}`}>
           {used}/{daily}
@@ -83,7 +83,7 @@ export default function QuotaDisplay({
       </div>
 
       {/* Barre de progression */}
-      <div className="relative h-2 bg-gray-100 rounded-full overflow-hidden">
+      <div className="relative h-2 bg-muted rounded-full overflow-hidden">
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${percentage}%` }}
@@ -100,7 +100,7 @@ export default function QuotaDisplay({
 
       {/* Indicateur de pourcentage (optionnel pour petits composants) */}
       <div className="flex justify-between items-center text-xs">
-        <span className="text-gray-400">
+        <span className="text-muted-foreground">
           {percentage.toFixed(0)}% utilisé
         </span>
         {status === 'critical' && (

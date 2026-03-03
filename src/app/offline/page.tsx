@@ -41,10 +41,10 @@ export default function OfflinePage() {
 
   if (isOnline) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] flex items-center justify-center p-4">
         <div className="text-center animate-pulse">
           <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-600">Connexion rétablie, redirection...</p>
+          <p className="text-muted-foreground">Connexion rétablie, redirection...</p>
         </div>
       </div>
     );
@@ -54,13 +54,13 @@ export default function OfflinePage() {
   if (selectedCapsule) {
     const sections = selectedCapsule.content?.sections || {};
     return (
-      <div className="min-h-screen bg-gray-50">
-        <header className="bg-white shadow-sm sticky top-0 z-50">
+      <div className="min-h-screen bg-background">
+        <header className="bg-card shadow-sm sticky top-0 z-50">
           <div className="max-w-4xl mx-auto px-6 py-4">
             <div className="flex items-center justify-between">
               <button
                 onClick={() => setSelectedCapsule(null)}
-                className="flex items-center gap-2 text-gray-600 hover:text-gray-800"
+                className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
               >
                 <WifiOff className="w-4 h-4" />
                 Retour (hors ligne)
@@ -74,10 +74,10 @@ export default function OfflinePage() {
         </header>
 
         <div className="max-w-4xl mx-auto px-6 py-8">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+          <h1 className="text-2xl font-bold text-foreground mb-2">
             {selectedCapsule.capsule.title}
           </h1>
-          <div className="flex items-center gap-3 text-sm text-gray-500 mb-6">
+          <div className="flex items-center gap-3 text-sm text-muted-foreground mb-6">
             <span>{selectedCapsule.moduleTitle}</span>
             <span>-</span>
             <div className="flex items-center gap-1">
@@ -88,48 +88,48 @@ export default function OfflinePage() {
 
           <div className="space-y-6">
             {sections.hook && (
-              <div className="bg-white rounded-lg shadow-sm p-6">
+              <div className="bg-card rounded-lg shadow-sm p-6">
                 <h3 className="font-semibold text-blue-900 mb-3">Accroche</h3>
-                <p className="text-gray-700">{sections.hook.text}</p>
+                <p className="text-foreground">{sections.hook.text}</p>
               </div>
             )}
             {sections.concept?.content && (
-              <div className="bg-white rounded-lg shadow-sm p-6">
+              <div className="bg-card rounded-lg shadow-sm p-6">
                 <h3 className="font-semibold text-purple-900 mb-3">Concept</h3>
-                <div className="text-gray-700 whitespace-pre-wrap">{sections.concept.content}</div>
+                <div className="text-foreground whitespace-pre-wrap">{sections.concept.content}</div>
               </div>
             )}
             {sections.demo && (
-              <div className="bg-white rounded-lg shadow-sm p-6">
+              <div className="bg-card rounded-lg shadow-sm p-6">
                 <h3 className="font-semibold text-green-900 mb-3">Démonstration</h3>
                 {sections.demo.before && (
                   <div className="mb-4">
-                    <h4 className="text-sm font-medium text-red-700 mb-1">Version vague</h4>
-                    <pre className="bg-red-50 p-3 rounded text-sm whitespace-pre-wrap">{sections.demo.before}</pre>
+                    <h4 className="text-sm font-medium text-red-700 dark:text-red-300 mb-1">Version vague</h4>
+                    <pre className="bg-red-50 dark:bg-red-950/30 p-3 rounded text-sm whitespace-pre-wrap">{sections.demo.before}</pre>
                   </div>
                 )}
                 {sections.demo.after && (
                   <div className="mb-4">
-                    <h4 className="text-sm font-medium text-green-700 mb-1">Version optimisée</h4>
-                    <pre className="bg-green-50 p-3 rounded text-sm whitespace-pre-wrap">{sections.demo.after}</pre>
+                    <h4 className="text-sm font-medium text-green-700 dark:text-green-300 mb-1">Version optimisée</h4>
+                    <pre className="bg-green-50 dark:bg-green-950/30 p-3 rounded text-sm whitespace-pre-wrap">{sections.demo.after}</pre>
                   </div>
                 )}
                 {sections.demo.explanation && (
-                  <p className="text-gray-700">{sections.demo.explanation}</p>
+                  <p className="text-foreground">{sections.demo.explanation}</p>
                 )}
               </div>
             )}
             {sections.exercise && (
-              <div className="bg-white rounded-lg shadow-sm p-6">
+              <div className="bg-card rounded-lg shadow-sm p-6">
                 <h3 className="font-semibold text-amber-900 mb-3">Exercice</h3>
-                <p className="text-gray-700">{sections.exercise.instruction}</p>
+                <p className="text-foreground">{sections.exercise.instruction}</p>
               </div>
             )}
             {sections.recap && (
-              <div className="bg-white rounded-lg shadow-sm p-6">
+              <div className="bg-card rounded-lg shadow-sm p-6">
                 <h3 className="font-semibold text-purple-900 mb-3">Récapitulatif</h3>
                 {sections.recap.keyPoint && (
-                  <p className="text-gray-700">{sections.recap.keyPoint}</p>
+                  <p className="text-foreground">{sections.recap.keyPoint}</p>
                 )}
               </div>
             )}
@@ -140,17 +140,17 @@ export default function OfflinePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
-      <div className="max-w-lg w-full bg-white rounded-2xl shadow-xl p-8">
+    <div className="min-h-screen bg-gradient-to-br from-background to-muted flex items-center justify-center p-4">
+      <div className="max-w-lg w-full bg-card rounded-2xl shadow-xl p-8">
         {/* Header */}
         <div className="text-center">
-          <div className="w-24 h-24 bg-gray-100 rounded-full mx-auto mb-6 flex items-center justify-center">
-            <WifiOff className="w-12 h-12 text-gray-400" />
+          <div className="w-24 h-24 bg-muted rounded-full mx-auto mb-6 flex items-center justify-center">
+            <WifiOff className="w-12 h-12 text-muted-foreground" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl font-bold text-foreground mb-2">
             Vous êtes hors ligne
           </h1>
-          <p className="text-gray-600 mb-6">
+          <p className="text-muted-foreground mb-6">
             Vérifiez votre connexion. En attendant, consultez vos capsules sauvegardées.
           </p>
           <button
@@ -165,11 +165,11 @@ export default function OfflinePage() {
         {/* Capsules en cache */}
         <div className="border-t pt-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-900">
+            <h2 className="text-lg font-semibold text-foreground">
               Capsules disponibles hors ligne
             </h2>
             {cacheInfo.totalCapsules > 0 && (
-              <span className="text-xs text-gray-500">
+              <span className="text-xs text-muted-foreground">
                 {cacheInfo.totalCapsules} capsule{cacheInfo.totalCapsules > 1 ? 's' : ''} - {formatSize(cacheInfo.totalSize)}
               </span>
             )}
@@ -178,14 +178,14 @@ export default function OfflinePage() {
           {isLoading ? (
             <div className="text-center py-4">
               <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-              <p className="text-sm text-gray-500">Chargement du cache...</p>
+              <p className="text-sm text-muted-foreground">Chargement du cache...</p>
             </div>
           ) : cachedCapsules.length > 0 ? (
             <div className="space-y-2">
               {cachedCapsules.map((cached) => (
                 <div
                   key={cached.capsule.id}
-                  className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors"
+                  className="flex items-center gap-3 p-3 bg-muted rounded-lg hover:bg-blue-50 transition-colors"
                 >
                   <button
                     onClick={() => setSelectedCapsule(cached)}
@@ -193,17 +193,17 @@ export default function OfflinePage() {
                   >
                     <BookOpen className="w-4 h-4 text-blue-600 flex-shrink-0" />
                     <div className="min-w-0">
-                      <p className="text-sm font-medium text-gray-900 truncate">
+                      <p className="text-sm font-medium text-foreground truncate">
                         {cached.capsule.title}
                       </p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-muted-foreground">
                         {cached.moduleTitle} - {cached.capsule.duration} min
                       </p>
                     </div>
                   </button>
                   <button
                     onClick={() => removeCapsule(cached.capsule.id)}
-                    className="p-1.5 text-gray-400 hover:text-red-500 transition-colors flex-shrink-0"
+                    className="p-1.5 text-muted-foreground hover:text-red-500 dark:text-red-400 transition-colors flex-shrink-0"
                     title="Retirer du cache"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
@@ -214,7 +214,7 @@ export default function OfflinePage() {
               {cachedCapsules.length > 1 && (
                 <button
                   onClick={clearAll}
-                  className="w-full mt-3 text-xs text-red-500 hover:text-red-700 py-2"
+                  className="w-full mt-3 text-xs text-red-500 dark:text-red-400 hover:text-red-700 dark:text-red-300 py-2"
                 >
                   Vider tout le cache
                 </button>
@@ -222,11 +222,11 @@ export default function OfflinePage() {
             </div>
           ) : (
             <div className="text-center py-4">
-              <HardDrive className="w-8 h-8 text-gray-300 mx-auto mb-2" />
-              <p className="text-sm text-gray-500">
+              <HardDrive className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
+              <p className="text-sm text-muted-foreground">
                 Aucune capsule sauvegardée.
               </p>
-              <p className="text-xs text-gray-400 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 Sauvegardez des capsules depuis leur page pour y accéder hors ligne.
               </p>
             </div>
@@ -244,11 +244,11 @@ export default function OfflinePage() {
             </p>
           </div>
 
-          <div className="bg-green-50 p-4 rounded-lg">
+          <div className="bg-green-50 dark:bg-green-950/30 p-4 rounded-lg">
             <h3 className="font-medium text-green-900 mb-1">
               Exercice mental
             </h3>
-            <p className="text-sm text-green-700">
+            <p className="text-sm text-green-700 dark:text-green-300">
               Réfléchissez à 3 façons d'améliorer ce prompt :
               "Écris-moi un article"
             </p>
@@ -258,7 +258,7 @@ export default function OfflinePage() {
         {/* Status */}
         <div className="mt-4 flex items-center justify-center gap-2">
           <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-          <span className="text-xs text-gray-500">Hors ligne</span>
+          <span className="text-xs text-muted-foreground">Hors ligne</span>
         </div>
       </div>
     </div>
