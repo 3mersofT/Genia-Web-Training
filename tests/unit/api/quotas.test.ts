@@ -1,4 +1,7 @@
 /**
+ * @jest-environment node
+ */
+/**
  * Unit Tests for /api/quotas Route
  *
  * Tests verify that the quotas API route:
@@ -18,6 +21,14 @@ import { GET } from '@/app/api/quotas/route';
 jest.mock('@/lib/supabase/server', () => ({
   createClient: jest.fn(),
   createAdminClient: jest.fn(),
+}));
+
+// Mock rate-limiter to avoid 429 in tests
+jest.mock('@/lib/rate-limiter', () => ({
+  createRateLimiter: () => async () => ({
+    response: null,
+    result: { success: true, limit: 100, remaining: 99, reset: Date.now() + 60000 },
+  }),
 }));
 
 describe('/api/quotas - Unit Tests', () => {
@@ -63,7 +74,7 @@ describe('/api/quotas - Unit Tests', () => {
       });
 
       const request = new NextRequest(
-        'http://localhost:3000/api/quotas?userId=test-user-123',
+        'http://localhost:3000/api/quotas?userId=a1b2c3d4-e5f6-7890-abcd-ef1234567890',
         {
           method: 'GET',
         }
@@ -85,7 +96,7 @@ describe('/api/quotas - Unit Tests', () => {
       });
 
       const request = new NextRequest(
-        'http://localhost:3000/api/quotas?userId=test-user-123',
+        'http://localhost:3000/api/quotas?userId=a1b2c3d4-e5f6-7890-abcd-ef1234567890',
         {
           method: 'GET',
         }
@@ -105,7 +116,7 @@ describe('/api/quotas - Unit Tests', () => {
       mockAuth.getUser.mockResolvedValue({
         data: {
           user: {
-            id: 'test-user-123',
+            id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
             email: 'test@example.com',
           },
         },
@@ -122,7 +133,7 @@ describe('/api/quotas - Unit Tests', () => {
       const data = await response.json();
 
       expect(response.status).toBe(400);
-      expect(data.error).toBe('userId requis');
+      expect(data.error).toBe('Invalid request data');
     });
 
     it('should return 400 when userId is empty string', async () => {
@@ -134,7 +145,7 @@ describe('/api/quotas - Unit Tests', () => {
       const data = await response.json();
 
       expect(response.status).toBe(400);
-      expect(data.error).toBe('userId requis');
+      expect(data.error).toBe('Invalid request data');
     });
   });
 
@@ -143,7 +154,7 @@ describe('/api/quotas - Unit Tests', () => {
       mockAuth.getUser.mockResolvedValue({
         data: {
           user: {
-            id: 'test-user-123',
+            id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
             email: 'test@example.com',
           },
         },
@@ -153,7 +164,7 @@ describe('/api/quotas - Unit Tests', () => {
 
     it('should return 403 when user tries to access another users quotas', async () => {
       const request = new NextRequest(
-        'http://localhost:3000/api/quotas?userId=another-user-456',
+        'http://localhost:3000/api/quotas?userId=b2c3d4e5-f6a7-8901-bcde-f12345678901',
         {
           method: 'GET',
         }
@@ -198,7 +209,7 @@ describe('/api/quotas - Unit Tests', () => {
       });
 
       const request = new NextRequest(
-        'http://localhost:3000/api/quotas?userId=test-user-123',
+        'http://localhost:3000/api/quotas?userId=a1b2c3d4-e5f6-7890-abcd-ef1234567890',
         {
           method: 'GET',
         }
@@ -217,7 +228,7 @@ describe('/api/quotas - Unit Tests', () => {
       mockAuth.getUser.mockResolvedValue({
         data: {
           user: {
-            id: 'test-user-123',
+            id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
             email: 'test@example.com',
           },
         },
@@ -280,7 +291,7 @@ describe('/api/quotas - Unit Tests', () => {
       });
 
       const request = new NextRequest(
-        'http://localhost:3000/api/quotas?userId=test-user-123',
+        'http://localhost:3000/api/quotas?userId=a1b2c3d4-e5f6-7890-abcd-ef1234567890',
         {
           method: 'GET',
         }
@@ -338,7 +349,7 @@ describe('/api/quotas - Unit Tests', () => {
       });
 
       const request = new NextRequest(
-        'http://localhost:3000/api/quotas?userId=test-user-123',
+        'http://localhost:3000/api/quotas?userId=a1b2c3d4-e5f6-7890-abcd-ef1234567890',
         {
           method: 'GET',
         }
@@ -348,7 +359,7 @@ describe('/api/quotas - Unit Tests', () => {
 
       expect(mockAdminSupabase.rpc).toHaveBeenCalledWith(
         'get_user_quota_status',
-        { p_user_id: 'test-user-123' }
+        { p_user_id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890' }
       );
     });
 
@@ -379,7 +390,7 @@ describe('/api/quotas - Unit Tests', () => {
       });
 
       const request = new NextRequest(
-        'http://localhost:3000/api/quotas?userId=test-user-123',
+        'http://localhost:3000/api/quotas?userId=a1b2c3d4-e5f6-7890-abcd-ef1234567890',
         {
           method: 'GET',
         }
@@ -417,7 +428,7 @@ describe('/api/quotas - Unit Tests', () => {
       });
 
       const request = new NextRequest(
-        'http://localhost:3000/api/quotas?userId=test-user-123',
+        'http://localhost:3000/api/quotas?userId=a1b2c3d4-e5f6-7890-abcd-ef1234567890',
         {
           method: 'GET',
         }
@@ -470,7 +481,7 @@ describe('/api/quotas - Unit Tests', () => {
       });
 
       const request = new NextRequest(
-        'http://localhost:3000/api/quotas?userId=test-user-123',
+        'http://localhost:3000/api/quotas?userId=a1b2c3d4-e5f6-7890-abcd-ef1234567890',
         {
           method: 'GET',
         }
@@ -502,7 +513,7 @@ describe('/api/quotas - Unit Tests', () => {
       mockAuth.getUser.mockResolvedValue({
         data: {
           user: {
-            id: 'test-user-123',
+            id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
             email: 'test@example.com',
           },
         },
@@ -517,7 +528,7 @@ describe('/api/quotas - Unit Tests', () => {
       });
 
       const request = new NextRequest(
-        'http://localhost:3000/api/quotas?userId=test-user-123',
+        'http://localhost:3000/api/quotas?userId=a1b2c3d4-e5f6-7890-abcd-ef1234567890',
         {
           method: 'GET',
         }
@@ -534,7 +545,7 @@ describe('/api/quotas - Unit Tests', () => {
       mockAdminSupabase.rpc.mockRejectedValue(new Error('Database connection failed'));
 
       const request = new NextRequest(
-        'http://localhost:3000/api/quotas?userId=test-user-123',
+        'http://localhost:3000/api/quotas?userId=a1b2c3d4-e5f6-7890-abcd-ef1234567890',
         {
           method: 'GET',
         }
@@ -573,7 +584,7 @@ describe('/api/quotas - Unit Tests', () => {
       });
 
       const request = new NextRequest(
-        'http://localhost:3000/api/quotas?userId=test-user-123',
+        'http://localhost:3000/api/quotas?userId=a1b2c3d4-e5f6-7890-abcd-ef1234567890',
         {
           method: 'GET',
         }
@@ -591,7 +602,7 @@ describe('/api/quotas - Unit Tests', () => {
       mockAuth.getUser.mockRejectedValue(new Error('Unexpected error'));
 
       const request = new NextRequest(
-        'http://localhost:3000/api/quotas?userId=test-user-123',
+        'http://localhost:3000/api/quotas?userId=a1b2c3d4-e5f6-7890-abcd-ef1234567890',
         {
           method: 'GET',
         }
@@ -610,7 +621,7 @@ describe('/api/quotas - Unit Tests', () => {
       mockAuth.getUser.mockResolvedValue({
         data: {
           user: {
-            id: 'test-user-123',
+            id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
             email: 'test@example.com',
           },
         },
@@ -649,7 +660,7 @@ describe('/api/quotas - Unit Tests', () => {
       });
 
       const request = new NextRequest(
-        'http://localhost:3000/api/quotas?userId=test-user-123',
+        'http://localhost:3000/api/quotas?userId=a1b2c3d4-e5f6-7890-abcd-ef1234567890',
         {
           method: 'GET',
         }
@@ -699,7 +710,7 @@ describe('/api/quotas - Unit Tests', () => {
       });
 
       const request = new NextRequest(
-        'http://localhost:3000/api/quotas?userId=test-user-123',
+        'http://localhost:3000/api/quotas?userId=a1b2c3d4-e5f6-7890-abcd-ef1234567890',
         {
           method: 'GET',
         }
@@ -718,36 +729,19 @@ describe('/api/quotas - Unit Tests', () => {
       });
     });
 
-    it('should handle special characters in userId', async () => {
+    it('should reject non-UUID userId format', async () => {
       mockAuth.getUser.mockResolvedValue({
         data: {
           user: {
-            id: 'test-user-with-special-chars-@#$',
+            id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
             email: 'test@example.com',
           },
         },
         error: null,
       });
 
-      mockAdminSupabase.rpc.mockResolvedValue({
-        data: [],
-        error: null,
-      });
-
-      mockAdminSupabase.from.mockReturnValue({
-        select: jest.fn(() => ({
-          eq: jest.fn(() => ({
-            eq: jest.fn().mockResolvedValue({
-              data: [],
-              error: null,
-            }),
-          })),
-        })),
-      });
-
-      const userId = encodeURIComponent('test-user-with-special-chars-@#$');
       const request = new NextRequest(
-        `http://localhost:3000/api/quotas?userId=${userId}`,
+        `http://localhost:3000/api/quotas?userId=not-a-uuid`,
         {
           method: 'GET',
         }
@@ -756,8 +750,8 @@ describe('/api/quotas - Unit Tests', () => {
       const response = await GET(request);
       const data = await response.json();
 
-      expect(response.status).toBe(200);
-      expect(data.quotas).toBeDefined();
+      expect(response.status).toBe(400);
+      expect(data.error).toBe('Invalid request data');
     });
 
     it('should handle very large token and cost values', async () => {
@@ -791,7 +785,7 @@ describe('/api/quotas - Unit Tests', () => {
       });
 
       const request = new NextRequest(
-        'http://localhost:3000/api/quotas?userId=test-user-123',
+        'http://localhost:3000/api/quotas?userId=a1b2c3d4-e5f6-7890-abcd-ef1234567890',
         {
           method: 'GET',
         }
