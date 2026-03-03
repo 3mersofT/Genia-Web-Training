@@ -131,13 +131,13 @@
             "duration": 15
           },
           "concept": {
-            "content": "Les 4 piliers CCFC sont votre boussole pour créer des prompts efficaces. Chaque pilier joue un rôle crucial dans la qualité du résultat.\n\n**🎯 CLARTÉ - Soyez précis comme un laser**\n• Instructions sans ambiguïté\n• Verbes d'action spécifiques (analyser, comparer, créer, synthétiser)\n• Évitez : 'fais quelque chose de bien'\n• Préférez : 'crée une analyse SWOT en 4 points'\n\n**📋 CONTEXTE - Donnez les bonnes infos**\n• Qui êtes-vous ? Qui est le destinataire ?\n• Quelle est la situation ?\n• Quels sont les enjeux ?\n• Exemple : 'Pour un rapport destiné au comité de direction d'une PME industrielle'\n\n**🚧 CONTRAINTES - Fixez les limites**\n• Longueur (100 mots, 5 paragraphes, 1 page)\n• Style (formel, conversationnel, technique)\n• Restrictions ('sans jargon', 'niveau débutant', 'avec exemples')\n• Ce qu'il NE faut PAS faire\n\n**📝 FORMAT - Définissez la structure**\n• Comment présenter l'information ?\n• Liste à puces, tableau, paragraphes, JSON ?\n• Ordre et organisation\n• Exemple : 'Format email avec objet, corps en 3 parties, signature'",
+            "content": "Les 4 piliers CCFC sont votre boussole pour créer des prompts efficaces. Chaque pilier joue un rôle crucial dans la qualité du résultat. Maîtrisez-les, et vous ne produirez plus jamais de prompt médiocre.\n\n**💡 RCTF et CCFC : deux outils complémentaires**\nDans la capsule précédente, vous avez découvert RCTF (Rôle-Contexte-Tâche-Format) qui structure votre prompt en sections claires. CCFC aborde les mêmes fondamentaux sous un angle qualité : Clarté (précision des instructions), Contexte (richesse des informations), Contraintes (cadrage précis), Format (structure de sortie). Pensez à RCTF comme l'architecture de votre prompt et à CCFC comme la checklist qualité. Les deux se complètent parfaitement et vous les utiliserez naturellement ensemble.\n\n**🎯 CLARTÉ - Soyez précis comme un laser**\n• Instructions sans ambiguïté\n• Verbes d'action spécifiques (analyser, comparer, créer, synthétiser)\n• Évitez le vague, privilégiez la précision chirurgicale\n\n→ Comparaison concrète :\n❌ « Fais quelque chose de bien sur mon entreprise »\n✅ « Crée une analyse SWOT en 4 points avec forces, faiblesses, opportunités et menaces pour une boulangerie artisanale à Lyon »\n\nLa version claire dit exactement quoi faire, quel format, et sur quel sujet. L'IA n'a plus à deviner.\n\n**📋 CONTEXTE - Donnez les bonnes infos**\n• Qui êtes-vous ? Qui est le destinataire ?\n• Quelle est la situation ?\n• Quels sont les enjeux ?\n\n→ Comparaison concrète :\n❌ « Rédige un email de relance »\n✅ « Rédige un email de relance pour un prospect PME du secteur logistique (50 employés) qui a assisté à notre webinaire il y a 10 jours mais n'a pas répondu à notre offre d'essai gratuit »\n\nAvec le bon contexte, l'IA adapte le ton, le vocabulaire et les arguments. Sans contexte, elle produit du générique inutilisable.\n\n**🚧 CONTRAINTES - Fixez les limites**\n• Longueur (100 mots, 5 paragraphes, 1 page)\n• Style (formel, conversationnel, technique)\n• Restrictions ('sans jargon', 'niveau débutant', 'avec exemples')\n• Ce qu'il NE faut PAS faire\n\n→ Comparaison concrète :\n❌ « Explique le machine learning »\n✅ « Explique le machine learning en maximum 150 mots, pour un public non technique, sans utiliser de termes anglais, avec une analogie tirée de la vie quotidienne »\n\nLes contraintes empêchent l'IA de partir dans tous les sens. Elles cadrent la réponse pour qu'elle soit immédiatement utilisable.\n\n**📝 FORMAT - Définissez la structure**\n• Comment présenter l'information ?\n• Liste à puces, tableau, paragraphes, JSON ?\n• Ordre et organisation\n\n→ Comparaison concrète :\n❌ « Donne-moi des idées de contenu »\n✅ « Propose 5 idées de posts LinkedIn, présentées dans un tableau avec les colonnes : Titre du post | Accroche (1 phrase) | Angle principal | CTA suggéré »\n\nLe format transforme une réponse en bloc de texte illisible en un livrable structuré et professionnel, prêt à être exploité directement.",
             "code": "// Exemple de structure CCFC en action\nconst promptCCFC = {\n  clarte: \"Crée une analyse des risques\",\n  contexte: \"Projet de lancement d'app mobile, startup fintech, marché français\",\n  contraintes: \"Maximum 5 risques principaux, avec probabilité et impact\",\n  format: \"Tableau avec colonnes : Risque | Probabilité (H/M/L) | Impact (H/M/L) | Mitigation\"\n};",
             "duration": 90
           },
           "demo": {
             "before": "Fais un rapport sur les ventes",
-            "after": "[CLARTÉ] Analyse les performances de ventes du Q4 2024 et identifie les tendances clés.\n\n[CONTEXTE] Entreprise e-commerce, 50 employés, vente de produits électroniques B2C, marché français, données de ventes disponibles par catégorie, région et canal.\n\n[CONTRAINTES]\n- Focus sur les 3 catégories principales\n- Comparer avec Q4 2023\n- Maximum 500 mots\n- Niveau de détail : direction générale\n- Éviter le jargon technique\n\n[FORMAT]\n1. Résumé exécutif (3 bullets)\n2. Performance par catégorie (tableau)\n3. Analyse des tendances (3 paragraphes)\n4. 3 recommandations actions",
+            "after": "[CLARTÉ] Analyse les performances de ventes du Q4 2024 et identifie les tendances clés, en mettant en évidence les écarts significatifs par rapport aux objectifs fixés.\n→ Pilier Clarté appliqué : verbe d'action précis (« analyse », « identifie »), périmètre temporel défini (Q4 2024), objectif mesurable (tendances + écarts).\n\n[CONTEXTE] Entreprise e-commerce, 50 employés, vente de produits électroniques B2C, marché français. Données de ventes disponibles par catégorie, région et canal. L'entreprise a connu une croissance de 15% au Q3 et vise 20% au Q4. Le rapport est destiné au comité de direction pour la réunion stratégique de janvier.\n→ Pilier Contexte appliqué : secteur, taille, données disponibles, historique de performance, destinataire du livrable.\n\n[CONTRAINTES]\n- Focus sur les 3 catégories principales (smartphones, accessoires, PC portables)\n- Comparer avec Q4 2023 pour dégager l'évolution année sur année\n- Maximum 500 mots pour rester synthétique\n- Niveau de détail : direction générale, pas de granularité SKU\n- Éviter le jargon technique et les acronymes non définis\n- Ne pas inclure de projections financières (réservées au DAF)\n→ Pilier Contraintes appliqué : limites de longueur, de périmètre, de ton, et exclusions explicites.\n\n[FORMAT]\n1. Résumé exécutif (3 bullets chiffrés)\n2. Performance par catégorie (tableau : Catégorie | CA Q4 2024 | CA Q4 2023 | Évolution % | vs Objectif)\n3. Analyse des tendances (3 paragraphes courts)\n4. 3 recommandations actionnables classées par priorité\n→ Pilier Format appliqué : structure numérotée, détail des colonnes du tableau, organisation logique du livrable.",
             "explanation": "Voyez comme chaque pilier ajoute de la valeur : CLARTÉ dit quoi faire, CONTEXTE donne les infos nécessaires, CONTRAINTES cadre le travail, FORMAT structure le résultat. Ensemble, ils garantissent un résultat professionnel.",
             "duration": 90
           },
@@ -159,13 +159,35 @@
               {
                 "prompt": "Tu es expert marketing. Pour ma startup SaaS B2B, crée une stratégie social media",
                 "options": [
-                  "Clarté", 
+                  "Clarté",
                   "Contexte",
                   "Contraintes et Format",
                   "Rien ne manque"
                 ],
                 "correct": 2,
                 "explanation": "Il manque CONTRAINTES (budget ? durée ? ressources ?) et FORMAT (comment présenter la stratégie ?)"
+              },
+              {
+                "prompt": "Rédige un texte de 200 mots maximum, en langage simple et sans jargon, sous forme de 3 paragraphes avec une introduction, un développement et une conclusion",
+                "options": [
+                  "Clarté - on ne sait pas quel texte rédiger",
+                  "Contexte - on ne sait pas pour qui ni pourquoi",
+                  "Clarté et Contexte manquent tous les deux",
+                  "Format - la structure n'est pas définie"
+                ],
+                "correct": 2,
+                "explanation": "Les contraintes (200 mots, langage simple) et le format (3 paragraphes) sont bien définis, mais il manque la CLARTÉ (quel sujet ? quel type de texte ?) et le CONTEXTE (pour quel public ? dans quelle situation ?). Un prompt peut avoir d'excellentes contraintes tout en restant inutilisable si l'objectif et le contexte sont absents."
+              },
+              {
+                "prompt": "Pour le site web de ma boulangerie artisanale à Bordeaux qui existe depuis 5 ans et cible une clientèle locale de quartier, crée du contenu engageant pour attirer plus de clients",
+                "options": [
+                  "Contexte - les informations sur l'entreprise sont insuffisantes",
+                  "Contraintes et Format - aucune limite ni structure demandée",
+                  "Clarté - le mot 'contenu' est trop vague",
+                  "Contraintes, Format et Clarté manquent"
+                ],
+                "correct": 3,
+                "explanation": "Le contexte est excellent (boulangerie artisanale, Bordeaux, 5 ans, clientèle locale). Mais trois piliers sont défaillants : la CLARTÉ est vague (quel type de contenu ? posts réseaux sociaux, flyer, page web ?), les CONTRAINTES sont absentes (combien de contenus ? quel ton ? quelle longueur ?), et le FORMAT n'est pas précisé (liste, texte rédigé, tableau éditorial ?). Cet exemple montre qu'un bon contexte ne suffit pas à lui seul."
               }
             ],
             "hints": [

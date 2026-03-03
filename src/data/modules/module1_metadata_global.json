@@ -343,9 +343,8 @@
       "certificationPath": "Certificat Fondamentaux → Avancé → Expert",
       "communityIntegration": "Accès au groupe Discord exclusif"
     }
-  },
-  
-  "analytics": {
+    ,
+    "analytics": {
     "trackingPoints": [
       "Capsule started",
       "Exercise attempted",
@@ -373,6 +372,7 @@
         "Time invested",
         "Achievements unlocked"
       ]
+    }
     }
   }
 }

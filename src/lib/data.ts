@@ -277,7 +277,7 @@ function transformModule(config: any, index: number, allCapsules: Record<string,
   // Pour modules 2 et 3, utiliser la structure alternative
   if (metadata.module?.title) {
     const sections = metadata.sections || metadata.module?.sections || [];
-    const capsules = metadata.capsules || metadata.module?.capsules_summary || [];
+    const capsules = metadata.capsules || metadata.module?.capsulesSummary || metadata.module?.capsules_summary || [];
 
     return {
       id: metadata.module.id,

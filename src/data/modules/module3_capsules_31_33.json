@@ -108,6 +108,11 @@
                 "automation": "Trigger : Vendredi 16h\nData : Auto-pull from dashboard\nReview : 15 min final check\nSend : 16h30"
               }
             },
+            "hints": [
+              "Commencez par auditer vos 5 types d'emails les plus fréquents : quels sont ceux que vous envoyez le plus souvent ?",
+              "Pour chaque template, incluez : des variables contextuelles ({{DESTINATAIRE}}, {{SUJET}}), des conditions [SI connu/inconnu], un CTA clair, et des métriques cibles.",
+              "Structurez votre système avec : 5 templates couvrant 80% de vos emails, une personnalisation conditionnelle (ton formel/informel, urgence), et un tracking (taux de réponse, satisfaction)."
+            ],
             "validation": {
               "checklist": [
                 "5 templates complets et distincts",
@@ -286,6 +291,11 @@
                 "KPIs et tracking"
               ]
             },
+            "hints": [
+              "Choisissez un sujet que vous maîtrisez et définissez votre message principal en une seule phrase claire et percutante.",
+              "Déclinez votre idée en 5 angles (débutant, expert, business, pratique, futur), puis pour chaque angle identifiez 3-4 formats adaptés aux différentes plateformes.",
+              "Créez une matrice : 5 angles × 4 plateformes (LinkedIn, Twitter, Instagram, Blog) avec pour chaque case le format, la longueur, le hook et le CTA. Ajoutez un calendrier sur 30 jours."
+            ],
             "validation": {
               "criteria": [
                 "Cohérence du message core",
@@ -463,6 +473,11 @@
               "competitor_analyzer": "Extraction: Products, Pricing, Strategy\nAnalyse: Strengths, Weaknesses, Moves\nActions: Counter-strategy, Differentiation",
               "research_analyzer": "Extraction: Methodology, Findings, Limitations\nAnalyse: Validity, Applicability, Gaps\nActions: Implementation, Further research"
             },
+            "hints": [
+              "Identifiez le type de document que vous analysez le plus souvent dans votre quotidien professionnel (rapport, contrat, étude, CV, etc.).",
+              "Définissez les 5 phases de votre analyseur : Extraction (quels éléments), Analyse (quels critères), Synthèse (quel format), Questions critiques (quels red flags), Actions (quelles décisions).",
+              "Créez un prompt master avec : un rôle expert spécifique, une liste d'éléments à extraire, un framework d'analyse avec critères, un format de synthèse en 1 page, et des next steps actionnables."
+            ],
             "validation": {
               "criteria": [
                 "Spécificité au type de document",
