@@ -104,6 +104,11 @@
               "project": "Template pour gestion de projet"
             },
             "solution": "# {{TASK_NAME:Tâche Professionnelle}}\n\n## CONTEXTE\n[SI {{USER_CONTEXT}}]\n  Contexte spécifique : {{USER_CONTEXT}}\n[SINON]\n  Domaine : {{DOMAIN:Business}}\n  Urgence : {{URGENCY:Normal|Urgent|Critique}}\n[FIN SI]\n\n## RÔLE\nTu es {{EXPERT:consultant senior}} avec {{YEARS:10}} ans d'expérience en {{SPECIALTY:management}}.\nTraits : {{TRAITS:analytique, pragmatique, orienté résultats}}\n\n## OBJECTIF PRINCIPAL\n{{MAIN_GOAL:Résoudre le problème efficacement}}\n\n[SI {{SECONDARY_GOALS}}]\n## OBJECTIFS SECONDAIRES\n{{SECONDARY_GOALS}}\n[FIN SI]\n\n## INSTRUCTIONS DÉTAILLÉES\n1. Analyse {{INPUT_TYPE:la situation|les données|le document}}\n2. Identifie {{KEY_ELEMENTS:points clés|problèmes|opportunités}}\n3. [SI {{NEED_RESEARCH}}]Recherche informations additionnelles sur {{RESEARCH_TOPICS}}[FIN SI]\n4. Développe {{OUTPUT_COUNT:3}} {{OUTPUT_TYPE:solutions|recommandations|options}}\n5. [POUR chaque OUTPUT]\n   - Avantages\n   - Inconvénients  \n   - Ressources nécessaires\n   - Timeline\n[FIN POUR]\n6. Priorise selon {{CRITERIA:impact, faisabilité, coût}}\n7. [SI {{NEED_VALIDATION}}]Valide avec critères : {{VALIDATION_CRITERIA}}[FIN SI]\n\n## CONTRAINTES\n- Budget : {{BUDGET:À définir}}\n- Délai : {{DEADLINE:À définir}}\n- Ressources : {{RESOURCES:À définir}}\n[SI {{ADDITIONAL_CONSTRAINTS}}]\n- {{ADDITIONAL_CONSTRAINTS}}\n[FIN SI]\n\n## FORMAT DE SORTIE\n[CHOIX {{OUTPUT_FORMAT:structured}}]\n  [CAS 'structured']\n    1. Résumé Exécutif\n    2. Analyse Détaillée\n    3. Recommandations\n    4. Plan d'Action\n    5. KPIs de Suivi\n  [CAS 'report']\n    - Introduction\n    - Méthodologie\n    - Findings\n    - Conclusions\n    - Annexes\n  [CAS 'presentation']\n    - Slide 1: Contexte\n    - Slide 2-4: Analyse\n    - Slide 5-7: Solutions\n    - Slide 8: Next Steps\n  [DÉFAUT]\n    Format narratif professionnel\n[FIN CHOIX]\n\n## EXEMPLES DE RÉFÉRENCE\n[SI {{EXAMPLES_PROVIDED}}]\n{{EXAMPLES}}\n[SINON SI {{AUTO_GENERATE_EXAMPLES}}]\n[Génère 2 exemples pertinents basés sur le contexte]\n[FIN SI]\n\n## CRITÈRES DE VALIDATION\n✔ Complétude : Tous les points adressés\n✔ Clarté : Langage {{LANGUAGE_LEVEL:professionnel mais accessible}}\n✔ Actionnable : Instructions concrètes\n✔ Mesurable : KPIs définis\n✔ Réaliste : Faisable avec ressources disponibles\n\n## MÉTA-PARAMÈTRES\n@confidence_required: {{CONFIDENCE:8}}/10\n@iteration_max: {{MAX_ITER:3}}\n@auto_improve: {{AUTO_IMPROVE:true}}\n@output_length: {{LENGTH:adaptatif|court|moyen|long}}\n\n## POST-TRAITEMENT\n[SI score < {{MIN_SCORE:7}}]\n  → Réviser en focusant sur : {{WEAK_POINTS}}\n[FIN SI]\n[SI {{REQUIRE_SUMMARY}}]\n  → Ajouter résumé 3 bullets points\n[FIN SI]",
+            "hints": [
+              "Identifiez d'abord votre cas d'usage le plus fréquent : quelle tâche faites-vous au moins 3 fois par semaine ?",
+              "Incluez au minimum : 5 variables {{dynamiques}} avec valeurs par défaut, 2 blocs conditionnels [SI/ALORS], et un mécanisme de validation avec score minimum.",
+              "Structurez votre template : CONTEXTE (variables), RÔLE (configurable), OBJECTIF, INSTRUCTIONS (étapes numérotées), CONTRAINTES, FORMAT (choix multiples), VALIDATION (critères qualité)."
+            ],
             "validation": {
               "checklist": [
                 "Variables clairement définies avec defaults",
@@ -235,6 +240,11 @@
               "productivity": "# Daily Planning\n---\nname: Daily Planner Pro\ncategory: Productivity\nfrequency: Daily\n---\n\n## Morning Review\n- Yesterday's wins: {{WINS}}\n- Pending items: {{PENDING}}\n\n## Today's Focus\n- Top 3 priorities: {{PRIORITIES}}\n- Time blocks: {{SCHEDULE}}\n- Energy management: {{HIGH_ENERGY_TASKS}}\n\n[Template details...]",
               "analysis": "# Quick SWOT\n---\nname: SWOT Express\ncategory: Analysis\nfrequency: Weekly\n---\n\n## Subject: {{ANALYSIS_SUBJECT}}\n\n### Strengths\n{{STRENGTHS_LIST}}\n\n### Weaknesses\n{{WEAKNESSES_LIST}}\n\n### Opportunities\n{{OPPORTUNITIES_LIST}}\n\n### Threats\n{{THREATS_LIST}}\n\n## Action Items\n[Auto-generated based on analysis]\n\n[Template details...]"
             },
+            "hints": [
+              "Choisissez 5 catégories parmi : Communication, Productivité, Analyse, Création, Personnel. Pensez aux tâches que vous faites le plus souvent.",
+              "Pour chaque template, définissez : le nom, la catégorie, la fréquence d'utilisation, les variables clés, et les instructions étape par étape.",
+              "Ajoutez à chaque template : des métadonnées (catégorie, tags, version), un format de sortie clair, et des critères de validation. Organisez-les dans une structure logique : CORE / CREATION / ANALYSIS / MANAGEMENT / PERSONAL."
+            ],
             "validation": {
               "scoring": {
                 "completeness": "20 points",
@@ -385,6 +395,11 @@
               }
             },
             "solution_framework": "## Mon Automatisation : {{TASK_NAME}}\n\n### Analyse\n- **Fréquence :** {{FREQUENCY}}\n- **Temps actuel :** {{CURRENT_TIME}}\n- **Complexité :** {{LOW|MEDIUM|HIGH}}\n\n### Architecture\n```\n[TRIGGER]\n{{TRIGGER_DESCRIPTION}}\n    ↓\n[COLLECT DATA]\n{{DATA_SOURCES}}\n    ↓\n[AI PROCESSING]\nPrompt : {{AI_PROMPT}}\n    ↓\n[FORMAT OUTPUT]\n{{OUTPUT_FORMAT}}\n    ↓\n[DISTRIBUTE]\n{{DISTRIBUTION_CHANNELS}}\n```\n\n### Implementation\n**Outil :** {{TOOL_CHOICE}}\n**Setup :** {{SETUP_STEPS}}\n**Test :** {{TEST_PLAN}}\n\n### ROI\n- **Temps setup :** {{SETUP_TIME}}\n- **Temps gagné/jour :** {{TIME_SAVED}}\n- **ROI :** {{PAYBACK_DAYS}} jours\n\n### Optimisations Futures\n1. {{OPTIMIZATION_1}}\n2. {{OPTIMIZATION_2}}\n3. {{OPTIMIZATION_3}}",
+            "hints": [
+              "Identifiez votre tâche répétitive la plus chronophage : celle que vous faites au moins 3 fois par semaine et qui prend plus de 15 minutes.",
+              "Définissez les 5 éléments clés : Trigger (déclencheur), Input (données d'entrée), Processing (traitement IA avec prompt), Output (format de sortie), Distribution (où et comment).",
+              "Calculez le ROI : temps de setup vs temps gagné par exécution × fréquence. Votre automatisation doit se rentabiliser en moins de 2 semaines. Incluez un plan de test."
+            ],
             "validation": {
               "criteria": [
                 "Tâche clairement identifiée",

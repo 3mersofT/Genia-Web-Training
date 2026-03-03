@@ -225,6 +225,11 @@
                 "prompt": "Crée un calendrier éditorial mensuel avec les 30 posts [STAGE_4]. Distribue intelligemment selon : thèmes, jours optimaux, événements industry. Format : calendrier JSON."
               }
             },
+            "hints": [
+              "Commencez par identifier les éléments clés de vos articles de blog qui résonnent le plus avec votre audience LinkedIn.",
+              "Structurez votre pipeline en 5 étapes : Extraction → Adaptation → Enrichissement → Validation → Calendrier. Chaque étape doit avoir un prompt dédié avec input/output clairs.",
+              "Pour l'étape d'adaptation, demandez à l'IA de transformer chaque insight en post LinkedIn : Hook (1 ligne) + Développement (3-4 lignes) + Question d'engagement + 3 hashtags. Max 1300 caractères."
+            ],
             "validation": {
               "criteria": [
                 "Pipeline complet et logique",
@@ -371,6 +376,11 @@
                 "expectedOutput": "Sprint 1 : Quick wins (2 sem). Sprint 2 : Onboarding (1 mois). Sprint 3 : Fidélité (6 sem). ROI estimé : +42% rétention."
               }
             },
+            "hints": [
+              "Pensez à des expertises complémentaires : données/analytics, expérience utilisateur, engagement client et gestion de projet.",
+              "Chaque agent doit utiliser l'output du précédent : Agent 1 analyse le problème, Agent 2 conçoit les solutions UX, Agent 3 crée le programme d'engagement, Agent 4 planifie l'exécution.",
+              "Définissez pour chaque agent : nom, expertise spécifique, prompt avec référence aux outputs précédents ([AGENT_X]), et output attendu détaillé."
+            ],
             "validation": {
               "criteria": [
                 "Expertises complémentaires",

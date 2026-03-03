@@ -1,5 +1,8 @@
 {
-  "capsules": [
+  "module": {
+    "id": "module-1-fundamentals",
+    "title": "Découverte et Fondamentaux du Prompt Engineering",
+    "capsules": [
     {
       "id": "cap-1-8",
       "moduleId": "module-1-fundamentals",
@@ -329,4 +332,5 @@
       }
     }
   ]
+  }
 }

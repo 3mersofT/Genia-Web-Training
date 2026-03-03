@@ -144,6 +144,11 @@
               }
             },
             "final_prompt_template": "# {{ASSISTANT_NAME}} - Configuration Complète\n\n## Identité\nJe suis {{NAME}}, ton {{ROLE}} personnel avec expertise en {{EXPERTISE}}.\n\n## Contexte\nJe connais ton contexte : {{CONTEXT}}\nTes objectifs : {{GOALS}}\nTes défis : {{CHALLENGES}}\n\n## Personnalité\nMon style : {{STYLE_DESCRIPTION}}\nMes valeurs : {{VALUES}}\nMes particularités : {{QUIRKS}}\n\n## Capacités\nJe peux t'aider avec :\n{{CAPABILITIES_LIST}}\n\n## Workflows\nRoutine quotidienne :\n{{DAILY_ROUTINE}}\n\n## Décisions\nJe prends des décisions basées sur : {{CRITERIA}}\nJ'escalade quand : {{ESCALATION}}\n\n## Évolution\nJ'apprends de : {{LEARNING_SOURCES}}\nJe m'améliore : {{IMPROVEMENT_RATE}}\n\n---\n*Prompt d'activation :*\n'Tu es {{NAME}}, mon assistant personnel configuré selon les spécifications ci-dessus. Commence chaque journée en...'",
+            "hints": [
+              "Donnez un nom à votre assistant et définissez son rôle principal en lien direct avec votre métier et vos besoins quotidiens.",
+              "Configurez les 4 premiers piliers : Identity (nom, rôle, expertise), Knowledge (contexte pro, défis, objectifs), Personality (style communication, valeurs), Capabilities (tâches gérées).",
+              "Complétez avec les 3 derniers piliers : Workflows (routines matin/réunion/soir), Decisions (critères, quand escalader), Evolution (apprentissage continu). Assemblez le tout dans un prompt d'activation."
+            ],
             "validation": {
               "completeness_check": [
                 "Les 7 piliers sont définis",
@@ -315,6 +320,11 @@
               "confidence_level": "95%",
               "edge_cases_handled": "100%"
             },
+            "hints": [
+              "Choisissez votre prompt le plus utilisé et mesurez sa performance actuelle sur 3 critères : qualité (1-10), vitesse, satisfaction.",
+              "Planifiez 5 itérations en testant une variable à la fois : structure, contexte, exemples, ton, format. Pour chaque itération, formulez une hypothèse et mesurez l'impact.",
+              "Documentez chaque version dans un tableau comparatif (Version | Qualité | Vitesse | Satisfaction | Notes). Validez sur 10 cas réels et vérifiez les edge cases."
+            ],
             "validation": {
               "metrics_required": [
                 "Before/After comparison",
@@ -505,6 +515,11 @@
                 "▢ Blog/Portfolio live"
               ]
             },
+            "hints": [
+              "Commencez par définir votre objectif à 12 mois : quel niveau d'expertise visez-vous et dans quelle spécialisation ?",
+              "Découpez en 3 phases : Mois 1-3 (consolidation : pratique quotidienne, bibliothèque, 1er projet), Mois 4-6 (croissance : spécialisation, impact mesurable), Mois 7-12 (maîtrise : leadership, contribution).",
+              "Définissez des actions concrètes : quotidiennes (1 prompt + 15 min veille), hebdomadaires (1 template + 1 partage), mensuelles (1 projet + 5 connexions). Ajoutez un contrat d'engagement avec métriques."
+            ],
             "validation": {
               "completeness": [
                 "Objectifs SMART définis",
