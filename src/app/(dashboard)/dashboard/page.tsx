@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/hooks/useAuth'
-import { Trophy, Flame, Target, Clock, ChevronRight, BarChart3, Award } from 'lucide-react'
+import { Trophy, Flame, Target, Clock, ChevronRight, BarChart3, Award, Brain } from 'lucide-react'
 import Link from 'next/link'
 import { getAllModulesWithProgress, type Module } from '@/lib/data'
 import { createClient } from '@/lib/supabase/client'
@@ -149,6 +149,24 @@ export default function DashboardPage() {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Spaced Repetition Widget */}
+        <div className="mb-8">
+          <Link href="/review" className="block bg-gradient-to-r from-purple-50 to-blue-50 rounded-xl p-6 shadow-sm border border-purple-200 hover:shadow-md transition-shadow">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="p-3 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg">
+                  <Brain className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-gray-800">Révisions espacées</h3>
+                  <p className="text-gray-600">Consolidez vos connaissances avec l'algorithme SM-2</p>
+                </div>
+              </div>
+              <ChevronRight className="w-5 h-5 text-gray-400" />
+            </div>
+          </Link>
         </div>
 
         {/* Tournament Widget - empty state until real tournaments are fetched */}
