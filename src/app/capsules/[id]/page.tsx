@@ -16,6 +16,7 @@ import FeedbackButton from '@/components/feedback/FeedbackButton';
 import FeedbackStats from '@/components/feedback/FeedbackStats';
 import RichContentRenderer from '@/components/capsule/RichContentRenderer';
 import CodeBlock from '@/components/capsule/CodeBlock';
+import OfflineToggle from '@/components/pwa/OfflineToggle';
 import { getCapsuleContent, getCapsuleById, getNextCapsule, getPreviousCapsule, getModuleBySlug, type Capsule, type Module } from '@/lib/data';
 import { logger } from '@/lib/logger';
 
@@ -388,8 +389,14 @@ export default function CapsulePage() {
                           body: JSON.stringify({ userId: user.id, capsuleId })
                         });
                         if (res.ok) {
+                          // Créer une carte de révision espacée
+                          fetch('/api/review', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ action: 'create', capsuleId })
+                          }).catch(() => { /* non bloquant */ });
+
                           toast.showSuccess('Leçon marquée comme terminée ✅');
-                          // Retour au module si connu, sinon dashboard
                           if (currentModule?.slug) {
                             router.push(`/modules/${currentModule.slug}`);
                           } else {
@@ -455,11 +462,17 @@ export default function CapsulePage() {
                 </div>
               </div>
               
-              {/* Feedback section */}
+              {/* Feedback & Offline section */}
               <div className="flex items-center gap-4">
-                <FeedbackStats 
-                  targetType="capsule" 
-                  targetId={capsuleId} 
+                <OfflineToggle
+                  capsule={capsuleData}
+                  content={capsuleContent}
+                  moduleTitle={currentModule?.title || ''}
+                  variant="icon"
+                />
+                <FeedbackStats
+                  targetType="capsule"
+                  targetId={capsuleId}
                   showDetails={false}
                 />
                 <FeedbackButton

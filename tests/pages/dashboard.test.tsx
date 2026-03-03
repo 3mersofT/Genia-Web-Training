@@ -71,14 +71,8 @@ jest.mock('@/components/gamification/SkillTreeVisualization', () =>
 );
 
 // Mock lucide-react icons used by the dashboard page
-jest.mock('lucide-react', () => ({
-  Trophy: (props: any) => <svg data-testid="icon-trophy" {...props} />,
-  Flame: (props: any) => <svg data-testid="icon-flame" {...props} />,
-  Target: (props: any) => <svg data-testid="icon-target" {...props} />,
-  Clock: (props: any) => <svg data-testid="icon-clock" {...props} />,
-  ChevronRight: (props: any) => <svg data-testid="icon-chevron-right" {...props} />,
-  BarChart3: (props: any) => <svg data-testid="icon-barchart" {...props} />,
-  Award: (props: any) => <svg data-testid="icon-award" {...props} />,
+jest.mock('lucide-react', () => new Proxy({}, {
+  get: (_, name) => (props: any) => <svg data-testid={`icon-${String(name)}`} {...props} />,
 }));
 
 // ── Import after mocks ─────────────────────────────────────────────────────

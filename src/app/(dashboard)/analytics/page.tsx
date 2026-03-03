@@ -9,7 +9,7 @@ import { useAuth } from '@/hooks/useAuth'
 import { analyticsService } from '@/lib/services/analyticsService'
 import { useSeasonalLeaderboard } from '@/hooks/useSeasonalLeaderboard'
 import type { StudentAnalytics } from '@/types/analytics.types'
-import { BarChart3, RefreshCw, TrendingUp, Trophy } from 'lucide-react'
+import { BarChart3, RefreshCw, TrendingUp, Trophy, Brain } from 'lucide-react'
 
 // Import all analytics components
 import ProgressOverview from '@/components/analytics/ProgressOverview'
@@ -281,6 +281,25 @@ export default function AnalyticsPage() {
 
                 {/* Next Steps Recommendations */}
                 <NextStepsRecommendations recommendations={analytics.next_steps} />
+
+                {/* Spaced Repetition Link */}
+                <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-xl p-6 border border-purple-200">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Brain className="w-6 h-6 text-purple-600" />
+                      <div>
+                        <h3 className="font-bold text-gray-900">Révisions espacées</h3>
+                        <p className="text-sm text-gray-600">Consolidez vos acquis avec l'algorithme SM-2</p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => router.push('/review')}
+                      className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                    >
+                      Accéder
+                    </button>
+                  </div>
+                </div>
               </div>
             ) : null}
           </>
