@@ -152,7 +152,7 @@ export default function ProfilePage() {
 
   if (authLoading || loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
       </div>
     );
@@ -160,32 +160,32 @@ export default function ProfilePage() {
 
   if (!profile) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Profil non trouvé</h2>
-          <p className="text-gray-600">Impossible de charger votre profil.</p>
+          <h2 className="text-2xl font-bold text-foreground mb-4">Profil non trouvé</h2>
+          <p className="text-muted-foreground">Impossible de charger votre profil.</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
+      <div className="bg-card shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="py-6">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Mon Profil</h1>
-                <p className="text-gray-600">Personnalisez votre profil et vos préférences</p>
+                <h1 className="text-2xl font-bold text-foreground">Mon Profil</h1>
+                <p className="text-muted-foreground">Personnalisez votre profil et vos préférences</p>
               </div>
               <div className="flex gap-3">
                 {editing ? (
                   <>
                     <button
                       onClick={handleCancel}
-                      className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 flex items-center gap-2"
+                      className="px-4 py-2 text-foreground bg-muted rounded-lg hover:bg-muted flex items-center gap-2"
                     >
                       <X className="w-4 h-4" />
                       Annuler
@@ -220,20 +220,20 @@ export default function ProfilePage() {
           <div className="flex items-center gap-4 mb-4">
             <button
               onClick={() => router.push('/dashboard')}
-              className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
+              className="flex items-center gap-2 text-muted-foreground hover:text-accent-foreground transition-colors"
             >
               <ArrowLeft className="w-5 h-5" />
               <span>Retour au dashboard</span>
             </button>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Mon Profil</h1>
-          <p className="text-gray-600">Personnalisez votre profil et vos préférences</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Mon Profil</h1>
+          <p className="text-muted-foreground">Personnalisez votre profil et vos préférences</p>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Sidebar */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-xl shadow-sm p-6">
+            <div className="bg-card rounded-xl shadow-sm p-6">
               <div className="text-center">
                 <div className="relative inline-block">
                   <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-2xl font-bold">
@@ -251,15 +251,15 @@ export default function ProfilePage() {
                     </label>
                   )}
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mt-4">
+                <h3 className="text-lg font-semibold text-foreground mt-4">
                   {profile.display_name || 'Utilisateur'}
                 </h3>
-                <p className="text-gray-600 text-sm">{profile.email}</p>
+                <p className="text-muted-foreground text-sm">{profile.email}</p>
                 <div className="mt-4">
                   <span className={`px-3 py-1 text-xs rounded-full ${
                     profile.role === 'admin' 
                       ? 'bg-purple-100 text-purple-800' 
-                      : 'bg-blue-100 text-blue-800'
+                      : 'bg-blue-100 dark:bg-blue-900/30 text-blue-800'
                   }`}>
                     {profile.role === 'admin' ? 'Administrateur' : 'Étudiant'}
                   </span>
@@ -273,7 +273,7 @@ export default function ProfilePage() {
                   className={`w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 transition-colors ${
                     activeTab === 'profile'
                       ? 'bg-blue-50 text-blue-700 border border-blue-200'
-                      : 'text-gray-700 hover:bg-gray-50'
+                      : 'text-foreground hover:bg-accent'
                   }`}
                 >
                   <User className="w-5 h-5" />
@@ -284,7 +284,7 @@ export default function ProfilePage() {
                   className={`w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 transition-colors ${
                     activeTab === 'preferences'
                       ? 'bg-blue-50 text-blue-700 border border-blue-200'
-                      : 'text-gray-700 hover:bg-gray-50'
+                      : 'text-foreground hover:bg-accent'
                   }`}
                 >
                   <Settings className="w-5 h-5" />
@@ -295,7 +295,7 @@ export default function ProfilePage() {
                   className={`w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 transition-colors ${
                     activeTab === 'security'
                       ? 'bg-blue-50 text-blue-700 border border-blue-200'
-                      : 'text-gray-700 hover:bg-gray-50'
+                      : 'text-foreground hover:bg-accent'
                   }`}
                 >
                   <Shield className="w-5 h-5" />
@@ -308,12 +308,12 @@ export default function ProfilePage() {
           {/* Main Content */}
           <div className="lg:col-span-3">
             {activeTab === 'profile' && (
-              <div className="bg-white rounded-xl shadow-sm p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-6">Informations personnelles</h2>
+              <div className="bg-card rounded-xl shadow-sm p-6">
+                <h2 className="text-xl font-semibold text-foreground mb-6">Informations personnelles</h2>
                 
                 <div className="space-y-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-foreground mb-2">
                       Nom d'affichage
                     </label>
                     <input
@@ -321,24 +321,24 @@ export default function ProfilePage() {
                       value={formData.display_name}
                       onChange={(e) => setFormData(prev => ({ ...prev, display_name: e.target.value }))}
                       disabled={!editing}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-50 disabled:text-gray-500"
+                      className="w-full px-4 py-3 border border-input rounded-lg focus:ring-2 focus-visible:ring-ring focus:border-transparent disabled:bg-muted disabled:text-muted-foreground"
                       placeholder="Votre nom d'affichage"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-foreground mb-2">
                       Email
                     </label>
                     <div className="flex items-center gap-3">
-                      <Mail className="w-5 h-5 text-gray-400" />
-                      <span className="text-gray-900">{profile.email}</span>
-                      <span className="text-xs text-gray-500">(Non modifiable)</span>
+                      <Mail className="w-5 h-5 text-muted-foreground" />
+                      <span className="text-foreground">{profile.email}</span>
+                      <span className="text-xs text-muted-foreground">(Non modifiable)</span>
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-foreground mb-2">
                       Biographie
                     </label>
                     <textarea
@@ -346,18 +346,18 @@ export default function ProfilePage() {
                       onChange={(e) => setFormData(prev => ({ ...prev, bio: e.target.value }))}
                       disabled={!editing}
                       rows={4}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-50 disabled:text-gray-500"
+                      className="w-full px-4 py-3 border border-input rounded-lg focus:ring-2 focus-visible:ring-ring focus:border-transparent disabled:bg-muted disabled:text-muted-foreground"
                       placeholder="Parlez-nous de vous..."
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-foreground mb-2">
                       Membre depuis
                     </label>
                     <div className="flex items-center gap-3">
-                      <Calendar className="w-5 h-5 text-gray-400" />
-                      <span className="text-gray-900">
+                      <Calendar className="w-5 h-5 text-muted-foreground" />
+                      <span className="text-foreground">
                         {new Date(profile.created_at).toLocaleDateString('fr-FR', {
                           year: 'numeric',
                           month: 'long',
@@ -372,12 +372,12 @@ export default function ProfilePage() {
 
             {activeTab === 'preferences' && (
               <div className="space-y-6">
-                <div className="bg-white rounded-xl shadow-sm p-6">
-                  <h2 className="text-xl font-semibold text-gray-900 mb-6">Préférences générales</h2>
+                <div className="bg-card rounded-xl shadow-sm p-6">
+                  <h2 className="text-xl font-semibold text-foreground mb-6">Préférences générales</h2>
 
                   <div className="space-y-6">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-3">
+                      <label className="block text-sm font-medium text-foreground mb-3">
                         Thème
                       </label>
                       <div className="grid grid-cols-3 gap-4">
@@ -396,7 +396,7 @@ export default function ProfilePage() {
                             className={`p-4 rounded-lg border-2 text-center transition-colors ${
                               formData.preferences.theme === theme.value
                                 ? 'border-blue-500 bg-blue-50'
-                                : 'border-gray-200 hover:border-gray-300'
+                                : 'border-border hover:border-input'
                             } ${!editing ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
                           >
                             <div className="text-2xl mb-2">{theme.icon}</div>
@@ -407,7 +407,7 @@ export default function ProfilePage() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-3">
+                      <label className="block text-sm font-medium text-foreground mb-3">
                         Langue
                       </label>
                       <select
@@ -417,7 +417,7 @@ export default function ProfilePage() {
                           preferences: { ...prev.preferences, language: e.target.value as 'fr' | 'en' }
                         }))}
                         disabled={!editing}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-50 disabled:text-gray-500"
+                        className="w-full px-4 py-3 border border-input rounded-lg focus:ring-2 focus-visible:ring-ring focus:border-transparent disabled:bg-muted disabled:text-muted-foreground"
                       >
                         <option value="fr">Français</option>
                         <option value="en">English</option>
@@ -432,15 +432,15 @@ export default function ProfilePage() {
             )}
 
             {activeTab === 'security' && (
-              <div className="bg-white rounded-xl shadow-sm p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-6">Sécurité</h2>
+              <div className="bg-card rounded-xl shadow-sm p-6">
+                <h2 className="text-xl font-semibold text-foreground mb-6">Sécurité</h2>
                 
                 <div className="space-y-6">
-                  <div className="border border-gray-200 rounded-lg p-4">
+                  <div className="border border-border rounded-lg p-4">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="text-sm font-medium text-gray-900">Mot de passe</h3>
-                        <p className="text-sm text-gray-500">Dernière modification il y a 30 jours</p>
+                        <h3 className="text-sm font-medium text-foreground">Mot de passe</h3>
+                        <p className="text-sm text-muted-foreground">Dernière modification il y a 30 jours</p>
                       </div>
                       <button 
                         onClick={handleChangePassword}
@@ -451,30 +451,30 @@ export default function ProfilePage() {
                     </div>
                   </div>
 
-                  <div className="border border-gray-200 rounded-lg p-4">
+                  <div className="border border-border rounded-lg p-4">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="text-sm font-medium text-gray-900">Authentification à deux facteurs</h3>
-                        <p className="text-sm text-gray-500">Ajoutez une couche de sécurité supplémentaire</p>
+                        <h3 className="text-sm font-medium text-foreground">Authentification à deux facteurs</h3>
+                        <p className="text-sm text-muted-foreground">Ajoutez une couche de sécurité supplémentaire</p>
                       </div>
                       <button 
                         onClick={handleEnable2FA}
-                        className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50"
+                        className="px-4 py-2 text-muted-foreground border border-input rounded-lg hover:bg-accent"
                       >
                         Activer
                       </button>
                     </div>
                   </div>
 
-                  <div className="border border-gray-200 rounded-lg p-4">
+                  <div className="border border-border rounded-lg p-4">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="text-sm font-medium text-gray-900">Sessions actives</h3>
-                        <p className="text-sm text-gray-500">Gérez vos sessions connectées</p>
+                        <h3 className="text-sm font-medium text-foreground">Sessions actives</h3>
+                        <p className="text-sm text-muted-foreground">Gérez vos sessions connectées</p>
                       </div>
                       <button 
                         onClick={handleViewSessions}
-                        className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50"
+                        className="px-4 py-2 text-muted-foreground border border-input rounded-lg hover:bg-accent"
                       >
                         Voir
                       </button>

@@ -50,13 +50,13 @@ export default function GENIAChat({ context: propContext, embedded = false }: GE
       ];
 
   const SuggestionsBar = () => (
-    <div className="px-4 py-2 bg-gray-50 border-t">
+    <div className="px-4 py-2 bg-muted border-t">
       <div className="flex gap-2 overflow-x-auto">
         {displaySuggestions.map((s, i) => (
           <button
             key={i}
             onClick={() => setInputMessage(s.text)}
-            className="px-3 py-1 bg-white border border-gray-200 rounded-full text-xs text-gray-600 hover:bg-blue-50 hover:border-blue-300 hover:text-blue-600 transition-colors whitespace-nowrap flex items-center gap-1"
+            className="px-3 py-1 bg-card border border-border rounded-full text-xs text-muted-foreground hover:bg-blue-50 hover:border-blue-300 hover:text-blue-600 transition-colors whitespace-nowrap flex items-center gap-1"
           >
             <span>{s.icon}</span>
             <span>{s.text}</span>
@@ -67,17 +67,17 @@ export default function GENIAChat({ context: propContext, embedded = false }: GE
   );
 
   const ExportMenu = () => (
-    <div className="absolute bottom-full right-0 mb-1 bg-white border border-gray-200 rounded-lg shadow-lg py-1 z-10">
+    <div className="absolute bottom-full right-0 mb-1 bg-card border border-border rounded-lg shadow-lg py-1 z-10">
       <button
         onClick={() => { exportChat('markdown'); setShowExportMenu(false); }}
-        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 w-full"
+        className="flex items-center gap-2 px-4 py-2 text-sm text-foreground hover:bg-accent w-full"
       >
         <FileText className="w-4 h-4" />
         Markdown (.md)
       </button>
       <button
         onClick={() => { exportChat('pdf'); setShowExportMenu(false); }}
-        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 w-full"
+        className="flex items-center gap-2 px-4 py-2 text-sm text-foreground hover:bg-accent w-full"
       >
         <Download className="w-4 h-4" />
         PDF (.pdf)
@@ -95,14 +95,14 @@ export default function GENIAChat({ context: propContext, embedded = false }: GE
       <div className="w-full h-full flex flex-col">
         <ChatMessageList messages={messages} isLoading={isLoading} loadingText="GENIA réfléchit..." onFeedback={sendFeedback} />
         <SuggestionsBar />
-        <div className="p-4 border-t bg-white space-y-3">
+        <div className="p-4 border-t bg-card space-y-3">
           <ChatInput value={inputMessage} onChange={setInputMessage} onSend={handleSendMessage} disabled={isLoading} placeholder="Pose ta question..." aria-label="Poser une question à GENIA" />
-          <div className="flex items-center justify-between text-xs text-gray-500">
+          <div className="flex items-center justify-between text-xs text-muted-foreground">
             <span>Modèle : {modelLabel}</span>
             <div className="flex items-center gap-2">
               <span>{quotaUsed}/{quotaDaily}</span>
               <div className="relative">
-                <button onClick={() => setShowExportMenu(!showExportMenu)} className="p-1 hover:bg-gray-100 rounded" title="Exporter">
+                <button onClick={() => setShowExportMenu(!showExportMenu)} className="p-1 hover:bg-accent rounded" title="Exporter">
                   <Download className="w-3.5 h-3.5" />
                 </button>
                 {showExportMenu && <ExportMenu />}
@@ -137,7 +137,7 @@ export default function GENIAChat({ context: propContext, embedded = false }: GE
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 100 }}
-            className="fixed bottom-6 right-6 z-50 w-[450px] h-[700px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+            className="fixed bottom-6 right-6 z-50 w-[450px] h-[700px] bg-card rounded-2xl shadow-2xl flex flex-col overflow-hidden"
           >
             {/* Header */}
             <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-4 text-white">
@@ -176,20 +176,20 @@ export default function GENIAChat({ context: propContext, embedded = false }: GE
             </div>
 
             {/* Info bar */}
-            <div className="bg-gradient-to-r from-blue-50 to-purple-50 px-4 py-2 border-b">
+            <div className="bg-gradient-to-r from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] px-4 py-2 border-b">
               <div className="flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2">
                   <BookOpen className="w-3 h-3 text-blue-600" />
-                  <span className="text-gray-600">{context.currentCapsule.title}</span>
+                  <span className="text-muted-foreground">{context.currentCapsule.title}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="flex items-center gap-1">
                     <Brain className="w-3 h-3 text-purple-600" />
-                    <span className="text-gray-600">{quota.magistralMedium.used}/{quota.magistralMedium.daily}</span>
+                    <span className="text-muted-foreground">{quota.magistralMedium.used}/{quota.magistralMedium.daily}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <Zap className="w-3 h-3 text-orange-600" />
-                    <span className="text-gray-600">{quota.mistralMedium3.used}/{quota.mistralMedium3.daily}</span>
+                    <span className="text-muted-foreground">{quota.mistralMedium3.used}/{quota.mistralMedium3.daily}</span>
                   </div>
                 </div>
               </div>
@@ -198,9 +198,9 @@ export default function GENIAChat({ context: propContext, embedded = false }: GE
             <ChatMessageList messages={messages} isLoading={isLoading} loadingText="GENIA réfléchit..." onFeedback={sendFeedback} />
             <SuggestionsBar />
 
-            <div className="p-4 border-t bg-white space-y-3">
+            <div className="p-4 border-t bg-card space-y-3">
               <ChatInput value={inputMessage} onChange={setInputMessage} onSend={handleSendMessage} disabled={isLoading} placeholder="Pose ta question..." aria-label="Poser une question à GENIA" />
-              <div className="flex items-center justify-between text-xs text-gray-500">
+              <div className="flex items-center justify-between text-xs text-muted-foreground">
                 <div className="flex items-center gap-2">
                   <span>Modèle :</span>
                   <button
@@ -213,7 +213,7 @@ export default function GENIAChat({ context: propContext, embedded = false }: GE
                 <div className="flex items-center gap-2">
                   <span>{quotaUsed}/{quotaDaily}</span>
                   <div className="relative">
-                    <button onClick={() => setShowExportMenu(!showExportMenu)} className="p-1 hover:bg-gray-100 rounded" title="Exporter la conversation">
+                    <button onClick={() => setShowExportMenu(!showExportMenu)} className="p-1 hover:bg-accent rounded" title="Exporter la conversation">
                       <Download className="w-3.5 h-3.5" />
                     </button>
                     {showExportMenu && <ExportMenu />}

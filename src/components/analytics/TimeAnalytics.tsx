@@ -319,14 +319,14 @@ export default function TimeAnalytics({ timeAnalytics }: TimeAnalyticsProps) {
   const hasData = timeAnalytics.total_time_seconds > 0;
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+    <div className="bg-card rounded-xl shadow-sm border border-border p-6">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+          <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
             <Clock className="w-6 h-6 text-indigo-600" />
             Time Analytics
           </h2>
-          <p className="text-sm text-gray-600 mt-1">
+          <p className="text-sm text-muted-foreground mt-1">
             Your learning time patterns and statistics
           </p>
         </div>
@@ -341,7 +341,7 @@ export default function TimeAnalytics({ timeAnalytics }: TimeAnalyticsProps) {
               <div className="flex items-center justify-between mb-2">
                 <Clock className="w-6 h-6 text-blue-600" />
               </div>
-              <p className="text-sm text-gray-700 font-medium">Total Learning Time</p>
+              <p className="text-sm text-foreground font-medium">Total Learning Time</p>
               <p className="text-2xl font-bold text-blue-700 mt-1">
                 {formatTime(timeAnalytics.total_time_seconds)}
               </p>
@@ -350,10 +350,10 @@ export default function TimeAnalytics({ timeAnalytics }: TimeAnalyticsProps) {
             {/* Total Sessions */}
             <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 border border-green-200">
               <div className="flex items-center justify-between mb-2">
-                <Calendar className="w-6 h-6 text-green-600" />
+                <Calendar className="w-6 h-6 text-green-600 dark:text-green-400" />
               </div>
-              <p className="text-sm text-gray-700 font-medium">Total Sessions</p>
-              <p className="text-2xl font-bold text-green-700 mt-1">
+              <p className="text-sm text-foreground font-medium">Total Sessions</p>
+              <p className="text-2xl font-bold text-green-700 dark:text-green-300 mt-1">
                 {timeAnalytics.total_sessions}
               </p>
             </div>
@@ -363,7 +363,7 @@ export default function TimeAnalytics({ timeAnalytics }: TimeAnalyticsProps) {
               <div className="flex items-center justify-between mb-2">
                 <TrendingUp className="w-6 h-6 text-purple-600" />
               </div>
-              <p className="text-sm text-gray-700 font-medium">Avg. Session</p>
+              <p className="text-sm text-foreground font-medium">Avg. Session</p>
               <p className="text-2xl font-bold text-purple-700 mt-1">
                 {formatTime(timeAnalytics.average_session_duration_seconds)}
               </p>
@@ -374,7 +374,7 @@ export default function TimeAnalytics({ timeAnalytics }: TimeAnalyticsProps) {
               <div className="flex items-center justify-between mb-2">
                 <Zap className="w-6 h-6 text-orange-600" />
               </div>
-              <p className="text-sm text-gray-700 font-medium">Longest Session</p>
+              <p className="text-sm text-foreground font-medium">Longest Session</p>
               <p className="text-2xl font-bold text-orange-700 mt-1">
                 {formatTime(timeAnalytics.longest_session_seconds)}
               </p>
@@ -384,16 +384,16 @@ export default function TimeAnalytics({ timeAnalytics }: TimeAnalyticsProps) {
           {/* Charts Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Time by Module */}
-            <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-              <h3 className="text-sm font-semibold text-gray-700 mb-4">Time by Module</h3>
+            <div className="bg-muted rounded-lg p-4 border border-border">
+              <h3 className="text-sm font-semibold text-foreground mb-4">Time by Module</h3>
               <div className="h-64">
                 <Bar data={moduleChartData} options={moduleChartOptions} />
               </div>
             </div>
 
             {/* Time by Day of Week */}
-            <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-              <h3 className="text-sm font-semibold text-gray-700 mb-4">Time by Day of Week</h3>
+            <div className="bg-muted rounded-lg p-4 border border-border">
+              <h3 className="text-sm font-semibold text-foreground mb-4">Time by Day of Week</h3>
               <div className="h-64">
                 <Bar data={dayOfWeekChartData} options={dayOfWeekChartOptions} />
               </div>
@@ -401,8 +401,8 @@ export default function TimeAnalytics({ timeAnalytics }: TimeAnalyticsProps) {
           </div>
 
           {/* Time Trend Chart */}
-          <div className="mt-6 bg-gray-50 rounded-lg p-4 border border-gray-200">
-            <h3 className="text-sm font-semibold text-gray-700 mb-4">Learning Time Trend (Last 30 Days)</h3>
+          <div className="mt-6 bg-muted rounded-lg p-4 border border-border">
+            <h3 className="text-sm font-semibold text-foreground mb-4">Learning Time Trend (Last 30 Days)</h3>
             <div className="h-64">
               <Line data={trendChartData} options={trendChartOptions} />
             </div>
@@ -410,7 +410,7 @@ export default function TimeAnalytics({ timeAnalytics }: TimeAnalyticsProps) {
 
           {/* Learning Insights */}
           {timeAnalytics.total_sessions > 0 && (
-            <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 rounded-lg">
               <h3 className="text-sm font-semibold text-blue-900 mb-2 flex items-center gap-2">
                 <TrendingUp className="w-4 h-4" />
                 Learning Insights
@@ -435,9 +435,9 @@ export default function TimeAnalytics({ timeAnalytics }: TimeAnalyticsProps) {
       ) : (
         /* Empty State */
         <div className="text-center py-12">
-          <Clock className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-          <p className="text-gray-600 font-medium">No time data available yet</p>
-          <p className="text-sm text-gray-500 mt-1">
+          <Clock className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+          <p className="text-muted-foreground font-medium">No time data available yet</p>
+          <p className="text-sm text-muted-foreground mt-1">
             Start learning to track your study time and patterns
           </p>
         </div>

@@ -94,16 +94,16 @@ export default function DashboardPage() {
 
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200">
+      <header className="bg-card border-b border-border">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-800">
+          <h1 className="text-2xl font-bold text-foreground">
             Prompt Engineering Academy
           </h1>
           <button
             onClick={signOut}
-            className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
+            className="px-4 py-2 text-muted-foreground hover:text-foreground transition-colors"
           >
             Déconnexion
           </button>
@@ -115,10 +115,10 @@ export default function DashboardPage() {
         <div className="mb-8">
           <div className="flex items-start justify-between">
             <div>
-              <h2 className="text-3xl font-bold text-gray-800 mb-2">
+              <h2 className="text-3xl font-bold text-foreground mb-2">
                 Bienvenue{displayName ? `, ${displayName}` : ''} ! 👋
               </h2>
-              <p className="text-gray-600">
+              <p className="text-muted-foreground">
                 Continuez votre parcours d'apprentissage
               </p>
             </div>
@@ -136,14 +136,14 @@ export default function DashboardPage() {
 
         {/* Level Badge - placeholder until real level data is fetched */}
         <div className="mb-8">
-          <div className="bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-300 rounded-xl p-6 shadow-lg">
+          <div className="bg-gradient-to-br from-muted to-muted/80 border-2 border-input rounded-xl p-6 shadow-lg">
             <div className="flex items-center gap-3">
               <div className="p-3 bg-gray-500 rounded-xl text-white text-3xl shadow-md">
                 🏆
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-gray-900">Niveau</h3>
-                <p className="text-sm text-gray-600 mt-1">
+                <h3 className="text-2xl font-bold text-foreground">Niveau</h3>
+                <p className="text-sm text-muted-foreground mt-1">
                   Complétez des capsules pour gagner de l'XP et monter en niveau
                 </p>
               </div>
@@ -153,32 +153,32 @@ export default function DashboardPage() {
 
         {/* Spaced Repetition Widget */}
         <div className="mb-8">
-          <Link href="/review" className="block bg-gradient-to-r from-purple-50 to-blue-50 rounded-xl p-6 shadow-sm border border-purple-200 hover:shadow-md transition-shadow">
+          <Link href="/review" className="block bg-gradient-to-r from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] rounded-xl p-6 shadow-sm border border-border hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="p-3 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg">
                   <Brain className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-gray-800">Révisions espacées</h3>
-                  <p className="text-gray-600">Consolidez vos connaissances avec l'algorithme SM-2</p>
+                  <h3 className="text-xl font-bold text-foreground">Révisions espacées</h3>
+                  <p className="text-muted-foreground">Consolidez vos connaissances avec l'algorithme SM-2</p>
                 </div>
               </div>
-              <ChevronRight className="w-5 h-5 text-gray-400" />
+              <ChevronRight className="w-5 h-5 text-muted-foreground" />
             </div>
           </Link>
         </div>
 
         {/* Tournament Widget - empty state until real tournaments are fetched */}
         <div className="mb-8">
-          <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+          <h3 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
             <Trophy className="w-6 h-6 text-yellow-500" />
             Tournois
           </h3>
-          <div className="bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl p-6 text-center">
-            <Trophy className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-            <p className="text-gray-600 font-medium">Aucun tournoi disponible</p>
-            <p className="text-sm text-gray-500 mt-1">Les tournois seront bientôt disponibles</p>
+          <div className="bg-gradient-to-br from-muted to-muted/80 border-2 border-border rounded-xl p-6 text-center">
+            <Trophy className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+            <p className="text-muted-foreground font-medium">Aucun tournoi disponible</p>
+            <p className="text-sm text-muted-foreground mt-1">Les tournois seront bientôt disponibles</p>
           </div>
         </div>
 
@@ -193,21 +193,21 @@ export default function DashboardPage() {
 
         {/* Team Widget - Coming Soon */}
         <div className="mb-8">
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 shadow-sm border border-blue-200">
+          <div className="bg-gradient-to-r from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] rounded-xl p-6 shadow-sm border border-border">
             <div className="flex items-center gap-4 mb-4">
               <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg">
                 <Trophy className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-gray-800">Équipes</h3>
-                <p className="text-gray-600">Rejoignez ou créez une équipe pour collaborer</p>
+                <h3 className="text-xl font-bold text-foreground">Équipes</h3>
+                <p className="text-muted-foreground">Rejoignez ou créez une équipe pour collaborer</p>
               </div>
             </div>
-            <div className="bg-white rounded-lg p-4 border border-blue-300">
-              <p className="text-gray-700 mb-2">
+            <div className="bg-card rounded-lg p-4 border">
+              <p className="text-foreground mb-2">
                 👥 <strong>Travail d'équipe</strong> : Créez ou rejoignez une équipe de 2 à 5 membres
               </p>
-              <p className="text-sm text-gray-600 mb-4">
+              <p className="text-sm text-muted-foreground mb-4">
                 Participez aux défis d'équipe, montez dans le classement et débloquez des achievements collectifs!
               </p>
               <button
@@ -222,49 +222,49 @@ export default function DashboardPage() {
 
         {/* Stats Grid - Progress Section */}
         <div id="progress" className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-xl p-6 shadow-sm">
+          <div className="bg-card rounded-xl p-6 shadow-sm">
             <div className="flex items-center justify-between mb-2">
               <Trophy className="w-8 h-8 text-yellow-500" />
               <span className="text-2xl font-bold">{stats.totalPoints}</span>
             </div>
-            <p className="text-gray-600">Points totaux</p>
+            <p className="text-muted-foreground">Points totaux</p>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-sm">
+          <div className="bg-card rounded-xl p-6 shadow-sm">
             <div className="flex items-center justify-between mb-2">
               <Flame className="w-8 h-8 text-orange-500" />
               <span className="text-2xl font-bold">{stats.streakDays}j</span>
             </div>
-            <p className="text-gray-600">Streak</p>
+            <p className="text-muted-foreground">Streak</p>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-sm">
+          <div className="bg-card rounded-xl p-6 shadow-sm">
             <div className="flex items-center justify-between mb-2">
               <Target className="w-8 h-8 text-green-500" />
               <span className="text-2xl font-bold">{stats.completedCapsules}</span>
             </div>
-            <p className="text-gray-600">Capsules terminées</p>
+            <p className="text-muted-foreground">Capsules terminées</p>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-sm">
+          <div className="bg-card rounded-xl p-6 shadow-sm">
             <div className="flex items-center justify-between mb-2">
               <Clock className="w-8 h-8 text-blue-500" />
               <span className="text-2xl font-bold">{stats.progress}%</span>
             </div>
-            <p className="text-gray-600">Progression</p>
+            <p className="text-muted-foreground">Progression</p>
           </div>
         </div>
 
         {/* Défis Quotidiens */}
-        <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-6 shadow-sm mb-8">
+        <div className="bg-gradient-to-r from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] rounded-xl p-6 shadow-sm mb-8">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               <div className="p-3 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg">
                 <Trophy className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-gray-800">Défis Quotidiens</h3>
-                <p className="text-gray-600">Relevez des challenges de Prompt Engineering</p>
+                <h3 className="text-xl font-bold text-foreground">Défis Quotidiens</h3>
+                <p className="text-muted-foreground">Relevez des challenges de Prompt Engineering</p>
               </div>
             </div>
             <Link
@@ -274,26 +274,26 @@ export default function DashboardPage() {
               Voir les défis
             </Link>
           </div>
-          <div className="bg-white rounded-lg p-4 border border-purple-200">
-            <p className="text-gray-700 mb-3">
+          <div className="bg-card rounded-lg p-4 border">
+            <p className="text-foreground mb-3">
               🎯 <strong>Défis quotidiens</strong> : Améliorez vos compétences en Prompt Engineering avec des challenges adaptés à votre niveau.
             </p>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-muted-foreground">
               Gagnez des points, montez dans le classement et débloquez des badges !
             </p>
           </div>
         </div>
 
         {/* Analytics */}
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 shadow-sm mb-8">
+        <div className="bg-gradient-to-r from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] rounded-xl p-6 shadow-sm mb-8">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg">
                 <BarChart3 className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-gray-800">Analytiques d'Apprentissage</h3>
-                <p className="text-gray-600">Visualisez votre progression détaillée</p>
+                <h3 className="text-xl font-bold text-foreground">Analytiques d'Apprentissage</h3>
+                <p className="text-muted-foreground">Visualisez votre progression détaillée</p>
               </div>
             </div>
             <Link
@@ -303,11 +303,11 @@ export default function DashboardPage() {
               Voir les analytics
             </Link>
           </div>
-          <div className="bg-white rounded-lg p-4 border border-blue-200">
-            <p className="text-gray-700 mb-3">
+          <div className="bg-card rounded-lg p-4 border">
+            <p className="text-foreground mb-3">
               📊 <strong>Tableau de bord analytique</strong> : Suivez vos performances, visualisez votre temps d'apprentissage et identifiez vos points forts.
             </p>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-muted-foreground">
               Obtenez des insights détaillés sur votre parcours d'apprentissage !
             </p>
           </div>
@@ -319,17 +319,17 @@ export default function DashboardPage() {
           if (allModulesCompleted) {
             // Show master certificate button
             return (
-              <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-6 shadow-sm mb-8 border-2 border-indigo-200">
+              <div className="bg-gradient-to-r from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] rounded-xl p-6 shadow-sm mb-8 border-2 border-border">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
                     <div className="p-3 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg">
                       <Award className="w-8 h-8 text-white" />
                     </div>
                     <div>
-                      <h3 className="text-2xl font-bold text-gray-800 mb-1">
+                      <h3 className="text-2xl font-bold text-foreground mb-1">
                         Certificat Master 🎓
                       </h3>
-                      <p className="text-gray-600">
+                      <p className="text-muted-foreground">
                         Félicitations ! Vous avez terminé tous les modules. Obtenez votre certificat master.
                       </p>
                     </div>
@@ -349,26 +349,26 @@ export default function DashboardPage() {
             const totalModules = modules.length;
 
             return (
-              <div className="bg-gradient-to-r from-gray-50 to-indigo-50 rounded-xl p-6 shadow-sm mb-8 border border-gray-200">
+              <div className="bg-gradient-to-r from-muted to-[hsl(var(--gradient-end))] rounded-xl p-6 shadow-sm mb-8 border border-border">
                 <div className="flex items-center gap-4">
                   <div className="p-3 bg-gradient-to-r from-gray-400 to-indigo-400 rounded-lg">
                     <Award className="w-8 h-8 text-white" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-800 mb-2">
+                    <h3 className="text-xl font-bold text-foreground mb-2">
                       Progression vers le Certificat Master
                     </h3>
-                    <p className="text-gray-600 mb-3">
+                    <p className="text-muted-foreground mb-3">
                       Complétez tous les modules pour débloquer votre certificat master.
                     </p>
                     <div className="flex items-center gap-4">
-                      <div className="flex-1 bg-gray-200 rounded-full h-3">
+                      <div className="flex-1 bg-muted rounded-full h-3">
                         <div
                           className="h-full bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full transition-all"
                           style={{ width: `${Math.round((completedModules / totalModules) * 100)}%` }}
                         />
                       </div>
-                      <span className="text-sm font-semibold text-gray-700 whitespace-nowrap">
+                      <span className="text-sm font-semibold text-foreground whitespace-nowrap">
                         {completedModules}/{totalModules} modules
                       </span>
                     </div>
@@ -382,23 +382,23 @@ export default function DashboardPage() {
         })()}
 
         {/* Modules */}
-        <div id="modules" className="bg-white rounded-xl p-6 shadow-sm">
-          <h3 className="text-xl font-bold text-gray-800 mb-4">Modules disponibles</h3>
+        <div id="modules" className="bg-card rounded-xl p-6 shadow-sm">
+          <h3 className="text-xl font-bold text-foreground mb-4">Modules disponibles</h3>
           <div className="space-y-4">
             {modules.map((m) => (
               <Link key={m.id} href={`/modules/${m.slug}`}>
-                <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md hover:border-blue-300 transition-all cursor-pointer">
+                <div className="border border-border rounded-lg p-4 hover:shadow-md hover:border-primary/30 transition-all cursor-pointer">
                   <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-gray-800">{m.title}</h4>
-                    <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-blue-500" />
+                    <h4 className="font-semibold text-foreground">{m.title}</h4>
+                    <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-blue-500" />
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="w-full bg-muted rounded-full h-2">
                     <div
                       className={`h-full bg-gradient-to-r ${m.color} rounded-full`}
                       style={{ width: `${m.progress}%` }}
                     />
                   </div>
-                  <p className="text-sm text-gray-600 mt-2">{m.progress}% complété</p>
+                  <p className="text-sm text-muted-foreground mt-2">{m.progress}% complété</p>
                 </div>
               </Link>
             ))}

@@ -105,7 +105,7 @@ describe('ChatMessageList', () => {
       const { container } = render(<ChatMessageList messages={messages} />);
       const messageDiv = screen.getByText('Assistant message').closest('.rounded-2xl');
 
-      expect(messageDiv).toHaveClass('bg-white', 'border', 'border-gray-200', 'text-gray-800');
+      expect(messageDiv).toHaveClass('bg-card', 'border', 'border-border', 'text-foreground');
     });
 
     it('should apply correct styling for system messages', () => {
@@ -121,7 +121,7 @@ describe('ChatMessageList', () => {
       const { container } = render(<ChatMessageList messages={messages} />);
       const messageDiv = screen.getByText('System message').closest('.rounded-2xl');
 
-      expect(messageDiv).toHaveClass('bg-gray-100', 'text-gray-700');
+      expect(messageDiv).toHaveClass('bg-muted', 'text-foreground');
     });
 
     it('should align user messages to the right', () => {
@@ -256,7 +256,7 @@ describe('ChatMessageList', () => {
       const { container } = render(<ChatMessageList messages={[]} isLoading={true} />);
       const loadingDiv = screen.getByText('GENIA réfléchit...').parentElement;
 
-      expect(loadingDiv).toHaveClass('bg-gray-100', 'rounded-2xl');
+      expect(loadingDiv).toHaveClass('bg-muted', 'rounded-2xl');
       // Vérifier la présence de la classe animate-spin pour le spinner
       const spinner = container.querySelector('.animate-spin');
       expect(spinner).toBeInTheDocument();

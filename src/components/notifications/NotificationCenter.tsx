@@ -66,7 +66,7 @@ export default function NotificationCenter({ userId, className = '' }: Notificat
       case 'peer_review': return <Users className="w-5 h-5 text-purple-500" />;
       case 'new_module': return <BookOpen className="w-5 h-5 text-green-500" />;
       case 'ai_nudge': return <Lightbulb className="w-5 h-5 text-indigo-500" />;
-      default: return <Info className="w-5 h-5 text-gray-500" />;
+      default: return <Info className="w-5 h-5 text-muted-foreground" />;
     }
   };
 
@@ -107,7 +107,7 @@ export default function NotificationCenter({ userId, className = '' }: Notificat
       {/* Bouton cloche */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="relative p-2 text-gray-600 hover:text-gray-800 transition-colors"
+        className="relative p-2 text-muted-foreground hover:text-foreground transition-colors"
       >
         <Bell className="w-6 h-6" />
         {unreadCount > 0 && (
@@ -119,14 +119,14 @@ export default function NotificationCenter({ userId, className = '' }: Notificat
 
       {/* Panel notifications */}
       {isOpen && (
-        <div className="absolute top-full right-0 mt-2 w-96 bg-white rounded-xl shadow-2xl border border-gray-200 z-50">
+        <div className="absolute top-full right-0 mt-2 w-96 bg-card rounded-xl shadow-2xl border border-border z-50">
           {/* Header */}
           <div className="flex justify-between items-center p-4 border-b">
             <div className="flex items-center gap-2">
-              <Bell className="w-5 h-5 text-gray-600" />
-              <h3 className="font-semibold text-gray-900">Notifications</h3>
+              <Bell className="w-5 h-5 text-muted-foreground" />
+              <h3 className="font-semibold text-foreground">Notifications</h3>
               {unreadCount > 0 && (
-                <span className="bg-red-100 text-red-600 px-2 py-0.5 rounded-full text-xs font-medium">
+                <span className="bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 px-2 py-0.5 rounded-full text-xs font-medium">
                   {unreadCount} nouvelles
                 </span>
               )}
@@ -135,7 +135,7 @@ export default function NotificationCenter({ userId, className = '' }: Notificat
               {unreadCount > 0 && (
                 <button
                   onClick={handleMarkAllAsRead}
-                  className="text-xs text-blue-600 hover:text-blue-700"
+                  className="text-xs text-primary hover:text-primary/80"
                   title="Marquer toutes comme lues"
                 >
                   <Check className="w-4 h-4" />
@@ -143,7 +143,7 @@ export default function NotificationCenter({ userId, className = '' }: Notificat
               )}
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-gray-400 hover:text-gray-600"
+                className="text-muted-foreground hover:text-foreground"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -151,13 +151,13 @@ export default function NotificationCenter({ userId, className = '' }: Notificat
           </div>
 
           {/* Filtres */}
-          <div className="flex gap-1 p-3 bg-gray-50 border-b overflow-x-auto">
+          <div className="flex gap-1 p-3 bg-muted border-b overflow-x-auto">
             <button
               onClick={() => setFilter('all')}
               className={`px-3 py-1 text-xs rounded-full transition-colors whitespace-nowrap ${
                 filter === 'all'
                   ? 'bg-blue-600 text-white'
-                  : 'bg-white text-gray-600 hover:bg-gray-100'
+                  : 'bg-card text-muted-foreground hover:bg-accent'
               }`}
             >
               Toutes {notifications.length > 0 && `(${notifications.length})`}
@@ -172,7 +172,7 @@ export default function NotificationCenter({ userId, className = '' }: Notificat
                   className={`px-3 py-1 text-xs rounded-full transition-colors whitespace-nowrap ${
                     filter === type
                       ? 'bg-blue-600 text-white'
-                      : 'bg-white text-gray-600 hover:bg-gray-100'
+                      : 'bg-card text-muted-foreground hover:bg-accent'
                   }`}
                 >
                   {getNotificationLabel(type)} ({count})
@@ -184,21 +184,21 @@ export default function NotificationCenter({ userId, className = '' }: Notificat
           {/* Liste notifications */}
           <div className="max-h-96 overflow-y-auto">
             {loading ? (
-              <div className="p-8 text-center text-gray-500">
+              <div className="p-8 text-center text-muted-foreground">
                 <div className="animate-spin w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full mx-auto mb-2"></div>
                 Chargement...
               </div>
             ) : filteredNotifications.length === 0 ? (
-              <div className="p-8 text-center text-gray-500">
-                <Bell className="w-12 h-12 text-gray-300 mx-auto mb-2" />
+              <div className="p-8 text-center text-muted-foreground">
+                <Bell className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
                 <p>Aucune notification</p>
               </div>
             ) : (
-              <div className="divide-y divide-gray-100">
+              <div className="divide-y divide-border">
                 {filteredNotifications.map((notification) => (
                   <div
                     key={notification.id}
-                    className={`p-4 hover:bg-gray-50 transition-colors cursor-pointer ${
+                    className={`p-4 hover:bg-accent transition-colors cursor-pointer ${
                       !notification.is_read ? 'bg-blue-50 border-l-4 border-l-blue-500' : ''
                     }`}
                     onClick={() => !notification.is_read && handleMarkAsRead(notification.id)}
@@ -207,20 +207,20 @@ export default function NotificationCenter({ userId, className = '' }: Notificat
                       {getNotificationIcon(notification.type)}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between">
-                          <h4 className={`text-sm font-medium text-gray-900 ${
+                          <h4 className={`text-sm font-medium text-foreground ${
                             !notification.is_read ? 'font-semibold' : ''
                           }`}>
                             {notification.title}
                           </h4>
-                          <span className="text-xs text-gray-500 ml-2 whitespace-nowrap">
+                          <span className="text-xs text-muted-foreground ml-2 whitespace-nowrap">
                             {formatTime(notification.created_at)}
                           </span>
                         </div>
-                        <p className="text-sm text-gray-600 mt-1 line-clamp-2">
+                        <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
                           {notification.message}
                         </p>
                         {notification.data && Object.keys(notification.data).length > 0 && (
-                          <div className="mt-2 p-2 bg-gray-100 rounded text-xs text-gray-600">
+                          <div className="mt-2 p-2 bg-muted rounded text-xs text-muted-foreground">
                             {Object.entries(notification.data)
                               .filter(([key]) => !['event'].includes(key))
                               .map(([key, value]) => (
@@ -239,18 +239,18 @@ export default function NotificationCenter({ userId, className = '' }: Notificat
           </div>
 
           {/* Footer */}
-          <div className="p-3 bg-gray-50 border-t">
+          <div className="p-3 bg-muted border-t">
             <div className="flex justify-between items-center">
               <button
                 onClick={() => {/* Ouvrir page de paramètres notifications */}}
-                className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
+                className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1"
               >
                 <Settings className="w-3 h-3" />
                 Paramètres
               </button>
               <button
                 onClick={() => studentNotificationService.cleanupOldNotifications(userId)}
-                className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1"
+                className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1"
               >
                 <Trash2 className="w-3 h-3" />
                 Nettoyer anciennes

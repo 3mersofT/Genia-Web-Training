@@ -133,9 +133,9 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-background to-card">
       {/* Header avec zone de connexion */}
-      <header className="bg-white shadow-sm border-b">
+      <header className="bg-card shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             {/* Logo GENIA */}
@@ -156,7 +156,7 @@ export default function HomePage() {
             <div className="flex gap-3">
               <Link 
                 href="/login" 
-                className="inline-flex items-center px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                className="inline-flex items-center px-4 py-2 text-foreground bg-card border border-input rounded-lg hover:bg-accent transition-colors"
               >
                 <LogIn className="w-4 h-4 mr-2" />
                 Connexion
@@ -175,7 +175,7 @@ export default function HomePage() {
 
       {/* Hero Section avec Logo GENIA en arrière-plan */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 opacity-70" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--gradient-start))] via-[hsl(var(--gradient-end))] to-pink-50 dark:to-pink-950/30 opacity-70" />
         <div className="absolute inset-0">
           <div className="absolute top-20 left-10 w-72 h-72 bg-blue-300 rounded-full filter blur-3xl opacity-20 animate-pulse" />
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-300 rounded-full filter blur-3xl opacity-20 animate-pulse" />
@@ -204,13 +204,13 @@ export default function HomePage() {
               />
             </div>
             
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+            <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">
               Maîtrisez le 
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> Prompt Engineering</span>
               <br />avec la Méthode GENIA
             </h1>
             
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
               Formation complète et structurée pour devenir expert 
               en intelligence artificielle générative
             </p>
@@ -221,7 +221,7 @@ export default function HomePage() {
                 Commencer la Formation
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
-              <a href="#method" className="inline-flex items-center px-8 py-4 bg-white text-gray-800 font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 border border-gray-200">
+              <a href="#method" className="inline-flex items-center px-8 py-4 bg-card text-foreground font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 border border-border">
                 <MessageCircle className="w-5 h-5 mr-2" />
                 Découvrir la Méthode
               </a>
@@ -234,8 +234,8 @@ export default function HomePage() {
                 return (
                   <div key={index} className="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-lg">
                     <Icon className="w-6 h-6 text-blue-600 mx-auto mb-2" />
-                    <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
-                    <div className="text-sm text-gray-600">{stat.label}</div>
+                    <div className="text-2xl font-bold text-foreground">{stat.value}</div>
+                    <div className="text-sm text-muted-foreground">{stat.label}</div>
                   </div>
                 );
               })}
@@ -245,13 +245,13 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-card">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Une plateforme pensée pour votre réussite
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-muted-foreground">
               Tous les outils pour devenir expert en Prompt Engineering
             </p>
           </div>
@@ -261,12 +261,12 @@ export default function HomePage() {
               const Icon = feature.icon;
               return (
                 <div key={index} className="group hover:scale-105 transition-transform duration-200">
-                  <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl p-6 h-full">
+                  <div className="bg-gradient-to-br from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] rounded-xl p-6 h-full">
                     <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center mb-4">
                       <Icon className="w-6 h-6 text-white" />
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
-                    <p className="text-gray-600">{feature.description}</p>
+                    <h3 className="text-xl font-semibold text-foreground mb-2">{feature.title}</h3>
+                    <p className="text-muted-foreground">{feature.description}</p>
                   </div>
                 </div>
               );
@@ -276,7 +276,7 @@ export default function HomePage() {
       </section>
 
       {/* GENIA Method Section avec logo */}
-      <section id="method" className="py-20 bg-gradient-to-r from-blue-50 to-purple-50 relative">
+      <section id="method" className="py-20 bg-gradient-to-r from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] relative">
         {/* Logo en filigrane */}
         <div className="absolute inset-0 flex items-center justify-center opacity-5">
           <Image 
@@ -290,10 +290,10 @@ export default function HomePage() {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               La Méthode GENIA
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-muted-foreground">
               Une approche pédagogique unique en 5 piliers
             </p>
           </div>
@@ -314,22 +314,22 @@ export default function HomePage() {
           </div>
           
           {/* Contenu de l'onglet actif */}
-          <div className="bg-white rounded-xl shadow-xl p-8 max-w-3xl mx-auto">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+          <div className="bg-card rounded-xl shadow-xl p-8 max-w-3xl mx-auto">
+            <h3 className="text-2xl font-bold text-foreground mb-4">
               {methodology[activeGENIATab].title}
             </h3>
-            <p className="text-lg text-gray-700 mb-4">
+            <p className="text-lg text-foreground mb-4">
               {methodology[activeGENIATab].description}
             </p>
-            <p className="text-gray-600">
+            <p className="text-muted-foreground">
               {methodology[activeGENIATab].details}
             </p>
           </div>
           
           <div className="mt-12 text-center">
-            <div className="inline-flex items-center gap-2 bg-white px-6 py-3 rounded-full shadow-lg">
+            <div className="inline-flex items-center gap-2 bg-card px-6 py-3 rounded-full shadow-lg">
               <Award className="w-5 h-5 text-yellow-500" />
-              <span className="text-gray-800 font-medium">
+              <span className="text-foreground font-medium">
                 Méthode développée par Hemerson KOFFI, expert en pédagogie IA
               </span>
             </div>
@@ -338,53 +338,53 @@ export default function HomePage() {
       </section>
 
       {/* Pricing Section - Prix caché */}
-      <section id="pricing" className="py-20 bg-white">
+      <section id="pricing" className="py-20 bg-card">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Investissez dans votre avenir professionnel
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-muted-foreground">
               Une formation d'exception à un prix accessible
             </p>
           </div>
           
           <div className="max-w-md mx-auto">
-            <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl shadow-2xl overflow-hidden p-8">
+            <div className="bg-gradient-to-br from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] rounded-2xl shadow-2xl overflow-hidden p-8">
               <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Formation Complète</h3>
-                <div className="bg-yellow-100 text-yellow-800 px-4 py-2 rounded-full inline-block mb-4">
+                <h3 className="text-2xl font-bold text-foreground mb-4">Formation Complète</h3>
+                <div className="bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 px-4 py-2 rounded-full inline-block mb-4">
                   🎉 Lancement Bientôt
                 </div>
-                <p className="text-gray-600">
+                <p className="text-muted-foreground">
                   Le tarif sera communiqué lors du lancement officiel
                 </p>
               </div>
               
               <ul className="space-y-3 mb-8">
                 <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Accès illimité à la plateforme</span>
+                  <CheckCircle className="w-5 h-5 text-green-500 dark:text-green-400 mr-2 flex-shrink-0 mt-0.5" />
+                  <span className="text-foreground">Accès illimité à la plateforme</span>
                 </li>
                 <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Assistant pédagogique GENIA</span>
+                  <CheckCircle className="w-5 h-5 text-green-500 dark:text-green-400 mr-2 flex-shrink-0 mt-0.5" />
+                  <span className="text-foreground">Assistant pédagogique GENIA</span>
                 </li>
                 <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">3 modules complets (36 capsules)</span>
+                  <CheckCircle className="w-5 h-5 text-green-500 dark:text-green-400 mr-2 flex-shrink-0 mt-0.5" />
+                  <span className="text-foreground">3 modules complets (36 capsules)</span>
                 </li>
                 <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Certificat de réussite officiel</span>
+                  <CheckCircle className="w-5 h-5 text-green-500 dark:text-green-400 mr-2 flex-shrink-0 mt-0.5" />
+                  <span className="text-foreground">Certificat de réussite officiel</span>
                 </li>
                 <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Mises à jour régulières</span>
+                  <CheckCircle className="w-5 h-5 text-green-500 dark:text-green-400 mr-2 flex-shrink-0 mt-0.5" />
+                  <span className="text-foreground">Mises à jour régulières</span>
                 </li>
                 <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Support technique par email</span>
+                  <CheckCircle className="w-5 h-5 text-green-500 dark:text-green-400 mr-2 flex-shrink-0 mt-0.5" />
+                  <span className="text-foreground">Support technique par email</span>
                 </li>
               </ul>
               
@@ -392,7 +392,7 @@ export default function HomePage() {
                 S'inscrire à la liste d'attente
               </Link>
               
-              <p className="text-center text-sm text-gray-500 mt-4">
+              <p className="text-center text-sm text-muted-foreground mt-4">
                 Soyez parmi les premiers informés du lancement
               </p>
             </div>
@@ -401,31 +401,31 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-muted">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Ils ont transformé leur carrière
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-muted-foreground">
               Rejoignez nos apprenants satisfaits
             </p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <div key={index} className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+              <div key={index} className="bg-card rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
                 <div className="flex mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
                     <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
                   ))}
                 </div>
-                <p className="text-gray-700 mb-4 italic">"{testimonial.content}"</p>
+                <p className="text-foreground mb-4 italic">"{testimonial.content}"</p>
                 <div className="flex items-center">
                   <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mr-3" />
                   <div>
-                    <div className="font-semibold text-gray-900">{testimonial.name}</div>
-                    <div className="text-sm text-gray-600">{testimonial.role}</div>
+                    <div className="font-semibold text-foreground">{testimonial.name}</div>
+                    <div className="text-sm text-muted-foreground">{testimonial.role}</div>
                   </div>
                 </div>
               </div>
@@ -435,27 +435,27 @@ export default function HomePage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-card">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Questions Fréquentes
             </h2>
           </div>
           
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="bg-gray-50 rounded-xl shadow-md overflow-hidden">
+              <div key={index} className="bg-muted rounded-xl shadow-md overflow-hidden">
                 <button
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-100 transition-colors"
+                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-accent transition-colors"
                 >
-                  <span className="font-semibold text-gray-900">{faq.question}</span>
-                  <ChevronDown className={`w-5 h-5 text-gray-500 transition-transform ${openFaq === index ? 'rotate-180' : ''}`} />
+                  <span className="font-semibold text-foreground">{faq.question}</span>
+                  <ChevronDown className={`w-5 h-5 text-muted-foreground transition-transform ${openFaq === index ? 'rotate-180' : ''}`} />
                 </button>
                 {openFaq === index && (
-                  <div className="px-6 py-4 border-t border-gray-200 bg-white">
-                    <p className="text-gray-700">{faq.answer}</p>
+                  <div className="px-6 py-4 border-t border-border bg-card">
+                    <p className="text-foreground">{faq.answer}</p>
                   </div>
                 )}
               </div>
@@ -465,9 +465,9 @@ export default function HomePage() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-12 bg-gray-50">
+      <section className="py-12 bg-muted">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">
+          <h3 className="text-2xl font-bold text-foreground mb-4">
             Des questions ? Contactez-nous
           </h3>
           <div className="flex justify-center gap-4">
@@ -482,7 +482,7 @@ export default function HomePage() {
             </a>
             <a 
               href="mailto:contact@geniawebtraining.com" 
-              className="inline-flex items-center px-6 py-3 bg-white text-gray-800 font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 border border-gray-200"
+              className="inline-flex items-center px-6 py-3 bg-card text-foreground font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 border border-border"
             >
               <Mail className="w-5 h-5 mr-2" />
               Email
@@ -501,7 +501,7 @@ export default function HomePage() {
             Rejoignez GENIA Web Training aujourd'hui
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/register" className="inline-flex items-center px-8 py-4 bg-white text-blue-600 font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
+            <Link href="/register" className="inline-flex items-center px-8 py-4 bg-card text-primary font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
               <Zap className="w-5 h-5 mr-2" />
               S'inscrire maintenant
               <ArrowRight className="w-5 h-5 ml-2" />
@@ -515,7 +515,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer avec logo */}
-      <footer className="bg-gray-900 text-white py-12">
+      <footer className="bg-background text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
             <div className="flex items-center justify-center gap-3 mb-4">
@@ -528,49 +528,49 @@ export default function HomePage() {
               />
               <span className="text-xl font-bold">GENIA Web Training</span>
             </div>
-            <p className="text-gray-400 max-w-md mx-auto">
+            <p className="text-muted-foreground max-w-md mx-auto">
               Plateforme de formation au Prompt Engineering
             </p>
           </div>
           
-          <div className="border-t border-gray-800 pt-8">
+          <div className="border-t border-border pt-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
               <div>
                 <h4 className="font-semibold mb-4">Formation</h4>
-                <div className="flex justify-center gap-4 text-gray-400 text-sm">
+                <div className="flex justify-center gap-4 text-muted-foreground text-sm">
                   <Link href="/dashboard" className="hover:text-white transition-colors">Programme</Link>
-                  <span className="text-gray-600">|</span>
+                  <span className="text-muted-foreground">|</span>
                   <a href="#method" className="hover:text-white transition-colors">Méthode</a>
-                  <span className="text-gray-600">|</span>
+                  <span className="text-muted-foreground">|</span>
                   <Link href="/dashboard/achievements" className="hover:text-white transition-colors">Certificats</Link>
                 </div>
               </div>
               
               <div>
                 <h4 className="font-semibold mb-4">Ressources</h4>
-                <div className="flex justify-center gap-4 text-gray-400 text-sm">
+                <div className="flex justify-center gap-4 text-muted-foreground text-sm">
                   <a href="#" className="hover:text-white transition-colors">Blog</a>
-                  <span className="text-gray-600">|</span>
+                  <span className="text-muted-foreground">|</span>
                   <a href="#" className="hover:text-white transition-colors">Documentation</a>
-                  <span className="text-gray-600">|</span>
+                  <span className="text-muted-foreground">|</span>
                   <a href="#" className="hover:text-white transition-colors">Support</a>
                 </div>
               </div>
               
               <div>
                 <h4 className="font-semibold mb-4">Informations</h4>
-                <div className="flex justify-center gap-4 text-gray-400 text-sm">
+                <div className="flex justify-center gap-4 text-muted-foreground text-sm">
                   <a href="#" className="hover:text-white transition-colors">CGU</a>
-                  <span className="text-gray-600">|</span>
+                  <span className="text-muted-foreground">|</span>
                   <a href="#" className="hover:text-white transition-colors">Contact</a>
-                  <span className="text-gray-600">|</span>
+                  <span className="text-muted-foreground">|</span>
                   <a href="#" className="hover:text-white transition-colors">À propos</a>
                 </div>
               </div>
             </div>
           </div>
           
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+          <div className="border-t border-border mt-8 pt-8 text-center text-muted-foreground">
             <p>© 2025 GENIA Web Training. Créé par Hemerson KOFFI. Tous droits réservés.</p>
           </div>
         </div>

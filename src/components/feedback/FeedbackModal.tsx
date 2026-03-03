@@ -155,7 +155,7 @@ export default function FeedbackModal({
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+          className="relative bg-card rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
         >
           {/* Header */}
           <div className="sticky top-0 bg-gradient-to-r from-blue-600 to-purple-600 p-6 rounded-t-2xl">
@@ -177,7 +177,7 @@ export default function FeedbackModal({
           <form onSubmit={handleSubmit} className="p-6 space-y-6">
             {/* Rating */}
             <div>
-              <label className="block text-lg font-semibold text-gray-900 mb-3">
+              <label className="block text-lg font-semibold text-foreground mb-3">
                 Note globale *
               </label>
               <div className="flex gap-2">
@@ -194,13 +194,13 @@ export default function FeedbackModal({
                       className={`w-8 h-8 ${
                         star <= (hoverRating || rating)
                           ? 'text-yellow-400 fill-current'
-                          : 'text-gray-300'
+                          : 'text-muted-foreground'
                       }`}
                     />
                   </button>
                 ))}
               </div>
-              <div className="flex justify-between text-sm text-gray-500 mt-1">
+              <div className="flex justify-between text-sm text-muted-foreground mt-1">
                 <span>Pas du tout</span>
                 <span>Excellent</span>
               </div>
@@ -208,7 +208,7 @@ export default function FeedbackModal({
 
             {/* Categories */}
             <div>
-              <label className="block text-lg font-semibold text-gray-900 mb-3">
+              <label className="block text-lg font-semibold text-foreground mb-3">
                 Catégories * (sélectionnez au moins une)
               </label>
               <div className="grid grid-cols-2 gap-3">
@@ -219,8 +219,8 @@ export default function FeedbackModal({
                     onClick={() => handleCategoryToggle(category.id)}
                     className={`p-3 rounded-lg border-2 transition-all ${
                       selectedCategories.includes(category.id)
-                        ? 'border-blue-500 bg-blue-50 text-blue-700'
-                        : 'border-gray-200 hover:border-gray-300 text-gray-700'
+                        ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30 text-blue-700 dark:text-blue-300'
+                        : 'border-border hover:border-input text-foreground'
                     }`}
                   >
                     <div className="flex items-center gap-2">
@@ -234,18 +234,18 @@ export default function FeedbackModal({
 
             {/* Comment */}
             <div>
-              <label className="block text-lg font-semibold text-gray-900 mb-3">
+              <label className="block text-lg font-semibold text-foreground mb-3">
                 Commentaire (optionnel)
               </label>
               <textarea
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 placeholder="Partagez vos suggestions, ce qui vous a plu, ce qui pourrait être amélioré..."
-                className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                className="w-full p-4 border border-input rounded-lg focus:ring-2 focus-visible:ring-ring focus:border-transparent resize-none"
                 rows={4}
                 maxLength={1000}
               />
-              <div className="text-right text-sm text-gray-500 mt-1">
+              <div className="text-right text-sm text-muted-foreground mt-1">
                 {comment.length}/1000 caractères
               </div>
             </div>
@@ -258,9 +258,9 @@ export default function FeedbackModal({
                   id="anonymous"
                   checked={isAnonymous}
                   onChange={(e) => setIsAnonymous(e.target.checked)}
-                  className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500"
+                  className="w-5 h-5 text-blue-600 rounded focus-visible:ring-ring"
                 />
-                <label htmlFor="anonymous" className="text-gray-700 font-medium">
+                <label htmlFor="anonymous" className="text-foreground font-medium">
                   Feedback anonyme
                 </label>
               </div>
@@ -268,7 +268,7 @@ export default function FeedbackModal({
               {!isAnonymous && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-foreground mb-1">
                       Nom (optionnel)
                     </label>
                     <input
@@ -276,11 +276,11 @@ export default function FeedbackModal({
                       value={userName}
                       onChange={(e) => setUserName(e.target.value)}
                       placeholder="Votre nom"
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full p-3 border border-input rounded-lg focus:ring-2 focus-visible:ring-ring focus:border-transparent"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-foreground mb-1">
                       Email (optionnel)
                     </label>
                     <input
@@ -288,7 +288,7 @@ export default function FeedbackModal({
                       value={userEmail}
                       onChange={(e) => setUserEmail(e.target.value)}
                       placeholder="votre@email.com"
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full p-3 border border-input rounded-lg focus:ring-2 focus-visible:ring-ring focus:border-transparent"
                     />
                   </div>
                 </div>
@@ -297,7 +297,7 @@ export default function FeedbackModal({
 
             {/* Error message */}
             {error && (
-              <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700">
+              <div className="flex items-center gap-2 p-3 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg text-red-700 dark:text-red-300">
                 <AlertCircle className="w-5 h-5" />
                 <span>{error}</span>
               </div>
@@ -308,7 +308,7 @@ export default function FeedbackModal({
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                className="flex-1 px-6 py-3 border border-input text-foreground rounded-lg hover:bg-accent transition-colors"
               >
                 Annuler
               </button>

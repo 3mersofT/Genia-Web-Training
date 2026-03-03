@@ -39,7 +39,7 @@ export default async function AdminLayout({
   console.log('Admin layout: Admin access granted, role:', userRole);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {children}
     </div>
   );

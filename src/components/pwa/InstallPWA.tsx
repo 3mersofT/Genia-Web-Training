@@ -133,7 +133,7 @@ export default function InstallPWA() {
             exit={{ y: 100, opacity: 0 }}
             className="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:max-w-md z-50"
           >
-            <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
+            <div className="bg-card rounded-2xl shadow-2xl border border-border overflow-hidden">
               {/* Header avec gradient */}
               <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-4">
                 <div className="flex items-start justify-between">
@@ -167,16 +167,16 @@ export default function InstallPWA() {
               <div className="p-4">
                 <div className="space-y-3 mb-4">
                   <div className="flex items-center gap-3 text-sm">
-                    <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center flex-shrink-0">
                       <span>⚡</span>
                     </div>
-                    <span className="text-gray-700">Lancement ultra-rapide</span>
+                    <span className="text-foreground">Lancement ultra-rapide</span>
                   </div>
                   <div className="flex items-center gap-3 text-sm">
-                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center flex-shrink-0">
                       <span>📱</span>
                     </div>
-                    <span className="text-gray-700">
+                    <span className="text-foreground">
                       Expérience {device === 'mobile' ? 'mobile optimisée' : 'native'}
                     </span>
                   </div>
@@ -184,7 +184,7 @@ export default function InstallPWA() {
                     <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
                       <span>🔔</span>
                     </div>
-                    <span className="text-gray-700">Notifications des nouveaux défis</span>
+                    <span className="text-foreground">Notifications des nouveaux défis</span>
                   </div>
                 </div>
 
@@ -199,7 +199,7 @@ export default function InstallPWA() {
                   </button>
                   <button
                     onClick={handleDismiss}
-                    className="px-4 py-2.5 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                    className="px-4 py-2.5 text-muted-foreground hover:bg-accent rounded-lg transition-colors"
                   >
                     Plus tard
                   </button>
@@ -223,7 +223,7 @@ export default function InstallPWA() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white rounded-2xl max-w-md w-full shadow-2xl overflow-hidden"
+              className="bg-card rounded-2xl max-w-md w-full shadow-2xl overflow-hidden"
             >
               {/* Header iOS */}
               <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white">
@@ -244,16 +244,16 @@ export default function InstallPWA() {
               {/* Étapes */}
               <div className="p-6 space-y-4">
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                     <span className="text-blue-600 font-bold text-sm">1</span>
                   </div>
                   <div>
-                    <p className="font-medium text-gray-900 mb-1">
+                    <p className="font-medium text-foreground mb-1">
                       Appuyez sur le bouton Partager
                     </p>
                     <div className="flex items-center gap-2">
                       <Share className="w-5 h-5 text-blue-600" />
-                      <span className="text-sm text-gray-600">
+                      <span className="text-sm text-muted-foreground">
                         en bas de votre écran Safari
                       </span>
                     </div>
@@ -261,28 +261,28 @@ export default function InstallPWA() {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                     <span className="text-blue-600 font-bold text-sm">2</span>
                   </div>
                   <div>
-                    <p className="font-medium text-gray-900 mb-1">
+                    <p className="font-medium text-foreground mb-1">
                       Faites défiler et sélectionnez
                     </p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-muted-foreground">
                       "Sur l'écran d'accueil" ➕
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                     <span className="text-blue-600 font-bold text-sm">3</span>
                   </div>
                   <div>
-                    <p className="font-medium text-gray-900 mb-1">
+                    <p className="font-medium text-foreground mb-1">
                       Appuyez sur "Ajouter"
                     </p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-muted-foreground">
                       L'app sera ajoutée à votre écran d'accueil
                     </p>
                   </div>

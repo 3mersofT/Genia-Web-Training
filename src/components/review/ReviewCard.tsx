@@ -43,7 +43,7 @@ export default function ReviewCard({
   const concept = sections?.concept?.content;
 
   return (
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden max-w-2xl mx-auto">
+    <div className="bg-card rounded-xl shadow-lg overflow-hidden max-w-2xl mx-auto">
       {/* Header */}
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4">
         <div className="flex items-center justify-between text-white">
@@ -63,11 +63,11 @@ export default function ReviewCard({
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-3">
             <Brain className="w-5 h-5 text-purple-600" />
-            <h3 className="font-semibold text-gray-900">De quoi traitait cette capsule ?</h3>
+            <h3 className="font-semibold text-foreground">De quoi traitait cette capsule ?</h3>
           </div>
 
           {hook?.text && (
-            <div className="bg-blue-50 p-4 rounded-lg text-gray-700 text-sm">
+            <div className="bg-blue-50 dark:bg-blue-950/30 p-4 rounded-lg text-foreground text-sm">
               <p className="font-medium text-blue-800 mb-1">Indice :</p>
               <p>{hook.text}</p>
             </div>
@@ -78,7 +78,7 @@ export default function ReviewCard({
         {!showAnswer ? (
           <button
             onClick={() => setShowAnswer(true)}
-            className="w-full py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg flex items-center justify-center gap-2 transition-colors"
+            className="w-full py-3 bg-muted hover:bg-accent text-foreground font-medium rounded-lg flex items-center justify-center gap-2 transition-colors"
           >
             <RotateCcw className="w-4 h-4" />
             Révéler la réponse
@@ -88,9 +88,9 @@ export default function ReviewCard({
             {/* Réponse */}
             <div className="mb-6 space-y-3">
               {keyPoint && (
-                <div className="bg-green-50 p-4 rounded-lg border border-green-200">
-                  <p className="font-medium text-green-800 mb-1">Point clé :</p>
-                  <p className="text-green-700 text-sm">{keyPoint}</p>
+                <div className="bg-green-50 dark:bg-green-950/30 p-4 rounded-lg border border-green-200">
+                  <p className="font-medium text-green-800 dark:text-green-200 mb-1">Point clé :</p>
+                  <p className="text-green-700 dark:text-green-300 text-sm">{keyPoint}</p>
                 </div>
               )}
 
@@ -107,7 +107,7 @@ export default function ReviewCard({
                 </button>
               )}
               {concept && (
-                <div id={`concept-${capsuleId}`} className="hidden bg-purple-50 p-4 rounded-lg text-sm text-gray-700 max-h-48 overflow-y-auto">
+                <div id={`concept-${capsuleId}`} className="hidden bg-purple-50 p-4 rounded-lg text-sm text-foreground max-h-48 overflow-y-auto">
                   {concept.substring(0, 500)}{concept.length > 500 ? '...' : ''}
                 </div>
               )}
@@ -115,7 +115,7 @@ export default function ReviewCard({
 
             {/* Boutons de notation */}
             <div>
-              <p className="text-sm text-gray-600 mb-3 text-center">
+              <p className="text-sm text-muted-foreground mb-3 text-center">
                 Comment évaluez-vous votre rappel ?
               </p>
               <div className="grid grid-cols-3 gap-2">

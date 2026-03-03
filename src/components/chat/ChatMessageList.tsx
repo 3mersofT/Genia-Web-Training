@@ -63,8 +63,8 @@ export default function ChatMessageList({
               message.role === 'user'
                 ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
                 : message.role === 'system'
-                ? 'bg-gray-100 text-gray-700'
-                : 'bg-white border border-gray-200 text-gray-800'
+                ? 'bg-muted text-foreground'
+                : 'bg-card border border-border text-foreground'
             }`}
           >
             {/* Method Step Indicator */}
@@ -77,7 +77,7 @@ export default function ChatMessageList({
 
             {/* Provider Badge */}
             {message.provider && message.role === 'assistant' && (
-              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] bg-gray-100 text-gray-500 ml-2 mb-2">
+              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] bg-muted text-muted-foreground ml-2 mb-2">
                 via {message.provider}
               </span>
             )}
@@ -103,10 +103,10 @@ export default function ChatMessageList({
             {/* CoT Reasoning for Magistral */}
             {message.reasoning && (
               <details className="mt-3 text-xs">
-                <summary className="cursor-pointer text-gray-500 hover:text-gray-700">
+                <summary className="cursor-pointer text-muted-foreground hover:text-accent-foreground">
                   Voir le raisonnement...
                 </summary>
-                <div className="mt-2 p-2 bg-gray-50 rounded text-gray-600 whitespace-pre-wrap">
+                <div className="mt-2 p-2 bg-muted rounded text-muted-foreground whitespace-pre-wrap">
                   {message.reasoning}
                 </div>
               </details>
@@ -128,8 +128,8 @@ export default function ChatMessageList({
                     onClick={() => onFeedback(message.id, 'up')}
                     className={`p-1 rounded transition-colors ${
                       message.feedback === 'up'
-                        ? 'text-green-600 bg-green-50'
-                        : 'text-gray-400 hover:text-green-600 hover:bg-green-50'
+                        ? 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-950/30'
+                        : 'text-muted-foreground hover:text-green-600 hover:bg-green-50 dark:hover:bg-green-950/30'
                     }`}
                     title="Bonne réponse"
                     aria-label="Marquer comme bonne réponse"
@@ -140,8 +140,8 @@ export default function ChatMessageList({
                     onClick={() => onFeedback(message.id, 'down')}
                     className={`p-1 rounded transition-colors ${
                       message.feedback === 'down'
-                        ? 'text-red-600 bg-red-50'
-                        : 'text-gray-400 hover:text-red-600 hover:bg-red-50'
+                        ? 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30'
+                        : 'text-muted-foreground hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30'
                     }`}
                     title="Mauvaise réponse"
                     aria-label="Marquer comme mauvaise réponse"
@@ -158,9 +158,9 @@ export default function ChatMessageList({
       {/* Loading Indicator */}
       {isLoading && !messages.some(m => m.isStreaming) && (
         <div className="flex justify-start">
-          <div className="bg-gray-100 rounded-2xl px-4 py-3 flex items-center gap-2">
-            <Loader2 className="w-4 h-4 animate-spin text-gray-500" />
-            <span className="text-gray-500">{loadingText}</span>
+          <div className="bg-muted rounded-2xl px-4 py-3 flex items-center gap-2">
+            <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
+            <span className="text-muted-foreground">{loadingText}</span>
           </div>
         </div>
       )}

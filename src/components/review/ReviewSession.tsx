@@ -52,22 +52,22 @@ export default function ReviewSession({ cards, onRate, onClose }: ReviewSessionP
 
     return (
       <div className="fixed inset-0 bg-gray-900/50 z-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-8 text-center">
-          <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Session terminée !</h2>
-          <p className="text-gray-600 mb-6">
+        <div className="bg-card rounded-xl shadow-2xl max-w-md w-full p-8 text-center">
+          <CheckCircle className="w-16 h-16 text-green-500 dark:text-green-400 mx-auto mb-4" />
+          <h2 className="text-2xl font-bold text-foreground mb-2">Session terminée !</h2>
+          <p className="text-muted-foreground mb-6">
             {goodCount}/{results.length} capsule{results.length > 1 ? 's' : ''} bien retenue{results.length > 1 ? 's' : ''}
           </p>
 
-          <div className="bg-gray-50 rounded-lg p-4 mb-6">
+          <div className="bg-muted rounded-lg p-4 mb-6">
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
-                <p className="text-gray-500">Cartes révisées</p>
-                <p className="text-xl font-bold text-gray-900">{results.length}</p>
+                <p className="text-muted-foreground">Cartes révisées</p>
+                <p className="text-xl font-bold text-foreground">{results.length}</p>
               </div>
               <div>
-                <p className="text-gray-500">Qualité moyenne</p>
-                <p className="text-xl font-bold text-gray-900">{avgQuality.toFixed(1)}/5</p>
+                <p className="text-muted-foreground">Qualité moyenne</p>
+                <p className="text-xl font-bold text-foreground">{avgQuality.toFixed(1)}/5</p>
               </div>
             </div>
           </div>
@@ -88,13 +88,13 @@ export default function ReviewSession({ cards, onRate, onClose }: ReviewSessionP
   return (
     <div className="fixed inset-0 bg-gray-900/50 z-50 flex flex-col">
       {/* Top bar */}
-      <div className="bg-white border-b px-4 py-3">
+      <div className="bg-card border-b px-4 py-3">
         <div className="flex items-center justify-between max-w-2xl mx-auto">
-          <div className="text-sm text-gray-600">
+          <div className="text-sm text-muted-foreground">
             {currentIndex + 1} / {cards.length}
           </div>
           <div className="flex-1 mx-4">
-            <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div className="h-2 bg-muted rounded-full overflow-hidden">
               <div
                 className="h-full bg-blue-600 rounded-full transition-all duration-300"
                 style={{ width: `${progress}%` }}
@@ -103,7 +103,7 @@ export default function ReviewSession({ cards, onRate, onClose }: ReviewSessionP
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 text-gray-500 hover:text-gray-700 rounded-lg hover:bg-gray-100"
+            className="p-1.5 text-muted-foreground hover:text-foreground rounded-lg hover:bg-accent"
           >
             <X className="w-5 h-5" />
           </button>

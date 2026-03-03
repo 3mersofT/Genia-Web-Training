@@ -46,8 +46,8 @@ export default function OfflineToggle({
         disabled={loading}
         className={`p-2 rounded-lg transition-colors ${
           cached
-            ? 'bg-green-100 text-green-700 hover:bg-green-200'
-            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 hover:bg-green-200'
+            : 'bg-muted text-muted-foreground hover:bg-muted'
         }`}
         title={cached ? 'Retirer du mode hors ligne' : 'Rendre disponible hors ligne'}
       >
@@ -69,8 +69,8 @@ export default function OfflineToggle({
         disabled={loading}
         className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
           cached
-            ? 'bg-green-100 text-green-700 hover:bg-green-200'
-            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 hover:bg-green-200'
+            : 'bg-muted text-muted-foreground hover:bg-muted'
         }`}
       >
         {loading ? (
@@ -97,8 +97,8 @@ export default function OfflineToggle({
       disabled={loading}
       className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
         cached
-          ? 'bg-green-50 text-green-700 border border-green-200 hover:bg-green-100'
-          : 'bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100'
+          ? 'bg-green-50 dark:bg-green-950/30 text-green-700 dark:text-green-300 border border-green-200 hover:bg-green-100 dark:bg-green-900/30'
+          : 'bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100 dark:bg-blue-900/30'
       }`}
     >
       {loading ? (

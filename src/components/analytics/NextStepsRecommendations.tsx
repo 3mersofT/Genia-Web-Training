@@ -54,7 +54,7 @@ export default function NextStepsRecommendations({ recommendations }: NextStepsR
         return {
           bg: 'from-red-50 to-orange-50',
           border: 'border-red-200',
-          text: 'text-red-700',
+          text: 'text-red-700 dark:text-red-300',
           badge: 'bg-red-500'
         }
       case 'medium':
@@ -73,9 +73,9 @@ export default function NextStepsRecommendations({ recommendations }: NextStepsR
         }
       default:
         return {
-          bg: 'from-gray-50 to-gray-100',
-          border: 'border-gray-200',
-          text: 'text-gray-700',
+          bg: 'from-muted to-muted/80',
+          border: 'border-border',
+          text: 'text-foreground',
           badge: 'bg-gray-500'
         }
     }
@@ -85,15 +85,15 @@ export default function NextStepsRecommendations({ recommendations }: NextStepsR
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case 'beginner':
-        return 'text-green-600 bg-green-100'
+        return 'text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/30'
       case 'intermediate':
-        return 'text-yellow-600 bg-yellow-100'
+        return 'text-yellow-600 bg-yellow-100 dark:bg-yellow-900/30'
       case 'advanced':
         return 'text-orange-600 bg-orange-100'
       case 'expert':
-        return 'text-red-600 bg-red-100'
+        return 'text-red-600 dark:text-red-400 bg-red-100 dark:bg-red-900/30'
       default:
-        return 'text-gray-600 bg-gray-100'
+        return 'text-muted-foreground bg-muted'
     }
   }
 
@@ -114,13 +114,13 @@ export default function NextStepsRecommendations({ recommendations }: NextStepsR
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+    <div className="bg-card rounded-xl shadow-sm border border-border p-6">
       <div className="mb-6">
-        <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+        <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
           <Lightbulb className="w-6 h-6 text-purple-500" />
           Prochaines Étapes Recommandées
         </h2>
-        <p className="text-sm text-gray-600 mt-1">
+        <p className="text-sm text-muted-foreground mt-1">
           Suggestions personnalisées basées sur votre progression et vos compétences
         </p>
       </div>
@@ -146,12 +146,12 @@ export default function NextStepsRecommendations({ recommendations }: NextStepsR
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-2 mb-1">
-                          <h3 className="font-semibold text-gray-900 group-hover:text-purple-600 transition-colors">
+                          <h3 className="font-semibold text-foreground group-hover:text-purple-600 transition-colors">
                             {rec.capsule_title}
                           </h3>
-                          <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-purple-500 group-hover:translate-x-1 transition-all flex-shrink-0" />
+                          <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-purple-500 group-hover:translate-x-1 transition-all flex-shrink-0" />
                         </div>
-                        <p className="text-sm text-gray-600 mb-2">
+                        <p className="text-sm text-muted-foreground mb-2">
                           {rec.module_title}
                         </p>
 
@@ -165,10 +165,10 @@ export default function NextStepsRecommendations({ recommendations }: NextStepsR
                           </span>
                           <span className={`px-2 py-1 text-xs font-medium rounded-full capitalize ${
                             rec.priority === 'high'
-                              ? 'bg-red-100 text-red-700'
+                              ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300'
                               : rec.priority === 'medium'
-                              ? 'bg-yellow-100 text-yellow-700'
-                              : 'bg-blue-100 text-blue-700'
+                              ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700'
+                              : 'bg-blue-100 dark:bg-blue-900/30 text-blue-700'
                           }`}>
                             {rec.priority === 'high' ? 'Priorité haute' : rec.priority === 'medium' ? 'Priorité moyenne' : 'Priorité basse'}
                           </span>
@@ -177,12 +177,12 @@ export default function NextStepsRecommendations({ recommendations }: NextStepsR
                         {/* Skills Focus */}
                         {rec.skill_focus.length > 0 && (
                           <div className="mb-3">
-                            <p className="text-xs text-gray-600 mb-1">Compétences ciblées :</p>
+                            <p className="text-xs text-muted-foreground mb-1">Compétences ciblées :</p>
                             <div className="flex flex-wrap gap-1">
                               {rec.skill_focus.map((skill, idx) => (
                                 <span
                                   key={idx}
-                                  className="px-2 py-0.5 text-xs bg-white/60 text-gray-700 rounded border border-gray-200"
+                                  className="px-2 py-0.5 text-xs bg-card/60 text-foreground rounded border border-border"
                                 >
                                   {skill}
                                 </span>
@@ -192,7 +192,7 @@ export default function NextStepsRecommendations({ recommendations }: NextStepsR
                         )}
 
                         {/* Duration */}
-                        <div className="flex items-center gap-4 text-sm text-gray-600">
+                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
                           <div className="flex items-center gap-1">
                             <Clock className="w-4 h-4" />
                             <span>{rec.estimated_duration_minutes} min</span>
@@ -213,9 +213,9 @@ export default function NextStepsRecommendations({ recommendations }: NextStepsR
       ) : (
         /* Empty State */
         <div className="text-center py-12">
-          <Lightbulb className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <p className="text-gray-600 font-medium mb-2">Aucune recommandation pour le moment</p>
-          <p className="text-sm text-gray-500">
+          <Lightbulb className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+          <p className="text-muted-foreground font-medium mb-2">Aucune recommandation pour le moment</p>
+          <p className="text-sm text-muted-foreground">
             Complétez plus de capsules pour recevoir des suggestions personnalisées !
           </p>
         </div>
@@ -227,12 +227,12 @@ export default function NextStepsRecommendations({ recommendations }: NextStepsR
           <div className="flex items-start gap-3">
             <Target className="w-5 h-5 text-purple-600 mt-0.5 flex-shrink-0" />
             <div>
-              <p className="text-sm font-medium text-gray-900">
+              <p className="text-sm font-medium text-foreground">
                 {sortedRecommendations.filter(r => r.priority === 'high').length > 0
                   ? `Focus sur les priorités hautes pour progresser rapidement !`
                   : `Continuez votre apprentissage avec ces suggestions adaptées à votre niveau.`}
               </p>
-              <p className="text-xs text-gray-600 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 Nos recommandations sont basées sur votre progression, vos compétences et vos objectifs d'apprentissage.
               </p>
             </div>
@@ -248,7 +248,7 @@ export default function NextStepsRecommendations({ recommendations }: NextStepsR
               <Target className="w-4 h-4 text-white" />
             </div>
             <div>
-              <p className="text-xs text-gray-600">Priorités hautes</p>
+              <p className="text-xs text-muted-foreground">Priorités hautes</p>
               <p className="text-lg font-bold text-purple-700">
                 {sortedRecommendations.filter(r => r.priority === 'high').length}
               </p>
@@ -260,7 +260,7 @@ export default function NextStepsRecommendations({ recommendations }: NextStepsR
               <Clock className="w-4 h-4 text-white" />
             </div>
             <div>
-              <p className="text-xs text-gray-600">Temps estimé</p>
+              <p className="text-xs text-muted-foreground">Temps estimé</p>
               <p className="text-lg font-bold text-blue-700">
                 {sortedRecommendations.reduce((sum, r) => sum + r.estimated_duration_minutes, 0)} min
               </p>
@@ -272,8 +272,8 @@ export default function NextStepsRecommendations({ recommendations }: NextStepsR
               <Award className="w-4 h-4 text-white" />
             </div>
             <div>
-              <p className="text-xs text-gray-600">Points potentiels</p>
-              <p className="text-lg font-bold text-green-700">
+              <p className="text-xs text-muted-foreground">Points potentiels</p>
+              <p className="text-lg font-bold text-green-700 dark:text-green-300">
                 +{sortedRecommendations.length * 10}
               </p>
             </div>

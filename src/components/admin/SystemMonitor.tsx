@@ -40,10 +40,10 @@ export default function SystemMonitor({ className = '' }: SystemMonitorProps) {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'healthy': return 'text-green-600 bg-green-100';
-      case 'warning': return 'text-yellow-600 bg-yellow-100';
-      case 'error': return 'text-red-600 bg-red-100';
-      default: return 'text-gray-600 bg-gray-100';
+      case 'healthy': return 'text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/30';
+      case 'warning': return 'text-yellow-600 bg-yellow-100 dark:bg-yellow-900/30';
+      case 'error': return 'text-red-600 dark:text-red-400 bg-red-100 dark:bg-red-900/30';
+      default: return 'text-muted-foreground bg-muted';
     }
   };
 
@@ -67,9 +67,9 @@ export default function SystemMonitor({ className = '' }: SystemMonitorProps) {
   };
 
   const getMetricColor = (value: number, thresholds: { warning: number; error: number }) => {
-    if (value > thresholds.error) return 'text-red-600';
+    if (value > thresholds.error) return 'text-red-600 dark:text-red-400';
     if (value > thresholds.warning) return 'text-yellow-600';
-    return 'text-green-600';
+    return 'text-green-600 dark:text-green-400';
   };
 
   const getProgressBarColor = (value: number, max: number = 100) => {
@@ -81,15 +81,15 @@ export default function SystemMonitor({ className = '' }: SystemMonitorProps) {
 
   if (loading && !health) {
     return (
-      <div className={`bg-white rounded-xl shadow-sm p-6 ${className}`}>
+      <div className={`bg-card rounded-xl shadow-sm p-6 ${className}`}>
         <div className="animate-pulse">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-8 bg-gray-200 rounded"></div>
-            <div className="h-6 bg-gray-200 rounded w-48"></div>
+            <div className="w-8 h-8 bg-muted rounded"></div>
+            <div className="h-6 bg-muted rounded w-48"></div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[1, 2, 3].map(i => (
-              <div key={i} className="h-24 bg-gray-200 rounded"></div>
+              <div key={i} className="h-24 bg-muted rounded"></div>
             ))}
           </div>
         </div>
@@ -99,8 +99,8 @@ export default function SystemMonitor({ className = '' }: SystemMonitorProps) {
 
   if (!health) {
     return (
-      <div className={`bg-white rounded-xl shadow-sm p-6 ${className}`}>
-        <div className="text-center text-red-600">
+      <div className={`bg-card rounded-xl shadow-sm p-6 ${className}`}>
+        <div className="text-center text-red-600 dark:text-red-400">
           <XCircle className="w-12 h-12 mx-auto mb-2" />
           <p>Impossible de récupérer l'état du système</p>
           <button
@@ -115,17 +115,17 @@ export default function SystemMonitor({ className = '' }: SystemMonitorProps) {
   }
 
   return (
-    <div className={`bg-white rounded-xl shadow-sm ${className}`}>
+    <div className={`bg-card rounded-xl shadow-sm ${className}`}>
       {/* Header */}
-      <div className="p-6 border-b border-gray-200">
+      <div className="p-6 border-b border-border">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-3">
             <div className={`p-2 rounded-lg ${getStatusColor(health.status)}`}>
               {getStatusIcon(health.status)}
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900">Santé du Système</h3>
-              <p className="text-sm text-gray-500">
+              <h3 className="text-lg font-semibold text-foreground">Santé du Système</h3>
+              <p className="text-sm text-muted-foreground">
                 Dernière vérification : {new Date(health.lastCheck).toLocaleTimeString('fr-FR')}
               </p>
             </div>
@@ -134,7 +134,7 @@ export default function SystemMonitor({ className = '' }: SystemMonitorProps) {
             <button
               onClick={() => setAutoRefresh(!autoRefresh)}
               className={`px-3 py-1 text-xs rounded-full ${
-                autoRefresh ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-600'
+                autoRefresh ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600' : 'bg-muted text-muted-foreground'
               }`}
             >
               Auto-refresh {autoRefresh ? 'ON' : 'OFF'}
@@ -142,7 +142,7 @@ export default function SystemMonitor({ className = '' }: SystemMonitorProps) {
             <button
               onClick={checkSystemHealth}
               disabled={loading}
-              className="p-2 text-gray-600 hover:text-gray-800 disabled:opacity-50"
+              className="p-2 text-muted-foreground hover:text-foreground disabled:opacity-50"
             >
               <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
             </button>
@@ -153,23 +153,23 @@ export default function SystemMonitor({ className = '' }: SystemMonitorProps) {
       <div className="p-6">
         {/* Status Overview */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <div className="bg-gray-50 rounded-lg p-4">
+          <div className="bg-muted rounded-lg p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Server className="w-5 h-5 text-blue-600" />
-                <span className="text-sm font-medium text-gray-700">Uptime</span>
+                <span className="text-sm font-medium text-foreground">Uptime</span>
               </div>
-              <span className="text-lg font-bold text-green-600">
+              <span className="text-lg font-bold text-green-600 dark:text-green-400">
                 {health.uptime.toFixed(2)}%
               </span>
             </div>
           </div>
 
-          <div className="bg-gray-50 rounded-lg p-4">
+          <div className="bg-muted rounded-lg p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Clock className="w-5 h-5 text-green-600" />
-                <span className="text-sm font-medium text-gray-700">Réponse API</span>
+                <Clock className="w-5 h-5 text-green-600 dark:text-green-400" />
+                <span className="text-sm font-medium text-foreground">Réponse API</span>
               </div>
               <span className={`text-lg font-bold ${
                 getMetricColor(health.metrics.api_response_time, { warning: 2000, error: 5000 })
@@ -179,11 +179,11 @@ export default function SystemMonitor({ className = '' }: SystemMonitorProps) {
             </div>
           </div>
 
-          <div className="bg-gray-50 rounded-lg p-4">
+          <div className="bg-muted rounded-lg p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Database className="w-5 h-5 text-purple-600" />
-                <span className="text-sm font-medium text-gray-700">Erreurs</span>
+                <span className="text-sm font-medium text-foreground">Erreurs</span>
               </div>
               <span className={`text-lg font-bold ${
                 getMetricColor(health.metrics.error_rate, { warning: 1, error: 3 })
@@ -193,13 +193,13 @@ export default function SystemMonitor({ className = '' }: SystemMonitorProps) {
             </div>
           </div>
 
-          <div className="bg-gray-50 rounded-lg p-4">
+          <div className="bg-muted rounded-lg p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <AlertTriangle className="w-5 h-5 text-yellow-600" />
-                <span className="text-sm font-medium text-gray-700">Alertes</span>
+                <span className="text-sm font-medium text-foreground">Alertes</span>
               </div>
-              <span className="text-lg font-bold text-red-600">
+              <span className="text-lg font-bold text-red-600 dark:text-red-400">
                 {health.alerts.filter(a => !a.resolved).length}
               </span>
             </div>
@@ -210,16 +210,16 @@ export default function SystemMonitor({ className = '' }: SystemMonitorProps) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           {/* Métriques système */}
           <div>
-            <h4 className="text-sm font-semibold text-gray-900 mb-3">Ressources Système</h4>
+            <h4 className="text-sm font-semibold text-foreground mb-3">Ressources Système</h4>
             <div className="space-y-4">
               {/* CPU */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Cpu className="w-4 h-4 text-blue-600" />
-                  <span className="text-sm text-gray-700">CPU</span>
+                  <span className="text-sm text-foreground">CPU</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-24 bg-gray-200 rounded-full h-2">
+                  <div className="w-24 bg-muted rounded-full h-2">
                     <div 
                       className={`h-2 rounded-full transition-all ${getProgressBarColor(health.metrics.cpu_usage)}`}
                       style={{ width: `${health.metrics.cpu_usage}%` }}
@@ -234,11 +234,11 @@ export default function SystemMonitor({ className = '' }: SystemMonitorProps) {
               {/* Mémoire */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <HardDrive className="w-4 h-4 text-green-600" />
-                  <span className="text-sm text-gray-700">Mémoire</span>
+                  <HardDrive className="w-4 h-4 text-green-600 dark:text-green-400" />
+                  <span className="text-sm text-foreground">Mémoire</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-24 bg-gray-200 rounded-full h-2">
+                  <div className="w-24 bg-muted rounded-full h-2">
                     <div 
                       className={`h-2 rounded-full transition-all ${getProgressBarColor(health.metrics.memory_usage)}`}
                       style={{ width: `${health.metrics.memory_usage}%` }}
@@ -254,10 +254,10 @@ export default function SystemMonitor({ className = '' }: SystemMonitorProps) {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <HardDrive className="w-4 h-4 text-purple-600" />
-                  <span className="text-sm text-gray-700">Stockage</span>
+                  <span className="text-sm text-foreground">Stockage</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-24 bg-gray-200 rounded-full h-2">
+                  <div className="w-24 bg-muted rounded-full h-2">
                     <div 
                       className={`h-2 rounded-full transition-all ${getProgressBarColor(health.metrics.storage_usage)}`}
                       style={{ width: `${health.metrics.storage_usage}%` }}
@@ -273,18 +273,18 @@ export default function SystemMonitor({ className = '' }: SystemMonitorProps) {
 
           {/* Alertes actives */}
           <div>
-            <h4 className="text-sm font-semibold text-gray-900 mb-3">
+            <h4 className="text-sm font-semibold text-foreground mb-3">
               Alertes Actives ({health.alerts.filter(a => !a.resolved).length})
             </h4>
             <div className="space-y-2 max-h-32 overflow-y-auto">
               {health.alerts.filter(a => !a.resolved).length === 0 ? (
-                <div className="text-sm text-gray-500 italic">Aucune alerte active</div>
+                <div className="text-sm text-muted-foreground italic">Aucune alerte active</div>
               ) : (
                 health.alerts.filter(a => !a.resolved).map((alert, index) => (
                   <div
                     key={index}
                     className={`p-3 rounded-lg border-l-4 ${
-                      alert.severity === 'critical' ? 'border-red-500 bg-red-50' :
+                      alert.severity === 'critical' ? 'border-red-500 bg-red-50 dark:bg-red-950/30' :
                       alert.severity === 'high' ? 'border-yellow-500 bg-yellow-50' :
                       'border-blue-500 bg-blue-50'
                     }`}
@@ -299,11 +299,11 @@ export default function SystemMonitor({ className = '' }: SystemMonitorProps) {
                           }`}>
                             {alert.severity}
                           </span>
-                          <span className="text-xs text-gray-500">
+                          <span className="text-xs text-muted-foreground">
                             {new Date(alert.timestamp).toLocaleTimeString('fr-FR')}
                           </span>
                         </div>
-                        <p className="text-sm font-medium text-gray-900 mt-1">
+                        <p className="text-sm font-medium text-foreground mt-1">
                           {alert.message}
                         </p>
                       </div>
@@ -331,7 +331,7 @@ export default function SystemMonitor({ className = '' }: SystemMonitorProps) {
           </button>
           <button
             onClick={() => {/* Exporter rapport */}}
-            className="px-4 py-2 text-sm bg-gray-600 text-white rounded-lg hover:bg-gray-700"
+            className="px-4 py-2 text-sm bg-muted-foreground text-white rounded-lg hover:bg-accent"
           >
             Exporter Rapport
           </button>

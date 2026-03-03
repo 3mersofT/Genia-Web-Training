@@ -38,10 +38,10 @@ export default function MemoryIndicator({
 
   const getSkillLevelColor = () => {
     switch (context.skillLevel) {
-      case 'expert': return 'text-purple-600 bg-purple-50';
-      case 'advanced': return 'text-blue-600 bg-blue-50';
-      case 'intermediate': return 'text-green-600 bg-green-50';
-      default: return 'text-gray-600 bg-gray-50';
+      case 'expert': return 'text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/30';
+      case 'advanced': return 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/30';
+      case 'intermediate': return 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-950/30';
+      default: return 'text-muted-foreground bg-muted';
     }
   };
 
@@ -50,12 +50,12 @@ export default function MemoryIndicator({
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden"
+        className="bg-card rounded-2xl shadow-xl border border-border overflow-hidden"
       >
         {/* Header compact */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="w-full px-4 py-3 bg-gradient-to-r from-blue-50 to-purple-50 flex items-center justify-between hover:from-blue-100 hover:to-purple-100 transition-colors"
+          className="w-full px-4 py-3 bg-gradient-to-r from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] flex items-center justify-between hover:from-blue-100 hover:to-purple-100 dark:hover:from-blue-950/40 dark:hover:to-purple-950/40 transition-colors"
         >
           <div className="flex items-center gap-2">
             <div className="relative">
@@ -68,7 +68,7 @@ export default function MemoryIndicator({
                 />
               )}
             </div>
-            <span className="font-medium text-gray-800">
+            <span className="font-medium text-foreground">
               Mémoire Active
             </span>
             {context.streakDays > 0 && (
@@ -78,19 +78,19 @@ export default function MemoryIndicator({
             )}
           </div>
           {isExpanded ? (
-            <ChevronUp className="w-4 h-4 text-gray-600" />
+            <ChevronUp className="w-4 h-4 text-muted-foreground" />
           ) : (
-            <ChevronDown className="w-4 h-4 text-gray-600" />
+            <ChevronDown className="w-4 h-4 text-muted-foreground" />
           )}
         </button>
 
         {/* Indicateurs compacts toujours visibles */}
-        <div className="px-4 py-2 flex items-center justify-between bg-white">
+        <div className="px-4 py-2 flex items-center justify-between bg-card">
           <div className="flex items-center gap-3">
             {/* Style d'apprentissage */}
             <div className="flex items-center gap-1">
               <span className="text-lg">{getLearningStyleIcon()}</span>
-              <span className="text-xs text-gray-600">
+              <span className="text-xs text-muted-foreground">
                 {context.learningStyle}
               </span>
             </div>
@@ -103,14 +103,14 @@ export default function MemoryIndicator({
             {/* Progression */}
             {context.currentProgress > 0 && (
               <div className="flex items-center gap-1">
-                <div className="w-12 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                <div className="w-12 h-1.5 bg-border rounded-full overflow-hidden">
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${context.currentProgress}%` }}
                     className="h-full bg-gradient-to-r from-blue-500 to-purple-500"
                   />
                 </div>
-                <span className="text-xs text-gray-600">
+                <span className="text-xs text-muted-foreground">
                   {context.currentProgress}%
                 </span>
               </div>
@@ -126,37 +126,37 @@ export default function MemoryIndicator({
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="border-t border-gray-100"
+              className="border-t border-border"
             >
               <div className="p-4 space-y-3">
                 {/* Métriques de session */}
                 {metrics && (
-                  <div className="bg-gray-50 rounded-lg p-3 space-y-2">
-                    <h4 className="text-xs font-medium text-gray-700 mb-2">
+                  <div className="bg-muted rounded-lg p-3 space-y-2">
+                    <h4 className="text-xs font-medium text-foreground mb-2">
                       Session actuelle
                     </h4>
                     <div className="grid grid-cols-2 gap-2 text-xs">
                       <div className="flex items-center gap-1">
-                        <Clock className="w-3 h-3 text-gray-400" />
-                        <span className="text-gray-600">
+                        <Clock className="w-3 h-3 text-muted-foreground" />
+                        <span className="text-muted-foreground">
                           {metrics.duration} min
                         </span>
                       </div>
                       <div className="flex items-center gap-1">
                         <Zap className="w-3 h-3 text-yellow-500" />
-                        <span className="text-gray-600">
+                        <span className="text-muted-foreground">
                           {metrics.interactions} interactions
                         </span>
                       </div>
                       <div className="flex items-center gap-1">
                         <TrendingUp className="w-3 h-3 text-green-500" />
-                        <span className="text-gray-600">
+                        <span className="text-muted-foreground">
                           {Math.round(metrics.successRate)}% succès
                         </span>
                       </div>
                       <div className="flex items-center gap-1">
                         <Target className="w-3 h-3 text-blue-500" />
-                        <span className="text-gray-600">
+                        <span className="text-muted-foreground">
                           {metrics.topics.length} sujets
                         </span>
                       </div>
@@ -167,7 +167,7 @@ export default function MemoryIndicator({
                 {/* Points de difficulté */}
                 {context.keyDifficulties.length > 0 && (
                   <div className="space-y-1">
-                    <h4 className="text-xs font-medium text-gray-700 flex items-center gap-1">
+                    <h4 className="text-xs font-medium text-foreground flex items-center gap-1">
                       <AlertCircle className="w-3 h-3 text-orange-500" />
                       Points d'attention
                     </h4>
@@ -187,7 +187,7 @@ export default function MemoryIndicator({
                 {/* Approches qui fonctionnent */}
                 {context.successfulApproaches.length > 0 && (
                   <div className="space-y-1">
-                    <h4 className="text-xs font-medium text-gray-700 flex items-center gap-1">
+                    <h4 className="text-xs font-medium text-foreground flex items-center gap-1">
                       <CheckCircle className="w-3 h-3 text-green-500" />
                       Méthodes efficaces
                     </h4>
@@ -207,7 +207,7 @@ export default function MemoryIndicator({
                 {/* Recommandations */}
                 {context.recommendedFocus.length > 0 && (
                   <div className="space-y-1">
-                    <h4 className="text-xs font-medium text-gray-700 flex items-center gap-1">
+                    <h4 className="text-xs font-medium text-foreground flex items-center gap-1">
                       <Sparkles className="w-3 h-3 text-purple-500" />
                       Focus suggéré
                     </h4>
@@ -225,8 +225,8 @@ export default function MemoryIndicator({
                 )}
 
                 {/* Actions rapides */}
-                <div className="pt-2 border-t border-gray-100">
-                  <h4 className="text-xs font-medium text-gray-700 mb-2">
+                <div className="pt-2 border-t border-border">
+                  <h4 className="text-xs font-medium text-foreground mb-2">
                     Ajuster le style
                   </h4>
                   <div className="grid grid-cols-4 gap-1">
@@ -235,7 +235,7 @@ export default function MemoryIndicator({
                       className={`p-2 rounded-lg text-xs flex flex-col items-center gap-1 transition-colors ${
                         context.learningStyle === 'visual'
                           ? 'bg-blue-100 text-blue-700'
-                          : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                          : 'bg-muted text-muted-foreground hover:bg-accent'
                       }`}
                     >
                       <span>👁️</span>
@@ -246,7 +246,7 @@ export default function MemoryIndicator({
                       className={`p-2 rounded-lg text-xs flex flex-col items-center gap-1 transition-colors ${
                         context.learningStyle === 'textual'
                           ? 'bg-blue-100 text-blue-700'
-                          : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                          : 'bg-muted text-muted-foreground hover:bg-accent'
                       }`}
                     >
                       <span>📝</span>
@@ -257,7 +257,7 @@ export default function MemoryIndicator({
                       className={`p-2 rounded-lg text-xs flex flex-col items-center gap-1 transition-colors ${
                         context.learningStyle === 'practical'
                           ? 'bg-blue-100 text-blue-700'
-                          : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                          : 'bg-muted text-muted-foreground hover:bg-accent'
                       }`}
                     >
                       <span>🛠️</span>
@@ -268,7 +268,7 @@ export default function MemoryIndicator({
                       className={`p-2 rounded-lg text-xs flex flex-col items-center gap-1 transition-colors ${
                         context.learningStyle === 'mixed'
                           ? 'bg-blue-100 text-blue-700'
-                          : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                          : 'bg-muted text-muted-foreground hover:bg-accent'
                       }`}
                     >
                       <span>🎯</span>

@@ -57,8 +57,8 @@ export default function StreakCalendar({ streak }: StreakCalendarProps) {
 
   // Get activity level color
   const getActivityColor = (activity: number, hasActivity: boolean) => {
-    if (!hasActivity) return 'bg-gray-100';
-    if (activity === 0) return 'bg-gray-100';
+    if (!hasActivity) return 'bg-muted';
+    if (activity === 0) return 'bg-muted';
     if (activity === 1) return 'bg-green-200';
     if (activity === 2) return 'bg-green-300';
     if (activity >= 3) return 'bg-green-500';
@@ -78,14 +78,14 @@ export default function StreakCalendar({ streak }: StreakCalendarProps) {
   const dayLabels = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+    <div className="bg-card rounded-xl shadow-sm border border-border p-6">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+          <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
             <Flame className="w-6 h-6 text-orange-500" />
             Learning Streak Calendar
           </h2>
-          <p className="text-sm text-gray-600 mt-1">
+          <p className="text-sm text-muted-foreground mt-1">
             Your daily learning activity over the past 12 weeks
           </p>
         </div>
@@ -99,12 +99,12 @@ export default function StreakCalendar({ streak }: StreakCalendarProps) {
             <Flame className="w-5 h-5 text-white" />
           </div>
           <div>
-            <p className="text-sm text-gray-600">Current Streak</p>
-            <p className="text-2xl font-bold text-gray-900">
+            <p className="text-sm text-muted-foreground">Current Streak</p>
+            <p className="text-2xl font-bold text-foreground">
               {streak.current_streak}
-              <span className="text-sm font-normal text-gray-600 ml-1">days</span>
+              <span className="text-sm font-normal text-muted-foreground ml-1">days</span>
             </p>
-            <p className="text-xs text-gray-500 mt-1">{streakHealth.message}</p>
+            <p className="text-xs text-muted-foreground mt-1">{streakHealth.message}</p>
           </div>
         </div>
 
@@ -114,12 +114,12 @@ export default function StreakCalendar({ streak }: StreakCalendarProps) {
             <Trophy className="w-5 h-5 text-white" />
           </div>
           <div>
-            <p className="text-sm text-gray-600">Longest Streak</p>
-            <p className="text-2xl font-bold text-gray-900">
+            <p className="text-sm text-muted-foreground">Longest Streak</p>
+            <p className="text-2xl font-bold text-foreground">
               {streak.longest_streak}
-              <span className="text-sm font-normal text-gray-600 ml-1">days</span>
+              <span className="text-sm font-normal text-muted-foreground ml-1">days</span>
             </p>
-            <p className="text-xs text-gray-500 mt-1">Personal best</p>
+            <p className="text-xs text-muted-foreground mt-1">Personal best</p>
           </div>
         </div>
 
@@ -129,11 +129,11 @@ export default function StreakCalendar({ streak }: StreakCalendarProps) {
             <Calendar className="w-5 h-5 text-white" />
           </div>
           <div>
-            <p className="text-sm text-gray-600">Total Active Days</p>
-            <p className="text-2xl font-bold text-gray-900">
+            <p className="text-sm text-muted-foreground">Total Active Days</p>
+            <p className="text-2xl font-bold text-foreground">
               {streak.total_active_days}
             </p>
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-muted-foreground mt-1">
               {streak.last_activity_date
                 ? `Last active: ${new Date(streak.last_activity_date).toLocaleDateString()}`
                 : 'No activity yet'}
@@ -143,7 +143,7 @@ export default function StreakCalendar({ streak }: StreakCalendarProps) {
       </div>
 
       {/* Calendar Heatmap */}
-      <div className="bg-gray-50 rounded-lg p-4">
+      <div className="bg-muted rounded-lg p-4">
         <div className="flex gap-1">
           {/* Day labels */}
           <div className="flex flex-col gap-1 mr-2">
@@ -151,7 +151,7 @@ export default function StreakCalendar({ streak }: StreakCalendarProps) {
             {dayLabels.map((day, idx) => (
               <div
                 key={day + idx}
-                className="h-3 flex items-center justify-center text-xs text-gray-500 font-medium"
+                className="h-3 flex items-center justify-center text-xs text-muted-foreground font-medium"
               >
                 {day}
               </div>
@@ -164,7 +164,7 @@ export default function StreakCalendar({ streak }: StreakCalendarProps) {
               {calendarData.map((week, weekIdx) => (
                 <div key={weekIdx} className="flex flex-col gap-1">
                   {/* Month label (show on first day of month) */}
-                  <div className="h-3 text-xs text-gray-500 font-medium">
+                  <div className="h-3 text-xs text-muted-foreground font-medium">
                     {weekIdx === 0 || new Date(week[0].date).getDate() <= 7
                       ? new Date(week[0].date).toLocaleDateString('en-US', { month: 'short' })
                       : ''}
@@ -179,7 +179,7 @@ export default function StreakCalendar({ streak }: StreakCalendarProps) {
                         key={day.date}
                         className={`
                           w-3 h-3 rounded-sm transition-all cursor-pointer
-                          ${isFuture ? 'bg-gray-50' : getActivityColor(day.activity, day.hasActivity)}
+                          ${isFuture ? 'bg-muted' : getActivityColor(day.activity, day.hasActivity)}
                           ${isToday ? 'ring-2 ring-blue-500 ring-offset-1' : ''}
                           hover:ring-2 hover:ring-gray-400 hover:scale-125
                         `}
@@ -194,25 +194,25 @@ export default function StreakCalendar({ streak }: StreakCalendarProps) {
         </div>
 
         {/* Legend */}
-        <div className="flex items-center justify-end gap-2 mt-4 pt-4 border-t border-gray-200">
-          <span className="text-xs text-gray-600">Less</span>
+        <div className="flex items-center justify-end gap-2 mt-4 pt-4 border-t border-border">
+          <span className="text-xs text-muted-foreground">Less</span>
           <div className="flex gap-1">
-            <div className="w-3 h-3 bg-gray-100 rounded-sm" title="No activity"></div>
+            <div className="w-3 h-3 bg-muted rounded-sm" title="No activity"></div>
             <div className="w-3 h-3 bg-green-200 rounded-sm" title="1 capsule"></div>
             <div className="w-3 h-3 bg-green-300 rounded-sm" title="2 capsules"></div>
             <div className="w-3 h-3 bg-green-400 rounded-sm" title="3 capsules"></div>
             <div className="w-3 h-3 bg-green-500 rounded-sm" title="4+ capsules"></div>
           </div>
-          <span className="text-xs text-gray-600">More</span>
+          <span className="text-xs text-muted-foreground">More</span>
         </div>
       </div>
 
       {/* Empty State */}
       {(!streak.daily_activities || streak.daily_activities.length === 0) && (
-        <div className="text-center py-8 mt-6 border-t border-gray-200">
-          <Flame className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-          <p className="text-gray-600 font-medium">No activity data yet</p>
-          <p className="text-sm text-gray-500 mt-1">
+        <div className="text-center py-8 mt-6 border-t border-border">
+          <Flame className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+          <p className="text-muted-foreground font-medium">No activity data yet</p>
+          <p className="text-sm text-muted-foreground mt-1">
             Start learning to build your streak!
           </p>
         </div>
@@ -224,12 +224,12 @@ export default function StreakCalendar({ streak }: StreakCalendarProps) {
           <div className="flex items-start gap-3">
             <TrendingUp className="w-5 h-5 text-orange-600 mt-0.5" />
             <div>
-              <p className="text-sm font-medium text-gray-900">
+              <p className="text-sm font-medium text-foreground">
                 {streak.current_streak >= streak.longest_streak
                   ? "🎉 You're at your all-time best streak!"
                   : `You're ${streak.longest_streak - streak.current_streak} days away from your record!`}
               </p>
-              <p className="text-xs text-gray-600 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 Keep the momentum going by completing a capsule today.
               </p>
             </div>

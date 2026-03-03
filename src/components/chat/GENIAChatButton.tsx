@@ -62,16 +62,16 @@ export default function GENIAChatButton({
 
         {/* Tooltip au hover */}
         <div className="absolute right-full mr-3 top-1/2 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-          <div className="bg-gray-900 text-white px-3 py-2 rounded-lg text-sm whitespace-nowrap">
+          <div className="bg-popover text-popover-foreground px-3 py-2 rounded-lg text-sm whitespace-nowrap shadow-md border border-border">
             <div className="flex items-center gap-2">
               <Bot className="w-4 h-4" />
               <span>Assistant GENIA</span>
             </div>
-            <div className="text-xs text-gray-300 mt-1">
+            <div className="text-xs text-muted-foreground mt-1">
               Cliquez pour obtenir de l'aide !
             </div>
             {/* Flèche du tooltip */}
-            <div className="absolute left-full top-1/2 transform -translate-y-1/2 border-4 border-transparent border-l-gray-900"></div>
+            <div className="absolute left-full top-1/2 transform -translate-y-1/2 border-4 border-transparent border-l-popover"></div>
           </div>
         </div>
       </button>
@@ -88,7 +88,7 @@ export default function GENIAChatButton({
           {/* Conteneur du chat */}
           <div 
             onClick={(e) => e.stopPropagation()}
-            className="fixed z-50 bottom-20 right-4 left-4 sm:left-auto sm:w-full sm:max-w-lg h-[700px] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden transform transition-all duration-300 ease-out"
+            className="fixed z-50 bottom-20 right-4 left-4 sm:left-auto sm:w-full sm:max-w-lg h-[700px] bg-card rounded-2xl shadow-2xl border border-border flex flex-col overflow-hidden transform transition-all duration-300 ease-out"
           >
             {/* Header du chat modal */}
             <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-4 text-white flex-shrink-0">

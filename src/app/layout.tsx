@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import GENIAProvider from '@/components/providers/GENIAProvider'
 import PWAProvider from '@/components/providers/PWAProvider'
-import { ToastProvider } from '@/components/ui/Toast'
+import { Toaster } from '@/components/ui/toaster'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import ErrorBoundary from '@/components/ErrorBoundary'
@@ -144,14 +144,13 @@ export default function RootLayout({
         <ThemeProvider>
           <GENIAProvider>
             <PWAProvider>
-              <ToastProvider>
-                <ErrorBoundary>
-                  {children}
-                </ErrorBoundary>
-              </ToastProvider>
+              <ErrorBoundary>
+                {children}
+              </ErrorBoundary>
             </PWAProvider>
           </GENIAProvider>
         </ThemeProvider>
+        <Toaster />
         <SpeedInsights />
       </body>
     </html>

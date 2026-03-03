@@ -74,9 +74,9 @@ export default function AchievementCelebration({
     switch (rarity) {
       case 'common':
         return {
-          bg: 'from-gray-50 to-gray-100',
-          border: 'border-gray-300',
-          text: 'text-gray-700',
+          bg: 'from-muted to-muted/80',
+          border: 'border-input',
+          text: 'text-foreground',
           badge: 'bg-gray-500',
           glow: 'shadow-gray-400',
           confetti: ['bg-gray-400', 'bg-gray-500', 'bg-gray-600']
@@ -110,9 +110,9 @@ export default function AchievementCelebration({
         }
       default:
         return {
-          bg: 'from-gray-50 to-gray-100',
-          border: 'border-gray-300',
-          text: 'text-gray-700',
+          bg: 'from-muted to-muted/80',
+          border: 'border-input',
+          text: 'text-foreground',
           badge: 'bg-gray-500',
           glow: 'shadow-gray-400',
           confetti: ['bg-gray-400', 'bg-gray-500', 'bg-gray-600']
@@ -190,10 +190,10 @@ export default function AchievementCelebration({
                 {/* Close Button */}
                 <button
                   onClick={onClose}
-                  className="absolute top-4 right-4 p-2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full transition-all z-10"
+                  className="absolute top-4 right-4 p-2 bg-card bg-opacity-80 hover:bg-opacity-100 rounded-full transition-all z-10"
                   aria-label="Close celebration"
                 >
-                  <X className="w-5 h-5 text-gray-700" />
+                  <X className="w-5 h-5 text-foreground" />
                 </button>
 
                 {/* Header */}
@@ -216,7 +216,7 @@ export default function AchievementCelebration({
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
-                    className="text-3xl font-bold text-gray-900 mb-2"
+                    className="text-3xl font-bold text-foreground mb-2"
                   >
                     🎉 Achievement Unlocked!
                   </motion.h2>
@@ -225,7 +225,7 @@ export default function AchievementCelebration({
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.4 }}
-                    className="text-sm text-gray-600"
+                    className="text-sm text-muted-foreground"
                   >
                     You&apos;ve earned a new badge!
                   </motion.p>
@@ -256,7 +256,7 @@ export default function AchievementCelebration({
                   className="px-8 pb-6 text-center"
                 >
                   <div className="flex items-center justify-center gap-2 mb-3">
-                    <h3 className="text-2xl font-bold text-gray-900">
+                    <h3 className="text-2xl font-bold text-foreground">
                       {badge.name}
                     </h3>
                     <span className={`px-3 py-1 text-xs font-bold ${colors.badge} text-white rounded-full uppercase tracking-wide`}>
@@ -264,7 +264,7 @@ export default function AchievementCelebration({
                     </span>
                   </div>
 
-                  <p className="text-gray-700 mb-4 leading-relaxed">
+                  <p className="text-foreground mb-4 leading-relaxed">
                     {badge.description}
                   </p>
 

@@ -142,24 +142,24 @@ export default function DownloadableAttachment({
 
           {/* File Info */}
           <div className="flex-1 min-w-0">
-            <h4 className="font-medium text-gray-900 dark:text-gray-100 text-sm truncate">
+            <h4 className="font-medium text-foreground text-sm truncate">
               {filename}
             </h4>
             <div className="flex items-center gap-2 mt-1">
-              <span className="text-xs text-gray-500 dark:text-gray-400">
+              <span className="text-xs text-muted-foreground">
                 {formatFileSize(fileSize)}
               </span>
               {mimeType && (
                 <>
-                  <span className="text-gray-300 dark:text-gray-600">•</span>
-                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                  <span className="text-muted-foreground">•</span>
+                  <span className="text-xs text-muted-foreground">
                     {mimeType.split('/')[1]?.toUpperCase() || 'Fichier'}
                   </span>
                 </>
               )}
             </div>
             {description && (
-              <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 line-clamp-1">
+              <p className="text-xs text-muted-foreground mt-1 line-clamp-1">
                 {description}
               </p>
             )}

@@ -301,26 +301,26 @@ export default function AIUsagePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Navigation Header */}
-      <div className="bg-white shadow-sm border-b">
+      <div className="bg-card shadow-sm border-b">
         <div className="px-6 py-4">
           <div className="flex items-center gap-4 mb-2">
-            <a href="/admin" className="text-blue-600 hover:text-blue-800 font-medium">← Dashboard Admin</a>
-            <span className="text-gray-300">|</span>
-            <h1 className="text-xl font-bold text-gray-900">Utilisation de l'IA</h1>
+            <a href="/admin" className="text-primary hover:text-primary/80 font-medium">← Dashboard Admin</a>
+            <span className="text-muted-foreground">|</span>
+            <h1 className="text-xl font-bold text-foreground">Utilisation de l'IA</h1>
           </div>
-          <p className="text-gray-600">Monitoring et analyse de la consommation des modèles Mistral</p>
+          <p className="text-muted-foreground">Monitoring et analyse de la consommation des modèles Mistral</p>
         </div>
         
         {/* Quick Navigation */}
         <div className="px-6 pb-2">
           <nav className="flex gap-4 text-sm">
-            <a href="/admin" className="text-gray-500 hover:text-gray-700">Dashboard</a>
-            <a href="/admin/users" className="text-gray-500 hover:text-gray-700">Utilisateurs</a>
-            <a href="/admin/analytics" className="text-blue-600 font-medium">Analytics</a>
-            <a href="/admin/content" className="text-gray-500 hover:text-gray-700">Contenu</a>
-            <a href="/admin/settings" className="text-gray-500 hover:text-gray-700">Paramètres</a>
+            <a href="/admin" className="text-muted-foreground hover:text-foreground">Dashboard</a>
+            <a href="/admin/users" className="text-muted-foreground hover:text-foreground">Utilisateurs</a>
+            <a href="/admin/analytics" className="text-primary font-medium">Analytics</a>
+            <a href="/admin/content" className="text-muted-foreground hover:text-foreground">Contenu</a>
+            <a href="/admin/settings" className="text-muted-foreground hover:text-foreground">Paramètres</a>
           </nav>
         </div>
       </div>
@@ -329,49 +329,49 @@ export default function AIUsagePage() {
 
       {/* Statistiques principales */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <div className="bg-white rounded-lg shadow p-4">
+        <div className="bg-card rounded-lg shadow p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Requêtes totales</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.totalRequests.toLocaleString()}</p>
-              <p className="text-xs text-gray-500">Période: {dateRange}</p>
+              <p className="text-sm text-muted-foreground">Requêtes totales</p>
+              <p className="text-2xl font-bold text-foreground">{stats.totalRequests.toLocaleString()}</p>
+              <p className="text-xs text-muted-foreground">Période: {dateRange}</p>
             </div>
             <Activity className="w-8 h-8 text-blue-500" />
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow p-4">
+        <div className="bg-card rounded-lg shadow p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Tokens consommés</p>
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-sm text-muted-foreground">Tokens consommés</p>
+              <p className="text-2xl font-bold text-foreground">
                 {(stats.totalTokens / 1000000).toFixed(2)}M
               </p>
-              <p className="text-xs text-gray-500">Millions de tokens</p>
+              <p className="text-xs text-muted-foreground">Millions de tokens</p>
             </div>
             <Cpu className="w-8 h-8 text-purple-500" />
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow p-4">
+        <div className="bg-card rounded-lg shadow p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Coût total</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.totalCost.toFixed(2)}€</p>
-              <p className="text-xs text-gray-500">Budget: 100€/mois</p>
+              <p className="text-sm text-muted-foreground">Coût total</p>
+              <p className="text-2xl font-bold text-foreground">{stats.totalCost.toFixed(2)}€</p>
+              <p className="text-xs text-muted-foreground">Budget: 100€/mois</p>
             </div>
-            <DollarSign className="w-8 h-8 text-green-500" />
+            <DollarSign className="w-8 h-8 text-green-500 dark:text-green-400" />
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow p-4">
+        <div className="bg-card rounded-lg shadow p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Projection mensuelle</p>
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-sm text-muted-foreground">Projection mensuelle</p>
+              <p className="text-2xl font-bold text-foreground">
                 {stats.projectedMonthlyCost.toFixed(2)}€
               </p>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-muted-foreground">
                 {stats.projectedMonthlyCost > 100 ? '⚠️ Dépassement' : '✅ Dans le budget'}
               </p>
             </div>
@@ -382,12 +382,12 @@ export default function AIUsagePage() {
 
       {/* Feedback & Provider Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div className="bg-white rounded-lg shadow p-4">
+        <div className="bg-card rounded-lg shadow p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Satisfaction utilisateur</p>
-              <p className="text-2xl font-bold text-gray-900">{feedbackStats.rate}%</p>
-              <p className="text-xs text-gray-500">
+              <p className="text-sm text-muted-foreground">Satisfaction utilisateur</p>
+              <p className="text-2xl font-bold text-foreground">{feedbackStats.rate}%</p>
+              <p className="text-xs text-muted-foreground">
                 {feedbackStats.positive} positifs / {feedbackStats.total} total
               </p>
             </div>
@@ -395,23 +395,23 @@ export default function AIUsagePage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow p-4">
+        <div className="bg-card rounded-lg shadow p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Requêtes aujourd&apos;hui</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.todayRequests}</p>
-              <p className="text-xs text-gray-500">Moyenne : {stats.avgRequestsPerDay.toFixed(0)}/jour</p>
+              <p className="text-sm text-muted-foreground">Requêtes aujourd&apos;hui</p>
+              <p className="text-2xl font-bold text-foreground">{stats.todayRequests}</p>
+              <p className="text-xs text-muted-foreground">Moyenne : {stats.avgRequestsPerDay.toFixed(0)}/jour</p>
             </div>
             <BarChart3 className="w-8 h-8 text-indigo-500" />
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow p-4">
+        <div className="bg-card rounded-lg shadow p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Providers disponibles</p>
-              <p className="text-2xl font-bold text-gray-900">Multi-provider</p>
-              <p className="text-xs text-gray-500">Mistral + OpenAI + Anthropic + DeepSeek</p>
+              <p className="text-sm text-muted-foreground">Providers disponibles</p>
+              <p className="text-2xl font-bold text-foreground">Multi-provider</p>
+              <p className="text-xs text-muted-foreground">Mistral + OpenAI + Anthropic + DeepSeek</p>
             </div>
             <Zap className="w-8 h-8 text-yellow-500" />
           </div>
@@ -420,7 +420,7 @@ export default function AIUsagePage() {
 
       {/* Alertes */}
       {stats.projectedMonthlyCost > 100 && (
-        <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
+        <div className="bg-red-50 dark:bg-red-950/30 border-l-4 border-red-400 p-4 mb-6">
           <div className="flex">
             <AlertCircle className="w-5 h-5 text-red-400 mr-2" />
             <div>
@@ -434,11 +434,11 @@ export default function AIUsagePage() {
       )}
 
       {/* Filtres */}
-      <div className="bg-white rounded-lg shadow mb-6 p-4">
+      <div className="bg-card rounded-lg shadow mb-6 p-4">
         <div className="flex flex-wrap gap-4 items-center justify-between">
           <div className="flex gap-4">
             <select
-              className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus-visible:ring-ring"
               value={dateRange}
               onChange={(e) => setDateRange(e.target.value as any)}
             >
@@ -448,7 +448,7 @@ export default function AIUsagePage() {
             </select>
 
             <select
-              className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus-visible:ring-ring"
               value={selectedModel}
               onChange={(e) => setSelectedModel(e.target.value as any)}
             >
@@ -462,7 +462,7 @@ export default function AIUsagePage() {
           <div className="flex gap-2">
             <button
               onClick={() => fetchUsageData()}
-              className="flex items-center gap-2 px-4 py-2 text-gray-700 border rounded-lg hover:bg-gray-50"
+              className="flex items-center gap-2 px-4 py-2 text-foreground border rounded-lg hover:bg-accent"
             >
               <RefreshCw className="w-4 h-4" />
               Actualiser
@@ -481,10 +481,10 @@ export default function AIUsagePage() {
       {/* Graphiques */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         {/* Évolution des requêtes */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Évolution des requêtes</h3>
+        <div className="bg-card rounded-lg shadow p-6">
+          <h3 className="text-lg font-semibold text-foreground mb-4">Évolution des requêtes</h3>
           {loading ? (
-            <div className="h-64 flex items-center justify-center text-gray-500">Chargement...</div>
+            <div className="h-64 flex items-center justify-center text-muted-foreground">Chargement...</div>
           ) : (
             <div className="h-64">
               <Line
@@ -518,10 +518,10 @@ export default function AIUsagePage() {
         </div>
 
         {/* Coûts par modèle */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Coûts par modèle</h3>
+        <div className="bg-card rounded-lg shadow p-6">
+          <h3 className="text-lg font-semibold text-foreground mb-4">Coûts par modèle</h3>
           {loading ? (
-            <div className="h-64 flex items-center justify-center text-gray-500">Chargement...</div>
+            <div className="h-64 flex items-center justify-center text-muted-foreground">Chargement...</div>
           ) : (
             <div className="h-64">
               <Bar
@@ -562,10 +562,10 @@ export default function AIUsagePage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Répartition des tokens */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Répartition des tokens</h3>
+        <div className="bg-card rounded-lg shadow p-6">
+          <h3 className="text-lg font-semibold text-foreground mb-4">Répartition des tokens</h3>
           {loading ? (
-            <div className="h-64 flex items-center justify-center text-gray-500">Chargement...</div>
+            <div className="h-64 flex items-center justify-center text-muted-foreground">Chargement...</div>
           ) : (
             <div className="h-64 flex items-center justify-center">
               <Doughnut
@@ -591,21 +591,21 @@ export default function AIUsagePage() {
         </div>
 
         {/* Top utilisateurs */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Top 10 utilisateurs (30j)</h3>
+        <div className="bg-card rounded-lg shadow p-6">
+          <h3 className="text-lg font-semibold text-foreground mb-4">Top 10 utilisateurs (30j)</h3>
           <div className="space-y-2">
             {topUsers.map((user, index) => (
               <div key={user.user_id} className="flex items-center justify-between py-2 border-b last:border-0">
                 <div className="flex items-center gap-3">
-                  <span className="text-sm font-bold text-gray-500 w-6">#{index + 1}</span>
+                  <span className="text-sm font-bold text-muted-foreground w-6">#{index + 1}</span>
                   <div>
-                    <p className="text-sm font-medium text-gray-900">{user.display_name}</p>
-                    <p className="text-xs text-gray-500">{user.email}</p>
+                    <p className="text-sm font-medium text-foreground">{user.display_name}</p>
+                    <p className="text-xs text-muted-foreground">{user.email}</p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm font-bold text-gray-900">{user.total_cost.toFixed(2)}€</p>
-                  <p className="text-xs text-gray-500">{user.total_requests} requêtes</p>
+                  <p className="text-sm font-bold text-foreground">{user.total_cost.toFixed(2)}€</p>
+                  <p className="text-xs text-muted-foreground">{user.total_requests} requêtes</p>
                 </div>
               </div>
             ))}
@@ -614,8 +614,8 @@ export default function AIUsagePage() {
       </div>
 
       {/* Quotas par modèle */}
-      <div className="bg-white rounded-lg shadow mt-6 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Utilisation des quotas aujourd'hui</h3>
+      <div className="bg-card rounded-lg shadow mt-6 p-6">
+        <h3 className="text-lg font-semibold text-foreground mb-4">Utilisation des quotas aujourd'hui</h3>
         <div className="space-y-4">
           {Object.entries(modelConfig).map(([key, config]) => {
             const todayUsage = usageData
@@ -626,12 +626,12 @@ export default function AIUsagePage() {
             return (
               <div key={key}>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-gray-700">{config.name}</span>
-                  <span className="text-sm text-gray-500">
+                  <span className="text-sm font-medium text-foreground">{config.name}</span>
+                  <span className="text-sm text-muted-foreground">
                     {todayUsage} / {config.dailyQuota} requêtes
                   </span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
+                <div className="w-full bg-muted rounded-full h-2">
                   <div
                     className="h-2 rounded-full transition-all duration-500"
                     style={{

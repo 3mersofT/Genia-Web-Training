@@ -30,7 +30,7 @@ const MODEL_CONFIG = {
     description: 'Raisonnement approfondi avec Chain-of-Thought',
     colorClasses: 'bg-purple-100 text-purple-700 border-purple-200 hover:bg-purple-200',
     activeClasses: 'bg-purple-500 text-white border-purple-600',
-    disabledClasses: 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed'
+    disabledClasses: 'bg-muted text-muted-foreground border-border cursor-not-allowed'
   },
   'mistral-medium-3': {
     name: 'Pratique',
@@ -39,7 +39,7 @@ const MODEL_CONFIG = {
     description: 'Réponses rapides et efficaces',
     colorClasses: 'bg-orange-100 text-orange-700 border-orange-200 hover:bg-orange-200',
     activeClasses: 'bg-orange-500 text-white border-orange-600',
-    disabledClasses: 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed'
+    disabledClasses: 'bg-muted text-muted-foreground border-border cursor-not-allowed'
   }
 } as const;
 
@@ -79,10 +79,10 @@ export default function ModelSelector({
     <div className={`flex flex-col gap-4 ${className}`}>
       {/* En-tête */}
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-gray-700">
+        <h3 className="text-sm font-semibold text-foreground">
           Sélection du modèle
         </h3>
-        <span className="text-xs text-gray-500">
+        <span className="text-xs text-muted-foreground">
           Quotas journaliers
         </span>
       </div>
@@ -171,7 +171,7 @@ export default function ModelSelector({
       </div>
 
       {/* Message d'aide */}
-      <div className="text-xs text-gray-500 bg-gray-50 p-3 rounded-lg">
+      <div className="text-xs text-muted-foreground bg-muted p-3 rounded-lg">
         <p>
           💡 <strong>Conseil :</strong> Utilisez le modèle <strong>Expert</strong> pour des questions complexes nécessitant un raisonnement approfondi, et le modèle <strong>Pratique</strong> pour des réponses rapides.
         </p>

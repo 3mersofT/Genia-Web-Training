@@ -41,10 +41,10 @@ export default function DailyChallengeWidget() {
 
   if (isLoading) {
     return (
-      <div className="bg-white rounded-xl shadow-sm p-6 animate-pulse">
-        <div className="h-6 bg-gray-200 rounded w-2/3 mb-4"></div>
-        <div className="h-4 bg-gray-200 rounded w-full mb-2"></div>
-        <div className="h-4 bg-gray-200 rounded w-4/5"></div>
+      <div className="bg-card rounded-xl shadow-sm p-6 animate-pulse">
+        <div className="h-6 bg-muted rounded w-2/3 mb-4"></div>
+        <div className="h-4 bg-muted rounded w-full mb-2"></div>
+        <div className="h-4 bg-muted rounded w-4/5"></div>
       </div>
     );
   }
@@ -55,7 +55,7 @@ export default function DailyChallengeWidget() {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-xl shadow-sm overflow-hidden"
+      className="bg-card rounded-xl shadow-sm overflow-hidden"
     >
       {/* Header avec gradient */}
       <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-6 text-white">
@@ -98,38 +98,38 @@ export default function DailyChallengeWidget() {
                 {userStats?.current_streak || 0}
               </span>
             </div>
-            <p className="text-xs text-gray-500">Série</p>
+            <p className="text-xs text-muted-foreground">Série</p>
           </div>
           
           <div className="text-center">
-            <div className="flex items-center justify-center gap-1 text-blue-500 mb-1">
+            <div className="flex items-center justify-center gap-1 text-blue-500 dark:text-blue-400 mb-1">
               <Trophy className="w-4 h-4" />
               <span className="text-xl font-bold">
                 {userRank ? `#${userRank}` : '-'}
               </span>
             </div>
-            <p className="text-xs text-gray-500">Rang</p>
+            <p className="text-xs text-muted-foreground">Rang</p>
           </div>
           
           <div className="text-center">
-            <div className="flex items-center justify-center gap-1 text-green-500 mb-1">
+            <div className="flex items-center justify-center gap-1 text-green-500 dark:text-green-400 mb-1">
               <Target className="w-4 h-4" />
               <span className="text-xl font-bold">
                 {participation?.score || 0}
               </span>
             </div>
-            <p className="text-xs text-gray-500">Score</p>
+            <p className="text-xs text-muted-foreground">Score</p>
           </div>
         </div>
 
         {/* Barre de progression */}
         {userStats && (
           <div className="mb-6">
-            <div className="flex items-center justify-between text-sm text-gray-600 mb-1">
+            <div className="flex items-center justify-between text-sm text-muted-foreground mb-1">
               <span>Progression mensuelle</span>
               <span>{userStats.total_participations || 0}/30</span>
             </div>
-            <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ 
@@ -146,7 +146,7 @@ export default function DailyChallengeWidget() {
         <Link href="/challenges">
           <button className={`w-full py-3 px-4 rounded-lg font-medium transition-all flex items-center justify-center gap-2 ${
             isCompleted
-              ? 'bg-gray-100 text-gray-600'
+              ? 'bg-muted text-muted-foreground'
               : 'bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:shadow-lg'
           }`}>
             {isCompleted ? (
@@ -166,7 +166,7 @@ export default function DailyChallengeWidget() {
         {/* Lien vers tous les défis */}
         <Link 
           href="/challenges/history"
-          className="block text-center text-sm text-gray-500 hover:text-gray-700 mt-3"
+          className="block text-center text-sm text-muted-foreground hover:text-foreground mt-3"
         >
           Voir l'historique des défis →
         </Link>

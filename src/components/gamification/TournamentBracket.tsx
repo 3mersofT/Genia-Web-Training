@@ -21,17 +21,17 @@ export default function TournamentBracket({ bracket, rounds, tournamentTitle }: 
   const getMatchStatusIndicator = (status: MatchStatus) => {
     switch (status) {
       case 'completed':
-        return { icon: <Check className="w-4 h-4" />, color: 'text-green-600', bg: 'bg-green-100' }
+        return { icon: <Check className="w-4 h-4" />, color: 'text-green-600 dark:text-green-400', bg: 'bg-green-100 dark:bg-green-900/30' }
       case 'in_progress':
-        return { icon: <Clock className="w-4 h-4" />, color: 'text-blue-600', bg: 'bg-blue-100' }
+        return { icon: <Clock className="w-4 h-4" />, color: 'text-blue-600', bg: 'bg-blue-100 dark:bg-blue-900/30' }
       case 'scheduled':
-        return { icon: <Clock className="w-4 h-4" />, color: 'text-gray-500', bg: 'bg-gray-100' }
+        return { icon: <Clock className="w-4 h-4" />, color: 'text-muted-foreground', bg: 'bg-muted' }
       case 'forfeit':
-        return { icon: <Minus className="w-4 h-4" />, color: 'text-red-600', bg: 'bg-red-100' }
+        return { icon: <Minus className="w-4 h-4" />, color: 'text-red-600 dark:text-red-400', bg: 'bg-red-100 dark:bg-red-900/30' }
       case 'cancelled':
-        return { icon: <Minus className="w-4 h-4" />, color: 'text-gray-400', bg: 'bg-gray-100' }
+        return { icon: <Minus className="w-4 h-4" />, color: 'text-muted-foreground', bg: 'bg-muted' }
       default:
-        return { icon: <Clock className="w-4 h-4" />, color: 'text-gray-500', bg: 'bg-gray-100' }
+        return { icon: <Clock className="w-4 h-4" />, color: 'text-muted-foreground', bg: 'bg-muted' }
     }
   }
 
@@ -43,19 +43,19 @@ export default function TournamentBracket({ bracket, rounds, tournamentTitle }: 
     if (roundName.toLowerCase().includes('semi')) {
       return <Trophy className="w-5 h-5 text-purple-500" />
     }
-    return <Award className="w-5 h-5 text-blue-500" />
+    return <Award className="w-5 h-5 text-blue-500 dark:text-blue-400" />
   }
 
   // Empty state
   if (!bracket || bracket.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+      <div className="bg-card rounded-xl shadow-sm border border-border p-8">
         <div className="text-center">
-          <Trophy className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+          <Trophy className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-foreground mb-2">
             Aucun bracket disponible
           </h3>
-          <p className="text-gray-600">
+          <p className="text-muted-foreground">
             Le bracket du tournoi sera généré une fois les inscriptions terminées.
           </p>
         </div>
@@ -64,14 +64,14 @@ export default function TournamentBracket({ bracket, rounds, tournamentTitle }: 
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+    <div className="bg-card rounded-xl shadow-sm border border-border p-6">
       {/* Header */}
       <div className="mb-6">
-        <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+        <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
           <Trophy className="w-6 h-6 text-yellow-500" />
           {tournamentTitle ? `Bracket - ${tournamentTitle}` : 'Bracket du Tournoi'}
         </h2>
-        <p className="text-sm text-gray-600 mt-1">
+        <p className="text-sm text-muted-foreground mt-1">
           Système d&apos;élimination directe - {rounds.length} tour{rounds.length > 1 ? 's' : ''}
         </p>
       </div>
@@ -85,11 +85,11 @@ export default function TournamentBracket({ bracket, rounds, tournamentTitle }: 
               <div className="mb-4 text-center">
                 <div className="flex items-center justify-center gap-2 mb-2">
                   {getRoundIcon(roundData.round.round_name)}
-                  <h3 className="text-lg font-semibold text-gray-900">
+                  <h3 className="text-lg font-semibold text-foreground">
                     {roundData.round.round_name}
                   </h3>
                 </div>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-muted-foreground">
                   {roundData.matches.length} match{roundData.matches.length > 1 ? 's' : ''}
                   {roundData.round.best_of > 1 && ` - Best of ${roundData.round.best_of}`}
                 </p>
@@ -113,7 +113,7 @@ export default function TournamentBracket({ bracket, rounds, tournamentTitle }: 
                     >
                       {/* Match Card */}
                       <div className={`border-2 rounded-lg overflow-hidden transition-all ${
-                        isCompleted ? 'border-green-200 bg-green-50' : 'border-gray-200 bg-white'
+                        isCompleted ? 'border-green-200 bg-green-50 dark:bg-green-950/30' : 'border-border bg-card'
                       }`}>
                         {/* Match Status Badge */}
                         <div className={`px-3 py-1 text-xs font-medium flex items-center gap-1 ${statusInfo.bg} ${statusInfo.color}`}>
@@ -135,21 +135,21 @@ export default function TournamentBracket({ bracket, rounds, tournamentTitle }: 
                         <div className={`px-3 py-2 flex items-center justify-between border-b ${
                           participant1IsWinner
                             ? 'bg-gradient-to-r from-yellow-50 to-yellow-100 border-yellow-200'
-                            : 'border-gray-200'
+                            : 'border-border'
                         }`}>
                           <div className="flex items-center gap-2 flex-1">
                             {participant1IsWinner && (
                               <Trophy className="w-4 h-4 text-yellow-600 flex-shrink-0" />
                             )}
                             <span className={`text-sm truncate ${
-                              participant1IsWinner ? 'font-semibold text-gray-900' : 'text-gray-700'
+                              participant1IsWinner ? 'font-semibold text-foreground' : 'text-foreground'
                             }`}>
                               {match.participant1_user_id ? `Joueur ${match.participant1_user_id.slice(0, 8)}` : 'TBD'}
                             </span>
                           </div>
                           {match.participant1_user_id && (
                             <span className={`text-sm font-bold ml-2 ${
-                              participant1IsWinner ? 'text-yellow-700' : 'text-gray-600'
+                              participant1IsWinner ? 'text-yellow-700' : 'text-muted-foreground'
                             }`}>
                               {match.participant1_score}
                             </span>
@@ -167,14 +167,14 @@ export default function TournamentBracket({ bracket, rounds, tournamentTitle }: 
                               <Trophy className="w-4 h-4 text-yellow-600 flex-shrink-0" />
                             )}
                             <span className={`text-sm truncate ${
-                              participant2IsWinner ? 'font-semibold text-gray-900' : 'text-gray-700'
+                              participant2IsWinner ? 'font-semibold text-foreground' : 'text-foreground'
                             }`}>
                               {match.participant2_user_id ? `Joueur ${match.participant2_user_id.slice(0, 8)}` : 'TBD'}
                             </span>
                           </div>
                           {match.participant2_user_id && (
                             <span className={`text-sm font-bold ml-2 ${
-                              participant2IsWinner ? 'text-yellow-700' : 'text-gray-600'
+                              participant2IsWinner ? 'text-yellow-700' : 'text-muted-foreground'
                             }`}>
                               {match.participant2_score}
                             </span>
@@ -183,7 +183,7 @@ export default function TournamentBracket({ bracket, rounds, tournamentTitle }: 
 
                         {/* Completion Time */}
                         {match.completed_at && (
-                          <div className="px-3 py-1 bg-gray-50 text-xs text-gray-500 text-center">
+                          <div className="px-3 py-1 bg-muted text-xs text-muted-foreground text-center">
                             Terminé le {new Date(match.completed_at).toLocaleDateString('fr-FR', {
                               day: 'numeric',
                               month: 'short',
@@ -197,7 +197,7 @@ export default function TournamentBracket({ bracket, rounds, tournamentTitle }: 
                       {/* Connection Line to Next Round */}
                       {roundIndex < bracketByRounds.length - 1 && (
                         <div className="absolute top-1/2 -right-8 transform -translate-y-1/2">
-                          <ChevronRight className="w-6 h-6 text-gray-300" />
+                          <ChevronRight className="w-6 h-6 text-muted-foreground" />
                         </div>
                       )}
                     </motion.div>
@@ -210,24 +210,24 @@ export default function TournamentBracket({ bracket, rounds, tournamentTitle }: 
       </div>
 
       {/* Legend */}
-      <div className="mt-6 pt-6 border-t border-gray-200">
-        <h4 className="text-sm font-semibold text-gray-700 mb-3">Légende</h4>
+      <div className="mt-6 pt-6 border-t border-border">
+        <h4 className="text-sm font-semibold text-foreground mb-3">Légende</h4>
         <div className="flex flex-wrap gap-4">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-green-500"></div>
-            <span className="text-xs text-gray-600">Terminé</span>
+            <span className="text-xs text-muted-foreground">Terminé</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-            <span className="text-xs text-gray-600">En cours</span>
+            <span className="text-xs text-muted-foreground">En cours</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-gray-400"></div>
-            <span className="text-xs text-gray-600">Planifié</span>
+            <span className="text-xs text-muted-foreground">Planifié</span>
           </div>
           <div className="flex items-center gap-2">
             <Trophy className="w-4 h-4 text-yellow-600" />
-            <span className="text-xs text-gray-600">Vainqueur</span>
+            <span className="text-xs text-muted-foreground">Vainqueur</span>
           </div>
         </div>
       </div>

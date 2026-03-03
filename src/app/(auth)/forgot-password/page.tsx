@@ -48,7 +48,7 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-[hsl(var(--gradient-start))] via-[hsl(var(--gradient-end))] to-[hsl(var(--gradient-start))] flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
@@ -58,23 +58,23 @@ export default function ForgotPasswordPage() {
               GENIA Web Training
             </span>
           </Link>
-          <p className="text-gray-600 mt-2">Réinitialisation du mot de passe</p>
+          <p className="text-muted-foreground mt-2">Réinitialisation du mot de passe</p>
         </div>
 
         {/* Formulaire */}
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+        <div className="bg-card text-card-foreground rounded-2xl shadow-xl border p-8">
           {!success ? (
             <>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              <h2 className="text-2xl font-bold text-foreground mb-2">
                 Mot de passe oublié ?
               </h2>
-              <p className="text-gray-600 mb-6">
+              <p className="text-muted-foreground mb-6">
                 Entrez votre email et nous vous enverrons un lien pour réinitialiser votre mot de passe.
               </p>
 
               {error && (
                 <div
-                  className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700"
+                  className="mb-4 p-3 bg-destructive/10 border border-destructive/20 rounded-lg flex items-center gap-2 text-destructive"
                   role="alert"
                   aria-live="polite"
                 >
@@ -85,21 +85,21 @@ export default function ForgotPasswordPage() {
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="email" className="block text-sm font-medium text-foreground mb-1">
                     Email
                   </label>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                     <input
                       id="email"
                       type="email"
                       {...register('email')}
                       aria-invalid={errors.email ? 'true' : 'false'}
                       aria-describedby={errors.email ? 'email-error' : undefined}
-                      className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                      className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus-visible:ring-ring focus:border-transparent ${
                         errors.email
                           ? 'border-red-300 focus:ring-red-500'
-                          : 'border-gray-300'
+                          : 'border-input'
                       }`}
                       placeholder="vous@exemple.com"
                     />
@@ -107,7 +107,7 @@ export default function ForgotPasswordPage() {
                   {errors.email && (
                     <p
                       id="email-error"
-                      className="mt-1 text-sm text-red-600"
+                      className="mt-1 text-sm text-destructive"
                       role="alert"
                     >
                       {errors.email.message}
@@ -136,14 +136,14 @@ export default function ForgotPasswordPage() {
               <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
                 <CheckCircle className="w-8 h-8 text-green-600" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              <h2 className="text-2xl font-bold text-foreground mb-2">
                 Email envoyé !
               </h2>
-              <p className="text-gray-600 mb-6">
+              <p className="text-muted-foreground mb-6">
                 Vérifiez votre boîte de réception. Nous avons envoyé un lien de réinitialisation à{' '}
                 <span className="font-medium">{submittedEmail}</span>
               </p>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-muted-foreground">
                 Vous n'avez pas reçu l'email ? Vérifiez vos spams ou{' '}
                 <button
                   onClick={() => {
@@ -151,7 +151,7 @@ export default function ForgotPasswordPage() {
                     setSubmittedEmail('');
                     reset();
                   }}
-                  className="text-blue-600 hover:underline"
+                  className="text-primary hover:underline"
                 >
                   réessayez
                 </button>
@@ -162,7 +162,7 @@ export default function ForgotPasswordPage() {
           <div className="mt-6 text-center">
             <Link 
               href="/login" 
-              className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
+              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
             >
               <ArrowLeft className="w-4 h-4" />
               Retour à la connexion
@@ -171,7 +171,7 @@ export default function ForgotPasswordPage() {
         </div>
 
         {/* Footer */}
-        <p className="text-center text-sm text-gray-500 mt-8">
+        <p className="text-center text-sm text-muted-foreground mt-8">
           © 2025 GENIA Web Training. Créé par Hemerson KOFFI.
         </p>
       </div>

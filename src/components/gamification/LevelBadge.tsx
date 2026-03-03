@@ -22,9 +22,9 @@ export default function LevelBadge({
     switch (rank) {
       case 1: // Novice
         return {
-          bg: 'from-gray-50 to-gray-100',
-          border: 'border-gray-300',
-          text: 'text-gray-700',
+          bg: 'from-muted to-muted/80',
+          border: 'border-input',
+          text: 'text-foreground',
           badge: 'bg-gray-500',
           glow: 'shadow-gray-200'
         }
@@ -48,7 +48,7 @@ export default function LevelBadge({
         return {
           bg: 'from-red-50 to-red-100',
           border: 'border-red-300',
-          text: 'text-red-700',
+          text: 'text-red-700 dark:text-red-300',
           badge: 'bg-red-500',
           glow: 'shadow-red-200'
         }
@@ -62,9 +62,9 @@ export default function LevelBadge({
         }
       default:
         return {
-          bg: 'from-gray-50 to-gray-100',
-          border: 'border-gray-300',
-          text: 'text-gray-700',
+          bg: 'from-muted to-muted/80',
+          border: 'border-input',
+          text: 'text-foreground',
           badge: 'bg-gray-500',
           glow: 'shadow-gray-200'
         }
@@ -90,7 +90,7 @@ export default function LevelBadge({
           <p className={`text-xs font-semibold ${colors.text}`}>
             {levelProgress.level_name_fr}
           </p>
-          <p className="text-xs text-gray-600">
+          <p className="text-xs text-muted-foreground">
             {levelProgress.total_xp.toLocaleString()} XP
           </p>
         </div>
@@ -114,7 +114,7 @@ export default function LevelBadge({
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-2xl font-bold text-gray-900">
+              <h3 className="text-2xl font-bold text-foreground">
                 {levelProgress.level_name_fr}
               </h3>
               <span className={`px-2 py-0.5 text-xs font-semibold ${colors.badge} text-white rounded-full`}>
@@ -122,7 +122,7 @@ export default function LevelBadge({
               </span>
             </div>
             {levelProgress.current_level.description && (
-              <p className="text-sm text-gray-600 mt-1">
+              <p className="text-sm text-muted-foreground mt-1">
                 {levelProgress.current_level.description}
               </p>
             )}
@@ -134,32 +134,32 @@ export default function LevelBadge({
       {/* XP Stats */}
       {showDetails && (
         <div className="grid grid-cols-3 gap-4 mb-4">
-          <div className="text-center p-3 bg-white bg-opacity-60 rounded-lg">
+          <div className="text-center p-3 bg-card bg-opacity-60 rounded-lg">
             <div className="flex items-center justify-center gap-1 mb-1">
               <Zap className="w-4 h-4 text-yellow-500" />
-              <p className="text-xs text-gray-600">XP Total</p>
+              <p className="text-xs text-muted-foreground">XP Total</p>
             </div>
-            <p className="text-xl font-bold text-gray-900">
+            <p className="text-xl font-bold text-foreground">
               {levelProgress.total_xp.toLocaleString()}
             </p>
           </div>
 
-          <div className="text-center p-3 bg-white bg-opacity-60 rounded-lg">
+          <div className="text-center p-3 bg-card bg-opacity-60 rounded-lg">
             <div className="flex items-center justify-center gap-1 mb-1">
-              <TrendingUp className="w-4 h-4 text-green-500" />
-              <p className="text-xs text-gray-600">XP Actuel</p>
+              <TrendingUp className="w-4 h-4 text-green-500 dark:text-green-400" />
+              <p className="text-xs text-muted-foreground">XP Actuel</p>
             </div>
-            <p className="text-xl font-bold text-gray-900">
+            <p className="text-xl font-bold text-foreground">
               {levelProgress.current_xp.toLocaleString()}
             </p>
           </div>
 
-          <div className="text-center p-3 bg-white bg-opacity-60 rounded-lg">
+          <div className="text-center p-3 bg-card bg-opacity-60 rounded-lg">
             <div className="flex items-center justify-center gap-1 mb-1">
               <Trophy className="w-4 h-4 text-purple-500" />
-              <p className="text-xs text-gray-600">Prochain</p>
+              <p className="text-xs text-muted-foreground">Prochain</p>
             </div>
-            <p className="text-xl font-bold text-gray-900">
+            <p className="text-xl font-bold text-foreground">
               {isMaxLevel ? 'MAX' : levelProgress.xp_to_next_level.toLocaleString()}
             </p>
           </div>
@@ -170,14 +170,14 @@ export default function LevelBadge({
       {!isMaxLevel && (
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-semibold text-gray-700">
+            <span className="text-sm font-semibold text-foreground">
               Progression vers {levelProgress.next_level?.level_name_fr}
             </span>
-            <span className="text-sm font-bold text-gray-900">
+            <span className="text-sm font-bold text-foreground">
               {Math.round(levelProgress.progress_percentage)}%
             </span>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+          <div className="w-full bg-muted rounded-full h-3 overflow-hidden">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${levelProgress.progress_percentage}%` }}
@@ -185,7 +185,7 @@ export default function LevelBadge({
               className={`h-full ${colors.badge} shadow-sm`}
             />
           </div>
-          <p className="text-xs text-gray-600 text-center">
+          <p className="text-xs text-muted-foreground text-center">
             {levelProgress.xp_to_next_level.toLocaleString()} XP restants pour le prochain niveau
           </p>
         </div>
@@ -206,20 +206,20 @@ export default function LevelBadge({
 
       {/* Next Level Preview */}
       {!isMaxLevel && levelProgress.next_level && showDetails && (
-        <div className="mt-4 pt-4 border-t border-gray-300">
+        <div className="mt-4 pt-4 border-t border-input">
           <div className="flex items-center gap-2">
             <div className="text-xl opacity-50">
               {levelProgress.next_level.icon_emoji || '🏆'}
             </div>
             <div className="flex-1">
-              <p className="text-xs text-gray-500">Prochain niveau</p>
-              <p className="text-sm font-semibold text-gray-700">
+              <p className="text-xs text-muted-foreground">Prochain niveau</p>
+              <p className="text-sm font-semibold text-foreground">
                 {levelProgress.next_level.level_name_fr}
               </p>
             </div>
             <div className="text-right">
-              <p className="text-xs text-gray-500">XP requis</p>
-              <p className="text-sm font-bold text-gray-900">
+              <p className="text-xs text-muted-foreground">XP requis</p>
+              <p className="text-sm font-bold text-foreground">
                 {levelProgress.next_level.xp_required.toLocaleString()}
               </p>
             </div>

@@ -132,11 +132,11 @@ export default function ReviewPage() {
 
   if (loading || isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      <div className="min-h-screen bg-gradient-to-br from-[hsl(var(--gradient-start))] via-background to-[hsl(var(--gradient-end))]">
         <div className="container mx-auto px-4 py-8">
           <div className="text-center">
             <div className="w-8 h-8 border-4 border-purple-600 border-t-transparent rounded-full mx-auto mb-4 animate-spin" />
-            <p className="text-gray-600">Chargement...</p>
+            <p className="text-muted-foreground">Chargement...</p>
           </div>
         </div>
       </div>
@@ -144,22 +144,22 @@ export default function ReviewPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-[hsl(var(--gradient-start))] via-background to-[hsl(var(--gradient-end))]">
       {/* Header */}
-      <div className="bg-white border-b">
+      <div className="bg-card border-b">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center gap-3">
             <Link
               href="/dashboard"
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-2 hover:bg-accent rounded-lg transition-colors"
             >
               <ChevronLeft className="w-5 h-5" />
             </Link>
             <div className="flex items-center gap-2">
               <Brain className="w-6 h-6 text-purple-600" />
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Révisions</h1>
-                <p className="text-gray-600">Système de révision espacée SM-2</p>
+                <h1 className="text-2xl font-bold text-foreground">Révisions</h1>
+                <p className="text-muted-foreground">Système de révision espacée SM-2</p>
               </div>
             </div>
           </div>

@@ -47,7 +47,7 @@ export default function ModulePage() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Chargement du module...</p>
+          <p className="text-muted-foreground">Chargement du module...</p>
         </div>
       </div>
     );
@@ -57,8 +57,8 @@ export default function ModulePage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-800 mb-4">Module non trouvé</h1>
-          <Link href="/dashboard" className="text-blue-600 hover:underline">
+          <h1 className="text-2xl font-bold text-foreground mb-4">Module non trouvé</h1>
+          <Link href="/dashboard" className="text-primary hover:underline">
             ← Retour au dashboard
           </Link>
         </div>
@@ -67,20 +67,20 @@ export default function ModulePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-white shadow-sm">
+      <header className="bg-card shadow-sm">
         <div className="max-w-4xl mx-auto px-6 py-4">
           <div className="flex items-center gap-4">
             <Link 
               href="/dashboard"
-              className="flex items-center gap-2 text-gray-600 hover:text-gray-800"
+              className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
             >
               <ArrowLeft className="w-4 h-4" />
               Dashboard
             </Link>
-            <div className="h-6 w-px bg-gray-300" />
-            <h1 className="text-xl font-bold text-gray-800">{moduleData.title}</h1>
+            <div className="h-6 w-px bg-border" />
+            <h1 className="text-xl font-bold text-foreground">{moduleData.title}</h1>
           </div>
         </div>
       </header>
@@ -88,15 +88,15 @@ export default function ModulePage() {
       {/* Contenu principal */}
       <main className="max-w-4xl mx-auto px-6 py-8">
         {/* En-tête du module */}
-        <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
+        <div className="bg-card rounded-xl shadow-sm p-6 mb-8">
           <div className={`w-full h-32 bg-gradient-to-r ${moduleData.color} rounded-lg mb-6 flex items-center justify-center`}>
             <BookOpen className="w-12 h-12 text-white" />
           </div>
           
           <div className="flex items-start justify-between mb-4">
             <div className="flex-1">
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">{moduleData.title}</h2>
-              <p className="text-gray-600">{moduleData.description}</p>
+              <h2 className="text-2xl font-bold text-foreground mb-2">{moduleData.title}</h2>
+              <p className="text-muted-foreground">{moduleData.description}</p>
             </div>
             
             {/* Feedback section */}
@@ -117,28 +117,28 @@ export default function ModulePage() {
           </div>
           
           <div className="flex items-center gap-4">
-            <div className="flex-1 bg-gray-200 rounded-full h-2">
+            <div className="flex-1 bg-muted rounded-full h-2">
               <div
                 className={`bg-gradient-to-r ${moduleData.color} h-2 rounded-full`}
                 style={{ width: `${moduleData.progress}%` }}
               />
             </div>
-            <span className="text-sm font-medium text-gray-600">
+            <span className="text-sm font-medium text-muted-foreground">
               {moduleData.progress}% complété
             </span>
           </div>
 
           {/* Certificate section - only shown when module is completed */}
           {moduleData.progress === 100 && user && (
-            <div className="mt-6 pt-6 border-t border-gray-200">
+            <div className="mt-6 pt-6 border-t border-border">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center">
+                  <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full flex items-center justify-center">
                     <CheckCircle className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-800">Module terminé !</h3>
-                    <p className="text-sm text-gray-600">Félicitations, vous pouvez maintenant obtenir votre certificat.</p>
+                    <h3 className="font-semibold text-foreground">Module terminé !</h3>
+                    <p className="text-sm text-muted-foreground">Félicitations, vous pouvez maintenant obtenir votre certificat.</p>
                   </div>
                 </div>
                 <CertificateButton
@@ -154,22 +154,22 @@ export default function ModulePage() {
         </div>
 
         {/* Liste des leçons */}
-        <div className="bg-white rounded-xl shadow-sm">
-          <div className="p-6 border-b border-gray-100">
-            <h3 className="text-lg font-semibold text-gray-800">Plan du module</h3>
+        <div className="bg-card rounded-xl shadow-sm">
+          <div className="p-6 border-b border-border">
+            <h3 className="text-lg font-semibold text-foreground">Plan du module</h3>
           </div>
           
-          <div className="divide-y divide-gray-100">
+          <div className="divide-y divide-border">
             {moduleData.capsules.map((capsule: Capsule, index: number) => (
-              <div key={capsule.id} className="p-6 hover:bg-gray-50 transition-colors">
+              <div key={capsule.id} className="p-6 hover:bg-accent transition-colors">
                 <div className="flex items-center gap-4">
                   <div className="flex-shrink-0">
                     {capsule.completed ? (
-                      <div className="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center">
+                      <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full flex items-center justify-center">
                         <CheckCircle className="w-5 h-5" />
                       </div>
                     ) : (
-                      <div className="w-10 h-10 bg-gray-100 text-gray-400 rounded-full flex items-center justify-center">
+                      <div className="w-10 h-10 bg-muted text-muted-foreground rounded-full flex items-center justify-center">
                         {capsule.available ? (
                           <Play className="w-5 h-5" />
                         ) : (
@@ -180,20 +180,20 @@ export default function ModulePage() {
                   </div>
                   
                   <div className="flex-1">
-                    <h4 className="font-medium text-gray-800 mb-1">
+                    <h4 className="font-medium text-foreground mb-1">
                       Leçon {capsule.order}: {capsule.title}
                     </h4>
-                    <div className="flex items-center gap-4 text-sm text-gray-500">
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
                       <div className="flex items-center gap-1">
                         <Clock className="w-4 h-4" />
                         <span>{capsule.duration} min</span>
                       </div>
-                      <span className="text-xs bg-gray-100 px-2 py-1 rounded">
+                      <span className="text-xs bg-muted px-2 py-1 rounded">
                         {capsule.difficulty}
                       </span>
                     </div>
                     {capsule.keyTakeaway && (
-                      <p className="text-sm text-gray-600 mt-1 italic">
+                      <p className="text-sm text-muted-foreground mt-1 italic">
                         💡 {capsule.keyTakeaway}
                       </p>
                     )}
@@ -201,7 +201,7 @@ export default function ModulePage() {
                   
                   <div className="flex-shrink-0">
                     {capsule.completed ? (
-                      <span className="px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full">
+                      <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 text-sm rounded-full">
                         Terminé
                       </span>
                     ) : capsule.available ? (
@@ -212,7 +212,7 @@ export default function ModulePage() {
                         Commencer
                       </Link>
                     ) : (
-                      <span className="px-3 py-1 bg-gray-100 text-gray-500 text-sm rounded-full">
+                      <span className="px-3 py-1 bg-muted text-muted-foreground text-sm rounded-full">
                         Verrouillé
                       </span>
                     )}
