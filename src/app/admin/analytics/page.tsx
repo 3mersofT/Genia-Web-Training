@@ -51,13 +51,21 @@ interface UserUsage {
   total_cost: number;
 }
 
+interface FeedbackStats {
+  total: number;
+  positive: number;
+  negative: number;
+  rate: number;
+}
+
 export default function AIUsagePage() {
   const [usageData, setUsageData] = useState<UsageData[]>([]);
   const [topUsers, setTopUsers] = useState<UserUsage[]>([]);
+  const [feedbackStats, setFeedbackStats] = useState<FeedbackStats>({ total: 0, positive: 0, negative: 0, rate: 0 });
   const [loading, setLoading] = useState(true);
   const [dateRange, setDateRange] = useState<'7d' | '30d' | '90d'>('30d');
   const [selectedModel, setSelectedModel] = useState<'all' | 'magistral-medium' | 'mistral-medium-3' | 'mistral-small'>('all');
-  
+
   const supabase = createClient();
 
   // Configuration des modèles et quotas
@@ -164,10 +172,34 @@ export default function AIUsagePage() {
     }
   }, [supabase]);
 
+  const fetchFeedbackStats = useCallback(async () => {
+    try {
+      const { data, error } = await supabase
+        .from('message_feedback')
+        .select('feedback');
+
+      if (error) throw error;
+
+      const total = data?.length || 0;
+      const positive = data?.filter((d: { feedback: string }) => d.feedback === 'up').length || 0;
+      const negative = data?.filter((d: { feedback: string }) => d.feedback === 'down').length || 0;
+
+      setFeedbackStats({
+        total,
+        positive,
+        negative,
+        rate: total > 0 ? Math.round((positive / total) * 100) : 0,
+      });
+    } catch (error) {
+      console.error('Error fetching feedback stats:', error);
+    }
+  }, [supabase]);
+
   useEffect(() => {
     fetchUsageData();
     fetchTopUsers();
-  }, [fetchUsageData, fetchTopUsers]);
+    fetchFeedbackStats();
+  }, [fetchUsageData, fetchTopUsers, fetchFeedbackStats]);
 
   // Calcul des statistiques avec mémoire
   const stats = useMemo(() => {
@@ -344,6 +376,44 @@ export default function AIUsagePage() {
               </p>
             </div>
             <TrendingUp className="w-8 h-8 text-orange-500" />
+          </div>
+        </div>
+      </div>
+
+      {/* Feedback & Provider Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div className="bg-white rounded-lg shadow p-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600">Satisfaction utilisateur</p>
+              <p className="text-2xl font-bold text-gray-900">{feedbackStats.rate}%</p>
+              <p className="text-xs text-gray-500">
+                {feedbackStats.positive} positifs / {feedbackStats.total} total
+              </p>
+            </div>
+            <div className="text-3xl">{feedbackStats.rate >= 80 ? '😊' : feedbackStats.rate >= 50 ? '😐' : '😟'}</div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg shadow p-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600">Requêtes aujourd&apos;hui</p>
+              <p className="text-2xl font-bold text-gray-900">{stats.todayRequests}</p>
+              <p className="text-xs text-gray-500">Moyenne : {stats.avgRequestsPerDay.toFixed(0)}/jour</p>
+            </div>
+            <BarChart3 className="w-8 h-8 text-indigo-500" />
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg shadow p-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600">Providers disponibles</p>
+              <p className="text-2xl font-bold text-gray-900">Multi-provider</p>
+              <p className="text-xs text-gray-500">Mistral + OpenAI + Anthropic + DeepSeek</p>
+            </div>
+            <Zap className="w-8 h-8 text-yellow-500" />
           </div>
         </div>
       </div>

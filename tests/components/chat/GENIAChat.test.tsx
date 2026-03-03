@@ -26,8 +26,12 @@ jest.mock('@/hooks/useChat', () => ({
       mistralMedium3: { used: 5, daily: 50 },
     },
     currentModel: 'mistral-medium-3',
+    suggestions: [],
     sendMessage: mockSendMessage,
     setCurrentModel: mockSetCurrentModel,
+    sendFeedback: jest.fn(),
+    exportChat: jest.fn(),
+    resetConversation: jest.fn(),
     context: {
       currentCapsule: { id: 'general', title: 'Formation GENIA', concepts: [], difficulty: 'beginner' },
       userLevel: 'beginner',

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef } from 'react';
-import { Loader2 } from 'lucide-react';
+import { Loader2, ThumbsUp, ThumbsDown } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeSanitize from 'rehype-sanitize';
@@ -18,6 +18,8 @@ export interface ChatMessageListProps {
   isLoading?: boolean;
   /** Texte à afficher pendant le chargement (optionnel) */
   loadingText?: string;
+  /** Callback pour envoyer un feedback */
+  onFeedback?: (messageId: string, feedback: 'up' | 'down') => void;
 }
 
 /**
@@ -25,34 +27,20 @@ export interface ChatMessageListProps {
  *
  * Affiche la liste des messages avec auto-scroll automatique.
  * Supporte le formatage Markdown, les indicateurs de méthode GENIA,
- * et le raisonnement CoT pour les modèles experts.
- *
- * @example
- * ```tsx
- * <ChatMessageList
- *   messages={messages}
- *   isLoading={isLoading}
- *   loadingText="GENIA réfléchit..."
- * />
- * ```
+ * le raisonnement CoT, le streaming avec curseur animé, et le feedback.
  */
 export default function ChatMessageList({
   messages,
   isLoading = false,
-  loadingText = "GENIA réfléchit..."
+  loadingText = "GENIA réfléchit...",
+  onFeedback,
 }: ChatMessageListProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  /**
-   * Fait défiler vers le bas de la liste des messages
-   */
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  /**
-   * Déclenche le scroll à chaque mise à jour des messages
-   */
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
@@ -87,6 +75,13 @@ export default function ChatMessageList({
               </div>
             )}
 
+            {/* Provider Badge */}
+            {message.provider && message.role === 'assistant' && (
+              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] bg-gray-100 text-gray-500 ml-2 mb-2">
+                via {message.provider}
+              </span>
+            )}
+
             {/* Message Content */}
             <div className="prose prose-sm max-w-none">
               <ReactMarkdown
@@ -99,6 +94,10 @@ export default function ChatMessageList({
               >
                 {message.content}
               </ReactMarkdown>
+              {/* Streaming Cursor */}
+              {message.isStreaming && (
+                <span className="inline-block w-2 h-4 bg-purple-500 animate-pulse rounded-sm ml-0.5" />
+              )}
             </div>
 
             {/* CoT Reasoning for Magistral */}
@@ -113,19 +112,51 @@ export default function ChatMessageList({
               </details>
             )}
 
-            {/* Timestamp */}
-            <div className="text-xs opacity-50 mt-2">
-              {message.timestamp.toLocaleTimeString('fr-FR', {
-                hour: '2-digit',
-                minute: '2-digit'
-              })}
+            {/* Footer: Timestamp + Feedback */}
+            <div className="flex items-center justify-between mt-2">
+              <div className="text-xs opacity-50">
+                {message.timestamp.toLocaleTimeString('fr-FR', {
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })}
+              </div>
+
+              {/* Feedback Buttons (assistant messages only, not streaming) */}
+              {message.role === 'assistant' && !message.isStreaming && onFeedback && (
+                <div className="flex items-center gap-1">
+                  <button
+                    onClick={() => onFeedback(message.id, 'up')}
+                    className={`p-1 rounded transition-colors ${
+                      message.feedback === 'up'
+                        ? 'text-green-600 bg-green-50'
+                        : 'text-gray-400 hover:text-green-600 hover:bg-green-50'
+                    }`}
+                    title="Bonne réponse"
+                    aria-label="Marquer comme bonne réponse"
+                  >
+                    <ThumbsUp className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    onClick={() => onFeedback(message.id, 'down')}
+                    className={`p-1 rounded transition-colors ${
+                      message.feedback === 'down'
+                        ? 'text-red-600 bg-red-50'
+                        : 'text-gray-400 hover:text-red-600 hover:bg-red-50'
+                    }`}
+                    title="Mauvaise réponse"
+                    aria-label="Marquer comme mauvaise réponse"
+                  >
+                    <ThumbsDown className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
       ))}
 
       {/* Loading Indicator */}
-      {isLoading && (
+      {isLoading && !messages.some(m => m.isStreaming) && (
         <div className="flex justify-start">
           <div className="bg-gray-100 rounded-2xl px-4 py-3 flex items-center gap-2">
             <Loader2 className="w-4 h-4 animate-spin text-gray-500" />
