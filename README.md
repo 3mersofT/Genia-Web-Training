@@ -1,344 +1,248 @@
-# 🚀 Plateforme de Formation au Prompt Engineering avec GENIA
+# GENIA Web Training
 
-[![CI](https://github.com/3mersofT/Genia-Web-Training/workflows/CI/badge.svg)](https://github.com/3mersofT/Genia-Web-Training/actions/workflows/ci.yml)
-[![E2E Tests](https://github.com/3mersofT/Genia-Web-Training/workflows/E2E%20Tests/badge.svg)](https://github.com/3mersofT/Genia-Web-Training/actions/workflows/e2e.yml)
-[![Production Deployment](https://github.com/3mersofT/Genia-Web-Training/workflows/Production%20Deployment/badge.svg)](https://github.com/3mersofT/Genia-Web-Training/actions/workflows/production.yml)
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2F3mersofT%2FGenia-Web-Training)
+Plateforme e-learning de Prompt Engineering avec IA (Mistral, OpenAI, Anthropic, DeepSeek).
+Methode pedagogique GENIA en 8 modules, 30+ capsules, gamification, certificats.
 
-## 📋 Vue d'ensemble
-
-Plateforme de formation interactive au Prompt Engineering utilisant la méthode pédagogique GENIA et l'IA française Mistral. Développée par Hemerson KOFFI.
-
-### 🚀 **Status Actuel : Version 2.1.1 - Déployée sur Vercel**
-- ✅ **Déploiement réussi** : Application fonctionnelle en production
-- ✅ **Système de feedback** : Collecte et modération des retours utilisateurs
-- ✅ **Système hybride** : Données réelles + simulées intelligentes
-- ✅ **Interface admin complète** : Gestion utilisateurs, contenu, analytics
-- ✅ **PWA support** : Installation mobile disponible
-
-### ✨ Caractéristiques principales
-
-- **🤖 Assistant IA GENIA** : Formateur virtuel utilisant Mistral AI
-- **📚 Méthode GENIA** : Approche pédagogique structurée en 5 piliers
-- **🎯 100% Souverain** : IA française, données hébergées en Europe
-- **💰 Économique** : ~0.36€/étudiant/mois
-- **🏆 Gamification** : Badges, progression, certificats
-
-## 🏗️ Architecture technique
-
-```
-Stack:
-├── Frontend: Next.js 14 + React + TypeScript
-├── Styling: TailwindCSS + Framer Motion
-├── Backend: Next.js API Routes
-├── Database: PostgreSQL (Supabase)
-├── Auth: Supabase Auth
-└── IA: Mistral AI (Large, Medium, Small)
-```
-
-## 📚 Méthode GENIA
-
-La méthode pédagogique GENIA structure l'apprentissage en 5 piliers :
-
-- **G** - Guide progressif 📘
-- **E** - Exemples concrets 💡
-- **N** - Niveau adaptatif 📊
-- **I** - Interaction pratique ⚡
-- **A** - Assessment continu 🏆
-
-## 🚀 Installation rapide
-
-### Prérequis
-
-- Node.js 18+ et npm/pnpm
-- Compte Supabase (gratuit)
-- Clé API Mistral AI
-- Git
-
-### 1. Cloner le projet
-
-```bash
-git clone https://github.com/yourusername/prompt-engineering-platform.git
-cd prompt-engineering-platform
-```
-
-### 2. Installer les dépendances
-
-```bash
-npm install
-# ou
-pnpm install
-```
-
-### 3. Configuration Supabase
-
-1. Créer un nouveau projet sur [Supabase](https://supabase.com)
-2. Récupérer les clés dans Settings > API
-3. Nettoyer les fichiers obsolètes (si mise à jour) :
-
-```bash
-node scripts/cleanup.js
-```
-
-4. Exécuter les migrations SQL :
-
-```bash
-# Se connecter à Supabase
-npx supabase login
-
-# Lier le projet
-npx supabase link --project-ref your-project-ref
-
-# Exécuter les migrations
-npx supabase db push
-```
-
-Ou manuellement dans l'éditeur SQL de Supabase (dans l'ordre) :
-1. Exécuter `supabase/migrations/001_initial_schema.sql`
-2. Exécuter `supabase/migrations/003_genia_chat_tables.sql`
-3. Exécuter `supabase/migrations/004_init_demo_accounts.sql`
-4. Exécuter `supabase/migrations/005_update_rate_limits.sql`
-5. Exécuter `supabase/migrations/006_hybrid_content_system.sql`
-6. Exécuter `supabase/migrations/007_feedback_system.sql`
-7. Exécuter `supabase/migrations/008_genia_memory_system.sql`
-8. Exécuter `supabase/migrations/009_daily_challenges_system.sql`
-
-⚠️ **Important** : Ne PAS exécuter les fichiers dans `_archive/` (versions obsolètes)
-
-### 4. Configuration Mistral AI
-
-1. Créer un compte sur [Mistral AI](https://console.mistral.ai)
-2. Générer une clé API
-3. Copier la clé pour l'étape suivante
-
-### 5. Variables d'environnement
-
-```bash
-# Copier le fichier exemple
-cp .env.example .env.local
-
-# Éditer .env.local avec vos clés
-```
-
-Remplir les variables obligatoires :
-```env
-NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJxxx...
-SUPABASE_SERVICE_KEY=eyJxxx...
-MISTRAL_API_KEY=xxx
-```
-
-### 6. Lancer le développement
-
-```bash
-npm run dev
-# Ouvrir http://localhost:3000
-```
-
-## 📖 Structure du projet
-
-```
-prompt-engineering-platform/
-├── src/
-│   ├── app/                    # Routes Next.js
-│   │   ├── api/                # API endpoints
-│   │   │   ├── chat/          # Chat avec GENIA
-│   │   │   ├── exercise/      # Génération d'exercices
-│   │   │   └── quotas/        # Gestion des quotas
-│   │   ├── (auth)/            # Pages authentification
-│   │   └── (dashboard)/       # Pages dashboard
-│   ├── components/
-│   │   └── chat/              
-│   │       └── GENIAChat.tsx  # Composant chat principal
-│   ├── services/
-│   │   └── mistralService.ts  # Service Mistral AI
-│   ├── hooks/
-│   │   └── useGENIAChat.ts    # Hook React pour le chat
-│   ├── lib/
-│   │   ├── supabase/          # Configuration Supabase
-│   │   └── geniaPrompts.ts    # Bibliothèque de prompts
-│   └── types/                  # Types TypeScript
-├── supabase/
-│   └── migrations/            # Scripts SQL
-└── public/                    # Assets statiques
-```
-
-## 💻 Utilisation
-
-### Intégration basique du chat
-
-```tsx
-import GENIAChat from '@/components/chat/GENIAChat';
-
-export default function Page() {
-  return (
-    <div>
-      {/* Votre contenu */}
-      <GENIAChat />
-    </div>
-  );
-}
-```
-
-### Utilisation avec le hook personnalisé
-
-```tsx
-import { useGENIAChat } from '@/hooks/useGENIAChat';
-
-function MyComponent() {
-  const {
-    messages,
-    sendMessage,
-    isLoading,
-    quotas,
-    generateExercise,
-    evaluateResponse
-  } = useGENIAChat({
-    initialContext: {
-      capsuleTitle: 'Introduction au Prompt Engineering',
-      userLevel: 'beginner'
-    }
-  });
-
-  // Votre logique ici
-}
-```
-
-### Appel direct de l'API
-
-```typescript
-const response = await fetch('/api/chat', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    messages: [
-      { role: 'user', content: 'Ma question' }
-    ],
-    model: 'mistral-medium-3',
-    userId: 'user-id'
-  })
-});
-```
-
-## 📊 Modèles et quotas
-
-| Modèle | Usage | Quota/jour | Coût/1M tokens |
-|--------|-------|------------|----------------|
-| Magistral Medium | Raisonnement complexe | 30 | 2€/6€ |
-| Mistral Medium 3 | Usage général | 150 | 1.5€/4.5€ |
-| Mistral Small | Questions simples | 500 | 0.25€/0.25€ |
-
-## 💰 Estimation des coûts
-
-Pour 100 étudiants actifs :
-- **Coût mensuel** : ~36€
-- **Par étudiant** : ~0.36€/mois
-
-## 🔒 Sécurité et RGPD
-
-- ✅ Données hébergées en Europe
-- ✅ Chiffrement des données sensibles
-- ✅ Row Level Security (RLS) activé
-- ✅ Conformité RGPD native
-- ✅ Pas de données personnelles dans les prompts
-
-## 🚀 Déploiement
-
-### Vercel (recommandé)
-
-```bash
-# Installer Vercel CLI
-npm i -g vercel
-
-# Déployer
-vercel
-
-# Configurer les variables d'environnement dans Vercel Dashboard
-```
-
-### Docker
-
-```dockerfile
-# Dockerfile disponible
-docker build -t prompt-platform .
-docker run -p 3000:3000 prompt-platform
-```
-
-## 📝 Scripts utiles
-
-```bash
-# Développement
-npm run dev
-
-# Build production
-npm run build
-
-# Lancer en production
-npm run start
-
-# Migrations base de données
-npm run db:migrate
-
-# Générer les types TypeScript depuis Supabase
-npm run db:generate
-
-# Linter
-npm run lint
-```
-
-## 🐛 Troubleshooting
-
-### Erreur de quota dépassé
-- Vérifier la table `llm_usage` dans Supabase
-- Ajuster les quotas dans `MODELS_CONFIG`
-
-### Erreur d'authentification
-- Vérifier les clés Supabase dans `.env.local`
-- S'assurer que RLS est configuré correctement
-
-### Erreur Mistral API
-- Vérifier la clé API
-- Vérifier les quotas sur console.mistral.ai
-
-## 📚 Documentation
-
-### Documentation externe
-
-- [Documentation Mistral AI](https://docs.mistral.ai)
-- [Documentation Supabase](https://supabase.com/docs)
-- [Documentation Next.js](https://nextjs.org/docs)
-
-### Documentation du projet
-
-- **Guide utilisateur** : [Guide étudiant](docs/guides/STUDENT_GUIDE.md) - Guide complet pour les étudiants
-- **Guide administrateur** : [Fonctionnalités admin](docs/admin/ADMIN_FEATURES_GUIDE.md) - Documentation des fonctionnalités d'administration
-- **Déploiement** : [Guide de déploiement](docs/DEPLOYMENT.md) - Instructions de déploiement production
-- **PWA** : [Guide PWA](docs/PWA_IMPLEMENTATION_GUIDE.md) - Implémentation Progressive Web App
-- **Système de feedback** : [Guide feedback](docs/guides/FEEDBACK_SYSTEM_GUIDE.md) - Système de retours utilisateurs
-- **Toute la documentation** : Voir le répertoire [docs/](docs/) pour la documentation complète
-
-## 🤝 Contribution
-
-Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou une pull request.
-
-## 📄 Licence
-
-MIT - Voir [LICENSE](LICENSE)
-
-## 👨‍💻 Auteur
-
-**Hemerson KOFFI**
-- Créateur de la méthode GENIA
-- Expert en Prompt Engineering
-
-## 🙏 Remerciements
-
-- Équipe Mistral AI pour l'IA souveraine française
-- Communauté Supabase
-- Contributeurs open source
+**Stack** : Next.js 14 &middot; Supabase &middot; TypeScript &middot; TailwindCSS &middot; Vercel
 
 ---
 
-**💡 Astuce** : Commencez par tester le chat GENIA sur quelques utilisateurs avant de déployer à grande échelle.
+## Quick Start (5 minutes)
 
-**🔥 Prêt à révolutionner la formation au Prompt Engineering !**
+### Prerequisites
+
+- **Node.js 18+** and npm
+- A **Supabase** project (free tier works) &mdash; [supabase.com](https://supabase.com)
+- At least one LLM API key (Mistral, OpenAI, Anthropic, or DeepSeek)
+
+### 1. Clone & install
+
+```bash
+git clone https://github.com/3mersofT/Genia-Web-Training.git
+cd Genia-Web-Training
+npm install
+```
+
+### 2. Configure environment
+
+```bash
+cp .env.example .env.local
+```
+
+Edit `.env.local` and fill in the **3 required** variables:
+
+| Variable | Where to get it |
+|----------|----------------|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase Dashboard > Settings > API |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Same page |
+| `MISTRAL_API_KEY` | [console.mistral.ai](https://console.mistral.ai) |
+
+Also add your Supabase direct connection string for database scripts:
+
+```
+DATABASE_URL=postgresql://postgres.[ref]:[password]@aws-0-[region].pooler.supabase.com:5432/postgres
+```
+
+(Find it in Supabase Dashboard > Settings > Database > Connection string > URI)
+
+### 3. Set up the database
+
+**Option A** &mdash; One-shot setup (recommended):
+
+```bash
+npm run db:setup
+```
+
+This runs `supabase/schema_consolidated.sql` against your database.
+
+**Option B** &mdash; Run migrations individually:
+
+Copy-paste each file from `supabase/migrations/` (001 to 032) into the Supabase SQL Editor, in order.
+
+**Option C** &mdash; Supabase CLI:
+
+```bash
+npx supabase login
+npx supabase link --project-ref your-project-ref
+npx supabase db push
+```
+
+### 4. (Optional) Seed data
+
+```bash
+npm run db:seed
+```
+
+To promote a user to admin, add `ADMIN_USER_ID=<uuid>` to `.env.local` before running seed.
+
+### 5. Run
+
+```bash
+npm run dev
+# Open http://localhost:3000
+```
+
+Register a new account, complete capsules, and explore the dashboard.
+
+---
+
+## Project Structure
+
+```
+genia-web-training/
+├── src/
+│   ├── app/
+│   │   ├── (auth)/              # Login, register, forgot-password
+│   │   ├── (dashboard)/         # Dashboard, analytics, review, admin
+│   │   ├── api/                 # API routes (chat, exercise, review, admin)
+│   │   ├── capsules/[id]/       # Capsule viewer
+│   │   └── modules/[id]/        # Module listing
+│   ├── components/
+│   │   ├── analytics/           # Charts, heatmaps, cohort views
+│   │   ├── chat/                # GENIA AI chat
+│   │   ├── gamification/        # Leaderboards, skill tree, badges
+│   │   ├── review/              # Spaced repetition (SM-2)
+│   │   └── pwa/                 # Offline toggle, install prompt
+│   ├── hooks/                   # useAuth, useOffline, useSeasonalLeaderboard...
+│   ├── lib/
+│   │   ├── services/            # Business logic services
+│   │   ├── supabase/            # Supabase client/server helpers
+│   │   └── validations/         # Zod schemas
+│   ├── services/                # LLM service (Mistral, OpenAI, etc.)
+│   └── types/                   # TypeScript types
+├── supabase/
+│   ├── migrations/              # 32 sequential SQL migrations (001-032)
+│   └── schema_consolidated.sql  # All-in-one schema for fresh setup
+├── content/
+│   └── courses/                 # Course JSON content (modules + capsules)
+├── scripts/                     # Setup, reset, seed, deploy scripts
+├── tests/                       # Jest unit + component tests
+└── docs/                        # Deployment guide, admin guide
+```
+
+## npm Scripts
+
+| Script | Description |
+|--------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Production build |
+| `npm run start` | Start production server |
+| `npm test` | Run all Jest tests |
+| `npm run test:coverage` | Run tests with coverage report |
+| `npm run test:e2e` | Run Playwright E2E tests |
+| `npm run lint` | ESLint check |
+| `npm run db:setup` | Run consolidated schema on fresh DB |
+| `npm run db:reset` | Drop all tables and re-apply schema |
+| `npm run db:seed` | Insert seed data (admin promotion) |
+| `npm run db:fresh` | Reset + seed in one command |
+| `npm run db:push` | Push migrations via Supabase CLI |
+| `npm run db:generate` | Generate TypeScript types from Supabase |
+
+## Database Migrations
+
+32 sequential migrations in `supabase/migrations/` (001-032):
+
+| # | Migration | Description |
+|---|-----------|-------------|
+| 001 | initial_schema | Core tables, enums, RLS |
+| 002 | genia_chat_tables | Chat conversations & messages |
+| 003 | init_demo_accounts | Demo account setup |
+| 004 | update_rate_limits | LLM rate limiting |
+| 005 | hybrid_content_system | JSON-based content |
+| 006 | feedback_system | User feedback & moderation |
+| 007 | genia_memory_system | AI memory/context |
+| 008 | daily_challenges_system | Daily challenges |
+| 009-014 | RLS & permissions fixes | JWT claims, role lookup, permissions |
+| 015 | certificate_system | Certificates & QR codes |
+| 016 | grant_execute_permission | Function permissions |
+| 017 | tournaments_system | Tournaments & competitions |
+| 018-019 | username_support | Username field & trigger |
+| 020 | fix_user_progress_rls | Progress RLS fix |
+| 021-022 | capsule_id_text | Change capsule_id to text |
+| 023-024 | llm_usage & quotas | Permissions & quota halving |
+| 025 | consolidate_rls_policies | RLS consolidation |
+| 026 | student_notifications | Notification system |
+| 027 | teams_system | Teams & collaboration |
+| 028 | skill_tree_levels | Skill tree & levels |
+| 029 | seasonal_leaderboards | Seasonal competitions |
+| 030-031 | Supabase role & signup fixes | Permission & trigger fixes |
+| 032 | spaced_repetition_system | SM-2 spaced repetition |
+
+For a fresh project, use `npm run db:setup` which runs the consolidated file instead.
+
+## Key Features
+
+- **8 learning modules** with 30+ interactive capsules
+- **Multi-LLM AI chat** (Mistral, OpenAI, Anthropic, DeepSeek) with smart quota management
+- **Spaced repetition** (SM-2 algorithm) for long-term retention
+- **Gamification**: badges, XP, streaks, seasonal leaderboards, tournaments
+- **Analytics**: student progress, cohort analysis, bottleneck detection, activity heatmaps
+- **Certificates** with QR code verification
+- **PWA**: offline mode with Cache API, installable on mobile
+- **Admin panel**: user management, content management, cohort analytics
+- **Row-Level Security** throughout the database
+
+## Environment Variables
+
+See `.env.example` for all available variables. The 3 required ones are:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
+MISTRAL_API_KEY=your-key
+```
+
+Optional but recommended for database scripts:
+
+```env
+DATABASE_URL=postgresql://...
+SUPABASE_SERVICE_ROLE_KEY=eyJ...
+```
+
+Full list of supported variables: see [.env.example](.env.example).
+
+## Deployment
+
+See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for the full deployment guide.
+
+Quick deploy to Vercel:
+
+```bash
+npm i -g vercel
+vercel
+# Set environment variables in Vercel Dashboard
+vercel --prod
+```
+
+## Testing
+
+```bash
+npm test                    # All tests
+npm run test:unit           # Unit tests only
+npm run test:coverage       # With coverage
+npm run test:e2e            # Playwright E2E
+```
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 14 (App Router) |
+| Language | TypeScript |
+| Styling | TailwindCSS + Framer Motion |
+| Database | PostgreSQL (Supabase) |
+| Auth | Supabase Auth |
+| AI/LLM | Mistral AI, OpenAI, Anthropic, DeepSeek |
+| Charts | Chart.js + react-chartjs-2 |
+| Validation | Zod |
+| Testing | Jest + Testing Library + Playwright |
+| Hosting | Vercel |
+| PWA | next-pwa + Workbox |
+
+## Author
+
+**Hemerson KOFFI** &mdash; Creator of the GENIA method
+
+## License
+
+MIT &mdash; see [LICENSE](LICENSE)
