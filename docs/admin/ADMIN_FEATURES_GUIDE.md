@@ -1,3 +1,5 @@
+> ⚠️ Les credentials de test ont été retirés pour des raisons de sécurité. Contactez l'administrateur pour obtenir des accès.
+
 # 🎛️ **GUIDE COMPLET - INTERFACE ADMINISTRATEUR**
 
 > **Documentation utilisateur complète des fonctionnalités admin**  
@@ -10,8 +12,8 @@
 
 ### **🔐 Connexion Admin**
 - **URL :** `/admin`
-- **Email :** `admin@geniawebtraining.com`  
-- **Mot de passe :** `AdminGenia2025!`
+- **Email :** `admin@example.com`
+- **Mot de passe :** `[MOT_DE_PASSE_SUPPRIMÉ]`
 - **Redirect automatique :** Vérifie le rôle et redirige vers `/admin`
 
 ---

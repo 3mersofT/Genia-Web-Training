@@ -113,7 +113,7 @@ Verify that login form fields are properly labeled, validation errors are announ
 
 #### Step 1.4: Successful Form Submission
 **Action:**
-1. Fill valid credentials (test user: testuser@example.com / password: testpass123)
+1. Fill valid credentials (test user: testuser@example.com / password: [MOT_DE_PASSE_SUPPRIMÉ])
 2. Submit the form
 
 **Expected Announcements:**

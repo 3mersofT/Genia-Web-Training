@@ -1,3 +1,5 @@
+> ⚠️ Les credentials de test ont été retirés pour des raisons de sécurité. Contactez l'administrateur pour obtenir des accès.
+
 # 🧪 **PLAN DE TEST COMPLET - INTERFACE ADMIN**
 
 > **Test méthodique de toutes les fonctionnalités administrateur**  
@@ -26,8 +28,8 @@
 - [x] **URL :** `http://localhost:3000/admin`
 - [x] **Redirection** vers login si non connecté
 - [x] **Credentials :**
-  - Email : `admin@geniawebtraining.com`
-  - Password : `AdminGenia2025!`
+  - Email : `admin@example.com`
+  - Password : `[MOT_DE_PASSE_SUPPRIMÉ]`
 - [x] **Vérifications :**
   - [x] Login réussi
   - [x] Redirection vers `/admin`

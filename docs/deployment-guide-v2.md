@@ -193,7 +193,7 @@ SUPABASE_SERVICE_KEY=eyJhbGci...
 ##### Compte Administrateur
 ```
 Email: admin@geniawebtraining.com
-Password: AdminGenia2025!
+Password: [MOT_DE_PASSE_SUPPRIMÉ]
 Auto Confirm User: ✅ Coché
 ```
 Cliquer sur `Create user`
@@ -201,7 +201,7 @@ Cliquer sur `Create user`
 ##### Compte Étudiant Test
 ```
 Email: student@geniawebtraining.com
-Password: Test@2025!
+Password: [MOT_DE_PASSE_SUPPRIMÉ]
 Auto Confirm User: ✅ Coché
 ```
 Cliquer sur `Create user`
@@ -209,7 +209,7 @@ Cliquer sur `Create user`
 ##### Compte Démo
 ```
 Email: demo@geniawebtraining.com
-Password: Demo@2025!
+Password: [MOT_DE_PASSE_SUPPRIMÉ]
 Auto Confirm User: ✅ Coché
 ```
 Cliquer sur `Create user`
@@ -373,7 +373,7 @@ npm run dev
 2. **Cliquer sur** : "Connexion"
 3. **Se connecter avec** :
    - Email : `student@geniawebtraining.com`
-   - Password : `Test@2025!`
+   - Password : `[MOT_DE_PASSE_SUPPRIMÉ]`
 4. ✅ **Vérifier** : Vous devez accéder au dashboard étudiant
 5. **Tester le chat** : Poser une question simple à GENIA
 
@@ -460,7 +460,7 @@ git push origin main
 2. **Créer un compte test** :
    ```
    Email: test@example.com
-   Mot de passe: Test123!
+   Mot de passe: [MOT_DE_PASSE_SUPPRIMÉ]
    ```
 3. ✅ Compte créé et profil automatiquement généré
 
@@ -469,7 +469,7 @@ git push origin main
 2. **Se reconnecter avec** :
    ```
    Email: student@geniawebtraining.com
-   Password: Test@2025!
+   Password: [MOT_DE_PASSE_SUPPRIMÉ]
    ```
 3. ✅ Dashboard accessible
 4. ✅ 15 modules visibles
@@ -479,7 +479,7 @@ git push origin main
 1. **Se connecter avec** :
    ```
    Email: admin@geniawebtraining.com
-   Password: AdminGenia2025!
+   Password: [MOT_DE_PASSE_SUPPRIMÉ]
    ```
 2. ✅ Dashboard admin accessible
 3. ✅ Statistiques visibles
@@ -552,7 +552,7 @@ git push origin v1.0.0
 
 - [ ] Email aux beta testeurs avec :
   - URL de production
-  - Compte démo : `demo@geniawebtraining.com` / `Demo@2025!`
+  - Compte démo : `demo@geniawebtraining.com` / `[MOT_DE_PASSE_SUPPRIMÉ]`
   - Formulaire de feedback
 
 ---
