@@ -111,7 +111,7 @@ Pour ajouter des données utilisateur :
 ```typescript
 await supabase.auth.signUp({
   email: 'user@example.com',
-  password: 'password',
+  password: '[MOT_DE_PASSE_SUPPRIMÉ]',
   options: {
     data: {
       full_name: 'Jean Dupont',
@@ -137,7 +137,7 @@ await supabase.auth.signUp({
 
 1. **Créez un compte test** :
    - Email : test@example.com
-   - Mot de passe : Test123!
+   - Mot de passe : [MOT_DE_PASSE_SUPPRIMÉ]
 
 2. **Vérifiez la réception** :
    - Email de confirmation

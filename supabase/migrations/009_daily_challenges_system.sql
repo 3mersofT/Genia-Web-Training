@@ -440,43 +440,43 @@ CREATE POLICY "Users can update their own notifications" ON challenge_notificati
   FOR UPDATE USING (auth.uid() = user_id);
 
 -- ============================================
--- SEED DATA - Défis d'exemple
+-- SEED DATA - Défis d'exemple (DÉSACTIVÉ en production)
 -- ============================================
 
--- Insérer un défi d'exemple pour aujourd'hui
-INSERT INTO daily_challenges (
-  challenge_date,
-  challenge_type,
-  title,
-  description,
-  difficulty,
-  base_prompt,
-  success_criteria,
-  hints,
-  max_score,
-  active
-) VALUES (
-  CURRENT_DATE,
-  'transform',
-  'Transformez ce prompt vague en version RCTF',
-  'Prenez ce prompt simple : "Écris-moi un article" et transformez-le en utilisant la structure RCTF complète.',
-  'beginner',
-  'Écris-moi un article',
-  jsonb_build_object(
-    'has_role', 'Contient un rôle défini',
-    'has_context', 'Inclut le contexte nécessaire',
-    'has_task', 'Tâche claire et précise',
-    'has_format', 'Format de sortie spécifié'
-  ),
-  ARRAY[
-    'Pensez à définir QUI doit écrire (Rôle)',
-    'Ajoutez le contexte : pour qui, pourquoi, où ?',
-    'Précisez exactement ce qui est attendu',
-    'Spécifiez le format : longueur, structure, ton'
-  ],
-  100,
-  true
-) ON CONFLICT (challenge_date) DO NOTHING;
+-- -- Insérer un défi d'exemple pour aujourd'hui
+-- INSERT INTO daily_challenges (
+--   challenge_date,
+--   challenge_type,
+--   title,
+--   description,
+--   difficulty,
+--   base_prompt,
+--   success_criteria,
+--   hints,
+--   max_score,
+--   active
+-- ) VALUES (
+--   CURRENT_DATE,
+--   'transform',
+--   'Transformez ce prompt vague en version RCTF',
+--   'Prenez ce prompt simple : "Écris-moi un article" et transformez-le en utilisant la structure RCTF complète.',
+--   'beginner',
+--   'Écris-moi un article',
+--   jsonb_build_object(
+--     'has_role', 'Contient un rôle défini',
+--     'has_context', 'Inclut le contexte nécessaire',
+--     'has_task', 'Tâche claire et précise',
+--     'has_format', 'Format de sortie spécifié'
+--   ),
+--   ARRAY[
+--     'Pensez à définir QUI doit écrire (Rôle)',
+--     'Ajoutez le contexte : pour qui, pourquoi, où ?',
+--     'Précisez exactement ce qui est attendu',
+--     'Spécifiez le format : longueur, structure, ton'
+--   ],
+--   100,
+--   true
+-- ) ON CONFLICT (challenge_date) DO NOTHING;
 
 -- ============================================
 -- INDEXES ADDITIONNELS POUR PERFORMANCE

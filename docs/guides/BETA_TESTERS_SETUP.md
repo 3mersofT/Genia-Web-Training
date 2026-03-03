@@ -1,3 +1,5 @@
+> ⚠️ Les credentials de test ont été retirés pour des raisons de sécurité. Contactez l'administrateur pour obtenir des accès.
+
 # 🧪 **GUIDE BETA TESTEURS - GENIA 2.1.0**
 
 > **Préparation environnement pour tests utilisateurs réels**  
@@ -88,19 +90,19 @@ NEXT_PUBLIC_APP_URL=https://your-domain.com
 ### **🔐 Comptes à Créer**
 
 #### **Admin Principal (Vous)**
-- **Email** : `admin@geniawebtraining.com`
-- **Password** : `AdminGenia2025!`
+- **Email** : `admin@example.com`
+- **Password** : `[MOT_DE_PASSE_SUPPRIMÉ]`
 - **Rôle** : `admin`
 - **✅ Déjà configuré**
 
 #### **Beta Testeurs Types**
 ```sql
 -- Exemples de profils à créer via /admin/users
-1. Débutant IA      → marie.test@beta.genia.com
-2. Développeur      → thomas.dev@beta.genia.com  
-3. Product Manager  → sarah.pm@beta.genia.com
-4. Consultant       → pierre.cons@beta.genia.com
-5. Étudiant         → julie.student@beta.genia.com
+1. Débutant IA      → testeur1@example.com
+2. Développeur      → testeur2@example.com
+3. Product Manager  → testeur3@example.com
+4. Consultant       → testeur4@example.com
+5. Étudiant         → testeur5@example.com
 ```
 
 ### **📋 Instructions Beta Testeurs**
