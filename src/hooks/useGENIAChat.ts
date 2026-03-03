@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import type { User, AuthChangeEvent, Session } from '@supabase/supabase-js';
+import { buildContextMessages } from '@/lib/buildContextMessages';
 
 // ============================================
 // TYPES
@@ -173,22 +174,27 @@ export function useGENIAChat(options: UseGENIAChatOptions = {}) {
       
       // Préparer le contexte système
       const systemPrompt = `Tu es GENIA, formateur senior en Prompt Engineering.
-      
+
 Contexte actuel :
 - Capsule : ${context.capsuleTitle || 'Introduction'}
 - Concepts : ${context.capsuleConcepts?.join(', ') || 'Bases du prompting'}
 - Niveau apprenant : ${context.userLevel}
 - Progression : ${context.completedCapsules || 0}/${context.totalCapsules || 10} capsules
 
-Applique TOUJOURS la méthode GENIA et identifie le pilier utilisé.`;
-      
-      // Construire l'historique des messages pour l'API
+Applique TOUJOURS la méthode GENIA et identifie le pilier utilisé.
+
+RÈGLE CRITIQUE D'ÉVALUATION :
+- Quand un apprenant te soumet SA tentative après un exercice, tu dois évaluer SA réponse, PAS ton propre exemple.
+- Différencie toujours clairement : TON exemple (ce que tu as montré) vs LA TENTATIVE de l'apprenant (ce qu'il a écrit).
+- Quand tu évalues, cite d'abord ce que l'apprenant a écrit, puis donne ton feedback dessus.
+- Ne confonds JAMAIS ta propre réponse précédente avec la soumission de l'apprenant.`;
+
+      // Construire l'historique intelligent : garder les messages importants
+      // pour que GENIA ne perde jamais le contexte des exercices en cours
+      const contextMessages = buildContextMessages(messages, content);
       const apiMessages = [
         { role: 'system', content: systemPrompt },
-        ...messages.slice(-10).map(m => ({ // Garder les 10 derniers messages pour le contexte
-          role: m.role,
-          content: m.content
-        })),
+        ...contextMessages,
         { role: 'user', content }
       ];
       

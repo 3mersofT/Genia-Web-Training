@@ -5,6 +5,7 @@ import type { User, AuthChangeEvent, Session } from '@supabase/supabase-js';
 import { createClient } from '@/lib/supabase/client';
 import type { Message, ChatContext, QuotaInfo, StreamEvent, SmartSuggestion } from '@/types/chat.types';
 import { generateSmartSuggestions } from '@/lib/smart-suggestions';
+import { buildContextMessages } from '@/lib/buildContextMessages';
 
 /**
  * Options de configuration pour le hook useChat
@@ -253,11 +254,20 @@ Contexte actuel :
 IMPORTANT: Identifie TOUJOURS quel pilier GENIA tu utilises dans ta réponse :
 [G - Guide] [E - Exemple] [N - Niveau] [I - Interaction] [A - Assessment]
 
-Applique la méthode GENIA et adapte ton niveau au contexte utilisateur.`;
+Applique la méthode GENIA et adapte ton niveau au contexte utilisateur.
 
+RÈGLE CRITIQUE D'ÉVALUATION :
+- Quand un apprenant te soumet SA tentative après un exercice, tu dois évaluer SA réponse, PAS ton propre exemple.
+- Différencie toujours clairement : TON exemple (ce que tu as montré) vs LA TENTATIVE de l'apprenant (ce qu'il a écrit).
+- Quand tu évalues, cite d'abord ce que l'apprenant a écrit, puis donne ton feedback dessus.
+- Ne confonds JAMAIS ta propre réponse précédente avec la soumission de l'apprenant.`;
+
+      // Construire l'historique intelligent : garder les messages importants
+      // pour que GENIA ne perde jamais le contexte des exercices en cours
+      const contextMessages = buildContextMessages(messages, content);
       const apiMessages = [
         { role: 'system' as const, content: systemPrompt },
-        ...messages.slice(-6).map(m => ({
+        ...contextMessages.map(m => ({
           role: m.role as 'user' | 'assistant' | 'system',
           content: m.content,
         })),
@@ -382,11 +392,20 @@ Contexte actuel :
 IMPORTANT: Identifie TOUJOURS quel pilier GENIA tu utilises dans ta réponse :
 [G - Guide] [E - Exemple] [N - Niveau] [I - Interaction] [A - Assessment]
 
-Applique la méthode GENIA et adapte ton niveau au contexte utilisateur.`;
+Applique la méthode GENIA et adapte ton niveau au contexte utilisateur.
 
+RÈGLE CRITIQUE D'ÉVALUATION :
+- Quand un apprenant te soumet SA tentative après un exercice, tu dois évaluer SA réponse, PAS ton propre exemple.
+- Différencie toujours clairement : TON exemple (ce que tu as montré) vs LA TENTATIVE de l'apprenant (ce qu'il a écrit).
+- Quand tu évalues, cite d'abord ce que l'apprenant a écrit, puis donne ton feedback dessus.
+- Ne confonds JAMAIS ta propre réponse précédente avec la soumission de l'apprenant.`;
+
+      // Construire l'historique intelligent : garder les messages importants
+      // pour que GENIA ne perde jamais le contexte des exercices en cours
+      const contextMessages = buildContextMessages(messages, content);
       const apiMessages = [
         { role: 'system' as const, content: systemPrompt },
-        ...messages.slice(-6).map(m => ({
+        ...contextMessages.map(m => ({
           role: m.role as 'user' | 'assistant' | 'system',
           content: m.content,
         })),
