@@ -76,7 +76,7 @@ describe('ReviewDashboard', () => {
       <ReviewDashboard stats={stats} dueCount={5} onStartReview={onStartReview} />
     );
 
-    const startButton = screen.getByText('Commencer');
+    const startButton = screen.getByText('Commencer la session');
     expect(startButton).toBeInTheDocument();
 
     fireEvent.click(startButton);
@@ -89,7 +89,7 @@ describe('ReviewDashboard', () => {
       <ReviewDashboard stats={stats} dueCount={0} onStartReview={onStartReview} />
     );
 
-    expect(screen.queryByText('Commencer')).not.toBeInTheDocument();
+    expect(screen.queryByText('Commencer la session')).not.toBeInTheDocument();
     expect(screen.getByText(/Aucune révision prévue/)).toBeInTheDocument();
   });
 

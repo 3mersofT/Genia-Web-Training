@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Trophy, Users, Calendar, ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import SeasonalLeaderboard from '@/components/gamification/SeasonalLeaderboard';
 import type {
   Season,
@@ -16,6 +17,8 @@ import type {
 export default function LeaderboardsPage() {
   const [mounted, setMounted] = useState(false);
   const [activeTab, setActiveTab] = useState<'individual' | 'team'>('individual');
+  const t = useTranslations('leaderboards');
+  const tc = useTranslations('common');
 
   // TODO: Remplacer par un vrai fetch Supabase quand le backend sera prêt
   const [currentSeason, setCurrentSeason] = useState<Season | null>(null);
@@ -33,7 +36,7 @@ export default function LeaderboardsPage() {
         <div className="container mx-auto px-4 py-8">
           <div className="text-center">
             <div className="w-8 h-8 border-4 border-purple-600 border-t-transparent rounded-full mx-auto mb-4 animate-spin"></div>
-            <p className="text-muted-foreground">Chargement...</p>
+            <p className="text-muted-foreground">{tc('loading')}</p>
           </div>
         </div>
       </div>
@@ -54,8 +57,8 @@ export default function LeaderboardsPage() {
                 <ChevronLeft className="w-5 h-5" />
               </Link>
               <div>
-                <h1 className="text-2xl font-bold text-foreground">Classements Saisonniers</h1>
-                <p className="text-muted-foreground">Comparez vos performances avec les meilleurs joueurs !</p>
+                <h1 className="text-2xl font-bold text-foreground">{t('title')}</h1>
+                <p className="text-muted-foreground">{t('subtitle')}</p>
               </div>
             </div>
             {currentSeason && (
@@ -65,14 +68,14 @@ export default function LeaderboardsPage() {
                     <Trophy className="w-5 h-5" />
                     <span className="text-2xl font-bold">{currentSeason.total_participants}</span>
                   </div>
-                  <p className="text-xs text-muted-foreground">Participants</p>
+                  <p className="text-xs text-muted-foreground">{t('participants')}</p>
                 </div>
                 <div className="text-center">
                   <div className="flex items-center gap-1 text-blue-500">
                     <Calendar className="w-5 h-5" />
                     <span className="text-2xl font-bold">{currentSeason.season_name}</span>
                   </div>
-                  <p className="text-xs text-muted-foreground">Saison actuelle</p>
+                  <p className="text-xs text-muted-foreground">{t('currentSeason')}</p>
                 </div>
               </div>
             )}
@@ -92,7 +95,7 @@ export default function LeaderboardsPage() {
               }`}
               onClick={() => setActiveTab('individual')}
             >
-              Classement Individuel
+              {t('individual')}
               {activeTab === 'individual' && (
                 <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-600"></div>
               )}
@@ -105,7 +108,7 @@ export default function LeaderboardsPage() {
               }`}
               onClick={() => setActiveTab('team')}
             >
-              Classement Équipes
+              {t('teams')}
               {activeTab === 'team' && (
                 <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-600"></div>
               )}
@@ -126,9 +129,9 @@ export default function LeaderboardsPage() {
             {!currentSeason && leaderboard.length === 0 ? (
               <div className="bg-card rounded-xl shadow-lg p-8 text-center">
                 <Trophy className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-foreground mb-2">Classement Individuel</h3>
+                <h3 className="text-xl font-bold text-foreground mb-2">{t('individual')}</h3>
                 <p className="text-muted-foreground">
-                  Le classement sera disponible quand des étudiants auront complété des capsules.
+                  {t('noIndividual')}
                 </p>
               </div>
             ) : (
@@ -152,8 +155,8 @@ export default function LeaderboardsPage() {
             className="bg-card rounded-xl shadow-lg p-8 text-center"
           >
             <Users className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-xl font-bold text-foreground mb-2">Classement Équipes</h3>
-            <p className="text-muted-foreground">Le classement des équipes sera bientôt disponible.</p>
+            <h3 className="text-xl font-bold text-foreground mb-2">{t('teams')}</h3>
+            <p className="text-muted-foreground">{t('noTeams')}</p>
           </motion.div>
         )}
       </div>

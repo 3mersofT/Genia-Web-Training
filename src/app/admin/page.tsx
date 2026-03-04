@@ -4,6 +4,7 @@
 export const dynamic = 'force-dynamic'
 
 import React, { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { 
   Users, Activity, TrendingUp, DollarSign, 
   BookOpen, MessageCircle, Award, Settings,
@@ -16,6 +17,7 @@ import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 
 export default function AdminDashboard() {
+  const t = useTranslations('admin');
   const [activeTab, setActiveTab] = useState('overview');
   const [dateRange, setDateRange] = useState('today');
   const [searchQuery, setSearchQuery] = useState('');
@@ -143,8 +145,8 @@ export default function AdminDashboard() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <Shield className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-          <h2 className="text-2xl font-bold mb-2">Accès Restreint</h2>
-          <p className="text-muted-foreground">Cette page est réservée aux administrateurs</p>
+          <h2 className="text-2xl font-bold mb-2">{t('restricted')}</h2>
+          <p className="text-muted-foreground">{t('restrictedDesc')}</p>
         </div>
       </div>
     );
@@ -155,7 +157,7 @@ export default function AdminDashboard() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <RefreshCw className="w-8 h-8 animate-spin text-blue-600 mx-auto mb-4" />
-          <p>Chargement du dashboard...</p>
+          <p>{t('loading')}</p>
         </div>
       </div>
     );
@@ -168,8 +170,8 @@ export default function AdminDashboard() {
         <div className="px-6 py-4">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-2xl font-bold text-foreground">Dashboard Administration</h1>
-              <p className="text-sm text-muted-foreground">GENIA Web Training Platform</p>
+              <h1 className="text-2xl font-bold text-foreground">{t('title')}</h1>
+              <p className="text-sm text-muted-foreground">{t('subtitle')}</p>
             </div>
             <div className="flex gap-3 items-center">
               {/* Barre de recherche globale */}
@@ -177,21 +179,21 @@ export default function AdminDashboard() {
                 <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
                 <input
                   type="text"
-                  placeholder="Rechercher utilisateur, contenu..."
+                  placeholder={t('searchPlaceholder')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10 pr-4 py-2 border rounded-lg text-sm w-64 focus:outline-none focus:ring-2 focus-visible:ring-ring"
                 />
                 {searchQuery && (
                   <div className="absolute top-full left-0 right-0 bg-card border border-border rounded-lg shadow-lg mt-1 z-50">
-                    <div className="p-2 text-sm text-muted-foreground border-b">Résultats de recherche</div>
+                    <div className="p-2 text-sm text-muted-foreground border-b">{t('searchResults')}</div>
                     <div className="p-2 hover:bg-accent cursor-pointer">
                       <div className="font-medium">Marie Dupont</div>
-                      <div className="text-xs text-muted-foreground">marie.dupont@entreprise.com • Utilisateur</div>
+                      <div className="text-xs text-muted-foreground">marie.dupont@entreprise.com • {t('user')}</div>
                     </div>
                     <div className="p-2 hover:bg-accent cursor-pointer">
                       <div className="font-medium">Module 1 - Fondamentaux</div>
-                      <div className="text-xs text-muted-foreground">Contenu • 12 capsules</div>
+                      <div className="text-xs text-muted-foreground">{t('content')} • 12 capsules</div>
                     </div>
                     <div className="p-2 text-xs text-muted-foreground border-t">
                       Recherche : "{searchQuery}"
@@ -205,24 +207,24 @@ export default function AdminDashboard() {
                 onChange={(e) => setDateRange(e.target.value)}
                 className="px-4 py-2 border rounded-lg text-sm"
               >
-                <option value="today">Aujourd'hui</option>
-                <option value="week">Cette semaine</option>
-                <option value="month">Ce mois</option>
-                <option value="year">Cette année</option>
+                <option value="today">{t('dateFilters.today')}</option>
+                <option value="week">{t('dateFilters.thisWeek')}</option>
+                <option value="month">{t('dateFilters.thisMonth')}</option>
+                <option value="year">{t('dateFilters.thisYear')}</option>
               </select>
               <button 
                 onClick={loadDashboardData}
                 className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center gap-2"
               >
                 <RefreshCw className="w-4 h-4" />
-                Actualiser
+                {t('refresh')}
               </button>
               <button 
                 onClick={handleLogout}
                 className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 flex items-center gap-2"
               >
                 <LogOut className="w-4 h-4" />
-                Déconnexion
+                {t('logout')}
               </button>
             </div>
           </div>
@@ -234,9 +236,9 @@ export default function AdminDashboard() {
         <nav className="flex items-center space-x-2 text-sm">
           <a href="/" className="text-primary hover:text-primary/80">GENIA</a>
           <span className="text-muted-foreground">/</span>
-          <a href="/admin" className="text-primary hover:text-primary/80">Administration</a>
+          <a href="/admin" className="text-primary hover:text-primary/80">{t('breadcrumbs.admin')}</a>
           <span className="text-muted-foreground">/</span>
-          <span className="text-foreground font-medium">Vue d'ensemble</span>
+          <span className="text-foreground font-medium">{t('breadcrumbs.overview')}</span>
         </nav>
       </div>
 
@@ -253,7 +255,7 @@ export default function AdminDashboard() {
           >
             <div className="flex items-center gap-2">
               <BarChart3 className="w-4 h-4" />
-              Vue d'ensemble
+              {t('tabs.overview')}
             </div>
           </button>
           <a
@@ -262,7 +264,7 @@ export default function AdminDashboard() {
           >
             <div className="flex items-center gap-2">
               <Users className="w-4 h-4" />
-              Utilisateurs
+              {t('tabs.users')}
             </div>
           </a>
           <a
@@ -271,7 +273,7 @@ export default function AdminDashboard() {
           >
             <div className="flex items-center gap-2">
               <Activity className="w-4 h-4" />
-              Utilisation IA
+              {t('tabs.aiUsage')}
             </div>
           </a>
           <a
@@ -280,7 +282,7 @@ export default function AdminDashboard() {
           >
             <div className="flex items-center gap-2">
               <BookOpen className="w-4 h-4" />
-              Contenu
+              {t('tabs.content')}
             </div>
           </a>
           <a
@@ -289,7 +291,7 @@ export default function AdminDashboard() {
           >
             <div className="flex items-center gap-2">
               <MessageCircle className="w-4 h-4" />
-              Feedbacks
+              {t('tabs.feedback')}
             </div>
           </a>
           <a
@@ -298,7 +300,7 @@ export default function AdminDashboard() {
           >
             <div className="flex items-center gap-2">
               <Settings className="w-4 h-4" />
-              Paramètres
+              {t('tabs.settings')}
             </div>
           </a>
         </nav>
@@ -315,7 +317,7 @@ export default function AdminDashboard() {
                   <div className="flex items-center">
                     <AlertCircle className="w-5 h-5 text-yellow-400 mr-2" />
                     <p className="text-yellow-700 text-sm">
-                      <strong>Attention :</strong> Taux de complétion faible ({stats.completionRate}%).
+                      {t('alerts.lowCompletion', { rate: stats.completionRate })}
                     </p>
                   </div>
                 </div>
@@ -326,7 +328,7 @@ export default function AdminDashboard() {
                   <div className="flex items-center">
                     <XCircle className="w-5 h-5 text-red-400 mr-2" />
                     <p className="text-red-700 dark:text-red-300 text-sm">
-                      <strong>Quota élevé :</strong> {Math.round(stats.tokensUsed / 1000)}k tokens utilisés ce mois.
+                      {t('alerts.highQuota', { tokens: Math.round(stats.tokensUsed / 1000) })}
                     </p>
                   </div>
                 </div>
@@ -348,9 +350,9 @@ export default function AdminDashboard() {
                   )}
                 </div>
                 <p className="text-2xl font-bold">{stats.totalUsers}</p>
-                <p className="text-sm text-muted-foreground mt-1">Utilisateurs totaux</p>
+                <p className="text-sm text-muted-foreground mt-1">{t('stats.totalUsers')}</p>
                 <p className="text-xs text-green-600 dark:text-green-400 mt-2">
-                  {stats.activeUsers} actifs cette semaine
+                  {stats.activeUsers} {t('stats.activeThisWeek')}
                 </p>
                 {stats.totalUsers > 0 && (
                   <div className="mt-3 h-8 bg-blue-50 rounded flex items-center justify-center">
@@ -368,7 +370,7 @@ export default function AdminDashboard() {
                   <TrendingUp className="w-4 h-4 text-green-600 dark:text-green-400" />
                 </div>
                 <p className="text-2xl font-bold">{stats.revenue}€</p>
-                <p className="text-sm text-muted-foreground mt-1">Revenus estimés</p>
+                <p className="text-sm text-muted-foreground mt-1">{t('stats.estimatedRevenue')}</p>
                 {stats.revenue > 0 && (
                   <p className="text-xs text-green-600 dark:text-green-400 mt-2">
                     Revenus calculés
@@ -385,7 +387,7 @@ export default function AdminDashboard() {
                   <CheckCircle className="w-4 h-4 text-purple-600" />
                 </div>
                 <p className="text-2xl font-bold">{stats.completionRate}%</p>
-                <p className="text-sm text-muted-foreground mt-1">Taux de complétion</p>
+                <p className="text-sm text-muted-foreground mt-1">{t('stats.completionRate')}</p>
                 <div className="mt-3">
                   <div className="bg-purple-100 rounded-full h-2">
                     <div
@@ -408,7 +410,7 @@ export default function AdminDashboard() {
                   </div>
                 </div>
                 <p className="text-2xl font-bold">{stats.totalMessages}</p>
-                <p className="text-sm text-muted-foreground mt-1">Messages GENIA</p>
+                <p className="text-sm text-muted-foreground mt-1">{t('stats.geniaMessages')}</p>
                 <p className="text-xs text-orange-600 mt-2">
                   {Math.round(stats.tokensUsed / 1000)}k tokens utilisés
                 </p>
@@ -420,7 +422,7 @@ export default function AdminDashboard() {
               {/* Graphique évolution utilisateurs */}
               <div className="bg-card rounded-xl shadow-sm p-6">
                 <h3 className="text-lg font-semibold text-foreground mb-4">
-                  Évolution des inscriptions (7 derniers jours)
+                  {t('charts.registrations')}
                 </h3>
                 <div className="h-32 flex items-center justify-center">
                   <div className="text-center">
@@ -433,18 +435,18 @@ export default function AdminDashboard() {
               {/* Activité récente */}
               <div className="bg-card rounded-xl shadow-sm p-6">
                 <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg font-semibold text-foreground">Activité récente</h3>
+                  <h3 className="text-lg font-semibold text-foreground">{t('charts.recentActivity')}</h3>
                   <Eye className="w-5 h-5 text-muted-foreground" />
                 </div>
                 <div className="space-y-4">
                   {stats.totalUsers === 0 ? (
                     <div className="text-center py-8">
-                      <p className="text-muted-foreground text-sm">Aucune activité récente</p>
-                      <p className="text-xs text-muted-foreground mt-1">Les logs d'activité apparaîtront ici</p>
+                      <p className="text-muted-foreground text-sm">{t('noActivity')}</p>
+                      <p className="text-xs text-muted-foreground mt-1">{t('noActivityDesc')}</p>
                     </div>
                   ) : (
                     <div className="text-center py-8">
-                      <p className="text-muted-foreground text-sm">Logs d'activité en cours de développement</p>
+                      <p className="text-muted-foreground text-sm">{t('activityLogs')}</p>
                       <p className="text-xs text-muted-foreground mt-1">Données réelles bientôt disponibles</p>
                     </div>
                   )}
@@ -454,35 +456,35 @@ export default function AdminDashboard() {
 
             {/* Actions rapides */}
             <div className="mt-6 bg-card rounded-xl shadow-sm p-6">
-              <h3 className="text-lg font-semibold text-foreground mb-4">Actions rapides</h3>
+              <h3 className="text-lg font-semibold text-foreground mb-4">{t('quickActions.title')}</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <a
                   href="/admin/users"
                   className="flex flex-col items-center p-4 rounded-lg border-2 border-dashed border-border hover:border-blue-300 hover:bg-blue-50 transition-colors"
                 >
                   <Users className="w-8 h-8 text-blue-600 mb-2" />
-                  <span className="text-sm font-medium text-foreground">Gérer utilisateurs</span>
+                  <span className="text-sm font-medium text-foreground">{t('quickActions.manageUsers')}</span>
                 </a>
                 <a
                   href="/admin/content"
                   className="flex flex-col items-center p-4 rounded-lg border-2 border-dashed border-border hover:border-green-300 hover:bg-green-50 dark:bg-green-950/30 transition-colors"
                 >
                   <BookOpen className="w-8 h-8 text-green-600 dark:text-green-400 mb-2" />
-                  <span className="text-sm font-medium text-foreground">Contenu</span>
+                  <span className="text-sm font-medium text-foreground">{t('quickActions.content')}</span>
                 </a>
                 <a
                   href="/admin/analytics"
                   className="flex flex-col items-center p-4 rounded-lg border-2 border-dashed border-border hover:border-purple-300 hover:bg-purple-50 transition-colors"
                 >
                   <BarChart3 className="w-8 h-8 text-purple-600 mb-2" />
-                  <span className="text-sm font-medium text-foreground">Analytics IA</span>
+                  <span className="text-sm font-medium text-foreground">{t('quickActions.aiAnalytics')}</span>
                 </a>
                 <a
                   href="/admin/settings"
                   className="flex flex-col items-center p-4 rounded-lg border-2 border-dashed border-border hover:border-orange-300 hover:bg-orange-50 transition-colors"
                 >
                   <Settings className="w-8 h-8 text-orange-600 mb-2" />
-                  <span className="text-sm font-medium text-foreground">Paramètres</span>
+                  <span className="text-sm font-medium text-foreground">{t('quickActions.settings')}</span>
                 </a>
               </div>
             </div>

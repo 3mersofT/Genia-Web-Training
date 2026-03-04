@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { ArrowLeft, Play, Lock, CheckCircle, Clock, BookOpen } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { getModuleBySlug, getAllModulesWithProgress, Module, Capsule } from '@/lib/data';
 import { useAuth } from '@/hooks/useAuth';
 import FeedbackButton from '@/components/feedback/FeedbackButton';
@@ -14,6 +15,8 @@ export default function ModulePage() {
   const params = useParams();
   const slug = params.slug as string;
   const { user } = useAuth();
+  const t = useTranslations('modules');
+  const tc = useTranslations('capsule');
   const [moduleData, setModuleData] = useState<Module | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -47,7 +50,7 @@ export default function ModulePage() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Chargement du module...</p>
+          <p className="text-muted-foreground">{t('loading')}</p>
         </div>
       </div>
     );
@@ -57,9 +60,9 @@ export default function ModulePage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-foreground mb-4">Module non trouvé</h1>
+          <h1 className="text-2xl font-bold text-foreground mb-4">{t('notFound')}</h1>
           <Link href="/dashboard" className="text-primary hover:underline">
-            ← Retour au dashboard
+            ← {t('backToDashboard')}
           </Link>
         </div>
       </div>
@@ -124,7 +127,7 @@ export default function ModulePage() {
               />
             </div>
             <span className="text-sm font-medium text-muted-foreground">
-              {moduleData.progress}% complété
+              {moduleData.progress}% {t('completed')}
             </span>
           </div>
 
@@ -137,8 +140,8 @@ export default function ModulePage() {
                     <CheckCircle className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground">Module terminé !</h3>
-                    <p className="text-sm text-muted-foreground">Félicitations, vous pouvez maintenant obtenir votre certificat.</p>
+                    <h3 className="font-semibold text-foreground">{t('moduleCompleted')}</h3>
+                    <p className="text-sm text-muted-foreground">{t('moduleCompletedDesc')}</p>
                   </div>
                 </div>
                 <CertificateButton
@@ -156,7 +159,7 @@ export default function ModulePage() {
         {/* Liste des leçons */}
         <div className="bg-card rounded-xl shadow-sm">
           <div className="p-6 border-b border-border">
-            <h3 className="text-lg font-semibold text-foreground">Plan du module</h3>
+            <h3 className="text-lg font-semibold text-foreground">{t('modulePlan')}</h3>
           </div>
           
           <div className="divide-y divide-border">
@@ -181,7 +184,7 @@ export default function ModulePage() {
                   
                   <div className="flex-1">
                     <h4 className="font-medium text-foreground mb-1">
-                      Leçon {capsule.order}: {capsule.title}
+                      {t('lesson')} {capsule.order}: {capsule.title}
                     </h4>
                     <div className="flex items-center gap-4 text-sm text-muted-foreground">
                       <div className="flex items-center gap-1">
@@ -202,18 +205,18 @@ export default function ModulePage() {
                   <div className="flex-shrink-0">
                     {capsule.completed ? (
                       <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 text-sm rounded-full">
-                        Terminé
+                        {tc('completed')}
                       </span>
                     ) : capsule.available ? (
-                      <Link 
+                      <Link
                         href={`/capsules/${capsule.id}`}
                         className="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors"
                       >
-                        Commencer
+                        {tc('start')}
                       </Link>
                     ) : (
                       <span className="px-3 py-1 bg-muted text-muted-foreground text-sm rounded-full">
-                        Verrouillé
+                        {tc('locked')}
                       </span>
                     )}
                   </div>

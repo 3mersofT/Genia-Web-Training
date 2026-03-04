@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { Award, Download, Loader2 } from 'lucide-react';
 import { generateQRCode } from '@/lib/certificates/qrcode';
 import {
@@ -32,6 +33,7 @@ export default function CertificateButton({
   variant = 'button',
   size = 'md'
 }: CertificateButtonProps) {
+  const t = useTranslations('certificates.generate');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showPreview, setShowPreview] = useState(false);
@@ -43,11 +45,11 @@ export default function CertificateButton({
   const getButtonText = () => {
     switch (certificateType) {
       case 'master':
-        return 'Obtenir le Certificat Master';
+        return t('masterButton');
       case 'module':
-        return 'Obtenir mon Certificat';
+        return t('moduleButton');
       default:
-        return 'Télécharger le Certificat';
+        return t('downloadButton');
     }
   };
 

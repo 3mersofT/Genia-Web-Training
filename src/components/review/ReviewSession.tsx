@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { X, ChevronRight, CheckCircle } from 'lucide-react';
 import ReviewCard from './ReviewCard';
 import type { SM2Quality } from '@/lib/services/spacedRepetitionService';
@@ -20,6 +21,7 @@ interface ReviewSessionProps {
 }
 
 export default function ReviewSession({ cards, onRate, onClose }: ReviewSessionProps) {
+  const t = useTranslations('review');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [completed, setCompleted] = useState(false);
@@ -54,19 +56,19 @@ export default function ReviewSession({ cards, onRate, onClose }: ReviewSessionP
       <div className="fixed inset-0 bg-gray-900/50 z-50 flex items-center justify-center p-4">
         <div className="bg-card rounded-xl shadow-2xl max-w-md w-full p-8 text-center">
           <CheckCircle className="w-16 h-16 text-green-500 dark:text-green-400 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-foreground mb-2">Session terminée !</h2>
+          <h2 className="text-2xl font-bold text-foreground mb-2">{t('sessionComplete')}</h2>
           <p className="text-muted-foreground mb-6">
-            {goodCount}/{results.length} capsule{results.length > 1 ? 's' : ''} bien retenue{results.length > 1 ? 's' : ''}
+            {t('wellRetained', { good: goodCount, total: results.length })}
           </p>
 
           <div className="bg-muted rounded-lg p-4 mb-6">
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
-                <p className="text-muted-foreground">Cartes révisées</p>
+                <p className="text-muted-foreground">{t('cardsReviewed')}</p>
                 <p className="text-xl font-bold text-foreground">{results.length}</p>
               </div>
               <div>
-                <p className="text-muted-foreground">Qualité moyenne</p>
+                <p className="text-muted-foreground">{t('averageQuality')}</p>
                 <p className="text-xl font-bold text-foreground">{avgQuality.toFixed(1)}/5</p>
               </div>
             </div>
@@ -76,7 +78,7 @@ export default function ReviewSession({ cards, onRate, onClose }: ReviewSessionP
             onClick={onClose}
             className="w-full py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
           >
-            Retour au tableau de bord
+            {t('backToDashboard')}
           </button>
         </div>
       </div>

@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 import { Loader2, ThumbsUp, ThumbsDown } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -32,9 +33,10 @@ export interface ChatMessageListProps {
 export default function ChatMessageList({
   messages,
   isLoading = false,
-  loadingText = "GENIA réfléchit...",
+  loadingText,
   onFeedback,
 }: ChatMessageListProps) {
+  const t = useTranslations('chat');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -104,7 +106,7 @@ export default function ChatMessageList({
             {message.reasoning && (
               <details className="mt-3 text-xs">
                 <summary className="cursor-pointer text-muted-foreground hover:text-accent-foreground">
-                  Voir le raisonnement...
+                  {t('reasoning')}
                 </summary>
                 <div className="mt-2 p-2 bg-muted rounded text-muted-foreground whitespace-pre-wrap">
                   {message.reasoning}
@@ -131,8 +133,8 @@ export default function ChatMessageList({
                         ? 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-950/30'
                         : 'text-muted-foreground hover:text-green-600 hover:bg-green-50 dark:hover:bg-green-950/30'
                     }`}
-                    title="Bonne réponse"
-                    aria-label="Marquer comme bonne réponse"
+                    title={t('feedbackHelpfulTitle')}
+                    aria-label={t('feedbackHelpfulAria')}
                   >
                     <ThumbsUp className="w-3.5 h-3.5" />
                   </button>
@@ -143,8 +145,8 @@ export default function ChatMessageList({
                         ? 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30'
                         : 'text-muted-foreground hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30'
                     }`}
-                    title="Mauvaise réponse"
-                    aria-label="Marquer comme mauvaise réponse"
+                    title={t('feedbackNotHelpfulTitle')}
+                    aria-label={t('feedbackNotHelpfulAria')}
                   >
                     <ThumbsDown className="w-3.5 h-3.5" />
                   </button>
@@ -160,7 +162,7 @@ export default function ChatMessageList({
         <div className="flex justify-start">
           <div className="bg-muted rounded-2xl px-4 py-3 flex items-center gap-2">
             <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
-            <span className="text-muted-foreground">{loadingText}</span>
+            <span className="text-muted-foreground">{loadingText || t('thinking')}</span>
           </div>
         </div>
       )}

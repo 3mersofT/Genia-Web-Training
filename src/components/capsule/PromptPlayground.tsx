@@ -12,6 +12,7 @@ import {
   Info,
   Zap
 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { useGENIA } from '@/components/providers/GENIAProvider'
 
 // ============= TYPES =============
@@ -29,7 +30,6 @@ interface PromptPlaygroundProps {
 // ============= DIFFICULTÉ BADGES =============
 const DIFFICULTY_CONFIG = {
   beginner: {
-    label: 'Débutant',
     color: 'from-green-500 to-green-600',
     textColor: 'text-green-700',
     bgColor: 'bg-green-50',
@@ -37,7 +37,6 @@ const DIFFICULTY_CONFIG = {
     icon: '🌱'
   },
   intermediate: {
-    label: 'Intermédiaire',
     color: 'from-yellow-500 to-yellow-600',
     textColor: 'text-yellow-700',
     bgColor: 'bg-yellow-50',
@@ -45,7 +44,6 @@ const DIFFICULTY_CONFIG = {
     icon: '🔥'
   },
   advanced: {
-    label: 'Avancé',
     color: 'from-red-500 to-red-600',
     textColor: 'text-red-700',
     bgColor: 'bg-red-50',
@@ -57,7 +55,7 @@ const DIFFICULTY_CONFIG = {
 // ============= COMPOSANT PRINCIPAL =============
 export default function PromptPlayground({
   starterPrompt,
-  title = 'Testez ce prompt',
+  title: titleProp,
   description,
   expectedOutput,
   concepts = [],
@@ -70,6 +68,9 @@ export default function PromptPlayground({
   const [showExpectedOutput, setShowExpectedOutput] = useState(false)
   const [charCount, setCharCount] = useState(starterPrompt.length)
   const { updateContext } = useGENIA()
+  const t = useTranslations('capsule.playground')
+  const td = useTranslations('capsule.difficulty')
+  const title = titleProp || t('title')
 
   const difficultyConfig = DIFFICULTY_CONFIG[difficulty]
 
@@ -129,7 +130,7 @@ export default function PromptPlayground({
           <div className="flex flex-col items-center justify-center text-center">
             <AlertCircle className="w-8 h-8 text-yellow-500 dark:text-yellow-400 mb-2" />
             <p className="text-yellow-700 dark:text-yellow-300 text-sm">
-              Aucun prompt de démarrage fourni
+              {t('noStarterPrompt')}
             </p>
           </div>
         </div>
@@ -166,7 +167,7 @@ export default function PromptPlayground({
             {/* Badge de difficulté */}
             <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm text-xs font-medium border border-white/30`}>
               <span>{difficultyConfig.icon}</span>
-              <span>{difficultyConfig.label}</span>
+              <span>{td(difficulty)}</span>
             </div>
           </div>
 
@@ -192,9 +193,9 @@ export default function PromptPlayground({
             <label className="block text-sm font-medium text-foreground mb-2">
               <div className="flex items-center gap-2">
                 <Edit3 className="w-4 h-4" />
-                <span>Votre prompt</span>
+                <span>{t('yourPrompt')}</span>
                 <span className="text-xs text-muted-foreground ml-auto">
-                  {charCount} caractères
+                  {charCount} {t('characters')}
                 </span>
               </div>
             </label>
@@ -218,7 +219,7 @@ export default function PromptPlayground({
                   : 'border-input'
                 }
               `}
-              placeholder="Écrivez ou modifiez votre prompt ici..."
+              placeholder={t('placeholder')}
               rows={6}
             />
 
@@ -232,7 +233,7 @@ export default function PromptPlayground({
                   className="absolute -top-2 left-3 px-2 py-0.5 bg-orange-500 text-white text-xs font-medium rounded-full flex items-center gap-1"
                 >
                   <Zap className="w-3 h-3" />
-                  Modifié
+                  {t('modified')}
                 </motion.div>
               )}
             </AnimatePresence>
@@ -248,7 +249,7 @@ export default function PromptPlayground({
               className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
             >
               <Play className="w-5 h-5" />
-              <span>Essayer avec GENIA</span>
+              <span>{t('tryWithGenia')}</span>
             </motion.button>
 
             {/* Bouton reset */}
@@ -262,7 +263,7 @@ export default function PromptPlayground({
                 className="flex items-center justify-center gap-2 px-4 py-3 bg-muted hover:bg-accent dark:bg-slate-700 dark:hover:bg-slate-600 text-foreground font-medium rounded-lg transition-colors duration-200"
               >
                 <RotateCcw className="w-4 h-4" />
-                <span className="hidden sm:inline">Réinitialiser</span>
+                <span className="hidden sm:inline">{t('reset')}</span>
               </motion.button>
             )}
           </div>
@@ -276,7 +277,7 @@ export default function PromptPlayground({
               >
                 <Info className="w-4 h-4" />
                 <span>
-                  {showExpectedOutput ? 'Masquer' : 'Voir'} le résultat attendu
+                  {showExpectedOutput ? t('hideExpected') : t('showExpected')}
                 </span>
               </button>
 
@@ -293,7 +294,7 @@ export default function PromptPlayground({
                       <MessageSquare className="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
                       <div className="flex-1">
                         <p className="text-sm font-medium text-green-800 dark:text-green-300 mb-1">
-                          Résultat attendu :
+                          {t('expectedResult')}
                         </p>
                         <p className="text-sm text-green-700 dark:text-green-400 leading-relaxed whitespace-pre-wrap">
                           {expectedOutput}
@@ -312,8 +313,7 @@ export default function PromptPlayground({
           <div className="flex items-start gap-2 p-3 bg-blue-50/50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
             <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
             <p className="text-xs text-blue-700 dark:text-blue-300 leading-relaxed">
-              <strong>Astuce :</strong> Modifiez le prompt ci-dessus pour expérimenter différentes formulations,
-              puis cliquez sur "Essayer avec GENIA" pour obtenir une réponse personnalisée et des conseils d'amélioration.
+              <strong>{t('tip')}</strong> {t('tipContent')}
             </p>
           </div>
         </div>

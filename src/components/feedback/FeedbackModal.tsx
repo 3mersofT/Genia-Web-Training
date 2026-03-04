@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { X, Star, Send, MessageSquare, ThumbsUp, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -15,22 +16,22 @@ interface FeedbackModalProps {
 
 const CATEGORIES = {
   module: [
-    { id: 'contenu', label: 'Contenu', icon: '📚' },
-    { id: 'pedagogie', label: 'Pédagogie', icon: '🎓' },
-    { id: 'technique', label: 'Technique', icon: '⚙️' },
-    { id: 'structure', label: 'Structure', icon: '🏗️' }
+    { id: 'contenu', icon: '📚' },
+    { id: 'pedagogie', icon: '🎓' },
+    { id: 'technique', icon: '⚙️' },
+    { id: 'structure', icon: '🏗️' }
   ],
   capsule: [
-    { id: 'contenu', label: 'Contenu', icon: '📚' },
-    { id: 'pedagogie', label: 'Pédagogie', icon: '🎓' },
-    { id: 'clarte', label: 'Clarté', icon: '💡' },
-    { id: 'exemples', label: 'Exemples', icon: '🔍' }
+    { id: 'contenu', icon: '📚' },
+    { id: 'pedagogie', icon: '🎓' },
+    { id: 'clarte', icon: '💡' },
+    { id: 'exemples', icon: '🔍' }
   ],
   platform: [
-    { id: 'ux', label: 'Interface', icon: '🎨' },
-    { id: 'performance', label: 'Performance', icon: '⚡' },
-    { id: 'navigation', label: 'Navigation', icon: '🧭' },
-    { id: 'fonctionnalites', label: 'Fonctionnalités', icon: '🛠️' }
+    { id: 'ux', icon: '🎨' },
+    { id: 'performance', icon: '⚡' },
+    { id: 'navigation', icon: '🧭' },
+    { id: 'fonctionnalites', icon: '🛠️' }
   ]
 };
 
@@ -42,6 +43,7 @@ export default function FeedbackModal({
   targetTitle,
   onSuccess 
 }: FeedbackModalProps) {
+  const t = useTranslations('feedback');
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [comment, setComment] = useState('');
@@ -66,12 +68,12 @@ export default function FeedbackModal({
     e.preventDefault();
     
     if (rating === 0) {
-      setError('Veuillez donner une note');
+      setError(t('ratingRequired'));
       return;
     }
 
     if (selectedCategories.length === 0) {
-      setError('Veuillez sélectionner au moins une catégorie');
+      setError(t('categoryRequired'));
       return;
     }
 
@@ -96,7 +98,7 @@ export default function FeedbackModal({
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || 'Erreur lors de l\'envoi du feedback');
+        throw new Error(errorData.error || t('errorSending'));
       }
 
       // Reset form
@@ -112,7 +114,7 @@ export default function FeedbackModal({
       
     } catch (error) {
       console.error('Erreur feedback:', error);
-      setError(error instanceof Error ? error.message : 'Erreur inconnue');
+      setError(error instanceof Error ? error.message : t('errorUnknown'));
     } finally {
       setIsSubmitting(false);
     }
@@ -120,19 +122,19 @@ export default function FeedbackModal({
 
   const getFeedbackTitle = () => {
     switch (feedbackType) {
-      case 'module': return `Feedback sur le module "${targetTitle}"`;
-      case 'capsule': return `Feedback sur la capsule "${targetTitle}"`;
-      case 'platform': return 'Feedback sur la plateforme';
-      default: return 'Feedback';
+      case 'module': return t('feedbackOnModule', { title: targetTitle });
+      case 'capsule': return t('feedbackOnCapsule', { title: targetTitle });
+      case 'platform': return t('feedbackOnPlatform');
+      default: return t('feedbackDefault');
     }
   };
 
   const getFeedbackDescription = () => {
     switch (feedbackType) {
-      case 'module': return 'Partagez votre avis sur ce module pour nous aider à l\'améliorer';
-      case 'capsule': return 'Votre retour nous aide à perfectionner cette capsule';
-      case 'platform': return 'Aidez-nous à améliorer votre expérience sur la plateforme';
-      default: return 'Votre avis compte !';
+      case 'module': return t('descriptionModule');
+      case 'capsule': return t('descriptionCapsule');
+      case 'platform': return t('descriptionPlatform');
+      default: return t('descriptionDefault');
     }
   };
 
@@ -178,7 +180,7 @@ export default function FeedbackModal({
             {/* Rating */}
             <div>
               <label className="block text-lg font-semibold text-foreground mb-3">
-                Note globale *
+                {t('overallRating')}
               </label>
               <div className="flex gap-2">
                 {[1, 2, 3, 4, 5].map((star) => (
@@ -201,15 +203,15 @@ export default function FeedbackModal({
                 ))}
               </div>
               <div className="flex justify-between text-sm text-muted-foreground mt-1">
-                <span>Pas du tout</span>
-                <span>Excellent</span>
+                <span>{t('ratingLow')}</span>
+                <span>{t('ratingHigh')}</span>
               </div>
             </div>
 
             {/* Categories */}
             <div>
               <label className="block text-lg font-semibold text-foreground mb-3">
-                Catégories * (sélectionnez au moins une)
+                {t('categoriesLabel')}
               </label>
               <div className="grid grid-cols-2 gap-3">
                 {categories.map((category) => (
@@ -225,7 +227,7 @@ export default function FeedbackModal({
                   >
                     <div className="flex items-center gap-2">
                       <span className="text-lg">{category.icon}</span>
-                      <span className="font-medium">{category.label}</span>
+                      <span className="font-medium">{t(`categories.${category.id}`)}</span>
                     </div>
                   </button>
                 ))}
@@ -235,18 +237,18 @@ export default function FeedbackModal({
             {/* Comment */}
             <div>
               <label className="block text-lg font-semibold text-foreground mb-3">
-                Commentaire (optionnel)
+                {t('commentLabel')}
               </label>
               <textarea
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
-                placeholder="Partagez vos suggestions, ce qui vous a plu, ce qui pourrait être amélioré..."
+                placeholder={t('commentPlaceholder')}
                 className="w-full p-4 border border-input rounded-lg focus:ring-2 focus-visible:ring-ring focus:border-transparent resize-none"
                 rows={4}
                 maxLength={1000}
               />
               <div className="text-right text-sm text-muted-foreground mt-1">
-                {comment.length}/1000 caractères
+                {comment.length}/1000 {t('characters')}
               </div>
             </div>
 
@@ -261,7 +263,7 @@ export default function FeedbackModal({
                   className="w-5 h-5 text-blue-600 rounded focus-visible:ring-ring"
                 />
                 <label htmlFor="anonymous" className="text-foreground font-medium">
-                  Feedback anonyme
+                  {t('anonymous')}
                 </label>
               </div>
 
@@ -269,19 +271,19 @@ export default function FeedbackModal({
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-1">
-                      Nom (optionnel)
+                      {t('nameLabel')}
                     </label>
                     <input
                       type="text"
                       value={userName}
                       onChange={(e) => setUserName(e.target.value)}
-                      placeholder="Votre nom"
+                      placeholder={t('namePlaceholder')}
                       className="w-full p-3 border border-input rounded-lg focus:ring-2 focus-visible:ring-ring focus:border-transparent"
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-1">
-                      Email (optionnel)
+                      {t('emailLabel')}
                     </label>
                     <input
                       type="email"
@@ -310,7 +312,7 @@ export default function FeedbackModal({
                 onClick={onClose}
                 className="flex-1 px-6 py-3 border border-input text-foreground rounded-lg hover:bg-accent transition-colors"
               >
-                Annuler
+                {t('cancel')}
               </button>
               <button
                 type="submit"
@@ -320,12 +322,12 @@ export default function FeedbackModal({
                 {isSubmitting ? (
                   <>
                     <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    Envoi...
+                    {t('sending')}
                   </>
                 ) : (
                   <>
                     <Send className="w-4 h-4" />
-                    Envoyer le feedback
+                    {t('sendFeedback')}
                   </>
                 )}
               </button>

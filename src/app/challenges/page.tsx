@@ -7,10 +7,13 @@ import {
   Award, Star, Clock, Filter, ChevronLeft, ChevronRight, RefreshCw, Send
 } from 'lucide-react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 export default function ChallengePage() {
   const [mounted, setMounted] = useState(false);
   const [activeTab, setActiveTab] = useState<'today' | 'leaderboard' | 'history'>('today');
+  const t = useTranslations('challenges');
+  const tc = useTranslations('common');
 
   useEffect(() => {
     setMounted(true);
@@ -22,7 +25,7 @@ export default function ChallengePage() {
         <div className="container mx-auto px-4 py-8">
           <div className="text-center">
             <div className="w-8 h-8 border-4 border-purple-600 border-t-transparent rounded-full mx-auto mb-4 animate-spin"></div>
-            <p className="text-muted-foreground">Chargement...</p>
+            <p className="text-muted-foreground">{tc('loading')}</p>
           </div>
         </div>
       </div>
@@ -43,8 +46,8 @@ export default function ChallengePage() {
                 <ChevronLeft className="w-5 h-5" />
               </Link>
               <div>
-                <h1 className="text-2xl font-bold text-foreground">Défis Quotidiens</h1>
-                <p className="text-muted-foreground">Relevez le défi du jour et grimpez dans le classement !</p>
+                <h1 className="text-2xl font-bold text-foreground">{t('title')}</h1>
+                <p className="text-muted-foreground">{t('subtitle')}</p>
               </div>
             </div>
             <div className="hidden md:flex items-center gap-6">
@@ -53,21 +56,21 @@ export default function ChallengePage() {
                   <Flame className="w-5 h-5" />
                   <span className="text-2xl font-bold">0</span>
                 </div>
-                <p className="text-xs text-muted-foreground">Série actuelle</p>
+                <p className="text-xs text-muted-foreground">{t('currentStreak')}</p>
               </div>
               <div className="text-center">
                 <div className="flex items-center gap-1 text-blue-500">
                   <Trophy className="w-5 h-5" />
                   <span className="text-2xl font-bold">0</span>
                 </div>
-                <p className="text-xs text-muted-foreground">Victoires</p>
+                <p className="text-xs text-muted-foreground">{t('victories')}</p>
               </div>
               <div className="text-center">
                 <div className="flex items-center gap-1 text-green-500 dark:text-green-400">
                   <Star className="w-5 h-5" />
                   <span className="text-2xl font-bold">0</span>
                 </div>
-                <p className="text-xs text-muted-foreground">Score moyen</p>
+                <p className="text-xs text-muted-foreground">{t('averageScore')}</p>
               </div>
             </div>
           </div>
@@ -86,7 +89,7 @@ export default function ChallengePage() {
               }`}
               onClick={() => setActiveTab('today')}
             >
-              Défi du jour
+              {t('dailyChallenge')}
               {activeTab === 'today' && (
                 <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-600"></div>
               )}
@@ -99,7 +102,7 @@ export default function ChallengePage() {
               }`}
               onClick={() => setActiveTab('leaderboard')}
             >
-              Classement
+              {t('leaderboard')}
               {activeTab === 'leaderboard' && (
                 <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-600"></div>
               )}
@@ -112,7 +115,7 @@ export default function ChallengePage() {
               }`}
               onClick={() => setActiveTab('history')}
             >
-              Historique
+              {t('history')}
               {activeTab === 'history' && (
                 <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-600"></div>
               )}
@@ -152,7 +155,7 @@ export default function ChallengePage() {
                 </div>
 
                 <div className="bg-muted rounded-lg p-6 mb-6">
-                  <h3 className="font-semibold text-foreground mb-3">Instructions :</h3>
+                  <h3 className="font-semibold text-foreground mb-3">{t('instructions')}:</h3>
                   <ul className="space-y-2 text-foreground">
                     <li className="flex items-start gap-2">
                       <Target className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
@@ -172,22 +175,22 @@ export default function ChallengePage() {
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
-                      Votre réponse :
+                      {t('yourAnswer')}:
                     </label>
                     <textarea
                       className="w-full h-32 px-3 py-2 border border-input rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                      placeholder="Écrivez votre prompt amélioré ici..."
+                      placeholder={t('placeholder')}
                     />
                   </div>
 
                   <div className="flex gap-3">
                     <button className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-all">
                       <Send className="w-4 h-4 inline mr-2" />
-                      Soumettre ma réponse
+                      {t('submit')}
                     </button>
                     <button className="px-6 py-3 border border-input text-foreground rounded-lg hover:bg-accent transition-colors">
                       <RefreshCw className="w-4 h-4 inline mr-2" />
-                      Nouveau défi
+                      {t('newChallenge')}
                     </button>
                   </div>
                 </div>
@@ -205,14 +208,14 @@ export default function ChallengePage() {
               className="max-w-4xl mx-auto"
             >
               <div className="bg-card rounded-xl shadow-lg p-8">
-                <h2 className="text-2xl font-bold text-foreground mb-6">Classement</h2>
+                <h2 className="text-2xl font-bold text-foreground mb-6">{t('leaderboard')}</h2>
                 <div className="text-center py-12">
                   <Trophy className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
                   <h3 className="text-lg font-semibold text-foreground mb-2">
-                    Aucun classement disponible
+                    {t('noLeaderboard')}
                   </h3>
                   <p className="text-muted-foreground">
-                    Participez aux défis pour apparaître dans le classement !
+                    {t('noLeaderboardDesc')}
                   </p>
                 </div>
               </div>
@@ -229,14 +232,14 @@ export default function ChallengePage() {
               className="max-w-4xl mx-auto"
             >
               <div className="bg-card rounded-xl shadow-lg p-8">
-                <h2 className="text-2xl font-bold text-foreground mb-6">Historique</h2>
+                <h2 className="text-2xl font-bold text-foreground mb-6">{t('history')}</h2>
                 <div className="text-center py-12">
                   <Calendar className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
                   <h3 className="text-lg font-semibold text-foreground mb-2">
-                    Aucun historique disponible
+                    {t('noHistory')}
                   </h3>
                   <p className="text-muted-foreground">
-                    Vos participations aux défis apparaîtront ici.
+                    {t('noHistoryDesc')}
                   </p>
                 </div>
               </div>

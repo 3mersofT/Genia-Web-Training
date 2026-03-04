@@ -6,10 +6,13 @@ import { ChevronLeft } from 'lucide-react'
 import Link from 'next/link'
 import TeamManager from '@/components/gamification/TeamManager'
 import TeamLeaderboard from '@/components/gamification/TeamLeaderboard'
+import { useTranslations } from 'next-intl'
 import { Team, TeamMember, TeamInvitation, CreateTeamData, TeamLeaderboardEntry } from '@/types/teams.types'
 
 export default function TeamsPage() {
   const [mounted, setMounted] = useState(false)
+  const t = useTranslations('teams')
+  const tc = useTranslations('common')
   const [myTeams, setMyTeams] = useState<Team[]>([])
   const [publicTeams, setPublicTeams] = useState<Team[]>([])
   const [currentTeam, setCurrentTeam] = useState<Team | null>(null)
@@ -66,7 +69,7 @@ export default function TeamsPage() {
         <div className="container mx-auto px-4 py-8">
           <div className="text-center">
             <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full mx-auto mb-4 animate-spin"></div>
-            <p className="text-muted-foreground">Chargement...</p>
+            <p className="text-muted-foreground">{tc('loading')}</p>
           </div>
         </div>
       </div>
@@ -86,8 +89,8 @@ export default function TeamsPage() {
               <ChevronLeft className="w-5 h-5" />
             </Link>
             <div>
-              <h1 className="text-2xl font-bold text-foreground">Équipes</h1>
-              <p className="text-muted-foreground">Collaborez avec d&apos;autres apprenants et relevez des défis ensemble</p>
+              <h1 className="text-2xl font-bold text-foreground">{t('title')}</h1>
+              <p className="text-muted-foreground">{t('subtitle')}</p>
             </div>
           </div>
         </div>

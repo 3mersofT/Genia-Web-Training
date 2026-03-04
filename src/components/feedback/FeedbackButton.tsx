@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { MessageSquare, Star, ThumbsUp } from 'lucide-react';
 import FeedbackModal from './FeedbackModal';
 
@@ -21,14 +22,15 @@ export default function FeedbackButton({
   size = 'md',
   showStats = false
 }: FeedbackButtonProps) {
+  const t = useTranslations('feedback');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const getButtonText = () => {
     switch (targetType) {
-      case 'module': return 'Évaluer ce module';
-      case 'capsule': return 'Évaluer cette capsule';
-      case 'platform': return 'Feedback plateforme';
-      default: return 'Donner un feedback';
+      case 'module': return t('rateModule');
+      case 'capsule': return t('rateCapsule');
+      case 'platform': return t('ratePlatform');
+      default: return t('giveFeedback');
     }
   };
 

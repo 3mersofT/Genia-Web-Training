@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TrendingUp, TrendingDown, Minus, Zap, Target, Brain, Shield } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
@@ -21,7 +22,6 @@ interface AdaptiveLevelIndicatorProps {
 }
 
 const LEVEL_CONFIG: Record<DifficultyLevel, {
-  label: string;
   color: string;
   bgColor: string;
   borderColor: string;
@@ -29,7 +29,6 @@ const LEVEL_CONFIG: Record<DifficultyLevel, {
   progressMax: number;
 }> = {
   beginner: {
-    label: 'Débutant',
     color: 'text-green-700',
     bgColor: 'bg-green-100 dark:bg-green-900/30',
     borderColor: 'border-green-300',
@@ -37,7 +36,6 @@ const LEVEL_CONFIG: Record<DifficultyLevel, {
     progressMax: 25,
   },
   intermediate: {
-    label: 'Intermédiaire',
     color: 'text-blue-700',
     bgColor: 'bg-blue-100 dark:bg-blue-900/30',
     borderColor: 'border-blue-300',
@@ -45,7 +43,6 @@ const LEVEL_CONFIG: Record<DifficultyLevel, {
     progressMax: 50,
   },
   advanced: {
-    label: 'Avancé',
     color: 'text-purple-700',
     bgColor: 'bg-purple-100 dark:bg-purple-900/30',
     borderColor: 'border-purple-300',
@@ -53,7 +50,6 @@ const LEVEL_CONFIG: Record<DifficultyLevel, {
     progressMax: 75,
   },
   expert: {
-    label: 'Expert',
     color: 'text-amber-700',
     bgColor: 'bg-amber-100 dark:bg-amber-900/30',
     borderColor: 'border-amber-300',
@@ -63,6 +59,7 @@ const LEVEL_CONFIG: Record<DifficultyLevel, {
 };
 
 export default function AdaptiveLevelIndicator({ userId, compact = false }: AdaptiveLevelIndicatorProps) {
+  const t = useTranslations('dashboard.level');
   const [profile, setProfile] = useState<UserPerformanceProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [showCelebration, setShowCelebration] = useState(false);
@@ -113,11 +110,11 @@ export default function AdaptiveLevelIndicator({ userId, compact = false }: Adap
           <TooltipTrigger asChild>
             <Badge className={`${config.bgColor} ${config.color} border ${config.borderColor} cursor-help`}>
               {config.icon}
-              <span className="ml-1">{config.label}</span>
+              <span className="ml-1">{t(profile.currentLevel)}</span>
             </Badge>
           </TooltipTrigger>
           <TooltipContent>
-            <p>Score: {progressPercent}% | {profile.exercisesCompleted} exercices</p>
+            <p>{t('score')}: {progressPercent}% | {profile.exercisesCompleted} {t('exercises').toLowerCase()}</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
@@ -148,22 +145,22 @@ export default function AdaptiveLevelIndicator({ userId, compact = false }: Adap
       <CardHeader className="pb-2">
         <CardTitle className="text-lg flex items-center gap-2">
           {config.icon}
-          Votre niveau adaptatif
+          {t('title')}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex items-center justify-between">
           <Badge className={`${config.bgColor} ${config.color} border ${config.borderColor} text-sm px-3 py-1`}>
-            {config.label}
+            {t(profile.currentLevel)}
           </Badge>
           <span className="text-sm text-muted-foreground">
-            Score : {progressPercent}%
+            {t('score')} : {progressPercent}%
           </span>
         </div>
 
         <div className="space-y-1">
           <div className="flex justify-between text-xs text-muted-foreground">
-            <span>Progression vers le prochain niveau</span>
+            <span>{t('progress')}</span>
             <span>{progressPercent}%</span>
           </div>
           <Progress value={progressPercent} className="h-2" />
@@ -172,15 +169,15 @@ export default function AdaptiveLevelIndicator({ userId, compact = false }: Adap
         <div className="grid grid-cols-3 gap-3 text-center text-sm">
           <div>
             <p className="font-semibold text-foreground">{profile.exercisesCompleted}</p>
-            <p className="text-xs text-muted-foreground">Exercices</p>
+            <p className="text-xs text-muted-foreground">{t('exercises')}</p>
           </div>
           <div>
             <p className="font-semibold text-foreground">{Math.round(profile.successRate)}%</p>
-            <p className="text-xs text-muted-foreground">Réussite</p>
+            <p className="text-xs text-muted-foreground">{t('successRate')}</p>
           </div>
           <div>
             <p className="font-semibold text-foreground">{Math.round(profile.retentionRate)}%</p>
-            <p className="text-xs text-muted-foreground">Rétention</p>
+            <p className="text-xs text-muted-foreground">{t('retention')}</p>
           </div>
         </div>
 
@@ -190,7 +187,7 @@ export default function AdaptiveLevelIndicator({ userId, compact = false }: Adap
               <div className="flex items-start gap-2">
                 <TrendingUp className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
                 <p className="text-xs text-muted-foreground">
-                  <span className="font-medium text-foreground">Points forts :</span> {profile.strengthAreas.slice(0, 3).join(', ')}
+                  <span className="font-medium text-foreground">{t('strengths')} :</span> {profile.strengthAreas.slice(0, 3).join(', ')}
                 </p>
               </div>
             )}
@@ -198,7 +195,7 @@ export default function AdaptiveLevelIndicator({ userId, compact = false }: Adap
               <div className="flex items-start gap-2">
                 <TrendingDown className="w-4 h-4 text-orange-600 mt-0.5 flex-shrink-0" />
                 <p className="text-xs text-muted-foreground">
-                  <span className="font-medium text-foreground">À améliorer :</span> {profile.weaknessAreas.slice(0, 3).join(', ')}
+                  <span className="font-medium text-foreground">{t('weaknesses')} :</span> {profile.weaknessAreas.slice(0, 3).join(', ')}
                 </p>
               </div>
             )}

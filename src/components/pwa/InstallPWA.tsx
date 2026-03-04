@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { X, Download, Smartphone, Monitor, Share } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -10,6 +11,7 @@ interface BeforeInstallPromptEvent extends Event {
 }
 
 export default function InstallPWA() {
+  const t = useTranslations('pwa');
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
@@ -147,10 +149,10 @@ export default function InstallPWA() {
                     </div>
                     <div>
                       <h3 className="text-white font-bold">
-                        Installer GENIA Training
+                        {t('installTitle')}
                       </h3>
                       <p className="text-blue-100 text-xs">
-                        Accès rapide depuis votre {device === 'mobile' ? 'écran d\'accueil' : 'bureau'}
+                        {t('quickAccess', { device: device === 'mobile' ? t('deviceMobile') : t('deviceDesktop') })}
                       </p>
                     </div>
                   </div>
@@ -170,21 +172,21 @@ export default function InstallPWA() {
                     <div className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center flex-shrink-0">
                       <span>⚡</span>
                     </div>
-                    <span className="text-foreground">Lancement ultra-rapide</span>
+                    <span className="text-foreground">{t('ultraFastLaunch')}</span>
                   </div>
                   <div className="flex items-center gap-3 text-sm">
                     <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center flex-shrink-0">
                       <span>📱</span>
                     </div>
                     <span className="text-foreground">
-                      Expérience {device === 'mobile' ? 'mobile optimisée' : 'native'}
+                      {device === 'mobile' ? t('experienceMobile') : t('experienceDesktop')}
                     </span>
                   </div>
                   <div className="flex items-center gap-3 text-sm">
                     <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
                       <span>🔔</span>
                     </div>
-                    <span className="text-foreground">Notifications des nouveaux défis</span>
+                    <span className="text-foreground">{t('newChallengeNotifications')}</span>
                   </div>
                 </div>
 
@@ -195,13 +197,13 @@ export default function InstallPWA() {
                     className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium py-2.5 px-4 rounded-lg hover:shadow-lg transition-all flex items-center justify-center gap-2"
                   >
                     <Download className="w-4 h-4" />
-                    Installer
+                    {t('installButton')}
                   </button>
                   <button
                     onClick={handleDismiss}
                     className="px-4 py-2.5 text-muted-foreground hover:bg-accent rounded-lg transition-colors"
                   >
-                    Plus tard
+                    {t('later')}
                   </button>
                 </div>
               </div>
@@ -228,7 +230,7 @@ export default function InstallPWA() {
               {/* Header iOS */}
               <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white">
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-xl font-bold">Installation sur iOS</h3>
+                  <h3 className="text-xl font-bold">{t('iosInstallTitle')}</h3>
                   <button
                     onClick={handleIOSClose}
                     className="text-white/80 hover:text-white"
@@ -237,7 +239,7 @@ export default function InstallPWA() {
                   </button>
                 </div>
                 <p className="text-blue-100 text-sm">
-                  Suivez ces étapes pour installer l'application
+                  {t('iosInstallDescription')}
                 </p>
               </div>
 
@@ -249,12 +251,12 @@ export default function InstallPWA() {
                   </div>
                   <div>
                     <p className="font-medium text-foreground mb-1">
-                      Appuyez sur le bouton Partager
+                      {t('iosStep1Title')}
                     </p>
                     <div className="flex items-center gap-2">
                       <Share className="w-5 h-5 text-blue-600" />
                       <span className="text-sm text-muted-foreground">
-                        en bas de votre écran Safari
+                        {t('iosStep1Description')}
                       </span>
                     </div>
                   </div>
@@ -266,10 +268,10 @@ export default function InstallPWA() {
                   </div>
                   <div>
                     <p className="font-medium text-foreground mb-1">
-                      Faites défiler et sélectionnez
+                      {t('iosStep2Title')}
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      "Sur l'écran d'accueil" ➕
+                      {t('iosStep2Description')}
                     </p>
                   </div>
                 </div>
@@ -280,17 +282,17 @@ export default function InstallPWA() {
                   </div>
                   <div>
                     <p className="font-medium text-foreground mb-1">
-                      Appuyez sur "Ajouter"
+                      {t('iosStep3Title')}
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      L'app sera ajoutée à votre écran d'accueil
+                      {t('iosStep3Description')}
                     </p>
                   </div>
                 </div>
 
                 <div className="bg-blue-50 p-4 rounded-lg">
                   <p className="text-sm text-blue-800">
-                    💡 <strong>Astuce :</strong> Vous devez utiliser Safari pour installer l'application sur iOS.
+                    {t('iosTip')}
                   </p>
                 </div>
 
@@ -298,7 +300,7 @@ export default function InstallPWA() {
                   onClick={handleIOSClose}
                   className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium py-3 rounded-lg hover:shadow-lg transition-all"
                 >
-                  Compris !
+                  {t('iosUnderstood')}
                 </button>
               </div>
             </motion.div>

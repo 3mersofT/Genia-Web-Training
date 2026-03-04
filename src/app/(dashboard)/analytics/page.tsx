@@ -5,6 +5,7 @@ export const dynamic = 'force-dynamic'
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { useAuth } from '@/hooks/useAuth'
 import { analyticsService } from '@/lib/services/analyticsService'
 import { useSeasonalLeaderboard } from '@/hooks/useSeasonalLeaderboard'
@@ -25,6 +26,7 @@ import SocialShareButton from '@/components/gamification/SocialShareButton'
 type TabType = 'performance' | 'seasonal'
 
 export default function AnalyticsPage() {
+  const t = useTranslations('analytics')
   const { user, loading: authLoading, signOut } = useAuth()
   const router = useRouter()
   const [analytics, setAnalytics] = useState<StudentAnalytics | null>(null)
@@ -100,7 +102,7 @@ export default function AnalyticsPage() {
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Authenticating...</p>
+          <p className="text-muted-foreground">{t('authenticating')}</p>
         </div>
       </div>
     )
@@ -115,13 +117,13 @@ export default function AnalyticsPage() {
         <header className="bg-card border-b border-border">
           <div className="container mx-auto px-4 py-4 flex justify-between items-center">
             <h1 className="text-2xl font-bold text-foreground">
-              Prompt Engineering Academy
+              {t('headerTitle')}
             </h1>
             <button
               onClick={signOut}
               className="px-4 py-2 text-muted-foreground hover:text-foreground transition-colors"
             >
-              Déconnexion
+              {t('signOut')}
             </button>
           </div>
         </header>
@@ -131,7 +133,7 @@ export default function AnalyticsPage() {
             <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
               <BarChart3 className="w-8 h-8 text-red-600 dark:text-red-400" />
             </div>
-            <h3 className="text-xl font-bold text-red-900 mb-2">Unable to Load Analytics</h3>
+            <h3 className="text-xl font-bold text-red-900 mb-2">{t('unableToLoad')}</h3>
             <p className="text-red-800 mb-6">{error}</p>
             <button
               onClick={handleRefresh}
@@ -141,12 +143,12 @@ export default function AnalyticsPage() {
               {refreshing ? (
                 <>
                   <RefreshCw className="w-4 h-4 animate-spin" />
-                  <span>Retrying...</span>
+                  <span>{t('retrying')}</span>
                 </>
               ) : (
                 <>
                   <RefreshCw className="w-4 h-4" />
-                  <span>Try Again</span>
+                  <span>{t('tryAgain')}</span>
                 </>
               )}
             </button>
@@ -162,13 +164,13 @@ export default function AnalyticsPage() {
       <header className="bg-card border-b border-border">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-foreground">
-            Prompt Engineering Academy
+            {t('headerTitle')}
           </h1>
           <button
             onClick={signOut}
             className="px-4 py-2 text-muted-foreground hover:text-foreground transition-colors"
           >
-            Déconnexion
+            {t('signOut')}
           </button>
         </div>
       </header>
@@ -184,10 +186,10 @@ export default function AnalyticsPage() {
               </div>
               <div>
                 <h2 className="text-3xl font-bold text-foreground">
-                  Learning Analytics Dashboard
+                  {t('title')}
                 </h2>
                 <p className="text-muted-foreground mt-1">
-                  Track your progress and performance
+                  {t('subtitle')}
                 </p>
               </div>
             </div>
@@ -199,7 +201,7 @@ export default function AnalyticsPage() {
               className="flex items-center gap-2 px-4 py-2 bg-card border border-input rounded-lg hover:bg-accent transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
-              <span>{refreshing ? 'Refreshing...' : 'Refresh'}</span>
+              <span>{refreshing ? t('refreshing') : t('refreshBtn')}</span>
             </button>
           </div>
         </div>
@@ -216,7 +218,7 @@ export default function AnalyticsPage() {
               }`}
             >
               <TrendingUp className="w-5 h-5" />
-              <span>Performance Analytics</span>
+              <span>{t('performanceTab')}</span>
             </button>
             <button
               onClick={() => setActiveTab('seasonal')}
@@ -227,7 +229,7 @@ export default function AnalyticsPage() {
               }`}
             >
               <Trophy className="w-5 h-5" />
-              <span>Seasonal Leaderboard</span>
+              <span>{t('seasonalTab')}</span>
             </button>
           </div>
         </div>
@@ -288,15 +290,15 @@ export default function AnalyticsPage() {
                     <div className="flex items-center gap-3">
                       <Brain className="w-6 h-6 text-purple-600" />
                       <div>
-                        <h3 className="font-bold text-foreground">Révisions espacées</h3>
-                        <p className="text-sm text-muted-foreground">Consolidez vos acquis avec l'algorithme SM-2</p>
+                        <h3 className="font-bold text-foreground">{t('spacedRepetition')}</h3>
+                        <p className="text-sm text-muted-foreground">{t('spacedRepetitionDesc')}</p>
                       </div>
                     </div>
                     <button
                       onClick={() => router.push('/review')}
                       className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
                     >
-                      Accéder
+                      {t('access')}
                     </button>
                   </div>
                 </div>
@@ -315,10 +317,10 @@ export default function AnalyticsPage() {
                   <div>
                     <h3 className="text-lg font-bold text-foreground mb-2 flex items-center gap-2">
                       <Trophy className="w-6 h-6 text-yellow-500" />
-                      Congratulations! You're in the Top 10!
+                      {t('congratsTop10')}
                     </h3>
                     <p className="text-sm text-muted-foreground mb-4">
-                      Share your achievement with friends and showcase your skills
+                      {t('shareAchievement')}
                     </p>
                   </div>
                   <SocialShareButton
@@ -352,15 +354,15 @@ export default function AnalyticsPage() {
         {activeTab === 'performance' && !analytics && !loading && !error && (
           <div className="bg-card rounded-xl p-12 text-center shadow-sm">
             <BarChart3 className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-xl font-bold text-foreground mb-2">No Analytics Data Yet</h3>
+            <h3 className="text-xl font-bold text-foreground mb-2">{t('noData')}</h3>
             <p className="text-muted-foreground mb-6">
-              Start completing capsules to see your learning analytics
+              {t('noDataDesc')}
             </p>
             <button
               onClick={() => router.push('/dashboard')}
               className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
             >
-              Go to Dashboard
+              {t('goToDashboard')}
             </button>
           </div>
         )}

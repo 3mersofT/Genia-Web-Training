@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { CheckCircle, AlertCircle, Award, Calendar, Target, ShieldCheck } from 'lucide-react';
+import { useTranslations, useLocale } from 'next-intl';
 
 interface CertificateDetails {
   valid: boolean;
@@ -27,6 +28,8 @@ interface CertificateDetails {
 export default function CertificateVerificationPage() {
   const params = useParams();
   const verificationCode = params.id as string;
+  const t = useTranslations('certificates.verification');
+  const locale = useLocale();
   const [certificateData, setCertificateData] = useState<CertificateDetails | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -38,9 +41,9 @@ export default function CertificateVerificationPage() {
 
         if (!response.ok) {
           if (response.status === 404) {
-            setError('Certificat introuvable ou invalide');
+            setError(t('invalid'));
           } else {
-            setError('Erreur lors de la vérification du certificat');
+            setError(t('error'));
           }
           setLoading(false);
           return;
@@ -49,7 +52,7 @@ export default function CertificateVerificationPage() {
         const data: CertificateDetails = await response.json();
         setCertificateData(data);
       } catch (err) {
-        setError('Erreur lors de la vérification du certificat');
+        setError(t('error'));
       } finally {
         setLoading(false);
       }
@@ -63,7 +66,7 @@ export default function CertificateVerificationPage() {
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Vérification du certificat...</p>
+          <p className="text-muted-foreground">{t('loading')}</p>
         </div>
       </div>
     );
@@ -77,15 +80,15 @@ export default function CertificateVerificationPage() {
             <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
               <AlertCircle className="w-8 h-8 text-red-600 dark:text-red-400" />
             </div>
-            <h1 className="text-2xl font-bold text-foreground mb-2">Certificat invalide</h1>
+            <h1 className="text-2xl font-bold text-foreground mb-2">{t('invalid')}</h1>
             <p className="text-muted-foreground mb-6">
-              {error || 'Ce certificat n\'a pas pu être vérifié. Le code de vérification est peut-être incorrect ou expiré.'}
+              {error || t('invalidDesc')}
             </p>
             <Link
               href="/"
               className="inline-block px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
-              Retour à l'accueil
+              {t('backHome')}
             </Link>
           </div>
         </div>
@@ -100,7 +103,7 @@ export default function CertificateVerificationPage() {
     : certificate.moduleTitle || certificate.metadata?.module_title || 'Module GENIA';
 
   const completionDate = new Date(certificate.completionDate);
-  const formattedDate = completionDate.toLocaleDateString('fr-FR', {
+  const formattedDate = completionDate.toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric'
@@ -120,7 +123,7 @@ export default function CertificateVerificationPage() {
               GENIA
             </Link>
             <div className="h-6 w-px bg-border" />
-            <h1 className="text-xl font-bold text-foreground">Vérification de Certificat</h1>
+            <h1 className="text-xl font-bold text-foreground">{t('title')}</h1>
           </div>
         </div>
       </header>
@@ -137,10 +140,10 @@ export default function CertificateVerificationPage() {
             </div>
             <div className="flex-1">
               <h2 className="text-2xl font-bold text-green-800 mb-1">
-                ✓ Certificat Vérifié
+                ✓ {t('verified')}
               </h2>
               <p className="text-green-700 dark:text-green-300">
-                Ce certificat est authentique et a été émis par GENIA
+                {t('verifiedDesc')}
               </p>
             </div>
           </div>
@@ -165,12 +168,12 @@ export default function CertificateVerificationPage() {
                 {isMasterCertificate ? (
                   <>
                     <Award className="w-4 h-4" />
-                    Certificat Master
+                    {t('masterCertificate')}
                   </>
                 ) : (
                   <>
                     <CheckCircle className="w-4 h-4" />
-                    Certificat de Module
+                    {t('moduleCertificate')}
                   </>
                 )}
               </span>
@@ -178,7 +181,7 @@ export default function CertificateVerificationPage() {
 
             {/* Student Name */}
             <div className="text-center mb-8">
-              <p className="text-sm text-muted-foreground mb-2">Ce certificat atteste que</p>
+              <p className="text-sm text-muted-foreground mb-2">{t('attests')}</p>
               <h3 className="text-3xl font-bold text-foreground mb-1">
                 {certificate.studentName}
               </h3>
@@ -187,7 +190,7 @@ export default function CertificateVerificationPage() {
 
             {/* Module Title */}
             <div className="text-center mb-8">
-              <p className="text-sm text-muted-foreground mb-2">a terminé avec succès</p>
+              <p className="text-sm text-muted-foreground mb-2">{t('completedSuccessfully')}</p>
               <h4 className="text-xl font-semibold text-foreground">
                 {displayTitle}
               </h4>
@@ -203,7 +206,7 @@ export default function CertificateVerificationPage() {
                   </div>
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Date de complétion</p>
+                  <p className="text-sm text-muted-foreground mb-1">{t('completionDate')}</p>
                   <p className="font-semibold text-foreground">{formattedDate}</p>
                 </div>
               </div>
@@ -216,7 +219,7 @@ export default function CertificateVerificationPage() {
                   </div>
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Score de réussite</p>
+                  <p className="text-sm text-muted-foreground mb-1">{t('successScore')}</p>
                   <p className="font-semibold text-amber-600 text-lg">{certificate.score}%</p>
                 </div>
               </div>
@@ -226,7 +229,7 @@ export default function CertificateVerificationPage() {
             {isMasterCertificate && certificate.metadata?.completed_modules && (
               <div className="mb-8">
                 <h5 className="text-sm font-semibold text-foreground mb-3">
-                  Modules complétés ({certificate.metadata.completed_modules.length})
+                  {t('modulesCompleted')} ({certificate.metadata.completed_modules.length})
                 </h5>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {certificate.metadata.completed_modules.map((moduleId: string, index: number) => (
@@ -243,15 +246,15 @@ export default function CertificateVerificationPage() {
             <div className="border-t border-border pt-6">
               <div className="flex items-center justify-between flex-wrap gap-4">
                 <div>
-                  <p className="text-xs text-muted-foreground mb-1">Code de vérification</p>
+                  <p className="text-xs text-muted-foreground mb-1">{t('verificationCode')}</p>
                   <p className="font-mono text-sm font-semibold text-foreground">
                     {certificate.verificationCode}
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs text-muted-foreground mb-1">Date d'émission</p>
+                  <p className="text-xs text-muted-foreground mb-1">{t('issueDate')}</p>
                   <p className="text-sm text-foreground">
-                    {new Date(certificate.issuedAt).toLocaleDateString('fr-FR')}
+                    {new Date(certificate.issuedAt).toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US')}
                   </p>
                 </div>
               </div>
@@ -261,18 +264,16 @@ export default function CertificateVerificationPage() {
 
         {/* Information Section */}
         <div className="bg-blue-50 rounded-xl p-6 border border-blue-100">
-          <h5 className="font-semibold text-blue-900 mb-3">À propos de GENIA</h5>
+          <h5 className="font-semibold text-blue-900 mb-3">{t('aboutGenia')}</h5>
           <p className="text-sm text-blue-800 mb-4">
-            GENIA est une plateforme d'apprentissage en ligne spécialisée dans le prompt engineering
-            et l'intelligence artificielle. Nos certificats attestent de compétences validées à travers
-            des modules pratiques et des évaluations rigoureuses.
+            {t('aboutGeniaDesc')}
           </p>
           <div className="flex flex-wrap gap-4">
             <Link
               href="/"
               className="text-sm text-primary hover:text-primary/80 font-medium hover:underline"
             >
-              Découvrir GENIA →
+              {t('discoverGenia')} →
             </Link>
             <a
               href={`/api/certificates/verify/${verificationCode}`}
@@ -280,7 +281,7 @@ export default function CertificateVerificationPage() {
               rel="noopener noreferrer"
               className="text-sm text-primary hover:text-primary/80 font-medium hover:underline"
             >
-              Voir les données JSON →
+              {t('viewJSON')} →
             </a>
           </div>
         </div>
@@ -290,7 +291,7 @@ export default function CertificateVerificationPage() {
       <footer className="bg-card border-t border-border mt-16">
         <div className="max-w-4xl mx-auto px-6 py-8 text-center">
           <p className="text-sm text-muted-foreground">
-            © 2026 GENIA - Plateforme d'apprentissage en IA et Prompt Engineering
+            {t('aboutGeniaDesc')}
           </p>
         </div>
       </footer>
