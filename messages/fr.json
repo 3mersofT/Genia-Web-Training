@@ -553,11 +553,31 @@
     "methodology": {
       "title": "La Méthode GENIA",
       "subtitle": "Une approche pédagogique unique en 5 piliers",
-      "G": { "title": "Guide progressif", "description": "Apprentissage structuré étape par étape", "details": "Chaque concept est décomposé en étapes simples et progressives pour une compréhension optimale." },
-      "E": { "title": "Exemples concrets", "description": "Cas pratiques du monde réel", "details": "Des exemples tirés de situations professionnelles réelles pour une application immédiate." },
-      "N": { "title": "Niveau adaptatif", "description": "Contenu qui s'ajuste à votre rythme", "details": "Le système s'adapte automatiquement à votre niveau et votre vitesse d'apprentissage." },
-      "I": { "title": "Interaction pratique", "description": "Exercices et défis engageants", "details": "Mettez en pratique immédiatement avec des exercices interactifs et des défis stimulants." },
-      "A": { "title": "Assessment continu", "description": "Évaluation bienveillante de vos progrès", "details": "Suivez vos progrès en temps réel avec des évaluations constructives et encourageantes." },
+      "G": {
+        "title": "Guide progressif",
+        "description": "Apprentissage structuré étape par étape",
+        "details": "Chaque concept est décomposé en étapes simples et progressives pour une compréhension optimale."
+      },
+      "E": {
+        "title": "Exemples concrets",
+        "description": "Cas pratiques du monde réel",
+        "details": "Des exemples tirés de situations professionnelles réelles pour une application immédiate."
+      },
+      "N": {
+        "title": "Niveau adaptatif",
+        "description": "Contenu qui s'ajuste à votre rythme",
+        "details": "Le système s'adapte automatiquement à votre niveau et votre vitesse d'apprentissage."
+      },
+      "I": {
+        "title": "Interaction pratique",
+        "description": "Exercices et défis engageants",
+        "details": "Mettez en pratique immédiatement avec des exercices interactifs et des défis stimulants."
+      },
+      "A": {
+        "title": "Assessment continu",
+        "description": "Évaluation bienveillante de vos progrès",
+        "details": "Suivez vos progrès en temps réel avec des évaluations constructives et encourageantes."
+      },
       "authorCredit": "Méthode développée par Hemerson KOFFI, expert en pédagogie IA"
     },
     "pricing": {
@@ -828,5 +848,41 @@
     "goToDashboard": "Go to Dashboard",
     "signOut": "Déconnexion",
     "headerTitle": "Prompt Engineering Academy"
+  },
+  "onboarding": {
+    "step1": {
+      "title": "Bienvenue !",
+      "message": "Salut ! Je suis GENIA, ton formateur personnel en Prompt Engineering ! 🎉 Je vais te faire visiter la plateforme en 2 minutes. Prêt(e) ?",
+      "cta": "C'est parti !",
+      "skip": "Passer le tour"
+    },
+    "step2": {
+      "title": "Ton niveau adaptatif",
+      "message": "Ici tu vois ton niveau. Je m'adapte automatiquement à toi : débutant, intermédiaire, avancé ou expert. Plus tu progresses, plus je te challenge ! 💪"
+    },
+    "step3": {
+      "title": "Révisions espacées",
+      "message": "Voici ton espace de révision. Grâce à l'algorithme SM-2, je te rappelle les concepts au moment parfait pour les ancrer dans ta mémoire. Reviens chaque jour ici ! 🧠"
+    },
+    "step4": {
+      "title": "Discute avec moi",
+      "message": "Quand tu as une question, viens me parler ! Je suis disponible 24/7 pour t'expliquer les concepts, te donner des exercices, et corriger tes prompts. N'hésite jamais ! 💬"
+    },
+    "step5": {
+      "title": "Tes modules de cours",
+      "message": "Et voilà tes modules de formation ! Commence par le Module 1 et progresse à ton rythme. Chaque capsule contient de la théorie, des exemples et des exercices pratiques. 📚"
+    },
+    "step6": {
+      "title": "Tu es prêt(e) ! 🚀",
+      "message": "Tu es prêt(e) pour l'aventure ! Rappelle-toi : le prompt engineering c'est comme un muscle, plus tu pratiques, plus tu deviens fort(e). On commence ?",
+      "cta": "Commencer ma formation !",
+      "celebration": "Félicitations !"
+    },
+    "next": "Suivant",
+    "skip": "Passer",
+    "stepOf": "Étape {current} sur {total}",
+    "geniaName": "GENIA",
+    "replayTour": "Rejouer le tour guidé",
+    "replayTourDescription": "Relancer le tutoriel d'introduction avec GENIA"
   }
 }

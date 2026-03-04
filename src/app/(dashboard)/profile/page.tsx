@@ -7,15 +7,19 @@ import { profileService, UserProfile } from '@/lib/services/profileService';
 import {
   User, Mail, Calendar, Settings, Camera, Save,
   Globe, Bell, Palette, Languages, Shield, Award,
-  Edit3, X, Check, Upload, Image as ImageIcon, ArrowLeft
+  Edit3, X, Check, Upload, Image as ImageIcon, ArrowLeft,
+  RotateCcw
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import NotificationPreferences from '@/components/notifications/NotificationPreferences';
 import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
+import { useOnboarding } from '@/hooks/useOnboarding';
 
 
 export default function ProfilePage() {
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
+  const to = useTranslations('onboarding');
   
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
@@ -131,6 +135,13 @@ export default function ProfilePage() {
 
   const handleViewSessions = () => {
     alert('Gestion des sessions en cours de développement');
+  };
+
+  const { resetOnboarding } = useOnboarding(user?.id);
+
+  const handleReplayTour = async () => {
+    await resetOnboarding();
+    router.push('/dashboard');
   };
 
   const handleAvatarUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -462,11 +473,28 @@ export default function ProfilePage() {
                         <h3 className="text-sm font-medium text-foreground">Sessions actives</h3>
                         <p className="text-sm text-muted-foreground">Gérez vos sessions connectées</p>
                       </div>
-                      <button 
+                      <button
                         onClick={handleViewSessions}
                         className="px-4 py-2 text-muted-foreground border border-input rounded-lg hover:bg-accent"
                       >
                         Voir
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Replay onboarding tour */}
+                  <div className="border border-border rounded-lg p-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="text-sm font-medium text-foreground">{to('replayTour')}</h3>
+                        <p className="text-sm text-muted-foreground">{to('replayTourDescription')}</p>
+                      </div>
+                      <button
+                        onClick={handleReplayTour}
+                        className="px-4 py-2 text-muted-foreground border border-input rounded-lg hover:bg-accent flex items-center gap-2"
+                      >
+                        <RotateCcw className="w-4 h-4" />
+                        {to('replayTour')}
                       </button>
                     </div>
                   </div>
