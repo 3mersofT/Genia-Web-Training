@@ -7,6 +7,8 @@ import { Toaster } from '@/components/ui/toaster'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import ErrorBoundary from '@/components/ErrorBoundary'
+import { NextIntlClientProvider } from 'next-intl'
+import { getLocale, getMessages } from 'next-intl/server'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -94,13 +96,16 @@ export const viewport: Viewport = {
   themeColor: '#3B82F6'
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html lang="fr" className="scroll-smooth">
+    <html lang={locale} className="scroll-smooth">
       <head>
         {/* Meta tags PWA supplémentaires */}
         <meta name="mobile-web-app-capable" content="yes" />
@@ -141,15 +146,17 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.className} antialiased`}>
-        <ThemeProvider>
-          <GENIAProvider>
-            <PWAProvider>
-              <ErrorBoundary>
-                {children}
-              </ErrorBoundary>
-            </PWAProvider>
-          </GENIAProvider>
-        </ThemeProvider>
+        <NextIntlClientProvider messages={messages}>
+          <ThemeProvider>
+            <GENIAProvider>
+              <PWAProvider>
+                <ErrorBoundary>
+                  {children}
+                </ErrorBoundary>
+              </PWAProvider>
+            </GENIAProvider>
+          </ThemeProvider>
+        </NextIntlClientProvider>
         <Toaster />
         <SpeedInsights />
       </body>

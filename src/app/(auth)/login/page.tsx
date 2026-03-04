@@ -10,8 +10,10 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createClient } from '@/lib/supabase/client'
 import { loginSchema, type LoginFormData } from '@/lib/validations/auth'
+import { useTranslations } from 'next-intl'
 
 export default function LoginPage() {
+  const t = useTranslations('auth.login')
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const router = useRouter()
@@ -82,10 +84,10 @@ export default function LoginPage() {
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-foreground mb-2">
-              Bon retour ! 👋
+              {t('subtitle')}
             </h1>
             <p className="text-muted-foreground">
-              Connectez-vous pour continuer votre apprentissage
+              {t('description')}
             </p>
           </div>
 
@@ -103,7 +105,7 @@ export default function LoginPage() {
 
             <div>
               <label htmlFor="identifier" className="block text-sm font-medium text-foreground mb-2">
-                Email ou Nom d'utilisateur
+                {t('emailOrUsername')}
               </label>
               <input
                 id="identifier"
@@ -131,7 +133,7 @@ export default function LoginPage() {
 
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-foreground mb-2">
-                Mot de passe
+                {t('password')}
               </label>
               <input
                 id="password"
@@ -160,10 +162,10 @@ export default function LoginPage() {
             <div className="flex items-center justify-between">
               <label htmlFor="remember" className="flex items-center">
                 <input id="remember" type="checkbox" className="rounded border-input text-blue-600 focus-visible:ring-ring" />
-                <span className="ml-2 text-sm text-muted-foreground">Se souvenir de moi</span>
+                <span className="ml-2 text-sm text-muted-foreground">{t('rememberMe')}</span>
               </label>
               <Link href="/forgot-password" className="text-sm text-primary hover:underline">
-                Mot de passe oublié ?
+                {t('forgotPassword')}
               </Link>
             </div>
 
@@ -172,15 +174,15 @@ export default function LoginPage() {
               disabled={loading}
               className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all disabled:opacity-50"
             >
-              {loading ? 'Connexion...' : 'Se connecter'}
+              {loading ? t('submitting') : t('submit')}
             </button>
           </form>
 
           {/* Footer */}
           <p className="mt-6 text-center text-muted-foreground">
-            Pas encore de compte ?{' '}
+            {t('noAccount')}{' '}
             <Link href="/register" className="text-primary font-semibold hover:underline">
-              Inscrivez-vous
+              {t('register')}
             </Link>
           </p>
         </div>

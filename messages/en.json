@@ -1,0 +1,404 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "send": "Send",
+    "search": "Search",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No",
+    "or": "or",
+    "and": "and",
+    "retry": "Retry",
+    "refresh": "Refresh page",
+    "learnMore": "Learn more"
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "subtitle": "Welcome back! 👋",
+      "description": "Sign in to continue your learning journey",
+      "emailOrUsername": "Email or Username",
+      "password": "Password",
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot password?",
+      "submit": "Sign in",
+      "submitting": "Signing in...",
+      "noAccount": "Don't have an account?",
+      "register": "Sign up",
+      "error": "Invalid email/username or password"
+    },
+    "register": {
+      "title": "Sign up",
+      "subtitle": "Create your account",
+      "description": "Create your account to start learning prompt engineering",
+      "fullName": "Full name",
+      "username": "Username",
+      "email": "Email address",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "submit": "Create my account",
+      "submitting": "Creating account...",
+      "hasAccount": "Already have an account?",
+      "login": "Sign in",
+      "usernameAvailable": "Username available",
+      "usernameUnavailable": "Username unavailable",
+      "usernameChecking": "Checking...",
+      "usernameCheckError": "Unable to check username",
+      "success": "Registration successful! Check your email to confirm your account.",
+      "terms": "I accept the",
+      "termsOfService": "terms of service",
+      "privacyPolicy": "privacy policy",
+      "usernameHint": "3–20 characters, a–z, 0–9, _ and -",
+      "passwordHint": "Minimum 6 characters",
+      "passwordRules": {
+        "minLength": "At least 6 characters",
+        "hasUppercase": "One uppercase letter",
+        "hasNumber": "One number"
+      }
+    },
+    "forgotPassword": {
+      "title": "Forgot password?",
+      "subtitle": "Password reset",
+      "description": "Enter your email and we'll send you a reset link.",
+      "email": "Email",
+      "submit": "Send reset link",
+      "submitting": "Sending...",
+      "success": "Email sent!",
+      "successDescription": "Check your inbox. We sent a reset link to",
+      "noEmail": "Didn't receive the email? Check your spam or",
+      "retry": "try again",
+      "backToLogin": "Back to login"
+    },
+    "logout": "Sign out"
+  },
+  "nav": {
+    "dashboard": "Home",
+    "modules": "Modules",
+    "chat": "GENIA",
+    "review": "Reviews",
+    "analytics": "Analytics",
+    "leaderboard": "Leaderboard",
+    "profile": "Profile",
+    "myProfile": "My Profile",
+    "settings": "Settings",
+    "admin": "Admin",
+    "notifications": "Notifications",
+    "challenges": "Challenges",
+    "certificates": "Certificates",
+    "offline": "Offline",
+    "progress": "Progress",
+    "tournaments": "Tournaments",
+    "teams": "Teams",
+    "skillTree": "Skill Tree",
+    "signOut": "Sign out"
+  },
+  "dashboard": {
+    "title": "Prompt Engineering Academy",
+    "welcome": "Welcome",
+    "welcomeBack": "Welcome back",
+    "subtitle": "Continue your learning journey",
+    "signOut": "Sign out",
+    "stats": {
+      "totalPoints": "Total points",
+      "streakDays": "Streak",
+      "capsulesDone": "Capsules completed",
+      "progress": "Progress",
+      "averageScore": "Average score"
+    },
+    "level": {
+      "title": "Your adaptive level",
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced",
+      "expert": "Expert",
+      "progress": "Progress to next level",
+      "nextLevel": "Next level",
+      "completeExercises": "Complete capsules to earn XP and level up",
+      "strengths": "Strengths",
+      "weaknesses": "Areas to improve"
+    },
+    "spacedRepetition": {
+      "title": "Spaced repetition",
+      "description": "Strengthen your knowledge with the SM-2 algorithm"
+    },
+    "tournaments": {
+      "title": "Tournaments",
+      "noTournaments": "No tournaments available",
+      "comingSoon": "Tournaments coming soon"
+    },
+    "teams": {
+      "title": "Teams",
+      "description": "Join or create a team to collaborate",
+      "teamwork": "Teamwork",
+      "teamworkDescription": "Create or join a team of 2 to 5 members",
+      "teamworkSubtitle": "Take on team challenges, climb the leaderboard, and unlock group achievements!",
+      "discover": "Explore teams"
+    },
+    "challenges": {
+      "title": "Daily Challenges",
+      "description": "Take on Prompt Engineering challenges",
+      "viewChallenges": "View challenges",
+      "info": "Daily challenges",
+      "infoDescription": "Improve your Prompt Engineering skills with challenges matched to your level.",
+      "infoSubtitle": "Earn points, climb the leaderboard, and unlock badges!"
+    },
+    "analytics": {
+      "title": "Learning Analytics",
+      "description": "Visualize your detailed progress",
+      "viewAnalytics": "View analytics",
+      "info": "Analytics dashboard",
+      "infoDescription": "Track your performance, visualize your learning time, and identify your strengths.",
+      "infoSubtitle": "Get detailed insights into your learning journey!"
+    },
+    "certificate": {
+      "masterTitle": "Master Certificate",
+      "masterDescription": "Congratulations! You've completed all modules. Get your master certificate.",
+      "progressTitle": "Progress toward Master Certificate",
+      "progressDescription": "Complete all modules to unlock your master certificate.",
+      "modules": "modules"
+    },
+    "modules": {
+      "title": "Available modules",
+      "completed": "completed"
+    },
+    "recentActivity": "Recent activity",
+    "continueLeaning": "Continue learning",
+    "noActivity": "No recent activity"
+  },
+  "chat": {
+    "title": "GENIA",
+    "subtitle": "AI Training Assistant",
+    "placeholder": "Ask your question...",
+    "send": "Send message",
+    "thinking": "GENIA is thinking...",
+    "model": "Model",
+    "quota": {
+      "remaining": "remaining",
+      "exhausted": "Quota exhausted",
+      "resetAt": "Resets at"
+    },
+    "export": {
+      "title": "Export conversation",
+      "markdown": "Markdown (.md)",
+      "pdf": "PDF (.pdf)"
+    },
+    "feedback": {
+      "helpful": "Helpful",
+      "notHelpful": "Not helpful"
+    },
+    "suggestions": {
+      "showExample": "Show me a concrete example",
+      "improvePrompt": "How can I improve this prompt?",
+      "practiceExercise": "Give me a practice exercise",
+      "stepByStep": "Explain the reasoning step by step"
+    },
+    "method": {
+      "G": "Guide",
+      "E": "Example",
+      "N": "Adaptive Level",
+      "I": "Interaction",
+      "A": "Assessment"
+    },
+    "newConversation": "New conversation",
+    "history": "History",
+    "loginRequired": "You must be signed in to use the chat",
+    "errorOccurred": "An error occurred",
+    "levelUp": "Congratulations! You've reached {level}!",
+    "levelDown": "We're adjusting the difficulty to better support you."
+  },
+  "capsule": {
+    "start": "Start",
+    "continue": "Continue",
+    "completed": "Completed",
+    "locked": "Locked",
+    "difficulty": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced",
+      "expert": "Expert"
+    },
+    "duration": "Estimated duration",
+    "minutes": "min",
+    "objectives": "Objectives",
+    "exercise": "Practice exercise",
+    "saveOffline": "Save offline",
+    "savedOffline": "Available offline",
+    "removeOffline": "Remove offline",
+    "score": "Score"
+  },
+  "review": {
+    "title": "Spaced repetition",
+    "subtitle": "Spaced repetition system based on the SM-2 algorithm",
+    "dueToday": "Due today",
+    "noDue": "No reviews scheduled!",
+    "startSession": "Start session",
+    "quality": {
+      "0": "No memory",
+      "1": "Very hard",
+      "2": "Hard",
+      "3": "Correct",
+      "4": "Easy",
+      "5": "Perfect"
+    },
+    "nextReview": "Next review in",
+    "daysUnit": "days",
+    "sessionComplete": "Session complete!",
+    "cardsReviewed": "cards reviewed",
+    "mastery": "Mastery",
+    "stats": {
+      "totalCards": "Total cards",
+      "dueCards": "Cards due",
+      "retention": "Retention",
+      "streak": "Streak"
+    },
+    "howItWorks": "How does it work?",
+    "howItWorksDescription": "The SM-2 system calculates the best time to review each concept. The more you succeed, the longer the interval."
+  },
+  "profile": {
+    "title": "My Profile",
+    "subtitle": "Customize your profile and preferences",
+    "personalInfo": "Personal information",
+    "preferences": "Preferences",
+    "security": "Security",
+    "displayName": "Display name",
+    "email": "Email",
+    "emailNotEditable": "Not editable",
+    "bio": "Bio",
+    "bioPlaceholder": "Tell us about yourself...",
+    "memberSince": "Member since",
+    "role": {
+      "admin": "Administrator",
+      "student": "Student"
+    },
+    "backToDashboard": "Back to dashboard",
+    "theme": {
+      "title": "Theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "language": {
+      "title": "Language"
+    },
+    "generalPreferences": "General preferences",
+    "password": {
+      "title": "Password",
+      "lastChanged": "Last changed 30 days ago",
+      "change": "Change"
+    },
+    "twoFactor": {
+      "title": "Two-factor authentication",
+      "description": "Add an extra layer of security",
+      "enable": "Enable"
+    },
+    "sessions": {
+      "title": "Active sessions",
+      "description": "Manage your connected sessions",
+      "view": "View"
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Mark all as read",
+    "noNotifications": "No notifications",
+    "preferences": {
+      "title": "Notification preferences",
+      "types": {
+        "title": "Notification types",
+        "description": "Choose which notifications you'd like to receive",
+        "dailyChallenge": "Daily challenge",
+        "dailyChallengeDesc": "Get notified when a new challenge is available",
+        "streakReminder": "Streak reminder",
+        "streakReminderDesc": "Get a reminder when your streak is at risk",
+        "badgeEarned": "Badges earned",
+        "badgeEarnedDesc": "Get notified when you earn a new badge",
+        "peerReview": "Peer review",
+        "peerReviewDesc": "Get notified when someone reviews your work",
+        "newModule": "New module",
+        "newModuleDesc": "Get notified when a new module is published",
+        "aiNudge": "AI suggestions",
+        "aiNudgeDesc": "Receive personalized suggestions from the AI tutor"
+      },
+      "push": {
+        "title": "Push Notifications",
+        "description": "Receive instant notifications on your device",
+        "enable": "Enable push notifications",
+        "enableDescription": "Receive real-time notifications even when the app is closed",
+        "notSupported": "Push notifications are not supported by your browser",
+        "denied": "Permission denied. Please allow notifications in your browser settings.",
+        "enabled": "Push notifications enabled!",
+        "disabled": "Push notifications disabled",
+        "error": "Unable to enable push notifications"
+      },
+      "email": {
+        "title": "Email notifications",
+        "description": "Choose how often you receive notification emails",
+        "immediate": "Immediate",
+        "immediateDesc": "Receive an email for each notification",
+        "daily": "Daily digest",
+        "dailyDesc": "Receive a summary once a day",
+        "weekly": "Weekly digest",
+        "weeklyDesc": "Receive a summary once a week",
+        "off": "Disabled",
+        "offDesc": "Don't receive notification emails"
+      },
+      "time": {
+        "title": "Reminder time",
+        "description": "Choose when you'd like to receive streak reminders",
+        "preferredTime": "Preferred time:"
+      },
+      "save": "Save preferences",
+      "saving": "Saving...",
+      "saved": "Preferences saved!",
+      "loadError": "Failed to load preferences",
+      "saveError": "Failed to save preferences"
+    }
+  },
+  "gamification": {
+    "level": "Level",
+    "xp": "XP",
+    "badge": "Badge",
+    "streak": "Streak",
+    "leaderboard": "Leaderboard",
+    "rank": "Rank",
+    "points": "Points",
+    "achievements": "Achievements"
+  },
+  "errors": {
+    "generic": "Something went wrong",
+    "genericDescription": "We're sorry, an unexpected error occurred.",
+    "notFound": "Page not found",
+    "unauthorized": "Unauthorized",
+    "serverError": "Server error",
+    "networkError": "Network error",
+    "tryAgain": "Please try again later",
+    "refreshPage": "Refresh page"
+  },
+  "pwa": {
+    "install": "Install app",
+    "installDescription": "Install GENIA on your device for quick access",
+    "update": "Update available",
+    "updateDescription": "A new version is available",
+    "offline": {
+      "title": "Offline mode",
+      "description": "You're offline. Some features are limited.",
+      "cachedContent": "Content available offline",
+      "capsulesCached": "capsules cached"
+    }
+  },
+  "feedback": {
+    "title": "Give feedback",
+    "placeholder": "Your feedback...",
+    "submit": "Send",
+    "thanks": "Thanks for your feedback!"
+  }
+}

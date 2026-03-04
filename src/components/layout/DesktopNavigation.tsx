@@ -10,6 +10,7 @@ import {
   Settings, LogOut, ChevronDown, Bell, Sun, Moon, Monitor,
   Swords, Users, Network
 } from 'lucide-react';
+import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
 
 interface NavItem {
   icon: React.ElementType;
@@ -137,6 +138,9 @@ export default function DesktopNavigation() {
               </div>
             )}
           </div>
+
+          {/* Language Switcher */}
+          <LanguageSwitcher />
 
           {/* Notifications */}
           {user?.id && <NotificationCenter userId={user.id} />}
