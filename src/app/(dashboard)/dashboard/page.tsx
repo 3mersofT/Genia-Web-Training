@@ -13,6 +13,8 @@ import { createClient } from '@/lib/supabase/client'
 import { logger } from '@/lib/logger'
 import { useTranslations } from 'next-intl'
 import FeedbackButton from '@/components/feedback/FeedbackButton'
+import GENIAOnboarding from '@/components/onboarding/GENIAOnboarding'
+import { useOnboarding } from '@/hooks/useOnboarding'
 import CertificateButton from '@/components/certificates/CertificateButton'
 import SkillTreeVisualization from '@/components/gamification/SkillTreeVisualization'
 import AdaptiveLevelIndicator from '@/components/gamification/AdaptiveLevelIndicator'
@@ -23,6 +25,7 @@ export default function DashboardPage() {
   const supabase = createClient()
   const t = useTranslations('dashboard')
   const tc = useTranslations('common')
+  const { showOnboarding, completeOnboarding } = useOnboarding(user?.id)
   const [displayName, setDisplayName] = useState<string>('')
   const [modules, setModules] = useState<Module[]>([]) // État local pour les modules
   
@@ -99,6 +102,11 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Onboarding */}
+      {showOnboarding && user && (
+        <GENIAOnboarding userId={user.id} onComplete={completeOnboarding} />
+      )}
+
       {/* Header */}
       <header className="bg-card border-b border-border">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -139,12 +147,12 @@ export default function DashboardPage() {
         </div>
 
         {/* Adaptive Level Indicator */}
-        <div className="mb-8">
+        <div className="mb-8" data-onboarding="adaptive-level">
           <AdaptiveLevelIndicator userId={user.id} />
         </div>
 
         {/* Spaced Repetition Widget */}
-        <div className="mb-8">
+        <div className="mb-8" data-onboarding="spaced-repetition">
           <Link href="/review" className="block bg-gradient-to-r from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] rounded-xl p-6 shadow-sm border border-border hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
@@ -374,7 +382,7 @@ export default function DashboardPage() {
         })()}
 
         {/* Modules */}
-        <div id="modules" className="bg-card rounded-xl p-6 shadow-sm">
+        <div id="modules" data-onboarding="modules" className="bg-card rounded-xl p-6 shadow-sm">
           <h3 className="text-xl font-bold text-foreground mb-4">{t('modules.title')}</h3>
           <div className="space-y-4">
             {modules.map((m) => (

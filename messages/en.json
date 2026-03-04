@@ -553,11 +553,31 @@
     "methodology": {
       "title": "The GENIA Method",
       "subtitle": "A unique pedagogical approach with 5 pillars",
-      "G": { "title": "Progressive Guide", "description": "Step-by-step structured learning", "details": "Each concept is broken down into simple, progressive steps for optimal understanding." },
-      "E": { "title": "Concrete Examples", "description": "Real-world practical cases", "details": "Examples drawn from real professional situations for immediate application." },
-      "N": { "title": "Adaptive Level", "description": "Content that adjusts to your pace", "details": "The system automatically adapts to your level and learning speed." },
-      "I": { "title": "Hands-on Interaction", "description": "Engaging exercises and challenges", "details": "Put knowledge into practice immediately with interactive exercises and stimulating challenges." },
-      "A": { "title": "Continuous Assessment", "description": "Supportive evaluation of your progress", "details": "Track your progress in real time with constructive and encouraging assessments." },
+      "G": {
+        "title": "Progressive Guide",
+        "description": "Step-by-step structured learning",
+        "details": "Each concept is broken down into simple, progressive steps for optimal understanding."
+      },
+      "E": {
+        "title": "Concrete Examples",
+        "description": "Real-world practical cases",
+        "details": "Examples drawn from real professional situations for immediate application."
+      },
+      "N": {
+        "title": "Adaptive Level",
+        "description": "Content that adjusts to your pace",
+        "details": "The system automatically adapts to your level and learning speed."
+      },
+      "I": {
+        "title": "Hands-on Interaction",
+        "description": "Engaging exercises and challenges",
+        "details": "Put knowledge into practice immediately with interactive exercises and stimulating challenges."
+      },
+      "A": {
+        "title": "Continuous Assessment",
+        "description": "Supportive evaluation of your progress",
+        "details": "Track your progress in real time with constructive and encouraging assessments."
+      },
       "authorCredit": "Method developed by Hemerson KOFFI, AI pedagogy expert"
     },
     "pricing": {
@@ -828,5 +848,41 @@
     "goToDashboard": "Go to Dashboard",
     "signOut": "Sign out",
     "headerTitle": "Prompt Engineering Academy"
+  },
+  "onboarding": {
+    "step1": {
+      "title": "Welcome!",
+      "message": "Hi! I'm GENIA, your personal Prompt Engineering trainer! 🎉 Let me show you around the platform in 2 minutes. Ready?",
+      "cta": "Let's go!",
+      "skip": "Skip the tour"
+    },
+    "step2": {
+      "title": "Your adaptive level",
+      "message": "Here you can see your level. I automatically adapt to you: beginner, intermediate, advanced or expert. The more you progress, the more I challenge you! 💪"
+    },
+    "step3": {
+      "title": "Spaced repetition",
+      "message": "This is your review space. Thanks to the SM-2 algorithm, I remind you of concepts at the perfect time to anchor them in your memory. Come back here every day! 🧠"
+    },
+    "step4": {
+      "title": "Chat with me",
+      "message": "When you have a question, come talk to me! I'm available 24/7 to explain concepts, give you exercises, and correct your prompts. Never hesitate! 💬"
+    },
+    "step5": {
+      "title": "Your course modules",
+      "message": "Here are your training modules! Start with Module 1 and progress at your own pace. Each capsule contains theory, examples and hands-on exercises. 📚"
+    },
+    "step6": {
+      "title": "You're ready! 🚀",
+      "message": "You're ready for the adventure! Remember: prompt engineering is like a muscle, the more you practice, the stronger you get. Shall we begin?",
+      "cta": "Start my training!",
+      "celebration": "Congratulations!"
+    },
+    "next": "Next",
+    "skip": "Skip",
+    "stepOf": "Step {current} of {total}",
+    "geniaName": "GENIA",
+    "replayTour": "Replay guided tour",
+    "replayTourDescription": "Restart the introduction tutorial with GENIA"
   }
 }

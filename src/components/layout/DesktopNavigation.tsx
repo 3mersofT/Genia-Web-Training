@@ -71,6 +71,7 @@ export default function DesktopNavigation() {
               <button
                 key={item.href}
                 onClick={() => router.push(item.href)}
+                {...(item.label === t('chat') ? { 'data-onboarding': 'chat-link' } : {})}
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors relative ${
                   isActive
                     ? 'text-primary bg-primary/10'
