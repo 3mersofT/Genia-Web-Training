@@ -5,6 +5,7 @@ import GENIAProvider from '@/components/providers/GENIAProvider'
 import PWAProvider from '@/components/providers/PWAProvider'
 import { Toaster } from '@/components/ui/toaster'
 import { ThemeProvider } from '@/contexts/ThemeContext'
+import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import ErrorBoundary from '@/components/ErrorBoundary'
 import { NextIntlClientProvider } from 'next-intl'
@@ -158,6 +159,7 @@ export default async function RootLayout({
           </ThemeProvider>
         </NextIntlClientProvider>
         <Toaster />
+        <Analytics />
         <SpeedInsights />
       </body>
     </html>
