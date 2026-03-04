@@ -883,6 +883,19 @@
     "stepOf": "Étape {current} sur {total}",
     "geniaName": "GENIA",
     "replayTour": "Rejouer le tour guidé",
-    "replayTourDescription": "Relancer le tutoriel d'introduction avec GENIA"
+    "replayTourDescription": "Relancer le tutoriel d'introduction avec GENIA",
+    "lite": {
+      "title": "Découvre les fonctionnalités",
+      "subtitle": "GENIA te présente la plateforme",
+      "tip_adaptive": "Ton niveau s'adapte automatiquement à tes performances",
+      "tip_spaced": "Révise au bon moment grâce à l'algorithme SM-2",
+      "tip_chat": "Pose tes questions à GENIA, disponible 24/7",
+      "tip_modules": "Parcours les modules à ton rythme",
+      "startFullTour": "Faire le tour complet",
+      "dismiss": "Masquer",
+      "gotIt": "Compris !",
+      "newBadge": "Nouveau",
+      "featureCount": "{count} fonctionnalités à découvrir"
+    }
   }
 }

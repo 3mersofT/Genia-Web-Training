@@ -13,6 +13,10 @@ interface SpotlightOverlayProps {
   totalSteps: number;
   onNext: () => void;
   onSkip: () => void;
+  /** Override the label on the action button (default: t('next')) */
+  nextLabel?: string;
+  /** Hide the step counter and skip button (for single-tip mode) */
+  hideStepInfo?: boolean;
 }
 
 interface SpotlightRect {
@@ -30,6 +34,8 @@ export default function SpotlightOverlay({
   totalSteps,
   onNext,
   onSkip,
+  nextLabel,
+  hideStepInfo,
 }: SpotlightOverlayProps) {
   const t = useTranslations('onboarding');
   const [rect, setRect] = useState<SpotlightRect | null>(null);
@@ -139,21 +145,25 @@ export default function SpotlightOverlay({
 
           {/* Actions */}
           <div className="flex items-center justify-between">
-            <button
-              onClick={onSkip}
-              className="text-xs text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {t('skip')}
-            </button>
+            {!hideStepInfo ? (
+              <button
+                onClick={onSkip}
+                className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {t('skip')}
+              </button>
+            ) : <span />}
             <div className="flex items-center gap-3">
-              <span className="text-xs text-muted-foreground">
-                {t('stepOf', { current: step, total: totalSteps })}
-              </span>
+              {!hideStepInfo && (
+                <span className="text-xs text-muted-foreground">
+                  {t('stepOf', { current: step, total: totalSteps })}
+                </span>
+              )}
               <button
                 onClick={onNext}
                 className="px-4 py-2 bg-gradient-to-r from-violet-600 to-blue-600 text-white text-sm font-medium rounded-lg hover:from-violet-700 hover:to-blue-700 transition-all"
               >
-                {t('next')}
+                {nextLabel || t('next')}
               </button>
             </div>
           </div>

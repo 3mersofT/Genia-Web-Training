@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { ONBOARDING_CURRENT_VERSION } from '@/lib/constants/onboarding';
 
 export async function POST(request: NextRequest) {
   try {
@@ -10,21 +11,55 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Check if this is a reset request
-    let reset = false;
+    // Parse body — support both new action format and legacy { reset: true }
+    let action = 'complete';
     try {
       const body = await request.json();
-      reset = body?.reset === true;
+      if (body?.action) {
+        action = body.action;
+      } else if (body?.reset === true) {
+        // Legacy backwards compatibility
+        action = 'reset';
+      }
     } catch {
-      // No body or invalid JSON - default to complete (not reset)
+      // No body — default to 'complete'
+    }
+
+    let updateData: Record<string, unknown>;
+
+    switch (action) {
+      case 'complete':
+        updateData = {
+          onboarding_completed: true,
+          onboarding_version_seen: ONBOARDING_CURRENT_VERSION,
+          updated_at: new Date().toISOString(),
+        };
+        break;
+
+      case 'reset':
+        updateData = {
+          onboarding_completed: false,
+          onboarding_version_seen: 0,
+          onboarding_lite_dismissed: false,
+          updated_at: new Date().toISOString(),
+        };
+        break;
+
+      case 'dismiss_lite':
+        updateData = {
+          onboarding_lite_dismissed: true,
+          onboarding_version_seen: ONBOARDING_CURRENT_VERSION,
+          updated_at: new Date().toISOString(),
+        };
+        break;
+
+      default:
+        return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
     }
 
     const { error } = await supabase
       .from('user_profiles')
-      .update({
-        onboarding_completed: !reset,
-        updated_at: new Date().toISOString(),
-      })
+      .update(updateData)
       .eq('user_id', user.id);
 
     if (error) {
