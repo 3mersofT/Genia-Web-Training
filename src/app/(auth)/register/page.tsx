@@ -11,8 +11,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { createClient } from '@/lib/supabase/client';
 import { registerSchema, type RegisterFormData } from '@/lib/validations/auth';
 import { Sparkles, Mail, Lock, User, ArrowRight, AlertCircle, AtSign, CheckCircle2, XCircle } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export default function RegisterPage() {
+  const t = useTranslations('auth.register');
   const [usernameOk, setUsernameOk] = useState<boolean | null>(null);
   const [isChecking, setIsChecking] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -128,12 +130,12 @@ export default function RegisterPage() {
               GENIA Web Training
             </span>
           </Link>
-          <p className="text-muted-foreground mt-2">Créez votre compte pour commencer</p>
+          <p className="text-muted-foreground mt-2">{t('description')}</p>
         </div>
 
         {/* Formulaire */}
         <div className="bg-card text-card-foreground rounded-2xl shadow-xl border p-8">
-          <h2 className="text-2xl font-bold text-foreground mb-6">Inscription</h2>
+          <h2 className="text-2xl font-bold text-foreground mb-6">{t('title')}</h2>
 
           {error && (
             <div
@@ -159,7 +161,7 @@ export default function RegisterPage() {
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
             <div>
-              <label htmlFor="fullName" className="block text-sm font-medium text-foreground mb-1">Nom complet</label>
+              <label htmlFor="fullName" className="block text-sm font-medium text-foreground mb-1">{t('fullName')}</label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <input
@@ -188,7 +190,7 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-foreground mb-1">Nom d'utilisateur</label>
+              <label htmlFor="username" className="block text-sm font-medium text-foreground mb-1">{t('username')}</label>
               <div className="relative">
                 <AtSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <input
@@ -229,7 +231,7 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-foreground mb-1">Email</label>
+              <label htmlFor="email" className="block text-sm font-medium text-foreground mb-1">{t('email')}</label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <input
@@ -258,7 +260,7 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-foreground mb-1">Mot de passe</label>
+              <label htmlFor="password" className="block text-sm font-medium text-foreground mb-1">{t('password')}</label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <input
@@ -329,11 +331,11 @@ export default function RegisterPage() {
               {loading ? (
                 <>
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  Inscription...
+                  {t('submitting')}
                 </>
               ) : (
                 <>
-                  Créer mon compte
+                  {t('submit')}
                   <ArrowRight className="w-5 h-5" />
                 </>
               )}
@@ -342,9 +344,9 @@ export default function RegisterPage() {
 
           <div className="mt-6 text-center">
             <p className="text-sm text-muted-foreground">
-              Déjà un compte ?{' '}
+              {t('hasAccount')}{' '}
               <Link href="/login" className="text-primary hover:underline font-medium">
-                Se connecter
+                {t('login')}
               </Link>
             </p>
           </div>

@@ -7,6 +7,7 @@ import { createRateLimiter } from '@/lib/rate-limiter';
 import { MODELS_CONFIG, type ModelKey } from '@/lib/ai-models.config';
 import { ChatRequestSchema } from '@/lib/validations/chat.schema';
 import { streamWithFallback } from '@/lib/ai-provider.service';
+import { AdaptiveDifficultyService } from '@/lib/services/adaptiveDifficultyService';
 
 const rateLimiter = createRateLimiter({
   interval: 60000,
@@ -92,8 +93,26 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { messages, model, temperature, maxTokens, conversationId, capsuleId } = validationResult.data;
+    const { messages: rawMessages, model, temperature, maxTokens, conversationId, capsuleId } = validationResult.data;
     const config = MODELS_CONFIG[model as ModelKey];
+
+    // Load adaptive profile and inject modifiers into system prompt
+    let messages = rawMessages;
+    try {
+      const profile = await AdaptiveDifficultyService.getUserPerformanceProfile(user.id);
+      const modifiers = AdaptiveDifficultyService.getDifficultyPromptModifiers(profile.currentLevel, profile);
+
+      // Inject adaptive modifiers into the system message if present
+      messages = rawMessages.map((m, i) => {
+        if (i === 0 && m.role === 'system') {
+          return { ...m, content: m.content + '\n\n' + modifiers };
+        }
+        return m;
+      });
+    } catch (err) {
+      // Non-blocking: continue without adaptive modifiers
+      console.error('[chat/stream] Adaptive profile error:', err);
+    }
 
     if (!config) {
       return NextResponse.json({ error: 'Modèle invalide' }, { status: 400 });

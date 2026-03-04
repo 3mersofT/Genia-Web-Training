@@ -40,6 +40,12 @@ jest.mock('@/components/notifications/NotificationCenter', () => {
   };
 });
 
+jest.mock('@/components/ui/LanguageSwitcher', () => {
+  return function MockLanguageSwitcher() {
+    return <div data-testid="language-switcher" />;
+  };
+});
+
 jest.mock('lucide-react', () => ({
   Home: (props: any) => <span data-testid="icon-home" {...props} />,
   BookOpen: (props: any) => <span {...props} />,

@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase/client';
 import type { Message, ChatContext, QuotaInfo, StreamEvent, SmartSuggestion } from '@/types/chat.types';
 import { generateSmartSuggestions } from '@/lib/smart-suggestions';
 import { buildContextMessages } from '@/lib/buildContextMessages';
+import type { UserPerformanceProfile } from '@/lib/services/adaptiveDifficultyService';
 
 /**
  * Options de configuration pour le hook useChat
@@ -108,6 +109,8 @@ export function useChat(options: UseChatOptions = {}): UseChatReturn {
     mistralMedium3: { used: 0, daily: 0 }
   });
   const [suggestions, setSuggestions] = useState<SmartSuggestion[]>([]);
+  const [adaptiveProfile, setAdaptiveProfile] = useState<UserPerformanceProfile | null>(null);
+  const adaptiveProfileRef = useRef<UserPerformanceProfile | null>(null);
 
   // Contexte combinant le contexte par défaut et celui fourni
   const [context] = useState<ChatContext>({
@@ -143,6 +146,26 @@ export function useChat(options: UseChatOptions = {}): UseChatReturn {
     return () => {
       subscription.unsubscribe();
     };
+  }, []);
+
+  // ============================================
+  // CHARGEMENT DU PROFIL ADAPTATIF
+  // ============================================
+  const loadAdaptiveProfile = useCallback(async () => {
+    if (adaptiveProfileRef.current) return adaptiveProfileRef.current;
+    try {
+      const res = await fetch('/api/user/difficulty');
+      if (res.ok) {
+        const data = await res.json();
+        const profile = data.profile as UserPerformanceProfile;
+        setAdaptiveProfile(profile);
+        adaptiveProfileRef.current = profile;
+        return profile;
+      }
+    } catch (err) {
+      console.error('[useChat] Failed to load adaptive profile:', err);
+    }
+    return null;
   }, []);
 
   // ============================================
@@ -230,6 +253,10 @@ export function useChat(options: UseChatOptions = {}): UseChatReturn {
   // ============================================
   const sendMessageStreaming = useCallback(
     async (content: string, model: string) => {
+      // Load adaptive profile on first message
+      const profile = await loadAdaptiveProfile();
+      const adaptiveLevel = profile?.currentLevel || context.userLevel || 'beginner';
+
       const assistantMsgId = (Date.now() + 1).toString();
 
       // Add placeholder assistant message
@@ -243,13 +270,24 @@ export function useChat(options: UseChatOptions = {}): UseChatReturn {
       };
       setMessages(prev => [...prev, assistantMessage]);
 
+      const adaptiveModifiers = profile
+        ? `\n\nPROFIL ADAPTATIF DE L'APPRENANT :
+- Score de difficulté : ${Math.round(profile.difficultyScore * 100)}%
+- Taux de réussite : ${Math.round(profile.successRate)}%
+- Exercices complétés : ${profile.exercisesCompleted}
+${profile.weaknessAreas.length > 0 ? `- Points faibles : ${profile.weaknessAreas.join(', ')}` : ''}
+${profile.strengthAreas.length > 0 ? `- Points forts : ${profile.strengthAreas.join(', ')}` : ''}
+${profile.recommendedFocus.length > 0 ? `- Focus recommandé : ${profile.recommendedFocus.join(', ')}` : ''}`
+        : '';
+
       const systemPrompt = `Tu es GENIA, formateur senior en Prompt Engineering utilisant la méthode GENIA.
 
 Contexte actuel :
 - Capsule : ${context.currentCapsule?.title || 'Formation GENIA'}
 - Concepts : ${context.currentCapsule?.concepts?.join(', ') || 'Prompt Engineering'}
-- Niveau : ${context.userLevel || 'beginner'}
+- Niveau : ${adaptiveLevel}
 - Progression : ${context.completedCapsules || 0}/${context.totalCapsules || 36} capsules
+${adaptiveModifiers}
 
 IMPORTANT: Identifie TOUJOURS quel pilier GENIA tu utilises dans ta réponse :
 [G - Guide] [E - Exemple] [N - Niveau] [I - Interaction] [A - Assessment]
@@ -373,7 +411,7 @@ RÈGLE CRITIQUE D'ÉVALUATION :
       updateSuggestions(fullContent, content);
       await loadQuotas();
     },
-    [messages, conversationId, context, detectGENIAStep, loadQuotas, updateSuggestions]
+    [messages, conversationId, context, detectGENIAStep, loadQuotas, updateSuggestions, loadAdaptiveProfile]
   );
 
   // ============================================
@@ -381,13 +419,28 @@ RÈGLE CRITIQUE D'ÉVALUATION :
   // ============================================
   const sendMessageNonStreaming = useCallback(
     async (content: string, model: string) => {
+      // Load adaptive profile on first message
+      const profile = await loadAdaptiveProfile();
+      const adaptiveLevel = profile?.currentLevel || context.userLevel || 'beginner';
+
+      const adaptiveModifiers = profile
+        ? `\n\nPROFIL ADAPTATIF DE L'APPRENANT :
+- Score de difficulté : ${Math.round(profile.difficultyScore * 100)}%
+- Taux de réussite : ${Math.round(profile.successRate)}%
+- Exercices complétés : ${profile.exercisesCompleted}
+${profile.weaknessAreas.length > 0 ? `- Points faibles : ${profile.weaknessAreas.join(', ')}` : ''}
+${profile.strengthAreas.length > 0 ? `- Points forts : ${profile.strengthAreas.join(', ')}` : ''}
+${profile.recommendedFocus.length > 0 ? `- Focus recommandé : ${profile.recommendedFocus.join(', ')}` : ''}`
+        : '';
+
       const systemPrompt = `Tu es GENIA, formateur senior en Prompt Engineering utilisant la méthode GENIA.
 
 Contexte actuel :
 - Capsule : ${context.currentCapsule?.title || 'Formation GENIA'}
 - Concepts : ${context.currentCapsule?.concepts?.join(', ') || 'Prompt Engineering'}
-- Niveau : ${context.userLevel || 'beginner'}
+- Niveau : ${adaptiveLevel}
 - Progression : ${context.completedCapsules || 0}/${context.totalCapsules || 36} capsules
+${adaptiveModifiers}
 
 IMPORTANT: Identifie TOUJOURS quel pilier GENIA tu utilises dans ta réponse :
 [G - Guide] [E - Exemple] [N - Niveau] [I - Interaction] [A - Assessment]
@@ -466,7 +519,7 @@ RÈGLE CRITIQUE D'ÉVALUATION :
       updateSuggestions(data.content, content);
       await loadQuotas();
     },
-    [user?.id, messages, conversationId, context, detectGENIAStep, loadQuotas, updateSuggestions]
+    [user?.id, messages, conversationId, context, detectGENIAStep, loadQuotas, updateSuggestions, loadAdaptiveProfile]
   );
 
   // ============================================

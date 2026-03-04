@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { createRateLimiter } from '@/lib/rate-limiter';
 import { EvaluateExerciseSchema } from '@/lib/validations/exercise.schema';
+import { AdaptiveDifficultyService } from '@/lib/services/adaptiveDifficultyService';
 
 // Rate limiter: 10 requests per minute (strict - calls Mistral AI)
 const rateLimiter = createRateLimiter({
@@ -146,12 +147,36 @@ Format :
         }, { onConflict: 'user_id,capsule_id' });
     }
     
+    // Check for level change after evaluation
+    let levelChange: { from: string; to: string; message: string } | undefined;
+    try {
+      const profile = await AdaptiveDifficultyService.getUserPerformanceProfile(userId);
+      if (profile.shouldLevelUp || profile.shouldLevelDown) {
+        const oldLevel = profile.shouldLevelUp
+          ? (['beginner', 'intermediate', 'advanced', 'expert'] as const)[
+              Math.max(0, ['beginner', 'intermediate', 'advanced', 'expert'].indexOf(profile.currentLevel) - 1)
+            ]
+          : (['beginner', 'intermediate', 'advanced', 'expert'] as const)[
+              Math.min(3, ['beginner', 'intermediate', 'advanced', 'expert'].indexOf(profile.currentLevel) + 1)
+            ];
+        levelChange = {
+          from: oldLevel,
+          to: profile.currentLevel,
+          message: profile.progressionMessage || '',
+        };
+        await AdaptiveDifficultyService.updateUserLevel(userId, profile.currentLevel);
+      }
+    } catch (err) {
+      console.error('[evaluate] Level check error:', err);
+    }
+
     return NextResponse.json({
       score,
       feedback: feedbackContent,
-      success: score >= 70
+      success: score >= 70,
+      levelChange,
     });
-    
+
   } catch (error) {
     console.error('Erreur évaluation:', error);
     return NextResponse.json(

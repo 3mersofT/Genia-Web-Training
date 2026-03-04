@@ -1,0 +1,404 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "save": "Sauvegarder",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "send": "Envoyer",
+    "search": "Rechercher",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "close": "Fermer",
+    "confirm": "Confirmer",
+    "yes": "Oui",
+    "no": "Non",
+    "or": "ou",
+    "and": "et",
+    "retry": "Réessayer",
+    "refresh": "Rafraîchir la page",
+    "learnMore": "En savoir plus"
+  },
+  "auth": {
+    "login": {
+      "title": "Connexion",
+      "subtitle": "Bon retour ! 👋",
+      "description": "Connectez-vous pour continuer votre apprentissage",
+      "emailOrUsername": "Email ou Nom d'utilisateur",
+      "password": "Mot de passe",
+      "rememberMe": "Se souvenir de moi",
+      "forgotPassword": "Mot de passe oublié ?",
+      "submit": "Se connecter",
+      "submitting": "Connexion...",
+      "noAccount": "Pas encore de compte ?",
+      "register": "Inscrivez-vous",
+      "error": "Email/nom d'utilisateur ou mot de passe incorrect"
+    },
+    "register": {
+      "title": "Inscription",
+      "subtitle": "Créez votre compte",
+      "description": "Créez votre compte pour commencer votre apprentissage du prompt engineering",
+      "fullName": "Nom complet",
+      "username": "Nom d'utilisateur",
+      "email": "Adresse email",
+      "password": "Mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "submit": "Créer mon compte",
+      "submitting": "Inscription...",
+      "hasAccount": "Déjà un compte ?",
+      "login": "Se connecter",
+      "usernameAvailable": "Nom d'utilisateur disponible",
+      "usernameUnavailable": "Nom d'utilisateur indisponible",
+      "usernameChecking": "Vérification...",
+      "usernameCheckError": "Impossible de vérifier le nom d'utilisateur",
+      "success": "Inscription réussie ! Vérifiez votre email pour confirmer votre compte.",
+      "terms": "J'accepte les",
+      "termsOfService": "conditions d'utilisation",
+      "privacyPolicy": "politique de confidentialité",
+      "usernameHint": "3–20 caractères, a–z, 0–9, _ et -",
+      "passwordHint": "Minimum 6 caractères",
+      "passwordRules": {
+        "minLength": "Au moins 6 caractères",
+        "hasUppercase": "Une majuscule",
+        "hasNumber": "Un chiffre"
+      }
+    },
+    "forgotPassword": {
+      "title": "Mot de passe oublié ?",
+      "subtitle": "Réinitialisation du mot de passe",
+      "description": "Entrez votre email et nous vous enverrons un lien pour réinitialiser votre mot de passe.",
+      "email": "Email",
+      "submit": "Envoyer le lien de réinitialisation",
+      "submitting": "Envoi en cours...",
+      "success": "Email envoyé !",
+      "successDescription": "Vérifiez votre boîte de réception. Nous avons envoyé un lien de réinitialisation à",
+      "noEmail": "Vous n'avez pas reçu l'email ? Vérifiez vos spams ou",
+      "retry": "réessayez",
+      "backToLogin": "Retour à la connexion"
+    },
+    "logout": "Déconnexion"
+  },
+  "nav": {
+    "dashboard": "Accueil",
+    "modules": "Modules",
+    "chat": "GENIA",
+    "review": "Révisions",
+    "analytics": "Analytiques",
+    "leaderboard": "Classement",
+    "profile": "Profil",
+    "myProfile": "Mon Profil",
+    "settings": "Préférences",
+    "admin": "Administration",
+    "notifications": "Notifications",
+    "challenges": "Défis",
+    "certificates": "Certificats",
+    "offline": "Hors-ligne",
+    "progress": "Progrès",
+    "tournaments": "Tournois",
+    "teams": "Équipes",
+    "skillTree": "Arbre de Compétences",
+    "signOut": "Se déconnecter"
+  },
+  "dashboard": {
+    "title": "Prompt Engineering Academy",
+    "welcome": "Bienvenue",
+    "welcomeBack": "Bienvenue",
+    "subtitle": "Continuez votre parcours d'apprentissage",
+    "signOut": "Déconnexion",
+    "stats": {
+      "totalPoints": "Points totaux",
+      "streakDays": "Streak",
+      "capsulesDone": "Capsules terminées",
+      "progress": "Progression",
+      "averageScore": "Score moyen"
+    },
+    "level": {
+      "title": "Votre niveau adaptatif",
+      "beginner": "Débutant",
+      "intermediate": "Intermédiaire",
+      "advanced": "Avancé",
+      "expert": "Expert",
+      "progress": "Progression vers le prochain niveau",
+      "nextLevel": "Prochain niveau",
+      "completeExercises": "Complétez des capsules pour gagner de l'XP et monter en niveau",
+      "strengths": "Points forts",
+      "weaknesses": "Points à améliorer"
+    },
+    "spacedRepetition": {
+      "title": "Révisions espacées",
+      "description": "Consolidez vos connaissances avec l'algorithme SM-2"
+    },
+    "tournaments": {
+      "title": "Tournois",
+      "noTournaments": "Aucun tournoi disponible",
+      "comingSoon": "Les tournois seront bientôt disponibles"
+    },
+    "teams": {
+      "title": "Équipes",
+      "description": "Rejoignez ou créez une équipe pour collaborer",
+      "teamwork": "Travail d'équipe",
+      "teamworkDescription": "Créez ou rejoignez une équipe de 2 à 5 membres",
+      "teamworkSubtitle": "Participez aux défis d'équipe, montez dans le classement et débloquez des achievements collectifs!",
+      "discover": "Découvrir les équipes"
+    },
+    "challenges": {
+      "title": "Défis Quotidiens",
+      "description": "Relevez des challenges de Prompt Engineering",
+      "viewChallenges": "Voir les défis",
+      "info": "Défis quotidiens",
+      "infoDescription": "Améliorez vos compétences en Prompt Engineering avec des challenges adaptés à votre niveau.",
+      "infoSubtitle": "Gagnez des points, montez dans le classement et débloquez des badges !"
+    },
+    "analytics": {
+      "title": "Analytiques d'Apprentissage",
+      "description": "Visualisez votre progression détaillée",
+      "viewAnalytics": "Voir les analytics",
+      "info": "Tableau de bord analytique",
+      "infoDescription": "Suivez vos performances, visualisez votre temps d'apprentissage et identifiez vos points forts.",
+      "infoSubtitle": "Obtenez des insights détaillés sur votre parcours d'apprentissage !"
+    },
+    "certificate": {
+      "masterTitle": "Certificat Master",
+      "masterDescription": "Félicitations ! Vous avez terminé tous les modules. Obtenez votre certificat master.",
+      "progressTitle": "Progression vers le Certificat Master",
+      "progressDescription": "Complétez tous les modules pour débloquer votre certificat master.",
+      "modules": "modules"
+    },
+    "modules": {
+      "title": "Modules disponibles",
+      "completed": "complété"
+    },
+    "recentActivity": "Activité récente",
+    "continueLeaning": "Continuer l'apprentissage",
+    "noActivity": "Aucune activité récente"
+  },
+  "chat": {
+    "title": "GENIA",
+    "subtitle": "Assistant Formateur IA",
+    "placeholder": "Pose ta question...",
+    "send": "Envoyer le message",
+    "thinking": "GENIA réfléchit...",
+    "model": "Modèle",
+    "quota": {
+      "remaining": "restant(s)",
+      "exhausted": "Quota épuisé",
+      "resetAt": "Réinitialisation à"
+    },
+    "export": {
+      "title": "Exporter la conversation",
+      "markdown": "Markdown (.md)",
+      "pdf": "PDF (.pdf)"
+    },
+    "feedback": {
+      "helpful": "Utile",
+      "notHelpful": "Pas utile"
+    },
+    "suggestions": {
+      "showExample": "Montre-moi un exemple concret",
+      "improvePrompt": "Comment améliorer ce prompt ?",
+      "practiceExercise": "Donne-moi un exercice pratique",
+      "stepByStep": "Explique le raisonnement step-by-step"
+    },
+    "method": {
+      "G": "Guide",
+      "E": "Exemple",
+      "N": "Niveau adaptatif",
+      "I": "Interaction",
+      "A": "Évaluation"
+    },
+    "newConversation": "Nouvelle conversation",
+    "history": "Historique",
+    "loginRequired": "Vous devez être connecté pour utiliser le chat",
+    "errorOccurred": "Une erreur est survenue",
+    "levelUp": "Félicitations ! Vous êtes passé au niveau {level} !",
+    "levelDown": "On ajuste la difficulté pour mieux vous accompagner."
+  },
+  "capsule": {
+    "start": "Commencer",
+    "continue": "Continuer",
+    "completed": "Terminée",
+    "locked": "Verrouillée",
+    "difficulty": {
+      "beginner": "Débutant",
+      "intermediate": "Intermédiaire",
+      "advanced": "Avancé",
+      "expert": "Expert"
+    },
+    "duration": "Durée estimée",
+    "minutes": "min",
+    "objectives": "Objectifs",
+    "exercise": "Exercice pratique",
+    "saveOffline": "Sauvegarder hors-ligne",
+    "savedOffline": "Disponible hors-ligne",
+    "removeOffline": "Retirer du hors-ligne",
+    "score": "Score"
+  },
+  "review": {
+    "title": "Révisions espacées",
+    "subtitle": "Système de révision espacée basé sur l'algorithme SM-2",
+    "dueToday": "À réviser aujourd'hui",
+    "noDue": "Aucune révision prévue !",
+    "startSession": "Commencer la session",
+    "quality": {
+      "0": "Aucun souvenir",
+      "1": "Très difficile",
+      "2": "Difficile",
+      "3": "Correct",
+      "4": "Facile",
+      "5": "Parfait"
+    },
+    "nextReview": "Prochaine révision dans",
+    "daysUnit": "jours",
+    "sessionComplete": "Session terminée !",
+    "cardsReviewed": "cartes révisées",
+    "mastery": "Maîtrise",
+    "stats": {
+      "totalCards": "Cartes totales",
+      "dueCards": "Cartes dues",
+      "retention": "Rétention",
+      "streak": "Série"
+    },
+    "howItWorks": "Comment ça marche ?",
+    "howItWorksDescription": "Le système SM-2 calcule le meilleur moment pour réviser chaque concept. Plus vous réussissez, plus l'intervalle augmente."
+  },
+  "profile": {
+    "title": "Mon Profil",
+    "subtitle": "Personnalisez votre profil et vos préférences",
+    "personalInfo": "Informations personnelles",
+    "preferences": "Préférences",
+    "security": "Sécurité",
+    "displayName": "Nom d'affichage",
+    "email": "Email",
+    "emailNotEditable": "Non modifiable",
+    "bio": "Biographie",
+    "bioPlaceholder": "Parlez-nous de vous...",
+    "memberSince": "Membre depuis",
+    "role": {
+      "admin": "Administrateur",
+      "student": "Étudiant"
+    },
+    "backToDashboard": "Retour au dashboard",
+    "theme": {
+      "title": "Thème",
+      "light": "Clair",
+      "dark": "Sombre",
+      "system": "Système"
+    },
+    "language": {
+      "title": "Langue"
+    },
+    "generalPreferences": "Préférences générales",
+    "password": {
+      "title": "Mot de passe",
+      "lastChanged": "Dernière modification il y a 30 jours",
+      "change": "Modifier"
+    },
+    "twoFactor": {
+      "title": "Authentification à deux facteurs",
+      "description": "Ajoutez une couche de sécurité supplémentaire",
+      "enable": "Activer"
+    },
+    "sessions": {
+      "title": "Sessions actives",
+      "description": "Gérez vos sessions connectées",
+      "view": "Voir"
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Tout marquer comme lu",
+    "noNotifications": "Aucune notification",
+    "preferences": {
+      "title": "Préférences de notification",
+      "types": {
+        "title": "Types de notifications",
+        "description": "Choisissez les types de notifications que vous souhaitez recevoir",
+        "dailyChallenge": "Défi quotidien",
+        "dailyChallengeDesc": "Recevoir une notification quand un nouveau défi est disponible",
+        "streakReminder": "Rappel de série",
+        "streakReminderDesc": "Recevoir un rappel si votre série est en danger",
+        "badgeEarned": "Badges gagnés",
+        "badgeEarnedDesc": "Recevoir une notification quand vous gagnez un nouveau badge",
+        "peerReview": "Revue par les pairs",
+        "peerReviewDesc": "Recevoir une notification quand quelqu'un évalue votre travail",
+        "newModule": "Nouveau module",
+        "newModuleDesc": "Recevoir une notification quand un nouveau module est publié",
+        "aiNudge": "Suggestions IA",
+        "aiNudgeDesc": "Recevoir des suggestions personnalisées du tuteur IA"
+      },
+      "push": {
+        "title": "Notifications Push",
+        "description": "Recevez des notifications instantanées sur votre appareil",
+        "enable": "Activer les notifications push",
+        "enableDescription": "Recevoir des notifications en temps réel même quand l'application n'est pas ouverte",
+        "notSupported": "Les notifications push ne sont pas supportées par votre navigateur",
+        "denied": "Permission refusée. Veuillez autoriser les notifications dans les paramètres de votre navigateur.",
+        "enabled": "Notifications push activées avec succès!",
+        "disabled": "Notifications push désactivées",
+        "error": "Impossible d'activer les notifications push"
+      },
+      "email": {
+        "title": "Notifications par email",
+        "description": "Choisissez la fréquence des emails de notification",
+        "immediate": "Immédiat",
+        "immediateDesc": "Recevoir un email pour chaque notification",
+        "daily": "Résumé quotidien",
+        "dailyDesc": "Recevoir un résumé une fois par jour",
+        "weekly": "Résumé hebdomadaire",
+        "weeklyDesc": "Recevoir un résumé une fois par semaine",
+        "off": "Désactivé",
+        "offDesc": "Ne pas recevoir d'emails de notification"
+      },
+      "time": {
+        "title": "Heure des rappels",
+        "description": "Choisissez l'heure à laquelle vous souhaitez recevoir vos rappels de série",
+        "preferredTime": "Heure préférée :"
+      },
+      "save": "Sauvegarder les préférences",
+      "saving": "Sauvegarde...",
+      "saved": "Préférences sauvegardées avec succès!",
+      "loadError": "Erreur lors du chargement des préférences",
+      "saveError": "Erreur lors de la sauvegarde des préférences"
+    }
+  },
+  "gamification": {
+    "level": "Niveau",
+    "xp": "XP",
+    "badge": "Badge",
+    "streak": "Série",
+    "leaderboard": "Classement",
+    "rank": "Rang",
+    "points": "Points",
+    "achievements": "Succès"
+  },
+  "errors": {
+    "generic": "Une erreur est survenue",
+    "genericDescription": "Nous sommes désolés, une erreur inattendue s'est produite.",
+    "notFound": "Page non trouvée",
+    "unauthorized": "Non autorisé",
+    "serverError": "Erreur serveur",
+    "networkError": "Erreur réseau",
+    "tryAgain": "Veuillez réessayer plus tard",
+    "refreshPage": "Rafraîchir la page"
+  },
+  "pwa": {
+    "install": "Installer l'application",
+    "installDescription": "Installez GENIA sur votre appareil pour un accès rapide",
+    "update": "Mise à jour disponible",
+    "updateDescription": "Une nouvelle version est disponible",
+    "offline": {
+      "title": "Mode hors-ligne",
+      "description": "Vous êtes hors-ligne. Certaines fonctionnalités sont limitées.",
+      "cachedContent": "Contenu disponible hors-ligne",
+      "capsulesCached": "capsules en cache"
+    }
+  },
+  "feedback": {
+    "title": "Donner un avis",
+    "placeholder": "Votre feedback...",
+    "submit": "Envoyer",
+    "thanks": "Merci pour votre retour !"
+  }
+}

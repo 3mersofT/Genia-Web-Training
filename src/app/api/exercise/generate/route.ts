@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { createRateLimiter } from '@/lib/rate-limiter';
 import { GenerateExerciseSchema } from '@/lib/validations/exercise.schema';
+import { AdaptiveDifficultyService } from '@/lib/services/adaptiveDifficultyService';
 
 // Rate limiter: 10 requests per minute (strict - calls Mistral AI)
 const rateLimiter = createRateLimiter({
@@ -49,7 +50,7 @@ export async function POST(req: NextRequest) {
     const {
       capsuleTitle,
       concepts,
-      userLevel,
+      userLevel: bodyUserLevel,
       userId
     } = validationResult.data;
 
@@ -60,18 +61,31 @@ export async function POST(req: NextRequest) {
         { status: 403 }
       );
     }
-    
+
+    // Calculate adaptive difficulty level instead of using body level
+    let adaptiveLevel: string = bodyUserLevel || 'beginner';
+    let exerciseParams: { complexity: string; maxSteps: number; hintsAvailable: number; timeEstimateMinutes: number; focusAreas: string[] } = { complexity: 'simple', maxSteps: 3, hintsAvailable: 3, timeEstimateMinutes: 5, focusAreas: concepts };
+    try {
+      const profile = await AdaptiveDifficultyService.getUserPerformanceProfile(userId);
+      adaptiveLevel = profile.currentLevel;
+      exerciseParams = AdaptiveDifficultyService.getExerciseParameters(profile.currentLevel, profile);
+    } catch (err) {
+      console.error('[generate] Adaptive level error, using body level:', err);
+    }
+
     // Prompts selon le niveau
-    const levelPrompts = {
+    const levelPrompts: Record<string, string> = {
       beginner: "un exercice simple avec guidage pas à pas et indices",
       intermediate: "un exercice pratique avec aide contextuelle",
-      advanced: "un défi complexe avec peu d'indices"
+      advanced: "un défi complexe avec peu d'indices",
+      expert: "un défi expert de niveau production sans indices"
     };
-    
+
     const prompt = `[I - Interaction pratique]
-    
-Crée ${levelPrompts[userLevel as keyof typeof levelPrompts]} sur le thème "${capsuleTitle}".
+
+Crée ${levelPrompts[adaptiveLevel] || levelPrompts.beginner} sur le thème "${capsuleTitle}".
 Concepts à couvrir : ${concepts.join(', ')}
+Complexité : ${exerciseParams.complexity} | Max ${exerciseParams.maxSteps} étapes | ${exerciseParams.hintsAvailable} indices disponibles
 
 L'exercice doit :
 1. Être concret et applicable immédiatement
@@ -131,7 +145,7 @@ Format de réponse :
     return NextResponse.json({
       exerciseId: exercise?.id,
       content: data.choices[0].message.content,
-      userLevel
+      userLevel: adaptiveLevel
     });
     
   } catch (error) {

@@ -10,6 +10,7 @@ import {
   Edit3, X, Check, Upload, Image as ImageIcon, ArrowLeft
 } from 'lucide-react';
 import NotificationPreferences from '@/components/notifications/NotificationPreferences';
+import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
 
 
 export default function ProfilePage() {
@@ -410,18 +411,7 @@ export default function ProfilePage() {
                       <label className="block text-sm font-medium text-foreground mb-3">
                         Langue
                       </label>
-                      <select
-                        value={formData.preferences.language}
-                        onChange={(e) => setFormData(prev => ({
-                          ...prev,
-                          preferences: { ...prev.preferences, language: e.target.value as 'fr' | 'en' }
-                        }))}
-                        disabled={!editing}
-                        className="w-full px-4 py-3 border border-input rounded-lg focus:ring-2 focus-visible:ring-ring focus:border-transparent disabled:bg-muted disabled:text-muted-foreground"
-                      >
-                        <option value="fr">Français</option>
-                        <option value="en">English</option>
-                      </select>
+                      <LanguageSwitcher />
                     </div>
                   </div>
                 </div>

@@ -8,6 +8,28 @@ import '@testing-library/jest-dom';
 
 // ── Mocks ───────────────────────────────────────────────────────────────────
 
+jest.mock('next-intl', () => {
+  const frMessages = require('../../messages/fr.json');
+  return {
+    useTranslations: (namespace: string) => {
+      const parts = namespace.split('.');
+      let section: any = frMessages;
+      for (const p of parts) {
+        section = section?.[p];
+      }
+      return (key: string) => {
+        const keyParts = key.split('.');
+        let val: any = section;
+        for (const k of keyParts) {
+          val = val?.[k];
+        }
+        return val ?? key;
+      };
+    },
+    useLocale: () => 'fr',
+  };
+});
+
 const mockPush = jest.fn();
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: mockPush }),

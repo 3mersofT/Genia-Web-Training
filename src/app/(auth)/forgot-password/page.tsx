@@ -10,8 +10,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { createClient } from '@/lib/supabase/client';
 import { forgotPasswordSchema, type ForgotPasswordFormData } from '@/lib/validations/auth';
 import { Sparkles, Mail, ArrowLeft, CheckCircle, AlertCircle } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export default function ForgotPasswordPage() {
+  const t = useTranslations('auth.forgotPassword');
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [submittedEmail, setSubmittedEmail] = useState('');
@@ -58,7 +60,7 @@ export default function ForgotPasswordPage() {
               GENIA Web Training
             </span>
           </Link>
-          <p className="text-muted-foreground mt-2">Réinitialisation du mot de passe</p>
+          <p className="text-muted-foreground mt-2">{t('subtitle')}</p>
         </div>
 
         {/* Formulaire */}
@@ -66,10 +68,10 @@ export default function ForgotPasswordPage() {
           {!success ? (
             <>
               <h2 className="text-2xl font-bold text-foreground mb-2">
-                Mot de passe oublié ?
+                {t('title')}
               </h2>
               <p className="text-muted-foreground mb-6">
-                Entrez votre email et nous vous enverrons un lien pour réinitialiser votre mot de passe.
+                {t('description')}
               </p>
 
               {error && (
@@ -86,7 +88,7 @@ export default function ForgotPasswordPage() {
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-foreground mb-1">
-                    Email
+                    {t('email')}
                   </label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
@@ -123,10 +125,10 @@ export default function ForgotPasswordPage() {
                   {isLoading ? (
                     <div className="flex items-center justify-center gap-2">
                       <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      Envoi en cours...
+                      {t('submitting')}
                     </div>
                   ) : (
-                    'Envoyer le lien de réinitialisation'
+                    t('submit')
                   )}
                 </button>
               </form>
@@ -137,14 +139,14 @@ export default function ForgotPasswordPage() {
                 <CheckCircle className="w-8 h-8 text-green-600" />
               </div>
               <h2 className="text-2xl font-bold text-foreground mb-2">
-                Email envoyé !
+                {t('success')}
               </h2>
               <p className="text-muted-foreground mb-6">
-                Vérifiez votre boîte de réception. Nous avons envoyé un lien de réinitialisation à{' '}
+                {t('successDescription')}{' '}
                 <span className="font-medium">{submittedEmail}</span>
               </p>
               <p className="text-sm text-muted-foreground">
-                Vous n'avez pas reçu l'email ? Vérifiez vos spams ou{' '}
+                {t('noEmail')}{' '}
                 <button
                   onClick={() => {
                     setSuccess(false);
@@ -153,7 +155,7 @@ export default function ForgotPasswordPage() {
                   }}
                   className="text-primary hover:underline"
                 >
-                  réessayez
+                  {t('retry')}
                 </button>
               </p>
             </div>
@@ -165,7 +167,7 @@ export default function ForgotPasswordPage() {
               className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
             >
               <ArrowLeft className="w-4 h-4" />
-              Retour à la connexion
+              {t('backToLogin')}
             </Link>
           </div>
         </div>

@@ -27,9 +27,9 @@ export interface ChatContext {
     id: string;
     title: string;
     concepts: string[];
-    difficulty: 'beginner' | 'intermediate' | 'advanced';
+    difficulty: 'beginner' | 'intermediate' | 'advanced' | 'expert';
   };
-  userLevel: 'beginner' | 'intermediate' | 'advanced';
+  userLevel: 'beginner' | 'intermediate' | 'advanced' | 'expert';
   completedCapsules: number;
   totalCapsules: number;
   lastExerciseScore?: number;

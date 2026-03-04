@@ -14,6 +14,7 @@ import { logger } from '@/lib/logger'
 import FeedbackButton from '@/components/feedback/FeedbackButton'
 import CertificateButton from '@/components/certificates/CertificateButton'
 import SkillTreeVisualization from '@/components/gamification/SkillTreeVisualization'
+import AdaptiveLevelIndicator from '@/components/gamification/AdaptiveLevelIndicator'
 
 export default function DashboardPage() {
   const { user, loading, signOut } = useAuth()
@@ -134,21 +135,9 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Level Badge - placeholder until real level data is fetched */}
+        {/* Adaptive Level Indicator */}
         <div className="mb-8">
-          <div className="bg-gradient-to-br from-muted to-muted/80 border-2 border-input rounded-xl p-6 shadow-lg">
-            <div className="flex items-center gap-3">
-              <div className="p-3 bg-gray-500 rounded-xl text-white text-3xl shadow-md">
-                🏆
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold text-foreground">Niveau</h3>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Complétez des capsules pour gagner de l'XP et monter en niveau
-                </p>
-              </div>
-            </div>
-          </div>
+          <AdaptiveLevelIndicator userId={user.id} />
         </div>
 
         {/* Spaced Repetition Widget */}
