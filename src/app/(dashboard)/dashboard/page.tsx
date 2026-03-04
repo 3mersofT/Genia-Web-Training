@@ -14,6 +14,7 @@ import { logger } from '@/lib/logger'
 import { useTranslations } from 'next-intl'
 import FeedbackButton from '@/components/feedback/FeedbackButton'
 import GENIAOnboarding from '@/components/onboarding/GENIAOnboarding'
+import FeatureDiscoveryButton from '@/components/onboarding/FeatureDiscoveryButton'
 import { useOnboarding } from '@/hooks/useOnboarding'
 import CertificateButton from '@/components/certificates/CertificateButton'
 import SkillTreeVisualization from '@/components/gamification/SkillTreeVisualization'
@@ -25,7 +26,7 @@ export default function DashboardPage() {
   const supabase = createClient()
   const t = useTranslations('dashboard')
   const tc = useTranslations('common')
-  const { showOnboarding, completeOnboarding } = useOnboarding(user?.id)
+  const { showFullOnboarding, showLiteOnboarding, completeOnboarding, dismissLiteOnboarding, startFullTourFromLite } = useOnboarding(user?.id)
   const [displayName, setDisplayName] = useState<string>('')
   const [modules, setModules] = useState<Module[]>([]) // État local pour les modules
   
@@ -102,9 +103,17 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Onboarding */}
-      {showOnboarding && user && (
+      {/* Full onboarding tour (new accounts) */}
+      {showFullOnboarding && user && (
         <GENIAOnboarding userId={user.id} onComplete={completeOnboarding} />
+      )}
+
+      {/* Feature discovery button (existing accounts) */}
+      {showLiteOnboarding && user && (
+        <FeatureDiscoveryButton
+          onDismiss={dismissLiteOnboarding}
+          onStartFullTour={startFullTourFromLite}
+        />
       )}
 
       {/* Header */}
