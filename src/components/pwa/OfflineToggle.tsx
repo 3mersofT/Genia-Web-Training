@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { Download, Trash2, Loader2, WifiOff, Check, HardDrive } from 'lucide-react';
 import { useOffline } from '@/hooks/useOffline';
 import type { Capsule } from '@/lib/data';
@@ -18,6 +19,7 @@ export default function OfflineToggle({
   moduleTitle,
   variant = 'button'
 }: OfflineToggleProps) {
+  const t = useTranslations('pwa.offline');
   const { isCapsuleCached, cacheCapsule, removeCapsule, isCaching } = useOffline();
   const [isProcessing, setIsProcessing] = useState(false);
   const cached = isCapsuleCached(capsule.id);
@@ -49,7 +51,7 @@ export default function OfflineToggle({
             ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 hover:bg-green-200'
             : 'bg-muted text-muted-foreground hover:bg-muted'
         }`}
-        title={cached ? 'Retirer du mode hors ligne' : 'Rendre disponible hors ligne'}
+        title={cached ? t('removeOffline') : t('makeAvailableOffline')}
       >
         {loading ? (
           <Loader2 className="w-4 h-4 animate-spin" />
@@ -78,12 +80,12 @@ export default function OfflineToggle({
         ) : cached ? (
           <>
             <WifiOff className="w-3 h-3" />
-            Hors ligne
+            {t('offlineLabel')}
           </>
         ) : (
           <>
             <Download className="w-3 h-3" />
-            Sauvegarder
+            {t('saveLabel')}
           </>
         )}
       </button>
@@ -104,17 +106,17 @@ export default function OfflineToggle({
       {loading ? (
         <>
           <Loader2 className="w-4 h-4 animate-spin" />
-          {cached ? 'Suppression...' : 'Téléchargement...'}
+          {cached ? t('removing') : t('downloading')}
         </>
       ) : cached ? (
         <>
           <Trash2 className="w-4 h-4" />
-          Retirer du hors ligne
+          {t('removeFromOffline')}
         </>
       ) : (
         <>
           <HardDrive className="w-4 h-4" />
-          Disponible hors ligne
+          {t('availableOffline')}
         </>
       )}
     </button>

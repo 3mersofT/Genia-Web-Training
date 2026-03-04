@@ -69,7 +69,7 @@ describe('ReviewCard', () => {
     fireEvent.click(revealButton);
 
     // After reveal, 6 rating buttons should appear with labels
-    expect(screen.getByText('Aucun')).toBeInTheDocument();
+    expect(screen.getByText('Aucun souvenir')).toBeInTheDocument();
     expect(screen.getByText('Très difficile')).toBeInTheDocument();
     expect(screen.getByText('Difficile')).toBeInTheDocument();
     expect(screen.getByText('Correct')).toBeInTheDocument();

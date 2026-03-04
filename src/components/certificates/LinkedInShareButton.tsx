@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTranslations } from 'next-intl';
 import { Share2, Linkedin } from 'lucide-react';
 
 interface LinkedInShareButtonProps {
@@ -25,8 +26,10 @@ export default function LinkedInShareButton({
   onSuccess
 }: LinkedInShareButtonProps) {
 
+  const t = useTranslations('certificates.preview');
+
   const getButtonText = () => {
-    return 'Partager sur LinkedIn';
+    return t('shareLinkedIn');
   };
 
   const getButtonIcon = () => {

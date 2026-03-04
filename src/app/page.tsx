@@ -3,85 +3,64 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { 
-  ArrowRight, Brain, Trophy, Users, 
+import { useTranslations } from 'next-intl';
+import {
+  ArrowRight, Brain, Trophy, Users,
   CheckCircle, Star, Zap, BookOpen, MessageCircle,
-  ChevronDown, Play, Award, TrendingUp, Globe, 
+  ChevronDown, Play, Award, TrendingUp, Globe,
   Linkedin, Mail, GraduationCap, Lightbulb,
   LogIn, UserPlus
 } from 'lucide-react';
 
 export default function HomePage() {
+  const t = useTranslations('landing');
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [activeGENIATab, setActiveGENIATab] = useState(0);
 
   const features = [
     {
       icon: Brain,
-      title: "IA Française Mistral",
-      description: "Technologie de pointe française pour votre apprentissage"
+      title: t('features.ai.title'),
+      description: t('features.ai.description')
     },
     {
       icon: GraduationCap,
-      title: "Méthode GENIA",
-      description: "5 piliers pédagogiques pour maîtriser le prompting"
+      title: t('features.method.title'),
+      description: t('features.method.description')
     },
     {
       icon: Award,
-      title: "Formation Certifiante",
-      description: "Obtenez votre certificat de compétence reconnu"
+      title: t('features.certificate.title'),
+      description: t('features.certificate.description')
     },
     {
       icon: Trophy,
-      title: "Gamification",
-      description: "Badges, points et défis pour rester motivé"
+      title: t('features.gamification.title'),
+      description: t('features.gamification.description')
     }
   ];
 
-  const methodology = [
-    { 
-      letter: 'G', 
-      title: 'Guide progressif', 
-      color: 'from-blue-500 to-blue-600', 
-      description: 'Apprentissage structuré étape par étape',
-      details: 'Chaque concept est décomposé en étapes simples et progressives pour une compréhension optimale.'
-    },
-    { 
-      letter: 'E', 
-      title: 'Exemples concrets', 
-      color: 'from-green-500 to-green-600', 
-      description: 'Cas pratiques du monde réel',
-      details: 'Des exemples tirés de situations professionnelles réelles pour une application immédiate.'
-    },
-    { 
-      letter: 'N', 
-      title: 'Niveau adaptatif', 
-      color: 'from-purple-500 to-purple-600', 
-      description: "Contenu qui s'ajuste à votre rythme",
-      details: 'Le système s\'adapte automatiquement à votre niveau et votre vitesse d\'apprentissage.'
-    },
-    { 
-      letter: 'I', 
-      title: 'Interaction pratique', 
-      color: 'from-orange-500 to-orange-600', 
-      description: 'Exercices et défis engageants',
-      details: 'Mettez en pratique immédiatement avec des exercices interactifs et des défis stimulants.'
-    },
-    { 
-      letter: 'A', 
-      title: 'Assessment continu', 
-      color: 'from-indigo-500 to-indigo-600', 
-      description: 'Évaluation bienveillante de vos progrès',
-      details: 'Suivez vos progrès en temps réel avec des évaluations constructives et encourageantes.'
-    }
+  const methodLetters = ['G', 'E', 'N', 'I', 'A'] as const;
+  const methodColors = [
+    'from-blue-500 to-blue-600',
+    'from-green-500 to-green-600',
+    'from-purple-500 to-purple-600',
+    'from-orange-500 to-orange-600',
+    'from-indigo-500 to-indigo-600',
   ];
+  const methodology = methodLetters.map((letter, i) => ({
+    letter,
+    title: t(`methodology.${letter}.title`),
+    color: methodColors[i],
+    description: t(`methodology.${letter}.description`),
+    details: t(`methodology.${letter}.details`),
+  }));
 
-  // Stats corrigées avec les vraies données
   const stats = [
-    { value: "3", label: "Modules complets", icon: BookOpen },
-    { value: "36", label: "Capsules", icon: Lightbulb },
-    { value: "3h", label: "De formation", icon: TrendingUp },
-    { value: "1", label: "Certificat", icon: Award }
+    { value: "3", label: t('stats.modules'), icon: BookOpen },
+    { value: "36", label: t('stats.capsules'), icon: Lightbulb },
+    { value: "3h", label: t('stats.training'), icon: TrendingUp },
+    { value: "1", label: t('stats.certificate'), icon: Award }
   ];
 
   const testimonials = [
@@ -159,14 +138,14 @@ export default function HomePage() {
                 className="inline-flex items-center px-4 py-2 text-foreground bg-card border border-input rounded-lg hover:bg-accent transition-colors"
               >
                 <LogIn className="w-4 h-4 mr-2" />
-                Connexion
+                {t('hero.login')}
               </Link>
-              <Link 
-                href="/register" 
+              <Link
+                href="/register"
                 className="inline-flex items-center px-4 py-2 text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg hover:shadow-lg transition-all"
               >
                 <UserPlus className="w-4 h-4 mr-2" />
-                Inscription
+                {t('hero.register')}
               </Link>
             </div>
           </div>
@@ -205,25 +184,24 @@ export default function HomePage() {
             </div>
             
             <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">
-              Maîtrisez le 
+              {t('hero.title')}
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> Prompt Engineering</span>
-              <br />avec la Méthode GENIA
+              <br />{t('hero.titleHighlight')}
             </h1>
-            
+
             <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-              Formation complète et structurée pour devenir expert 
-              en intelligence artificielle générative
+              {t('hero.subtitle')}
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <Link href="/register" className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
                 <Play className="w-5 h-5 mr-2" />
-                Commencer la Formation
+                {t('hero.cta')}
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
               <a href="#method" className="inline-flex items-center px-8 py-4 bg-card text-foreground font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 border border-border">
                 <MessageCircle className="w-5 h-5 mr-2" />
-                Découvrir la Méthode
+                {t('hero.ctaSecondary')}
               </a>
             </div>
             
@@ -249,10 +227,10 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Une plateforme pensée pour votre réussite
+              {t('features.title')}
             </h2>
             <p className="text-xl text-muted-foreground">
-              Tous les outils pour devenir expert en Prompt Engineering
+              {t('features.subtitle')}
             </p>
           </div>
           
@@ -291,10 +269,10 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              La Méthode GENIA
+              {t('methodology.title')}
             </h2>
             <p className="text-xl text-muted-foreground">
-              Une approche pédagogique unique en 5 piliers
+              {t('methodology.subtitle')}
             </p>
           </div>
           
@@ -330,7 +308,7 @@ export default function HomePage() {
             <div className="inline-flex items-center gap-2 bg-card px-6 py-3 rounded-full shadow-lg">
               <Award className="w-5 h-5 text-yellow-500" />
               <span className="text-foreground font-medium">
-                Méthode développée par Hemerson KOFFI, expert en pédagogie IA
+                {t('methodology.authorCredit')}
               </span>
             </div>
           </div>
@@ -342,58 +320,40 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Investissez dans votre avenir professionnel
+              {t('pricing.title')}
             </h2>
             <p className="text-xl text-muted-foreground">
-              Une formation d'exception à un prix accessible
+              {t('pricing.subtitle')}
             </p>
           </div>
           
           <div className="max-w-md mx-auto">
             <div className="bg-gradient-to-br from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] rounded-2xl shadow-2xl overflow-hidden p-8">
               <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-foreground mb-4">Formation Complète</h3>
+                <h3 className="text-2xl font-bold text-foreground mb-4">{t('pricing.planTitle')}</h3>
                 <div className="bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 px-4 py-2 rounded-full inline-block mb-4">
-                  🎉 Lancement Bientôt
+                  🎉 {t('pricing.comingSoon')}
                 </div>
                 <p className="text-muted-foreground">
-                  Le tarif sera communiqué lors du lancement officiel
+                  {t('pricing.priceInfo')}
                 </p>
               </div>
               
               <ul className="space-y-3 mb-8">
-                <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-green-500 dark:text-green-400 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-foreground">Accès illimité à la plateforme</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-green-500 dark:text-green-400 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-foreground">Assistant pédagogique GENIA</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-green-500 dark:text-green-400 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-foreground">3 modules complets (36 capsules)</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-green-500 dark:text-green-400 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-foreground">Certificat de réussite officiel</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-green-500 dark:text-green-400 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-foreground">Mises à jour régulières</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-green-500 dark:text-green-400 mr-2 flex-shrink-0 mt-0.5" />
-                  <span className="text-foreground">Support technique par email</span>
-                </li>
+                {(['unlimited', 'assistant', 'modules', 'certificate', 'updates', 'support'] as const).map((key) => (
+                  <li key={key} className="flex items-start">
+                    <CheckCircle className="w-5 h-5 text-green-500 dark:text-green-400 mr-2 flex-shrink-0 mt-0.5" />
+                    <span className="text-foreground">{t(`pricing.features.${key}`)}</span>
+                  </li>
+                ))}
               </ul>
               
               <Link href="/register" className="block w-full text-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
-                S'inscrire à la liste d'attente
+                {t('waitlist')}
               </Link>
-              
+
               <p className="text-center text-sm text-muted-foreground mt-4">
-                Soyez parmi les premiers informés du lancement
+                {t('pricing.earlyInfo')}
               </p>
             </div>
           </div>
@@ -405,10 +365,10 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Ils ont transformé leur carrière
+              {t('testimonials.title')}
             </h2>
             <p className="text-xl text-muted-foreground">
-              Rejoignez nos apprenants satisfaits
+              {t('testimonials.subtitle')}
             </p>
           </div>
           
@@ -439,7 +399,7 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Questions Fréquentes
+              {t('faq.title')}
             </h2>
           </div>
           
@@ -468,7 +428,7 @@ export default function HomePage() {
       <section className="py-12 bg-muted">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h3 className="text-2xl font-bold text-foreground mb-4">
-            Des questions ? Contactez-nous
+            {t('contact.title')}
           </h3>
           <div className="flex justify-center gap-4">
             <a 
@@ -495,20 +455,20 @@ export default function HomePage() {
       <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Prêt à devenir expert en Prompt Engineering ?
+            {t('cta.title')}
           </h2>
           <p className="text-xl text-white/90 mb-8">
-            Rejoignez GENIA Web Training aujourd'hui
+            {t('cta.subtitle')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/register" className="inline-flex items-center px-8 py-4 bg-card text-primary font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
               <Zap className="w-5 h-5 mr-2" />
-              S'inscrire maintenant
+              {t('cta.register')}
               <ArrowRight className="w-5 h-5 ml-2" />
             </Link>
             <a href="#method" className="inline-flex items-center px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl border-2 border-white/30 hover:bg-white/20 transition-all duration-200">
               <BookOpen className="w-5 h-5 mr-2" />
-              Voir la méthode
+              {t('cta.method')}
             </a>
           </div>
         </div>
@@ -529,49 +489,49 @@ export default function HomePage() {
               <span className="text-xl font-bold">GENIA Web Training</span>
             </div>
             <p className="text-muted-foreground max-w-md mx-auto">
-              Plateforme de formation au Prompt Engineering
+              {t('footer.description')}
             </p>
           </div>
           
           <div className="border-t border-border pt-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
               <div>
-                <h4 className="font-semibold mb-4">Formation</h4>
+                <h4 className="font-semibold mb-4">{t('footer.training')}</h4>
                 <div className="flex justify-center gap-4 text-muted-foreground text-sm">
-                  <Link href="/dashboard" className="hover:text-white transition-colors">Programme</Link>
+                  <Link href="/dashboard" className="hover:text-white transition-colors">{t('footer.program')}</Link>
                   <span className="text-muted-foreground">|</span>
-                  <a href="#method" className="hover:text-white transition-colors">Méthode</a>
+                  <a href="#method" className="hover:text-white transition-colors">{t('footer.method')}</a>
                   <span className="text-muted-foreground">|</span>
-                  <Link href="/dashboard/achievements" className="hover:text-white transition-colors">Certificats</Link>
+                  <Link href="/dashboard/achievements" className="hover:text-white transition-colors">{t('footer.certificates')}</Link>
                 </div>
               </div>
-              
+
               <div>
-                <h4 className="font-semibold mb-4">Ressources</h4>
+                <h4 className="font-semibold mb-4">{t('footer.resources')}</h4>
                 <div className="flex justify-center gap-4 text-muted-foreground text-sm">
-                  <a href="#" className="hover:text-white transition-colors">Blog</a>
+                  <a href="#" className="hover:text-white transition-colors">{t('footer.blog')}</a>
                   <span className="text-muted-foreground">|</span>
-                  <a href="#" className="hover:text-white transition-colors">Documentation</a>
+                  <a href="#" className="hover:text-white transition-colors">{t('footer.documentation')}</a>
                   <span className="text-muted-foreground">|</span>
-                  <a href="#" className="hover:text-white transition-colors">Support</a>
+                  <a href="#" className="hover:text-white transition-colors">{t('footer.support')}</a>
                 </div>
               </div>
-              
+
               <div>
-                <h4 className="font-semibold mb-4">Informations</h4>
+                <h4 className="font-semibold mb-4">{t('footer.info')}</h4>
                 <div className="flex justify-center gap-4 text-muted-foreground text-sm">
-                  <a href="#" className="hover:text-white transition-colors">CGU</a>
+                  <a href="#" className="hover:text-white transition-colors">{t('footer.terms')}</a>
                   <span className="text-muted-foreground">|</span>
-                  <a href="#" className="hover:text-white transition-colors">Contact</a>
+                  <a href="#" className="hover:text-white transition-colors">{t('footer.contact')}</a>
                   <span className="text-muted-foreground">|</span>
-                  <a href="#" className="hover:text-white transition-colors">À propos</a>
+                  <a href="#" className="hover:text-white transition-colors">{t('footer.about')}</a>
                 </div>
               </div>
             </div>
           </div>
           
           <div className="border-t border-border mt-8 pt-8 text-center text-muted-foreground">
-            <p>© 2025 GENIA Web Training. Créé par Hemerson KOFFI. Tous droits réservés.</p>
+            <p>{t('footer.copyright')}</p>
           </div>
         </div>
       </footer>

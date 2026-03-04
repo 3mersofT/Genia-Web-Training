@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { Bell, Mail, Clock, Check, AlertCircle, Save, Smartphone } from 'lucide-react';
 import type { NotificationPreferences as NotificationPrefsType, EmailDigestFrequency } from '@/types/notifications.types';
 import { studentNotificationService } from '@/lib/services/studentNotificationService';
@@ -11,51 +12,52 @@ interface NotificationPreferencesProps {
 
 interface NotificationTypeConfig {
   key: keyof NotificationPrefsType['notification_types_enabled'];
-  label: string;
-  description: string;
+  labelKey: string;
+  descriptionKey: string;
 }
 
 const notificationTypes: NotificationTypeConfig[] = [
   {
     key: 'daily_challenge',
-    label: 'Défi quotidien',
-    description: 'Recevoir une notification quand un nouveau défi est disponible'
+    labelKey: 'types.dailyChallenge',
+    descriptionKey: 'types.dailyChallengeDesc'
   },
   {
     key: 'streak_reminder',
-    label: 'Rappel de série',
-    description: 'Recevoir un rappel si votre série est en danger (pas d\'activité depuis 20h)'
+    labelKey: 'types.streakReminder',
+    descriptionKey: 'types.streakReminderDesc'
   },
   {
     key: 'badge_earned',
-    label: 'Badges gagnés',
-    description: 'Recevoir une notification quand vous gagnez un nouveau badge'
+    labelKey: 'types.badgeEarned',
+    descriptionKey: 'types.badgeEarnedDesc'
   },
   {
     key: 'peer_review',
-    label: 'Revue par les pairs',
-    description: 'Recevoir une notification quand quelqu\'un évalue votre travail'
+    labelKey: 'types.peerReview',
+    descriptionKey: 'types.peerReviewDesc'
   },
   {
     key: 'new_module',
-    label: 'Nouveau module',
-    description: 'Recevoir une notification quand un nouveau module est publié'
+    labelKey: 'types.newModule',
+    descriptionKey: 'types.newModuleDesc'
   },
   {
     key: 'ai_nudge',
-    label: 'Suggestions IA',
-    description: 'Recevoir des suggestions personnalisées du tuteur IA'
+    labelKey: 'types.aiNudge',
+    descriptionKey: 'types.aiNudgeDesc'
   }
 ];
 
-const emailDigestOptions: { value: EmailDigestFrequency; label: string; description: string }[] = [
-  { value: 'immediate', label: 'Immédiat', description: 'Recevoir un email pour chaque notification' },
-  { value: 'daily', label: 'Résumé quotidien', description: 'Recevoir un résumé une fois par jour' },
-  { value: 'weekly', label: 'Résumé hebdomadaire', description: 'Recevoir un résumé une fois par semaine' },
-  { value: 'off', label: 'Désactivé', description: 'Ne pas recevoir d\'emails de notification' }
+const emailDigestOptions: { value: EmailDigestFrequency; labelKey: string; descriptionKey: string }[] = [
+  { value: 'immediate', labelKey: 'email.immediate', descriptionKey: 'email.immediateDesc' },
+  { value: 'daily', labelKey: 'email.daily', descriptionKey: 'email.dailyDesc' },
+  { value: 'weekly', labelKey: 'email.weekly', descriptionKey: 'email.weeklyDesc' },
+  { value: 'off', labelKey: 'email.off', descriptionKey: 'email.offDesc' }
 ];
 
 export default function NotificationPreferences({ userId }: NotificationPreferencesProps) {
+  const t = useTranslations('notifications.preferences');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
@@ -98,7 +100,7 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
       const response = await fetch('/api/notifications/preferences');
 
       if (!response.ok) {
-        throw new Error('Erreur lors du chargement des préférences');
+        throw new Error(t('loadError'));
       }
 
       const responseData = await response.json();
@@ -135,7 +137,7 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
     if (!pushSupported) {
       setMessage({
         type: 'error',
-        text: 'Les notifications push ne sont pas supportées par votre navigateur'
+        text: t('push.notSupported')
       });
       setTimeout(() => setMessage(null), 3000);
       return;
@@ -148,7 +150,7 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
         setPushEnabled(false);
         setMessage({
           type: 'success',
-          text: 'Notifications push désactivées'
+          text: t('push.disabled')
         });
       }
     } else {
@@ -160,7 +162,7 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
         setPushPermission('granted');
         setMessage({
           type: 'success',
-          text: 'Notifications push activées avec succès!'
+          text: t('push.enabled')
         });
       } else {
         const currentPermission = await studentNotificationService.checkPushPermission();
@@ -169,12 +171,12 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
         if (currentPermission === 'denied') {
           setMessage({
             type: 'error',
-            text: 'Permission refusée. Veuillez autoriser les notifications dans les paramètres de votre navigateur.'
+            text: t('push.denied')
           });
         } else {
           setMessage({
             type: 'error',
-            text: 'Impossible d\'activer les notifications push'
+            text: t('push.error')
           });
         }
       }
@@ -204,7 +206,7 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
       });
 
       if (!response.ok) {
-        throw new Error('Erreur lors de la sauvegarde');
+        throw new Error(t('saveError'));
       }
 
       const responseData = await response.json();
@@ -216,13 +218,13 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
         setPreferredTime(saved.preferred_notification_time?.substring(0, 5) || preferredTime);
       }
 
-      setMessage({ type: 'success', text: 'Préférences sauvegardées avec succès!' });
+      setMessage({ type: 'success', text: t('saved') });
 
       // Effacer le message après 3 secondes
       setTimeout(() => setMessage(null), 3000);
     } catch (error) {
       console.error('[NotificationPreferences] Failed to save preferences:', error);
-      setMessage({ type: 'error', text: 'Erreur lors de la sauvegarde des préférences' });
+      setMessage({ type: 'error', text: t('saveError') });
     } finally {
       setSaving(false);
     }
@@ -252,10 +254,10 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
       <div className="bg-card rounded-lg shadow-sm border p-6">
         <div className="flex items-center gap-2 mb-4">
           <Bell className="w-5 h-5 text-blue-600" />
-          <h3 className="text-lg font-semibold text-foreground">Types de notifications</h3>
+          <h3 className="text-lg font-semibold text-foreground">{t('types.title')}</h3>
         </div>
         <p className="text-sm text-muted-foreground mb-6">
-          Choisissez les types de notifications que vous souhaitez recevoir
+          {t('types.description')}
         </p>
 
         <div className="space-y-4">
@@ -263,9 +265,9 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
             <div key={type.key} className="flex items-start justify-between py-3 border-b last:border-b-0">
               <div className="flex-1">
                 <label htmlFor={type.key} className="font-medium text-foreground cursor-pointer">
-                  {type.label}
+                  {t(type.labelKey)}
                 </label>
-                <p className="text-sm text-muted-foreground mt-1">{type.description}</p>
+                <p className="text-sm text-muted-foreground mt-1">{t(type.descriptionKey)}</p>
               </div>
               <button
                 id={type.key}
@@ -289,17 +291,17 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
       <div className="bg-card rounded-lg shadow-sm border p-6">
         <div className="flex items-center gap-2 mb-4">
           <Smartphone className="w-5 h-5 text-blue-600" />
-          <h3 className="text-lg font-semibold text-foreground">Notifications Push</h3>
+          <h3 className="text-lg font-semibold text-foreground">{t('push.title')}</h3>
         </div>
         <p className="text-sm text-muted-foreground mb-6">
-          Recevez des notifications instantanées sur votre appareil
+          {t('push.description')}
         </p>
 
         {!pushSupported ? (
           <div className="p-4 bg-yellow-50 text-yellow-800 rounded-lg flex items-center gap-2">
             <AlertCircle className="w-5 h-5" />
             <span className="text-sm">
-              Les notifications push ne sont pas supportées par votre navigateur
+              {t('push.notSupported')}
             </span>
           </div>
         ) : (
@@ -307,14 +309,14 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
             <div className="flex items-start justify-between py-3">
               <div className="flex-1">
                 <label htmlFor="pushNotifications" className="font-medium text-foreground cursor-pointer">
-                  Activer les notifications push
+                  {t('push.enable')}
                 </label>
                 <p className="text-sm text-muted-foreground mt-1">
-                  Recevoir des notifications en temps réel même quand l'application n'est pas ouverte
+                  {t('push.enableDescription')}
                 </p>
                 {pushPermission === 'denied' && (
                   <p className="text-sm text-red-600 dark:text-red-400 mt-2">
-                    ⚠️ Permission refusée. Veuillez autoriser les notifications dans les paramètres de votre navigateur.
+                    {t('push.denied')}
                   </p>
                 )}
               </div>
@@ -341,10 +343,10 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
       <div className="bg-card rounded-lg shadow-sm border p-6">
         <div className="flex items-center gap-2 mb-4">
           <Mail className="w-5 h-5 text-blue-600" />
-          <h3 className="text-lg font-semibold text-foreground">Notifications par email</h3>
+          <h3 className="text-lg font-semibold text-foreground">{t('email.title')}</h3>
         </div>
         <p className="text-sm text-muted-foreground mb-6">
-          Choisissez la fréquence des emails de notification
+          {t('email.description')}
         </p>
 
         <div className="space-y-3">
@@ -366,8 +368,8 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
                 className="mt-1 h-4 w-4 text-blue-600 focus-visible:ring-ring"
               />
               <div className="ml-3">
-                <div className="font-medium text-foreground">{option.label}</div>
-                <div className="text-sm text-muted-foreground">{option.description}</div>
+                <div className="font-medium text-foreground">{t(option.labelKey)}</div>
+                <div className="text-sm text-muted-foreground">{t(option.descriptionKey)}</div>
               </div>
             </label>
           ))}
@@ -378,15 +380,15 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
       <div className="bg-card rounded-lg shadow-sm border p-6">
         <div className="flex items-center gap-2 mb-4">
           <Clock className="w-5 h-5 text-blue-600" />
-          <h3 className="text-lg font-semibold text-foreground">Heure des rappels</h3>
+          <h3 className="text-lg font-semibold text-foreground">{t('time.title')}</h3>
         </div>
         <p className="text-sm text-muted-foreground mb-6">
-          Choisissez l'heure à laquelle vous souhaitez recevoir vos rappels de série
+          {t('time.description')}
         </p>
 
         <div className="flex items-center gap-4">
           <label htmlFor="preferredTime" className="text-sm font-medium text-foreground">
-            Heure préférée :
+            {t('time.preferredTime')}
           </label>
           <input
             type="time"
@@ -406,7 +408,7 @@ export default function NotificationPreferences({ userId }: NotificationPreferen
           className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <Save className="w-5 h-5" />
-          {saving ? 'Sauvegarde...' : 'Sauvegarder les préférences'}
+          {saving ? t('saving') : t('save')}
         </button>
       </div>
     </div>

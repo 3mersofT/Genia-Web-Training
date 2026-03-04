@@ -11,6 +11,7 @@ import Link from 'next/link'
 import { getAllModulesWithProgress, type Module } from '@/lib/data'
 import { createClient } from '@/lib/supabase/client'
 import { logger } from '@/lib/logger'
+import { useTranslations } from 'next-intl'
 import FeedbackButton from '@/components/feedback/FeedbackButton'
 import CertificateButton from '@/components/certificates/CertificateButton'
 import SkillTreeVisualization from '@/components/gamification/SkillTreeVisualization'
@@ -20,6 +21,8 @@ export default function DashboardPage() {
   const { user, loading, signOut } = useAuth()
   const router = useRouter()
   const supabase = createClient()
+  const t = useTranslations('dashboard')
+  const tc = useTranslations('common')
   const [displayName, setDisplayName] = useState<string>('')
   const [modules, setModules] = useState<Module[]>([]) // État local pour les modules
   
@@ -100,13 +103,13 @@ export default function DashboardPage() {
       <header className="bg-card border-b border-border">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-foreground">
-            Prompt Engineering Academy
+            {t('title')}
           </h1>
           <button
             onClick={signOut}
             className="px-4 py-2 text-muted-foreground hover:text-foreground transition-colors"
           >
-            Déconnexion
+            {t('signOut')}
           </button>
         </div>
       </header>
@@ -117,10 +120,10 @@ export default function DashboardPage() {
           <div className="flex items-start justify-between">
             <div>
               <h2 className="text-3xl font-bold text-foreground mb-2">
-                Bienvenue{displayName ? `, ${displayName}` : ''} ! 👋
+                {t('welcomeBack')}{displayName ? `, ${displayName}` : ''} ! 👋
               </h2>
               <p className="text-muted-foreground">
-                Continuez votre parcours d'apprentissage
+                {t('subtitle')}
               </p>
             </div>
             
@@ -149,8 +152,8 @@ export default function DashboardPage() {
                   <Brain className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-foreground">Révisions espacées</h3>
-                  <p className="text-muted-foreground">Consolidez vos connaissances avec l'algorithme SM-2</p>
+                  <h3 className="text-xl font-bold text-foreground">{t('spacedRepetition.title')}</h3>
+                  <p className="text-muted-foreground">{t('spacedRepetition.description')}</p>
                 </div>
               </div>
               <ChevronRight className="w-5 h-5 text-muted-foreground" />
@@ -162,12 +165,12 @@ export default function DashboardPage() {
         <div className="mb-8">
           <h3 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
             <Trophy className="w-6 h-6 text-yellow-500" />
-            Tournois
+            {t('tournaments.title')}
           </h3>
           <div className="bg-gradient-to-br from-muted to-muted/80 border-2 border-border rounded-xl p-6 text-center">
             <Trophy className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
-            <p className="text-muted-foreground font-medium">Aucun tournoi disponible</p>
-            <p className="text-sm text-muted-foreground mt-1">Les tournois seront bientôt disponibles</p>
+            <p className="text-muted-foreground font-medium">{t('tournaments.noTournaments')}</p>
+            <p className="text-sm text-muted-foreground mt-1">{t('tournaments.comingSoon')}</p>
           </div>
         </div>
 
@@ -188,22 +191,22 @@ export default function DashboardPage() {
                 <Trophy className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-foreground">Équipes</h3>
-                <p className="text-muted-foreground">Rejoignez ou créez une équipe pour collaborer</p>
+                <h3 className="text-xl font-bold text-foreground">{t('teams.title')}</h3>
+                <p className="text-muted-foreground">{t('teams.description')}</p>
               </div>
             </div>
             <div className="bg-card rounded-lg p-4 border">
               <p className="text-foreground mb-2">
-                👥 <strong>Travail d'équipe</strong> : Créez ou rejoignez une équipe de 2 à 5 membres
+                👥 <strong>{t('teams.teamwork')}</strong> : {t('teams.teamworkDescription')}
               </p>
               <p className="text-sm text-muted-foreground mb-4">
-                Participez aux défis d'équipe, montez dans le classement et débloquez des achievements collectifs!
+                {t('teams.teamworkSubtitle')}
               </p>
               <button
                 onClick={() => router.push('/teams')}
                 className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all font-semibold"
               >
-                Découvrir les équipes
+                {t('teams.discover')}
               </button>
             </div>
           </div>
@@ -216,7 +219,7 @@ export default function DashboardPage() {
               <Trophy className="w-8 h-8 text-yellow-500" />
               <span className="text-2xl font-bold">{stats.totalPoints}</span>
             </div>
-            <p className="text-muted-foreground">Points totaux</p>
+            <p className="text-muted-foreground">{t('stats.totalPoints')}</p>
           </div>
 
           <div className="bg-card rounded-xl p-6 shadow-sm">
@@ -232,7 +235,7 @@ export default function DashboardPage() {
               <Target className="w-8 h-8 text-green-500" />
               <span className="text-2xl font-bold">{stats.completedCapsules}</span>
             </div>
-            <p className="text-muted-foreground">Capsules terminées</p>
+            <p className="text-muted-foreground">{t('stats.capsulesDone')}</p>
           </div>
 
           <div className="bg-card rounded-xl p-6 shadow-sm">
@@ -240,7 +243,7 @@ export default function DashboardPage() {
               <Clock className="w-8 h-8 text-blue-500" />
               <span className="text-2xl font-bold">{stats.progress}%</span>
             </div>
-            <p className="text-muted-foreground">Progression</p>
+            <p className="text-muted-foreground">{t('stats.progress')}</p>
           </div>
         </div>
 
@@ -252,23 +255,23 @@ export default function DashboardPage() {
                 <Trophy className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-foreground">Défis Quotidiens</h3>
-                <p className="text-muted-foreground">Relevez des challenges de Prompt Engineering</p>
+                <h3 className="text-xl font-bold text-foreground">{t('challenges.title')}</h3>
+                <p className="text-muted-foreground">{t('challenges.description')}</p>
               </div>
             </div>
             <Link
               href="/challenges"
               className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-pink-700 transition-all"
             >
-              Voir les défis
+              {t('challenges.viewChallenges')}
             </Link>
           </div>
           <div className="bg-card rounded-lg p-4 border">
             <p className="text-foreground mb-3">
-              🎯 <strong>Défis quotidiens</strong> : Améliorez vos compétences en Prompt Engineering avec des challenges adaptés à votre niveau.
+              🎯 <strong>{t('challenges.info')}</strong> : {t('challenges.infoDescription')}
             </p>
             <p className="text-sm text-muted-foreground">
-              Gagnez des points, montez dans le classement et débloquez des badges !
+              {t('challenges.infoSubtitle')}
             </p>
           </div>
         </div>
@@ -281,23 +284,23 @@ export default function DashboardPage() {
                 <BarChart3 className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-foreground">Analytiques d'Apprentissage</h3>
-                <p className="text-muted-foreground">Visualisez votre progression détaillée</p>
+                <h3 className="text-xl font-bold text-foreground">{t('analytics.title')}</h3>
+                <p className="text-muted-foreground">{t('analytics.description')}</p>
               </div>
             </div>
             <Link
               href="/analytics"
               className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-2 rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-all"
             >
-              Voir les analytics
+              {t('analytics.viewAnalytics')}
             </Link>
           </div>
           <div className="bg-card rounded-lg p-4 border">
             <p className="text-foreground mb-3">
-              📊 <strong>Tableau de bord analytique</strong> : Suivez vos performances, visualisez votre temps d'apprentissage et identifiez vos points forts.
+              📊 <strong>{t('analytics.info')}</strong> : {t('analytics.infoDescription')}
             </p>
             <p className="text-sm text-muted-foreground">
-              Obtenez des insights détaillés sur votre parcours d'apprentissage !
+              {t('analytics.infoSubtitle')}
             </p>
           </div>
         </div>
@@ -316,10 +319,10 @@ export default function DashboardPage() {
                     </div>
                     <div>
                       <h3 className="text-2xl font-bold text-foreground mb-1">
-                        Certificat Master 🎓
+                        {t('certificate.masterTitle')} 🎓
                       </h3>
                       <p className="text-muted-foreground">
-                        Félicitations ! Vous avez terminé tous les modules. Obtenez votre certificat master.
+                        {t('certificate.masterDescription')}
                       </p>
                     </div>
                   </div>
@@ -345,10 +348,10 @@ export default function DashboardPage() {
                   </div>
                   <div className="flex-1">
                     <h3 className="text-xl font-bold text-foreground mb-2">
-                      Progression vers le Certificat Master
+                      {t('certificate.progressTitle')}
                     </h3>
                     <p className="text-muted-foreground mb-3">
-                      Complétez tous les modules pour débloquer votre certificat master.
+                      {t('certificate.progressDescription')}
                     </p>
                     <div className="flex items-center gap-4">
                       <div className="flex-1 bg-muted rounded-full h-3">
@@ -358,7 +361,7 @@ export default function DashboardPage() {
                         />
                       </div>
                       <span className="text-sm font-semibold text-foreground whitespace-nowrap">
-                        {completedModules}/{totalModules} modules
+                        {completedModules}/{totalModules} {t('certificate.modules')}
                       </span>
                     </div>
                   </div>
@@ -372,7 +375,7 @@ export default function DashboardPage() {
 
         {/* Modules */}
         <div id="modules" className="bg-card rounded-xl p-6 shadow-sm">
-          <h3 className="text-xl font-bold text-foreground mb-4">Modules disponibles</h3>
+          <h3 className="text-xl font-bold text-foreground mb-4">{t('modules.title')}</h3>
           <div className="space-y-4">
             {modules.map((m) => (
               <Link key={m.id} href={`/modules/${m.slug}`}>
@@ -387,7 +390,7 @@ export default function DashboardPage() {
                       style={{ width: `${m.progress}%` }}
                     />
                   </div>
-                  <p className="text-sm text-muted-foreground mt-2">{m.progress}% complété</p>
+                  <p className="text-sm text-muted-foreground mt-2">{m.progress}% {t('modules.completed')}</p>
                 </div>
               </Link>
             ))}

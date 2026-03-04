@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTranslations } from 'next-intl';
 import { X, Download, Share2, Award, CheckCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { CertificateData } from '@/lib/certificates/generator';
@@ -20,6 +21,7 @@ export default function CertificatePreview({
   onDownload,
   onShare
 }: CertificatePreviewProps) {
+  const t = useTranslations('certificates.preview');
   const {
     studentName,
     moduleTitle,
@@ -67,8 +69,8 @@ export default function CertificatePreview({
               <div className="flex items-center gap-3">
                 <Award className="w-8 h-8 text-white" />
                 <div>
-                  <h2 className="text-2xl font-bold text-white">Aperçu du Certificat</h2>
-                  <p className="text-blue-100 mt-1">Prévisualisation avant téléchargement</p>
+                  <h2 className="text-2xl font-bold text-white">{t('title')}</h2>
+                  <p className="text-blue-100 mt-1">{t('subtitle')}</p>
                 </div>
               </div>
               <button
@@ -178,7 +180,7 @@ export default function CertificatePreview({
                 {/* Verified Badge - Top Right */}
                 <div className="absolute top-8 right-8 flex items-center gap-2 bg-green-50 text-green-700 px-3 py-1.5 rounded-full border border-green-200">
                   <CheckCircle className="w-4 h-4" />
-                  <span className="text-xs font-semibold">Vérifié</span>
+                  <span className="text-xs font-semibold">{t('verified')}</span>
                 </div>
               </div>
             </div>
@@ -191,7 +193,7 @@ export default function CertificatePreview({
                 className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-medium hover:shadow-lg transition-all"
               >
                 <Download className="w-5 h-5" />
-                Télécharger le PDF
+                {t('downloadPDF')}
               </button>
 
               {/* Share to LinkedIn Button */}
@@ -201,7 +203,7 @@ export default function CertificatePreview({
                   className="flex items-center gap-2 px-6 py-3 bg-[#0077B5] text-white rounded-lg font-medium hover:shadow-lg transition-all"
                 >
                   <Share2 className="w-5 h-5" />
-                  Partager sur LinkedIn
+                  {t('shareLinkedIn')}
                 </button>
               )}
             </div>
@@ -209,7 +211,7 @@ export default function CertificatePreview({
             {/* Info Text */}
             <div className="mt-6 text-center">
               <p className="text-sm text-slate-600">
-                Ce certificat est authentique et peut être vérifié via le code QR ou le lien de vérification.
+                {t('authenticInfo')}
               </p>
             </div>
           </div>

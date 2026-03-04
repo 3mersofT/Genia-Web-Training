@@ -27,7 +27,7 @@ const customJestConfig = {
   testPathIgnorePatterns: ['/node_modules/', '/.next/', '\\.spec\\.ts'],
   moduleDirectories: ['node_modules', '<rootDir>/'],
   transformIgnorePatterns: [
-    'node_modules/(?!(react-syntax-highlighter|refractor|hastscript|hast-util-.*|unist-.*|property-information|space-separated-tokens|comma-separated-tokens|react-markdown|remark-.*|rehype-.*|micromark.*|mdast-.*|ccount|decode-named-character-reference|character-entities|escape-string-regexp|markdown-table|vfile.*)/)',
+    'node_modules/(?!(next-intl|use-intl|react-syntax-highlighter|refractor|hastscript|hast-util-.*|unist-.*|property-information|space-separated-tokens|comma-separated-tokens|react-markdown|remark-.*|rehype-.*|micromark.*|mdast-.*|ccount|decode-named-character-reference|character-entities|escape-string-regexp|markdown-table|vfile.*)/)',
   ],
 }
 

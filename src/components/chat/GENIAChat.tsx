@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { X, Sparkles, BookOpen, Brain, Zap, Download, FileText, RotateCcw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useGENIA } from '@/components/providers/GENIAProvider';
@@ -16,6 +17,7 @@ interface GENIAChatProps {
 }
 
 export default function GENIAChat({ context: propContext, embedded = false }: GENIAChatProps = {}) {
+  const t = useTranslations('chat');
   const { currentContext } = useGENIA();
   const [isOpen, setIsOpen] = useState(false);
   const [inputMessage, setInputMessage] = useState('');
@@ -43,10 +45,10 @@ export default function GENIAChat({ context: propContext, embedded = false }: GE
   const displaySuggestions = suggestions.length > 0
     ? suggestions
     : [
-        { text: "Montre-moi un exemple concret", category: 'explore' as const, icon: '🔍' },
-        { text: "Comment améliorer ce prompt ?", category: 'deepen' as const, icon: '⚙️' },
-        { text: "Donne-moi un exercice pratique", category: 'practice' as const, icon: '⚡' },
-        { text: "Explique le raisonnement step-by-step", category: 'explore' as const, icon: '🧠' },
+        { text: t('suggestions.showExample'), category: 'explore' as const, icon: '🔍' },
+        { text: t('suggestions.improvePrompt'), category: 'deepen' as const, icon: '⚙️' },
+        { text: t('suggestions.practiceExercise'), category: 'practice' as const, icon: '⚡' },
+        { text: t('suggestions.stepByStep'), category: 'explore' as const, icon: '🧠' },
       ];
 
   const SuggestionsBar = () => (
@@ -73,14 +75,14 @@ export default function GENIAChat({ context: propContext, embedded = false }: GE
         className="flex items-center gap-2 px-4 py-2 text-sm text-foreground hover:bg-accent w-full"
       >
         <FileText className="w-4 h-4" />
-        Markdown (.md)
+        {t('export.markdown')}
       </button>
       <button
         onClick={() => { exportChat('pdf'); setShowExportMenu(false); }}
         className="flex items-center gap-2 px-4 py-2 text-sm text-foreground hover:bg-accent w-full"
       >
         <Download className="w-4 h-4" />
-        PDF (.pdf)
+        {t('export.pdf')}
       </button>
     </div>
   );
@@ -93,16 +95,16 @@ export default function GENIAChat({ context: propContext, embedded = false }: GE
   if (embedded) {
     return (
       <div className="w-full h-full flex flex-col">
-        <ChatMessageList messages={messages} isLoading={isLoading} loadingText="GENIA réfléchit..." onFeedback={sendFeedback} />
+        <ChatMessageList messages={messages} isLoading={isLoading} loadingText={t('thinking')} onFeedback={sendFeedback} />
         <SuggestionsBar />
         <div className="p-4 border-t bg-card space-y-3">
-          <ChatInput value={inputMessage} onChange={setInputMessage} onSend={handleSendMessage} disabled={isLoading} placeholder="Pose ta question..." aria-label="Poser une question à GENIA" />
+          <ChatInput value={inputMessage} onChange={setInputMessage} onSend={handleSendMessage} disabled={isLoading} placeholder={t('placeholder')} aria-label={t('ariaLabel')} />
           <div className="flex items-center justify-between text-xs text-muted-foreground">
-            <span>Modèle : {modelLabel}</span>
+            <span>{t('model')} : {modelLabel}</span>
             <div className="flex items-center gap-2">
               <span>{quotaUsed}/{quotaDaily}</span>
               <div className="relative">
-                <button onClick={() => setShowExportMenu(!showExportMenu)} className="p-1 hover:bg-accent rounded" title="Exporter">
+                <button onClick={() => setShowExportMenu(!showExportMenu)} className="p-1 hover:bg-accent rounded" title={t('export.title')}>
                   <Download className="w-3.5 h-3.5" />
                 </button>
                 {showExportMenu && <ExportMenu />}
@@ -147,15 +149,15 @@ export default function GENIAChat({ context: propContext, embedded = false }: GE
                     <Sparkles className="w-6 h-6" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-lg">GENIA</h3>
-                    <p className="text-xs text-white/80">Assistant Formateur IA</p>
+                    <h3 className="font-bold text-lg">{t('title')}</h3>
+                    <p className="text-xs text-white/80">{t('subtitle')}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-1">
                   <button
                     onClick={resetConversation}
                     className="p-1.5 hover:bg-white/20 rounded-lg transition-colors"
-                    title="Nouvelle conversation"
+                    title={t('newConversation')}
                   >
                     <RotateCcw className="w-4 h-4" />
                   </button>
@@ -195,14 +197,14 @@ export default function GENIAChat({ context: propContext, embedded = false }: GE
               </div>
             </div>
 
-            <ChatMessageList messages={messages} isLoading={isLoading} loadingText="GENIA réfléchit..." onFeedback={sendFeedback} />
+            <ChatMessageList messages={messages} isLoading={isLoading} loadingText={t('thinking')} onFeedback={sendFeedback} />
             <SuggestionsBar />
 
             <div className="p-4 border-t bg-card space-y-3">
-              <ChatInput value={inputMessage} onChange={setInputMessage} onSend={handleSendMessage} disabled={isLoading} placeholder="Pose ta question..." aria-label="Poser une question à GENIA" />
+              <ChatInput value={inputMessage} onChange={setInputMessage} onSend={handleSendMessage} disabled={isLoading} placeholder={t('placeholder')} aria-label={t('ariaLabel')} />
               <div className="flex items-center justify-between text-xs text-muted-foreground">
                 <div className="flex items-center gap-2">
-                  <span>Modèle :</span>
+                  <span>{t('model')} :</span>
                   <button
                     onClick={() => setCurrentModel(isExpert ? 'mistral-medium-3' : 'magistral-medium')}
                     className={`px-2 py-1 rounded-full text-xs font-medium transition-all ${isExpert ? 'bg-purple-100 text-purple-700 border border-purple-200' : 'bg-orange-100 text-orange-700 border border-orange-200'}`}
@@ -213,7 +215,7 @@ export default function GENIAChat({ context: propContext, embedded = false }: GE
                 <div className="flex items-center gap-2">
                   <span>{quotaUsed}/{quotaDaily}</span>
                   <div className="relative">
-                    <button onClick={() => setShowExportMenu(!showExportMenu)} className="p-1 hover:bg-accent rounded" title="Exporter la conversation">
+                    <button onClick={() => setShowExportMenu(!showExportMenu)} className="p-1 hover:bg-accent rounded" title={t('export.title')}>
                       <Download className="w-3.5 h-3.5" />
                     </button>
                     {showExportMenu && <ExportMenu />}

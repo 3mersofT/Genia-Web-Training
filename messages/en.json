@@ -124,7 +124,11 @@
       "nextLevel": "Next level",
       "completeExercises": "Complete capsules to earn XP and level up",
       "strengths": "Strengths",
-      "weaknesses": "Areas to improve"
+      "weaknesses": "Areas to improve",
+      "exercises": "Exercises",
+      "successRate": "Success rate",
+      "retention": "Retention",
+      "score": "Score"
     },
     "spacedRepetition": {
       "title": "Spaced repetition",
@@ -213,7 +217,13 @@
     "loginRequired": "You must be signed in to use the chat",
     "errorOccurred": "An error occurred",
     "levelUp": "Congratulations! You've reached {level}!",
-    "levelDown": "We're adjusting the difficulty to better support you."
+    "levelDown": "We're adjusting the difficulty to better support you.",
+    "ariaLabel": "Ask GENIA a question",
+    "reasoning": "Show reasoning...",
+    "feedbackHelpfulAria": "Mark as helpful",
+    "feedbackNotHelpfulAria": "Mark as not helpful",
+    "feedbackHelpfulTitle": "Helpful",
+    "feedbackNotHelpfulTitle": "Not helpful"
   },
   "capsule": {
     "start": "Start",
@@ -233,7 +243,22 @@
     "saveOffline": "Save offline",
     "savedOffline": "Available offline",
     "removeOffline": "Remove offline",
-    "score": "Score"
+    "score": "Score",
+    "playground": {
+      "title": "Try this prompt",
+      "yourPrompt": "Your prompt",
+      "characters": "characters",
+      "placeholder": "Write or edit your prompt here...",
+      "modified": "Modified",
+      "tryWithGenia": "Try with GENIA",
+      "reset": "Reset",
+      "showExpected": "Show expected result",
+      "hideExpected": "Hide expected result",
+      "expectedResult": "Expected result:",
+      "tip": "Tip:",
+      "tipContent": "Edit the prompt above to experiment with different phrasings, then click \"Try with GENIA\" for a personalized response and improvement tips.",
+      "noStarterPrompt": "No starter prompt provided"
+    }
   },
   "review": {
     "title": "Spaced repetition",
@@ -261,7 +286,25 @@
       "streak": "Streak"
     },
     "howItWorks": "How does it work?",
-    "howItWorksDescription": "The SM-2 system calculates the best time to review each concept. The more you succeed, the longer the interval."
+    "howItWorksDescription": "The SM-2 system calculates the best time to review each concept. The more you succeed, the longer the interval.",
+    "questionPrompt": "What was this capsule about?",
+    "hint": "Hint:",
+    "revealAnswer": "Reveal the answer",
+    "keyPoint": "Key point:",
+    "viewFullConcept": "View full concept",
+    "rateRecall": "How well did you recall this?",
+    "reviews": "Reviews",
+    "averageEasiness": "Avg. easiness",
+    "dueCountMessage": "{count} capsule(s) due for review today",
+    "wellRetained": "{good}/{total} capsule(s) well retained",
+    "averageQuality": "Average quality",
+    "backToDashboard": "Back to dashboard",
+    "howItWorksSteps": {
+      "step1": "1. Complete capsules to add them to your reviews",
+      "step2": "2. The SM-2 algorithm calculates the optimal time to review",
+      "step3": "3. Rate your recall from 0 (no memory) to 5 (perfect)",
+      "step4": "4. Intervals adapt: the more you retain, the less you review"
+    }
   },
   "profile": {
     "title": "My Profile",
@@ -388,17 +431,402 @@
     "installDescription": "Install GENIA on your device for quick access",
     "update": "Update available",
     "updateDescription": "A new version is available",
+    "installTitle": "Install GENIA Training",
+    "quickAccess": "Quick access from your {device}",
+    "deviceMobile": "home screen",
+    "deviceDesktop": "desktop",
+    "ultraFastLaunch": "Ultra-fast launch",
+    "experienceMobile": "Optimized mobile experience",
+    "experienceDesktop": "Native experience",
+    "newChallengeNotifications": "New challenge notifications",
+    "installButton": "Install",
+    "later": "Later",
+    "iosInstallTitle": "Install on iOS",
+    "iosInstallDescription": "Follow these steps to install the app",
+    "iosStep1Title": "Tap the Share button",
+    "iosStep1Description": "at the bottom of your Safari screen",
+    "iosStep2Title": "Scroll down and select",
+    "iosStep2Description": "\"Add to Home Screen\"",
+    "iosStep3Title": "Tap \"Add\"",
+    "iosStep3Description": "The app will be added to your home screen",
+    "iosTip": "You must use Safari to install the app on iOS.",
+    "iosUnderstood": "Got it!",
     "offline": {
       "title": "Offline mode",
       "description": "You're offline. Some features are limited.",
       "cachedContent": "Content available offline",
-      "capsulesCached": "capsules cached"
+      "capsulesCached": "capsules cached",
+      "removeOffline": "Remove from offline mode",
+      "makeAvailableOffline": "Make available offline",
+      "offlineLabel": "Offline",
+      "saveLabel": "Save",
+      "removing": "Removing...",
+      "downloading": "Downloading...",
+      "removeFromOffline": "Remove from offline",
+      "availableOffline": "Available offline"
     }
   },
   "feedback": {
     "title": "Give feedback",
     "placeholder": "Your feedback...",
     "submit": "Send",
-    "thanks": "Thanks for your feedback!"
+    "thanks": "Thanks for your feedback!",
+    "sendFeedback": "Send feedback",
+    "rateModule": "Rate this module",
+    "rateCapsule": "Rate this capsule",
+    "ratePlatform": "Platform feedback",
+    "giveFeedback": "Give feedback",
+    "feedbackOnModule": "Feedback on module \"{title}\"",
+    "feedbackOnCapsule": "Feedback on capsule \"{title}\"",
+    "feedbackOnPlatform": "Platform feedback",
+    "feedbackDefault": "Feedback",
+    "descriptionModule": "Share your opinion on this module to help us improve it",
+    "descriptionCapsule": "Your feedback helps us improve this capsule",
+    "descriptionPlatform": "Help us improve your experience on the platform",
+    "descriptionDefault": "Your opinion matters!",
+    "overallRating": "Overall rating *",
+    "ratingLow": "Not at all",
+    "ratingHigh": "Excellent",
+    "categoriesLabel": "Categories * (select at least one)",
+    "commentLabel": "Comment (optional)",
+    "commentPlaceholder": "Share your suggestions, what you liked, what could be improved...",
+    "characters": "characters",
+    "anonymous": "Anonymous feedback",
+    "nameLabel": "Name (optional)",
+    "namePlaceholder": "Your name",
+    "emailLabel": "Email (optional)",
+    "cancel": "Cancel",
+    "sending": "Sending...",
+    "ratingRequired": "Please give a rating",
+    "categoryRequired": "Please select at least one category",
+    "errorSending": "Error sending feedback",
+    "errorUnknown": "Unknown error",
+    "categories": {
+      "contenu": "Content",
+      "pedagogie": "Pedagogy",
+      "technique": "Technical",
+      "structure": "Structure",
+      "clarte": "Clarity",
+      "exemples": "Examples",
+      "ux": "Interface",
+      "performance": "Performance",
+      "navigation": "Navigation",
+      "fonctionnalites": "Features"
+    }
+  },
+  "landing": {
+    "hero": {
+      "title": "Master Prompt Engineering",
+      "titleHighlight": "with the GENIA Method",
+      "subtitle": "A complete, structured training to become an expert in generative artificial intelligence",
+      "cta": "Start Training",
+      "ctaSecondary": "Discover the Method",
+      "login": "Sign in",
+      "register": "Sign up"
+    },
+    "stats": {
+      "modules": "Full modules",
+      "capsules": "Capsules",
+      "training": "Of training",
+      "certificate": "Certificate"
+    },
+    "features": {
+      "title": "A platform designed for your success",
+      "subtitle": "All the tools to become a Prompt Engineering expert",
+      "ai": {
+        "title": "French AI Mistral",
+        "description": "Cutting-edge French technology for your learning"
+      },
+      "method": {
+        "title": "GENIA Method",
+        "description": "5 pedagogical pillars to master prompting"
+      },
+      "certificate": {
+        "title": "Certified Training",
+        "description": "Get your recognized competency certificate"
+      },
+      "gamification": {
+        "title": "Gamification",
+        "description": "Badges, points and challenges to stay motivated"
+      }
+    },
+    "methodology": {
+      "title": "The GENIA Method",
+      "subtitle": "A unique pedagogical approach with 5 pillars",
+      "G": { "title": "Progressive Guide", "description": "Step-by-step structured learning", "details": "Each concept is broken down into simple, progressive steps for optimal understanding." },
+      "E": { "title": "Concrete Examples", "description": "Real-world practical cases", "details": "Examples drawn from real professional situations for immediate application." },
+      "N": { "title": "Adaptive Level", "description": "Content that adjusts to your pace", "details": "The system automatically adapts to your level and learning speed." },
+      "I": { "title": "Hands-on Interaction", "description": "Engaging exercises and challenges", "details": "Put knowledge into practice immediately with interactive exercises and stimulating challenges." },
+      "A": { "title": "Continuous Assessment", "description": "Supportive evaluation of your progress", "details": "Track your progress in real time with constructive and encouraging assessments." },
+      "authorCredit": "Method developed by Hemerson KOFFI, AI pedagogy expert"
+    },
+    "pricing": {
+      "title": "Invest in your professional future",
+      "subtitle": "An exceptional training at an accessible price",
+      "planTitle": "Complete Training",
+      "comingSoon": "Launching Soon",
+      "priceInfo": "Pricing will be announced at official launch",
+      "features": {
+        "unlimited": "Unlimited platform access",
+        "assistant": "GENIA pedagogical assistant",
+        "modules": "3 complete modules (36 capsules)",
+        "certificate": "Official completion certificate",
+        "updates": "Regular updates",
+        "support": "Email technical support"
+      },
+      "earlyInfo": "Be among the first to know about the launch"
+    },
+    "testimonials": {
+      "title": "They transformed their careers",
+      "subtitle": "Join our satisfied learners"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions"
+    },
+    "contact": {
+      "title": "Questions? Contact us"
+    },
+    "cta": {
+      "title": "Ready to become a Prompt Engineering expert?",
+      "subtitle": "Join GENIA Web Training today",
+      "register": "Sign up now",
+      "method": "See the method"
+    },
+    "footer": {
+      "description": "Prompt Engineering training platform",
+      "training": "Training",
+      "program": "Program",
+      "method": "Method",
+      "certificates": "Certificates",
+      "resources": "Resources",
+      "blog": "Blog",
+      "documentation": "Documentation",
+      "support": "Support",
+      "info": "Information",
+      "terms": "Terms",
+      "contact": "Contact",
+      "about": "About",
+      "copyright": "© 2025 GENIA Web Training. Created by Hemerson KOFFI. All rights reserved."
+    },
+    "waitlist": "Join the waitlist"
+  },
+  "challenges": {
+    "title": "Daily Challenges",
+    "subtitle": "Take on today's challenge and climb the leaderboard!",
+    "currentStreak": "Current streak",
+    "victories": "Victories",
+    "averageScore": "Average score",
+    "dailyChallenge": "Today's challenge",
+    "leaderboard": "Leaderboard",
+    "history": "History",
+    "instructions": "Instructions",
+    "yourAnswer": "Your answer",
+    "placeholder": "Write your improved prompt here...",
+    "submit": "Submit my answer",
+    "newChallenge": "New challenge",
+    "noLeaderboard": "No leaderboard available",
+    "noLeaderboardDesc": "Participate in challenges to appear on the leaderboard!",
+    "noHistory": "No history available",
+    "noHistoryDesc": "Your challenge participations will appear here."
+  },
+  "leaderboards": {
+    "title": "Seasonal Leaderboards",
+    "subtitle": "Compare your performance with the best players!",
+    "participants": "Participants",
+    "currentSeason": "Current season",
+    "individual": "Individual Leaderboard",
+    "teams": "Team Leaderboard",
+    "noIndividual": "The leaderboard will be available once students have completed capsules.",
+    "noTeams": "The team leaderboard will be available soon."
+  },
+  "skillTree": {
+    "title": "Skill Tree",
+    "subtitle": "Progress in your mastery of prompt engineering by unlocking new skills",
+    "total": "Total",
+    "available": "Available skills",
+    "unlocked": "Unlocked",
+    "unlockedDesc": "In progress or completed",
+    "completed": "Completed",
+    "completedDesc": "Ready to use",
+    "mastered": "Mastered",
+    "masteredDesc": "Expertise achieved",
+    "noSkills": "No skills available",
+    "noSkillsDesc": "The skill tree will be displayed here when data is available.",
+    "howToUse": "How to use the skill tree",
+    "instructions": {
+      "click": "Click on a node to see skill details",
+      "green": "Green nodes are already completed prerequisites",
+      "blue": "Blue nodes are available for unlocking",
+      "gray": "Gray nodes are locked — complete the prerequisites first",
+      "connections": "Dashed lines show unmet prerequisites"
+    }
+  },
+  "teams": {
+    "title": "Teams",
+    "subtitle": "Collaborate with other learners and take on challenges together"
+  },
+  "offline": {
+    "title": "Offline mode",
+    "youAreOffline": "You are offline",
+    "description": "Check your connection. In the meantime, browse your saved capsules.",
+    "retry": "Retry",
+    "cachedCapsules": "Capsules available offline",
+    "loadingCache": "Loading cache...",
+    "removeFromCache": "Remove from cache",
+    "clearCache": "Clear all cache",
+    "noCapsules": "No saved capsules.",
+    "noCapsulesTip": "Save capsules from their page to access them offline.",
+    "connectionRestored": "Connection restored, redirecting...",
+    "backOffline": "Back (offline)",
+    "offlineMode": "Offline mode",
+    "offlineStatus": "Offline",
+    "connectionRestoredShort": "Connection restored",
+    "contentSections": {
+      "hook": "Hook",
+      "concept": "Concept",
+      "demo": "Demonstration",
+      "vagueVersion": "Vague version",
+      "optimizedVersion": "Optimized version",
+      "exercise": "Exercise",
+      "recap": "Summary"
+    },
+    "tipOfTheDay": "Tip of the day",
+    "tipContent": "A good prompt always contains: Role, Context, Task and Format (RCTF)",
+    "mentalExercise": "Mental exercise",
+    "mentalExerciseContent": "Think of 3 ways to improve this prompt: \"Write me an article\""
+  },
+  "certificates": {
+    "verification": {
+      "title": "Certificate Verification",
+      "loading": "Verifying certificate...",
+      "invalid": "Invalid Certificate",
+      "invalidDesc": "This certificate could not be verified. The verification code may be incorrect or expired.",
+      "backHome": "Back to home",
+      "verified": "Certificate Verified",
+      "verifiedDesc": "This certificate is authentic and was issued by GENIA",
+      "masterCertificate": "Master Certificate",
+      "moduleCertificate": "Module Certificate",
+      "attests": "This certificate attests that",
+      "completedSuccessfully": "has successfully completed",
+      "completionDate": "Completion date",
+      "successScore": "Success score",
+      "modulesCompleted": "Modules completed",
+      "verificationCode": "Verification code",
+      "issueDate": "Issue date",
+      "aboutGenia": "About GENIA",
+      "aboutGeniaDesc": "GENIA is an innovative learning platform dedicated to prompt engineering and artificial intelligence.",
+      "discoverGenia": "Discover GENIA",
+      "viewJSON": "View JSON data",
+      "error": "Error verifying certificate"
+    },
+    "generate": {
+      "masterButton": "Get Master Certificate",
+      "moduleButton": "Get my Certificate",
+      "downloadButton": "Download Certificate"
+    },
+    "preview": {
+      "title": "Certificate Preview",
+      "subtitle": "Preview before downloading",
+      "downloadPDF": "Download PDF",
+      "shareLinkedIn": "Share on LinkedIn",
+      "authenticInfo": "This certificate is authentic and can be verified via the QR code or the verification link.",
+      "verified": "Verified"
+    }
+  },
+  "modules": {
+    "loading": "Loading module...",
+    "notFound": "Module not found",
+    "backToDashboard": "Back to dashboard",
+    "completed": "completed",
+    "moduleCompleted": "Module completed!",
+    "moduleCompletedDesc": "Congratulations, you can now get your certificate.",
+    "getCertificate": "Get certificate",
+    "modulePlan": "Module plan",
+    "lesson": "Lesson"
+  },
+  "admin": {
+    "title": "Admin Dashboard",
+    "subtitle": "GENIA Web Training Platform",
+    "restricted": "Restricted Access",
+    "restrictedDesc": "This page is reserved for administrators.",
+    "loading": "Loading dashboard...",
+    "searchPlaceholder": "Search user, content...",
+    "searchResults": "Search results",
+    "user": "User",
+    "content": "Content",
+    "refresh": "Refresh",
+    "logout": "Sign out",
+    "breadcrumbs": {
+      "admin": "Admin",
+      "overview": "Overview"
+    },
+    "tabs": {
+      "overview": "Overview",
+      "users": "Users",
+      "aiUsage": "AI Usage",
+      "content": "Content",
+      "feedback": "Feedback",
+      "settings": "Settings"
+    },
+    "dateFilters": {
+      "today": "Today",
+      "thisWeek": "This week",
+      "thisMonth": "This month",
+      "thisYear": "This year"
+    },
+    "alerts": {
+      "lowCompletion": "Warning: Low completion rate",
+      "highQuota": "High quota: {tokens}k tokens used this month."
+    },
+    "stats": {
+      "totalUsers": "Total users",
+      "activeThisWeek": "active this week",
+      "estimatedRevenue": "Estimated revenue",
+      "completionRate": "Completion rate",
+      "geniaMessages": "GENIA Messages",
+      "tokensUsed": "{tokens}k tokens used",
+      "realData": "Real data",
+      "revenueCalculated": "Revenue calculated",
+      "today": "today"
+    },
+    "charts": {
+      "registrations": "Registration trends (last 7 days)",
+      "registrationsChart": "Trend chart",
+      "registrationsData": "Real data being collected",
+      "recentActivity": "Recent activity"
+    },
+    "noActivity": "No recent activity",
+    "noActivityDesc": "Activity logs will appear here",
+    "activityLogs": "Activity logs in development",
+    "activityLogsDesc": "Real data coming soon",
+    "quickActions": {
+      "title": "Quick Actions",
+      "manageUsers": "Manage users",
+      "content": "Content",
+      "aiAnalytics": "AI Analytics",
+      "settings": "Settings"
+    }
+  },
+  "analytics": {
+    "title": "Learning Analytics Dashboard",
+    "subtitle": "Track your progress and performance",
+    "authenticating": "Authenticating...",
+    "unableToLoad": "Unable to Load Analytics",
+    "retrying": "Retrying...",
+    "tryAgain": "Try Again",
+    "refreshing": "Refreshing...",
+    "refreshBtn": "Refresh",
+    "performanceTab": "Performance Analytics",
+    "seasonalTab": "Seasonal Leaderboard",
+    "spacedRepetition": "Spaced repetition",
+    "spacedRepetitionDesc": "Strengthen your knowledge with the SM-2 algorithm",
+    "access": "Access",
+    "congratsTop10": "Congratulations! You're in the Top 10!",
+    "shareAchievement": "Share your achievement with friends and showcase your skills",
+    "noData": "No Analytics Data Yet",
+    "noDataDesc": "Start completing capsules to see your learning analytics",
+    "goToDashboard": "Go to Dashboard",
+    "signOut": "Sign out",
+    "headerTitle": "Prompt Engineering Academy"
   }
 }

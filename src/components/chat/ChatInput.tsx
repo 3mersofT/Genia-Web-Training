@@ -1,6 +1,7 @@
 'use client'
 
 import React, { KeyboardEvent, ChangeEvent, useRef, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { Send } from 'lucide-react';
 
 // ============= TYPES =============
@@ -20,10 +21,11 @@ export default function ChatInput({
   onChange,
   onSend,
   disabled = false,
-  placeholder = "Pose ta question...",
+  placeholder,
   className = "",
   'aria-label': ariaLabel
 }: ChatInputProps) {
+  const t = useTranslations('chat');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Auto-resize textarea based on content
@@ -69,7 +71,7 @@ export default function ChatInput({
         value={value}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
-        placeholder={placeholder}
+        placeholder={placeholder || t('placeholder')}
         disabled={disabled}
         rows={1}
         className="flex-1 px-4 py-2 border border-border rounded-xl bg-background text-foreground focus:outline-none focus:ring-2 focus-visible:ring-ring focus:border-transparent resize-none overflow-y-auto disabled:opacity-50 disabled:cursor-not-allowed"
@@ -80,7 +82,7 @@ export default function ChatInput({
         onClick={handleSendClick}
         disabled={!value.trim() || disabled}
         className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
-        aria-label="Envoyer le message"
+        aria-label={t('send')}
       >
         <Send className="w-5 h-5" />
       </button>

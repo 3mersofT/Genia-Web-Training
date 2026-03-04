@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useAuth } from '@/hooks/useAuth';
 import { useTheme } from '@/contexts/ThemeContext';
 import NotificationCenter from '@/components/notifications/NotificationCenter';
@@ -20,6 +21,8 @@ interface NavItem {
 }
 
 export default function DesktopNavigation() {
+  const t = useTranslations('nav');
+  const tp = useTranslations('profile');
   const pathname = usePathname();
   const router = useRouter();
   const { user, signOut } = useAuth();
@@ -28,13 +31,13 @@ export default function DesktopNavigation() {
   const [showThemeMenu, setShowThemeMenu] = useState(false);
 
   const navItems: NavItem[] = [
-    { icon: Home, label: 'Accueil', href: '/dashboard' },
-    { icon: BookOpen, label: 'Modules', href: '/dashboard#modules' },
-    { icon: MessageSquare, label: 'GENIA', href: '/dashboard' },
-    { icon: Trophy, label: 'Progrès', href: '/dashboard#progress' },
-    { icon: Swords, label: 'Tournois', href: '/tournaments' },
-    { icon: Users, label: 'Équipes', href: '/teams' },
-    { icon: Network, label: 'Arbre de Compétences', href: '/skill-tree' }
+    { icon: Home, label: t('dashboard'), href: '/dashboard' },
+    { icon: BookOpen, label: t('modules'), href: '/dashboard#modules' },
+    { icon: MessageSquare, label: t('chat'), href: '/dashboard' },
+    { icon: Trophy, label: t('progress'), href: '/dashboard#progress' },
+    { icon: Swords, label: t('tournaments'), href: '/tournaments' },
+    { icon: Users, label: t('teams'), href: '/teams' },
+    { icon: Network, label: t('skillTree'), href: '/skill-tree' }
   ];
 
   const handleSignOut = async () => {
@@ -95,7 +98,7 @@ export default function DesktopNavigation() {
             title="Mon profil"
           >
             <User className="w-4 h-4" />
-            Profil
+            {t('profile')}
           </button>
           {/* Sélecteur de thème */}
           <div className="relative">
@@ -115,7 +118,7 @@ export default function DesktopNavigation() {
                   }`}
                 >
                   <Sun className="w-4 h-4" />
-                  Clair
+                  {tp('theme.light')}
                 </button>
                 <button
                   onClick={() => { setTheme('dark'); setShowThemeMenu(false); }}
@@ -124,7 +127,7 @@ export default function DesktopNavigation() {
                   }`}
                 >
                   <Moon className="w-4 h-4" />
-                  Sombre
+                  {tp('theme.dark')}
                 </button>
                 <button
                   onClick={() => { setTheme('system'); setShowThemeMenu(false); }}
@@ -133,7 +136,7 @@ export default function DesktopNavigation() {
                   }`}
                 >
                   <Monitor className="w-4 h-4" />
-                  Système
+                  {tp('theme.system')}
                 </button>
               </div>
             )}
@@ -174,7 +177,7 @@ export default function DesktopNavigation() {
                   className="flex items-center gap-3 w-full px-4 py-2 text-sm text-foreground hover:bg-accent"
                 >
                   <User className="w-4 h-4" />
-                  Mon Profil
+                  {t('myProfile')}
                 </button>
                 <button
                   onClick={() => {
@@ -184,7 +187,7 @@ export default function DesktopNavigation() {
                   className="flex items-center gap-3 w-full px-4 py-2 text-sm text-foreground hover:bg-accent"
                 >
                   <Settings className="w-4 h-4" />
-                  Préférences
+                  {t('settings')}
                 </button>
                 <div className="border-t border-border my-1"></div>
                 <button
@@ -192,7 +195,7 @@ export default function DesktopNavigation() {
                   className="flex items-center gap-3 w-full px-4 py-2 text-sm text-destructive hover:bg-destructive/10"
                 >
                   <LogOut className="w-4 h-4" />
-                  Se déconnecter
+                  {t('signOut')}
                 </button>
               </div>
             )}

@@ -2,10 +2,13 @@
 
 import { WifiOff, RefreshCw, BookOpen, Clock, Trash2, HardDrive } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { useOffline } from '@/hooks/useOffline';
 import type { CachedCapsule } from '@/lib/services/offlineService';
 
 export default function OfflinePage() {
+  const t = useTranslations('offline');
+  const tc = useTranslations('common');
   const [isOnline, setIsOnline] = useState(false);
   const { cachedCapsules, cacheInfo, removeCapsule, clearAll, formatSize, isLoading } = useOffline();
   const [selectedCapsule, setSelectedCapsule] = useState<CachedCapsule | null>(null);
@@ -44,7 +47,7 @@ export default function OfflinePage() {
       <div className="min-h-screen bg-gradient-to-br from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] flex items-center justify-center p-4">
         <div className="text-center animate-pulse">
           <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-muted-foreground">Connexion rétablie, redirection...</p>
+          <p className="text-muted-foreground">{t('connectionRestored')}</p>
         </div>
       </div>
     );
@@ -63,11 +66,11 @@ export default function OfflinePage() {
                 className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
               >
                 <WifiOff className="w-4 h-4" />
-                Retour (hors ligne)
+                {t('backOffline')}
               </button>
               <div className="flex items-center gap-2 text-xs text-orange-600">
                 <HardDrive className="w-3 h-3" />
-                Mode hors ligne
+                {t('offlineMode')}
               </div>
             </div>
           </div>
@@ -89,28 +92,28 @@ export default function OfflinePage() {
           <div className="space-y-6">
             {sections.hook && (
               <div className="bg-card rounded-lg shadow-sm p-6">
-                <h3 className="font-semibold text-blue-900 mb-3">Accroche</h3>
+                <h3 className="font-semibold text-blue-900 mb-3">{t('contentSections.hook')}</h3>
                 <p className="text-foreground">{sections.hook.text}</p>
               </div>
             )}
             {sections.concept?.content && (
               <div className="bg-card rounded-lg shadow-sm p-6">
-                <h3 className="font-semibold text-purple-900 mb-3">Concept</h3>
+                <h3 className="font-semibold text-purple-900 mb-3">{t('contentSections.concept')}</h3>
                 <div className="text-foreground whitespace-pre-wrap">{sections.concept.content}</div>
               </div>
             )}
             {sections.demo && (
               <div className="bg-card rounded-lg shadow-sm p-6">
-                <h3 className="font-semibold text-green-900 mb-3">Démonstration</h3>
+                <h3 className="font-semibold text-green-900 mb-3">{t('contentSections.demo')}</h3>
                 {sections.demo.before && (
                   <div className="mb-4">
-                    <h4 className="text-sm font-medium text-red-700 dark:text-red-300 mb-1">Version vague</h4>
+                    <h4 className="text-sm font-medium text-red-700 dark:text-red-300 mb-1">{t('contentSections.vagueVersion')}</h4>
                     <pre className="bg-red-50 dark:bg-red-950/30 p-3 rounded text-sm whitespace-pre-wrap">{sections.demo.before}</pre>
                   </div>
                 )}
                 {sections.demo.after && (
                   <div className="mb-4">
-                    <h4 className="text-sm font-medium text-green-700 dark:text-green-300 mb-1">Version optimisée</h4>
+                    <h4 className="text-sm font-medium text-green-700 dark:text-green-300 mb-1">{t('contentSections.optimizedVersion')}</h4>
                     <pre className="bg-green-50 dark:bg-green-950/30 p-3 rounded text-sm whitespace-pre-wrap">{sections.demo.after}</pre>
                   </div>
                 )}
@@ -121,13 +124,13 @@ export default function OfflinePage() {
             )}
             {sections.exercise && (
               <div className="bg-card rounded-lg shadow-sm p-6">
-                <h3 className="font-semibold text-amber-900 mb-3">Exercice</h3>
+                <h3 className="font-semibold text-amber-900 mb-3">{t('contentSections.exercise')}</h3>
                 <p className="text-foreground">{sections.exercise.instruction}</p>
               </div>
             )}
             {sections.recap && (
               <div className="bg-card rounded-lg shadow-sm p-6">
-                <h3 className="font-semibold text-purple-900 mb-3">Récapitulatif</h3>
+                <h3 className="font-semibold text-purple-900 mb-3">{t('contentSections.recap')}</h3>
                 {sections.recap.keyPoint && (
                   <p className="text-foreground">{sections.recap.keyPoint}</p>
                 )}
@@ -148,17 +151,17 @@ export default function OfflinePage() {
             <WifiOff className="w-12 h-12 text-muted-foreground" />
           </div>
           <h1 className="text-3xl font-bold text-foreground mb-2">
-            Vous êtes hors ligne
+            {t('youAreOffline')}
           </h1>
           <p className="text-muted-foreground mb-6">
-            Vérifiez votre connexion. En attendant, consultez vos capsules sauvegardées.
+            {t('description')}
           </p>
           <button
             onClick={handleRetry}
             className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-3 px-6 rounded-lg hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 mb-6"
           >
             <RefreshCw className="w-5 h-5" />
-            Réessayer
+            {t('retry')}
           </button>
         </div>
 
@@ -166,7 +169,7 @@ export default function OfflinePage() {
         <div className="border-t pt-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-foreground">
-              Capsules disponibles hors ligne
+              {t('cachedCapsules')}
             </h2>
             {cacheInfo.totalCapsules > 0 && (
               <span className="text-xs text-muted-foreground">
@@ -178,7 +181,7 @@ export default function OfflinePage() {
           {isLoading ? (
             <div className="text-center py-4">
               <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-              <p className="text-sm text-muted-foreground">Chargement du cache...</p>
+              <p className="text-sm text-muted-foreground">{t('loadingCache')}</p>
             </div>
           ) : cachedCapsules.length > 0 ? (
             <div className="space-y-2">
@@ -204,7 +207,7 @@ export default function OfflinePage() {
                   <button
                     onClick={() => removeCapsule(cached.capsule.id)}
                     className="p-1.5 text-muted-foreground hover:text-red-500 dark:text-red-400 transition-colors flex-shrink-0"
-                    title="Retirer du cache"
+                    title={t('removeFromCache')}
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
@@ -216,7 +219,7 @@ export default function OfflinePage() {
                   onClick={clearAll}
                   className="w-full mt-3 text-xs text-red-500 dark:text-red-400 hover:text-red-700 dark:text-red-300 py-2"
                 >
-                  Vider tout le cache
+                  {t('clearCache')}
                 </button>
               )}
             </div>
@@ -224,10 +227,10 @@ export default function OfflinePage() {
             <div className="text-center py-4">
               <HardDrive className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
               <p className="text-sm text-muted-foreground">
-                Aucune capsule sauvegardée.
+                {t('noCapsules')}
               </p>
               <p className="text-xs text-muted-foreground mt-1">
-                Sauvegardez des capsules depuis leur page pour y accéder hors ligne.
+                {t('noCapsulesTip')}
               </p>
             </div>
           )}
@@ -237,20 +240,19 @@ export default function OfflinePage() {
         <div className="border-t pt-6 mt-6 space-y-3 text-left">
           <div className="bg-blue-50 p-4 rounded-lg">
             <h3 className="font-medium text-blue-900 mb-1">
-              Astuce du jour
+              {t('tipOfTheDay')}
             </h3>
             <p className="text-sm text-blue-700">
-              Un bon prompt contient toujours : Rôle, Contexte, Tâche et Format (RCTF)
+              {t('tipContent')}
             </p>
           </div>
 
           <div className="bg-green-50 dark:bg-green-950/30 p-4 rounded-lg">
             <h3 className="font-medium text-green-900 mb-1">
-              Exercice mental
+              {t('mentalExercise')}
             </h3>
             <p className="text-sm text-green-700 dark:text-green-300">
-              Réfléchissez à 3 façons d'améliorer ce prompt :
-              "Écris-moi un article"
+              {t('mentalExerciseContent')}
             </p>
           </div>
         </div>
@@ -258,7 +260,7 @@ export default function OfflinePage() {
         {/* Status */}
         <div className="mt-4 flex items-center justify-center gap-2">
           <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-          <span className="text-xs text-muted-foreground">Hors ligne</span>
+          <span className="text-xs text-muted-foreground">{t('offlineStatus')}</span>
         </div>
       </div>
     </div>

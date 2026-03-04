@@ -8,6 +8,7 @@ import Link from 'next/link';
 import ReviewDashboard from '@/components/review/ReviewDashboard';
 import ReviewSession from '@/components/review/ReviewSession';
 import { getCapsuleById, getCapsuleContent } from '@/lib/data';
+import { useTranslations } from 'next-intl';
 import type { SM2Quality } from '@/lib/services/spacedRepetitionService';
 
 interface CardWithContent {
@@ -21,6 +22,8 @@ interface CardWithContent {
 export default function ReviewPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const t = useTranslations('review');
+  const tc = useTranslations('common');
   const [isLoading, setIsLoading] = useState(true);
   const [stats, setStats] = useState({
     totalCards: 0,
@@ -136,7 +139,7 @@ export default function ReviewPage() {
         <div className="container mx-auto px-4 py-8">
           <div className="text-center">
             <div className="w-8 h-8 border-4 border-purple-600 border-t-transparent rounded-full mx-auto mb-4 animate-spin" />
-            <p className="text-muted-foreground">Chargement...</p>
+            <p className="text-muted-foreground">{tc('loading')}</p>
           </div>
         </div>
       </div>
@@ -158,8 +161,8 @@ export default function ReviewPage() {
             <div className="flex items-center gap-2">
               <Brain className="w-6 h-6 text-purple-600" />
               <div>
-                <h1 className="text-2xl font-bold text-foreground">Révisions</h1>
-                <p className="text-muted-foreground">Système de révision espacée SM-2</p>
+                <h1 className="text-2xl font-bold text-foreground">{t('title')}</h1>
+                <p className="text-muted-foreground">{t('subtitle')}</p>
               </div>
             </div>
           </div>
