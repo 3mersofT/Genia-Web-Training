@@ -189,22 +189,69 @@ function checkRateLimit(
  */
 export function createRateLimiter(config: RateLimitConfig): RateLimiterMiddleware {
   if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
-    // TODO: Replace this block with @upstash/ratelimit implementation:
-    //
-    // import { Ratelimit } from '@upstash/ratelimit';
-    // import { Redis } from '@upstash/redis';
-    //
-    // const redis = new Redis({
-    //   url: process.env.UPSTASH_REDIS_REST_URL,
-    //   token: process.env.UPSTASH_REDIS_REST_TOKEN,
-    // });
-    // const ratelimit = new Ratelimit({
-    //   redis,
-    //   limiter: Ratelimit.slidingWindow(config.limit, `${config.interval}ms`),
-    // });
-    //
-    // For now, fall through to in-memory implementation.
-    console.info('Rate limiter: Upstash Redis env vars detected but @upstash/ratelimit not installed. Using in-memory fallback.');
+    try {
+      // Dynamic imports to avoid breaking build when packages aren't installed
+      const { Redis } = require('@upstash/redis');
+      const { Ratelimit } = require('@upstash/ratelimit');
+
+      const redis = new Redis({
+        url: process.env.UPSTASH_REDIS_REST_URL,
+        token: process.env.UPSTASH_REDIS_REST_TOKEN,
+      });
+
+      const ratelimit = new Ratelimit({
+        redis,
+        limiter: Ratelimit.slidingWindow(config.limit, `${config.interval} ms`),
+      });
+
+      console.info('Rate limiter: Using Upstash Redis for distributed rate limiting.');
+
+      return async (req: NextRequest): Promise<RateLimitCheckResult> => {
+        try {
+          const identifier = getClientIdentifier(req);
+          const { success, limit, remaining, reset } = await ratelimit.limit(identifier);
+
+          const result: RateLimitResult = {
+            success,
+            limit,
+            remaining,
+            reset,
+          };
+
+          if (!success) {
+            const headers: RateLimitHeaders = {
+              'X-RateLimit-Limit': limit.toString(),
+              'X-RateLimit-Remaining': '0',
+              'Retry-After': Math.ceil((reset - Date.now()) / 1000).toString(),
+            };
+
+            const errorResponse: RateLimitErrorResponse = {
+              error: 'Too many requests',
+              message: 'Rate limit exceeded. Please try again later.',
+              retryAfter: Math.ceil((reset - Date.now()) / 1000),
+            };
+
+            return {
+              response: new NextResponse(JSON.stringify(errorResponse), {
+                status: 429,
+                headers: { 'Content-Type': 'application/json', ...headers },
+              }),
+              result,
+            };
+          }
+
+          return { response: null, result };
+        } catch (error) {
+          console.error('Upstash rate limiter error, failing open:', error);
+          return {
+            response: null,
+            result: { success: true, limit: config.limit, remaining: config.limit, reset: Date.now() + config.interval },
+          };
+        }
+      };
+    } catch {
+      console.warn('Rate limiter: Upstash Redis env vars detected but packages not available. Using in-memory fallback.');
+    }
   }
 
   return async (req: NextRequest): Promise<RateLimitCheckResult> => {
