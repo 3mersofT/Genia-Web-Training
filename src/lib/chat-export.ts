@@ -2,6 +2,7 @@
 // Chat export utilities: Markdown and PDF
 
 import type { Message, ChatContext } from '@/types/chat.types';
+import { BRAND, AI_ASSISTANT_NAME } from '@/config/branding';
 
 /**
  * Export conversation as Markdown file
@@ -13,7 +14,7 @@ export function exportToMarkdown(messages: Message[], context: ChatContext): voi
     year: 'numeric',
   });
 
-  let md = `# Conversation GENIA\n\n`;
+  let md = `# Conversation ${AI_ASSISTANT_NAME}\n\n`;
   md += `**Date** : ${date}\n`;
   md += `**Capsule** : ${context.currentCapsule.title}\n`;
   md += `**Niveau** : ${context.userLevel}\n`;
@@ -27,14 +28,14 @@ export function exportToMarkdown(messages: Message[], context: ChatContext): voi
       md += `### Vous\n\n${msg.content}\n\n`;
     } else {
       const step = msg.methodStep ? ` [${msg.methodStep}]` : '';
-      md += `### GENIA${step}\n\n${msg.content}\n\n`;
+      md += `### ${AI_ASSISTANT_NAME}${step}\n\n${msg.content}\n\n`;
       if (msg.reasoning) {
         md += `<details><summary>Raisonnement</summary>\n\n${msg.reasoning}\n\n</details>\n\n`;
       }
     }
   }
 
-  md += `---\n\n*Exporté depuis GENIA - Formation Prompt Engineering*\n`;
+  md += `---\n\n*Exporté depuis ${AI_ASSISTANT_NAME} - Formation Prompt Engineering*\n`;
 
   const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
   downloadBlob(blob, `genia-chat-${formatDateForFilename()}.md`);
@@ -63,7 +64,7 @@ export async function exportToPdf(messages: Message[], context: ChatContext): Pr
   // Title
   doc.setFontSize(18);
   doc.setFont('helvetica', 'bold');
-  doc.text('Conversation GENIA', margin, y);
+  doc.text(`Conversation ${AI_ASSISTANT_NAME}`, margin, y);
   y += 10;
 
   // Metadata
@@ -93,7 +94,7 @@ export async function exportToPdf(messages: Message[], context: ChatContext): Pr
     if (msg.role === 'system') continue;
 
     const isUser = msg.role === 'user';
-    const label = isUser ? 'Vous' : `GENIA${msg.methodStep ? ` [${msg.methodStep}]` : ''}`;
+    const label = isUser ? 'Vous' : `${AI_ASSISTANT_NAME}${msg.methodStep ? ` [${msg.methodStep}]` : ''}`;
 
     // Label
     addPageIfNeeded(15);
@@ -123,7 +124,7 @@ export async function exportToPdf(messages: Message[], context: ChatContext): Pr
   addPageIfNeeded(15);
   doc.setFontSize(8);
   doc.setTextColor(150);
-  doc.text('Exporte depuis GENIA - Formation Prompt Engineering', margin, doc.internal.pageSize.getHeight() - 10);
+  doc.text(`Exporte depuis ${AI_ASSISTANT_NAME} - Formation Prompt Engineering`, margin, doc.internal.pageSize.getHeight() - 10);
 
   doc.save(`genia-chat-${formatDateForFilename()}.pdf`);
 }

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { CheckCircle, AlertCircle, Award, Calendar, Target, ShieldCheck } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
+import { BRAND } from '@/config/branding';
 
 interface CertificateDetails {
   valid: boolean;
@@ -99,8 +100,8 @@ export default function CertificateVerificationPage() {
   const certificate = certificateData.certificate!;
   const isMasterCertificate = certificate.certificateType === 'master';
   const displayTitle = isMasterCertificate
-    ? 'GENIA Master Certificate - AI-Powered Prompt Engineering'
-    : certificate.moduleTitle || certificate.metadata?.module_title || 'Module GENIA';
+    ? `${BRAND.name} Master Certificate - AI-Powered Prompt Engineering`
+    : certificate.moduleTitle || certificate.metadata?.module_title || `Module ${BRAND.name}`;
 
   const completionDate = new Date(certificate.completionDate);
   const formattedDate = completionDate.toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US', {

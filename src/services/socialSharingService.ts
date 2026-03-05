@@ -1,6 +1,7 @@
 import type {
   Achievement,
 } from '@/types/challenges.types';
+import { BRAND_NAME } from '@/config/branding';
 import type {
   Tournament,
   TournamentResult,
@@ -90,7 +91,7 @@ export class SocialSharingService {
     levelDefinition: LevelDefinition,
     userName: string
   ): ShareConfig {
-    const title = `J'ai atteint le niveau ${levelDefinition.level_name_fr} sur GENIA ! 🎉`;
+    const title = `J'ai atteint le niveau ${levelDefinition.level_name_fr} sur ${BRAND_NAME} ! 🎉`;
     const description = `Je viens de monter au niveau ${levelDefinition.level_name_fr} avec ${userLevel.total_xp} XP total. Rejoignez-moi pour maîtriser le prompt engineering !`;
     const url = `${this.baseUrl}/share/level-up/${userLevel.user_id}`;
 
@@ -99,7 +100,7 @@ export class SocialSharingService {
       title,
       description,
       url,
-      hashtags: ['GENIA', 'PromptEngineering', 'AILearning', levelDefinition.level_name_fr],
+      hashtags: [BRAND_NAME, 'PromptEngineering', 'AILearning', levelDefinition.level_name_fr],
     };
   }
 
@@ -112,7 +113,7 @@ export class SocialSharingService {
     userName: string
   ): ShareConfig {
     const position = result.final_rank === 1 ? '1ère' : `${result.final_rank}ème`;
-    const title = `J'ai terminé ${position} place du tournoi "${tournament.title}" sur GENIA ! 🏆`;
+    const title = `J'ai terminé ${position} place du tournoi "${tournament.title}" sur ${BRAND_NAME} ! 🏆`;
     const description = `Score final : ${result.total_score} points. ${result.prize_amount ? `Récompense : ${result.prize_amount} points` : ''}`;
     const url = `${this.baseUrl}/share/tournament/${tournament.id}/${result.participant_id}`;
 
@@ -121,7 +122,7 @@ export class SocialSharingService {
       title,
       description,
       url,
-      hashtags: ['GENIA', 'PromptEngineering', 'Tournament', 'Winner'],
+      hashtags: [BRAND_NAME, 'PromptEngineering', 'Tournament', 'Winner'],
     };
   }
 
@@ -133,7 +134,7 @@ export class SocialSharingService {
     userName: string,
     totalSkills: number
   ): ShareConfig {
-    const title = `J'ai débloqué la compétence "${skill.name}" sur GENIA ! 🚀`;
+    const title = `J'ai débloqué la compétence "${skill.name}" sur ${BRAND_NAME} ! 🚀`;
     const description = `${skill.description}. ${totalSkills} compétences débloquées au total !`;
     const url = `${this.baseUrl}/share/skill/${skill.id}`;
 
@@ -142,7 +143,7 @@ export class SocialSharingService {
       title,
       description,
       url,
-      hashtags: ['GENIA', 'PromptEngineering', 'SkillUnlock'],
+      hashtags: [BRAND_NAME, 'PromptEngineering', 'SkillUnlock'],
     };
   }
 
@@ -160,7 +161,7 @@ export class SocialSharingService {
       legendary: '💎',
     };
 
-    const title = `J'ai débloqué le badge "${achievement.name}" sur GENIA ! ${rarityEmoji[achievement.rarity]}`;
+    const title = `J'ai débloqué le badge "${achievement.name}" sur ${BRAND_NAME} ! ${rarityEmoji[achievement.rarity]}`;
     const description = achievement.description;
     const url = `${this.baseUrl}/share/badge/${achievement.id}`;
 
@@ -169,7 +170,7 @@ export class SocialSharingService {
       title,
       description,
       url,
-      hashtags: ['GENIA', 'Achievement', 'PromptEngineering'],
+      hashtags: [BRAND_NAME, 'Achievement', 'PromptEngineering'],
     };
   }
 
@@ -181,7 +182,7 @@ export class SocialSharingService {
     achievement: TeamAchievement,
     userName: string
   ): ShareConfig {
-    const title = `Notre équipe "${team.name}" a débloqué "${achievement.achievement_name}" sur GENIA ! 🎊`;
+    const title = `Notre équipe "${team.name}" a débloqué "${achievement.achievement_name}" sur ${BRAND_NAME} ! 🎊`;
     const description = achievement.achievement_description || 'Achievement débloqué !';
     const url = `${this.baseUrl}/share/team/${team.id}/achievement/${achievement.id}`;
 
@@ -190,7 +191,7 @@ export class SocialSharingService {
       title,
       description,
       url,
-      hashtags: ['GENIA', 'TeamWork', 'PromptEngineering'],
+      hashtags: [BRAND_NAME, 'TeamWork', 'PromptEngineering'],
     };
   }
 
@@ -201,7 +202,7 @@ export class SocialSharingService {
     streakDays: number,
     userName: string
   ): ShareConfig {
-    const title = `${streakDays} jours de suite sur GENIA ! 🔥`;
+    const title = `${streakDays} jours de suite sur ${BRAND_NAME} ! 🔥`;
     const description = `Je maintiens ma série depuis ${streakDays} jours en m'entraînant quotidiennement au prompt engineering !`;
     const url = `${this.baseUrl}/share/streak/${userName}`;
 
@@ -210,7 +211,7 @@ export class SocialSharingService {
       title,
       description,
       url,
-      hashtags: ['GENIA', 'Streak', 'DailyPractice', 'PromptEngineering'],
+      hashtags: [BRAND_NAME, 'Streak', 'DailyPractice', 'PromptEngineering'],
     };
   }
 
@@ -229,7 +230,7 @@ export class SocialSharingService {
 
       case 'linkedin':
         // LinkedIn permet des posts plus longs
-        return `${config.title}\n\n${config.description}\n\nRejoignez-moi sur GENIA pour maîtriser le prompt engineering !\n${config.url}`;
+        return `${config.title}\n\n${config.description}\n\nRejoignez-moi sur ${BRAND_NAME} pour maîtriser le prompt engineering !\n${config.url}`;
 
       case 'facebook':
         // Facebook permet également des posts longs

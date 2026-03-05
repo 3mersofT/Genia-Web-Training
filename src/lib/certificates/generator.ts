@@ -1,4 +1,5 @@
 import jsPDF from 'jspdf';
+import { BRAND } from '@/config/branding';
 
 /**
  * Certificate data structure for PDF generation
@@ -88,7 +89,7 @@ export function generateCertificatePDF(data: CertificateData): jsPDF {
   pdf.setFont('helvetica', 'bold');
   pdf.setFontSize(28);
   pdf.setTextColor(99, 102, 241); // Primary indigo
-  pdf.text('GENIA', pageWidth / 2, 35, { align: 'center' });
+  pdf.text(BRAND.name, pageWidth / 2, 35, { align: 'center' });
 
   // Subtitle
   pdf.setFont('helvetica', 'normal');
@@ -240,7 +241,7 @@ export function generateCertificatePDF(data: CertificateData): jsPDF {
   // Website
   pdf.setFontSize(7);
   pdf.setTextColor(100, 116, 139);
-  pdf.text('www.genia.com', pageWidth / 2, pageHeight - 10, { align: 'center' });
+  pdf.text(`www.${BRAND.email.domain}`, pageWidth / 2, pageHeight - 10, { align: 'center' });
 
   return pdf;
 }

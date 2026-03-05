@@ -2,6 +2,7 @@
 
 import { Share2, Twitter, Linkedin, Facebook, Copy, Check } from 'lucide-react'
 import { useState } from 'react'
+import { BRAND_NAME } from '@/config/branding'
 
 interface SocialShareButtonProps {
   shareType: 'achievement' | 'level-up' | 'tournament' | 'badge' | 'team'
@@ -39,26 +40,26 @@ export default function SocialShareButton({
 
     switch (shareType) {
       case 'achievement':
-        text = `🎯 J'ai débloqué "${title}" sur GENIA! ${description ? description : ''}`
+        text = `🎯 J'ai débloqué "${title}" sur ${BRAND_NAME}! ${description ? description : ''}`
         if (data.points) text += ` (+${data.points} points)`
         break
       case 'level-up':
-        text = `🚀 Je viens d'atteindre le niveau "${data.level || title}" sur GENIA!`
+        text = `🚀 Je viens d'atteindre le niveau "${data.level || title}" sur ${BRAND_NAME}!`
         if (data.points) text += ` J'ai accumulé ${data.points} XP!`
         break
       case 'tournament':
-        text = `🏆 ${data.rank === 1 ? 'Victoire' : `${data.rank}ème place`} au tournoi "${data.tournamentName || title}" sur GENIA!`
+        text = `🏆 ${data.rank === 1 ? 'Victoire' : `${data.rank}ème place`} au tournoi "${data.tournamentName || title}" sur ${BRAND_NAME}!`
         break
       case 'badge':
-        text = `⭐ J'ai gagné le badge "${data.badgeName || title}" sur GENIA!`
+        text = `⭐ J'ai gagné le badge "${data.badgeName || title}" sur ${BRAND_NAME}!`
         if (description) text += ` ${description}`
         break
       case 'team':
-        text = `👥 Mon équipe "${data.teamName || title}" performe sur GENIA!`
+        text = `👥 Mon équipe "${data.teamName || title}" performe sur ${BRAND_NAME}!`
         if (data.rank) text += ` Classement: ${data.rank}ème`
         break
       default:
-        text = `🎓 ${title} sur GENIA - La plateforme d'apprentissage du Prompt Engineering!`
+        text = `🎓 ${title} sur ${BRAND_NAME} - La plateforme d'apprentissage du Prompt Engineering!`
     }
 
     text += ` 🔗 ${baseUrl}`

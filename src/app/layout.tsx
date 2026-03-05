@@ -10,50 +10,51 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import ErrorBoundary from '@/components/ErrorBoundary'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
+import { BRAND } from '@/config/branding'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'GENIA Training - Prompt Engineering Academy',
-  description: 'Maîtrisez l\'art du Prompt Engineering avec notre formation interactive et notre assistant IA GENIA',
-  applicationName: 'GENIA Training',
+  title: BRAND.title,
+  description: BRAND.description,
+  applicationName: BRAND.seo.applicationName,
   authors: [{ name: 'Hemerson KOFFI' }],
   generator: 'Next.js',
-  keywords: ['prompt engineering', 'IA', 'formation', 'GENIA', 'ChatGPT', 'Claude', 'Mistral'],
+  keywords: [...BRAND.seo.keywords],
   referrer: 'origin-when-cross-origin',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#3B82F6' },
-    { media: '(prefers-color-scheme: dark)', color: '#1E40AF' }
+    { media: '(prefers-color-scheme: light)', color: BRAND.colors.theme.light },
+    { media: '(prefers-color-scheme: dark)', color: BRAND.colors.theme.dark }
   ],
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'GENIA Training'
+    title: BRAND.seo.applicationName
   },
   formatDetection: {
     telephone: false
   },
   openGraph: {
     type: 'website',
-    locale: 'fr_FR',
-    url: 'https://genia-training.com',
-    title: 'GENIA Training - Prompt Engineering Academy',
-    description: 'Maîtrisez l\'art du Prompt Engineering avec notre formation interactive',
-    siteName: 'GENIA Training',
+    locale: BRAND.seo.locale,
+    url: BRAND.urls.production,
+    title: BRAND.title,
+    description: BRAND.description,
+    siteName: BRAND.seo.applicationName,
     images: [
       {
-        url: '/og-image.png',
+        url: BRAND.assets.ogImage,
         width: 1200,
         height: 630,
-        alt: 'GENIA Training'
+        alt: BRAND.seo.applicationName
       }
     ]
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'GENIA Training - Prompt Engineering Academy',
-    description: 'Maîtrisez l\'art du Prompt Engineering avec notre formation interactive',
+    title: BRAND.title,
+    description: BRAND.description,
     images: ['/twitter-image.png']
   },
   icons: {
@@ -83,7 +84,7 @@ export const metadata: Metadata = {
   verification: {
     google: 'google-verification-code',
     other: {
-      me: ['contact@genia-training.com']
+      me: [`contact@${BRAND.email.domain}`]
     }
   }
 }
@@ -94,7 +95,7 @@ export const viewport: Viewport = {
   maximumScale: 5,
   userScalable: true,
   viewportFit: 'cover',
-  themeColor: '#3B82F6'
+  themeColor: BRAND.colors.theme.light
 }
 
 export default async function RootLayout({

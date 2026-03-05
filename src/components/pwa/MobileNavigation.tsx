@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { Home, BookOpen, MessageSquare, User, Trophy } from 'lucide-react';
+import { BRAND_NAME } from '@/config/branding';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSwipeable } from 'react-swipeable';
 
@@ -22,7 +23,7 @@ export default function MobileNavigation() {
   const navItems: NavItem[] = [
     { icon: Home, label: 'Accueil', href: '/dashboard' },
     { icon: BookOpen, label: 'Modules', href: '/dashboard#modules' },
-    { icon: MessageSquare, label: 'GENIA', href: '/dashboard' },
+    { icon: MessageSquare, label: BRAND_NAME, href: '/dashboard' },
     { icon: Trophy, label: 'Progrès', href: '/dashboard#progress' },
     { icon: User, label: 'Profil', href: '/profile' }
   ];

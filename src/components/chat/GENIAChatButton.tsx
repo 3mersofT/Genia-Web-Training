@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { MessageCircle, X, Bot } from 'lucide-react';
 import GENIAChat from './GENIAChat';
+import { AI_ASSISTANT_NAME } from '@/config/branding';
 
 interface GENIAChatButtonProps {
   /** Position du bouton flottant */
@@ -42,7 +43,7 @@ export default function GENIAChatButton({
         className={`fixed ${positionClasses[position]} z-50 group transition-all duration-300 ease-in-out transform hover:scale-110 ${
           isOpen ? 'rotate-180' : ''
         }`}
-        aria-label="Ouvrir l'assistant GENIA"
+        aria-label={`Ouvrir l'assistant ${AI_ASSISTANT_NAME}`}
       >
         <div className="relative">
           {/* Bouton principal avec gradient GENIA */}
@@ -65,7 +66,7 @@ export default function GENIAChatButton({
           <div className="bg-popover text-popover-foreground px-3 py-2 rounded-lg text-sm whitespace-nowrap shadow-md border border-border">
             <div className="flex items-center gap-2">
               <Bot className="w-4 h-4" />
-              <span>Assistant GENIA</span>
+              <span>Assistant {AI_ASSISTANT_NAME}</span>
             </div>
             <div className="text-xs text-muted-foreground mt-1">
               Cliquez pour obtenir de l'aide !
@@ -98,7 +99,7 @@ export default function GENIAChatButton({
                     <Bot className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg">GENIA</h3>
+                    <h3 className="font-semibold text-lg">{AI_ASSISTANT_NAME}</h3>
                     <p className="text-sm text-blue-100">Votre assistant formateur</p>
                   </div>
                 </div>

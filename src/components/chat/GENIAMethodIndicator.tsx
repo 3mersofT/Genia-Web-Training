@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { GENIA_METHOD, type GeniaMethodKey } from '@/constants/geniaMethod';
+import { BRAND } from '@/config/branding';
 
 /**
  * GENIAMethodIndicator Component
@@ -40,7 +41,7 @@ export default function GENIAMethodIndicator({
       className={`inline-flex items-center gap-1 px-2 py-1 rounded-full bg-gradient-to-r ${method.color} text-white text-xs mb-2 ${className}`}
       title={method.description}
       role="status"
-      aria-label={`GENIA Method: ${method.name}`}
+      aria-label={`${BRAND.method.nameEn}: ${method.name}`}
     >
       <span aria-hidden="true">{method.icon}</span>
       <span className="font-medium">{method.name}</span>
