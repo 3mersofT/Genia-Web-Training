@@ -13,6 +13,7 @@ import { createClient } from '@/lib/supabase/client'
 import { logger } from '@/lib/logger'
 import { useTranslations } from 'next-intl'
 import FeedbackButton from '@/components/feedback/FeedbackButton'
+import { BRAND_FULL_NAME } from '@/config/branding'
 import GENIAOnboarding from '@/components/onboarding/GENIAOnboarding'
 import FeatureDiscoveryButton from '@/components/onboarding/FeatureDiscoveryButton'
 import { useOnboarding } from '@/hooks/useOnboarding'
@@ -148,7 +149,7 @@ export default function DashboardPage() {
             <FeedbackButton
               targetType="platform"
               targetId="platform"
-              targetTitle="GENIA Web Training"
+              targetTitle={BRAND_FULL_NAME}
               variant="button"
               size="sm"
             />

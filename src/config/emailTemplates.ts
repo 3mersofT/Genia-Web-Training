@@ -3,12 +3,14 @@
  * GENIA Web Training Platform
  */
 
+import { BRAND } from './branding';
+
 export const emailConfig = {
   // Informations de l'expéditeur
   sender: {
-    name: 'GENIA Web Training',
-    email: 'noreply@geniawebtraining.com',
-    replyTo: 'support@geniawebtraining.com'
+    name: BRAND.email.senderName,
+    email: BRAND.email.noreplyAddress,
+    replyTo: BRAND.email.supportAddress
   },
 
   // URLs de base
@@ -32,28 +34,28 @@ export const emailConfig = {
 
   // Couleurs de la marque
   colors: {
-    primary: '#667eea',
-    secondary: '#764ba2',
-    success: '#10b981',
-    warning: '#ffc107',
-    danger: '#ff6b6b',
-    info: '#3b82f6'
+    primary: BRAND.colors.email.primary,
+    secondary: BRAND.colors.email.secondary,
+    success: BRAND.colors.email.success,
+    warning: BRAND.colors.email.warning,
+    danger: BRAND.colors.email.danger,
+    info: BRAND.colors.email.info
   },
 
   // Sujets des emails
   subjects: {
-    confirmSignup: '🎯 Bienvenue sur GENIA - Confirmez votre inscription',
-    resetPassword: '🔐 Réinitialisez votre mot de passe GENIA',
-    magicLink: '✨ Votre lien de connexion rapide GENIA',
-    inviteUser: '🎓 Invitation à rejoindre GENIA Web Training',
-    changeEmail: '📧 Confirmez votre nouvelle adresse email GENIA',
-    reauthentication: '🔒 Vérification de sécurité GENIA requise'
+    confirmSignup: `🎯 Bienvenue sur ${BRAND.name} - Confirmez votre inscription`,
+    resetPassword: `🔐 Réinitialisez votre mot de passe ${BRAND.name}`,
+    magicLink: `✨ Votre lien de connexion rapide ${BRAND.name}`,
+    inviteUser: `🎓 Invitation à rejoindre ${BRAND.fullName}`,
+    changeEmail: `📧 Confirmez votre nouvelle adresse email ${BRAND.name}`,
+    reauthentication: `🔒 Vérification de sécurité ${BRAND.name} requise`
   },
 
   // Messages de footer
   footer: {
-    copyright: `© ${new Date().getFullYear()} GENIA Web Training. Tous droits réservés.`,
-    address: 'GENIA Web Training, France',
+    copyright: BRAND.legal.copyright(new Date().getFullYear()),
+    address: `${BRAND.fullName}, France`,
     unsubscribe: 'Se désinscrire des notifications'
   }
 }
@@ -225,9 +227,9 @@ export const emailTemplates = {
   confirmSignup: {
     subject: emailConfig.subjects.confirmSignup,
     generateBody: (data: EmailData) => `
-      <h2>🚀 Bienvenue sur GENIA Web Training !</h2>
+      <h2>🚀 Bienvenue sur ${BRAND.fullName} !</h2>
       <p>Bonjour ${data.full_name || 'là'},</p>
-      <p>Nous sommes ravis de vous accueillir sur <strong>GENIA Web Training</strong>.</p>
+      <p>Nous sommes ravis de vous accueillir sur <strong>${BRAND.fullName}</strong>.</p>
       <!-- ... reste du template ... -->
     `
   },

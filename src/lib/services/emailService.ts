@@ -3,6 +3,8 @@
  * Falls back gracefully when RESEND_API_KEY is not configured.
  */
 
+import { BRAND } from '@/config/branding';
+
 interface ReviewReminderParams {
   to: string;
   name: string;
@@ -12,7 +14,7 @@ interface ReviewReminderParams {
 
 export class EmailService {
   private resend: any = null;
-  private fromAddress = 'GENIA <noreply@genia-training.com>';
+  private fromAddress = BRAND.email.fromDisplay;
 
   constructor() {
     if (process.env.RESEND_API_KEY) {
@@ -38,7 +40,7 @@ export class EmailService {
   <div style="max-width:560px;margin:32px auto;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.1);">
     <!-- Header -->
     <div style="background:linear-gradient(135deg,#7c3aed,#3b82f6);padding:32px;text-align:center;">
-      <h1 style="color:#ffffff;margin:0;font-size:28px;">GENIA</h1>
+      <h1 style="color:#ffffff;margin:0;font-size:28px;">${BRAND.name}</h1>
       <p style="color:rgba(255,255,255,0.85);margin:8px 0 0;font-size:14px;">Ton formateur en Prompt Engineering</p>
     </div>
     <!-- Body -->
@@ -59,7 +61,7 @@ export class EmailService {
     </div>
     <!-- Footer -->
     <div style="padding:16px 32px;background:#f1f5f9;text-align:center;">
-      <p style="font-size:12px;color:#94a3b8;margin:0;">GENIA Web Training — Prompt Engineering Academy</p>
+      <p style="font-size:12px;color:#94a3b8;margin:0;">${BRAND.fullName} — ${BRAND.tagline}</p>
     </div>
   </div>
 </body>

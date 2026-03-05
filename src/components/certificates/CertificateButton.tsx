@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Award, Download, Loader2 } from 'lucide-react';
+import { BRAND } from '@/config/branding';
 import { generateQRCode } from '@/lib/certificates/qrcode';
 import {
   generateCertificatePDF,
@@ -177,8 +178,8 @@ export default function CertificateButton({
 
     // Format certificate name based on type
     const certificateName = certificateType === 'master'
-      ? 'GENIA Master Certificate - AI-Powered Prompt Engineering'
-      : `GENIA Certificate - ${moduleTitle}`;
+      ? `${BRAND.name} Master Certificate - AI-Powered Prompt Engineering`
+      : `${BRAND.name} Certificate - ${moduleTitle}`;
 
     // LinkedIn certification URL format
     const year = completionDate.getFullYear();
@@ -187,7 +188,7 @@ export default function CertificateButton({
     const params = new URLSearchParams({
       startTask: 'CERTIFICATION_NAME',
       name: certificateName,
-      organizationId: 'GENIA',
+      organizationId: BRAND.name,
       issueYear: year.toString(),
       issueMonth: month.toString(),
       certUrl: verificationUrl,

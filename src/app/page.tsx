@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import { BRAND, BRAND_FULL_NAME, BRAND_NAME } from '@/config/branding';
 import {
   ArrowRight, Brain, Trophy, Users,
   CheckCircle, Star, Zap, BookOpen, MessageCircle,
@@ -67,7 +68,7 @@ export default function HomePage() {
     {
       name: "Marie L.",
       role: "Product Manager",
-      content: "GENIA m'a permis de passer de novice à experte en prompt engineering en seulement 3 mois !",
+      content: `${BRAND_NAME} m'a permis de passer de novice à experte en prompt engineering en seulement 3 mois !`,
       rating: 5
     },
     {
@@ -86,12 +87,12 @@ export default function HomePage() {
 
   const faqs = [
     {
-      question: "Qu'est-ce que GENIA Web Training ?",
-      answer: "GENIA Web Training est une plateforme de formation au Prompt Engineering, utilisant l'IA Mistral et une méthode pédagogique unique en 5 piliers. Notre assistant GENIA accompagne les apprenants inscrits tout au long de leur parcours."
+      question: `Qu'est-ce que ${BRAND_FULL_NAME} ?`,
+      answer: `${BRAND_FULL_NAME} est une plateforme de formation au Prompt Engineering, utilisant l'IA Mistral et une méthode pédagogique unique en 5 piliers. Notre assistant ${BRAND_NAME} accompagne les apprenants inscrits tout au long de leur parcours.`
     },
     {
-      question: "Comment fonctionne l'assistant GENIA ?",
-      answer: "GENIA est un assistant pédagogique exclusivement réservé aux apprenants inscrits. Il applique notre méthode en 5 piliers pour vous guider, vous donner des exemples adaptés, proposer des exercices et suivre vos progrès tout au long de votre formation."
+      question: `Comment fonctionne l'assistant ${BRAND_NAME} ?`,
+      answer: `${BRAND_NAME} est un assistant pédagogique exclusivement réservé aux apprenants inscrits. Il applique notre méthode en 5 piliers pour vous guider, vous donner des exemples adaptés, proposer des exercices et suivre vos progrès tout au long de votre formation.`
     },
     {
       question: "À qui s'adresse cette formation ?",
@@ -102,8 +103,8 @@ export default function HomePage() {
       answer: "La formation complète représente environ 3 heures de contenu réparti en 36 capsules. Vous progressez à votre rythme, avec un accès illimité dans le temps à tous les contenus et mises à jour."
     },
     {
-      question: "Qu'est-ce que la méthode GENIA ?",
-      answer: "La méthode GENIA est notre approche pédagogique exclusive en 5 piliers : Guide progressif, Exemples concrets, Niveau adaptatif, Interaction pratique et Assessment continu. Cette méthode garantit un apprentissage efficace et durable."
+      question: `Qu'est-ce que la ${BRAND.method.name} ?`,
+      answer: `La ${BRAND.method.name} est notre approche pédagogique exclusive en 5 piliers : Guide progressif, Exemples concrets, Niveau adaptatif, Interaction pratique et Assessment continu. Cette méthode garantit un apprentissage efficace et durable.`
     },
     {
       question: "Quel est le prix de la formation ?",
@@ -120,14 +121,14 @@ export default function HomePage() {
             {/* Logo GENIA */}
             <div className="flex items-center gap-3">
               <Image 
-                src="/logo/GENIA Logo.png" 
-                alt="GENIA Logo" 
+                src={BRAND.assets.logo} 
+                alt={`${BRAND_NAME} Logo`} 
                 width={48} 
                 height={48}
                 className="w-12 h-12 object-contain"
               />
               <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                GENIA Web Training
+                {BRAND_FULL_NAME}
               </span>
             </div>
             
@@ -161,7 +162,7 @@ export default function HomePage() {
           {/* Logo GENIA en filigrane */}
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-5">
             <Image 
-              src="/logo/GENIA Logo.png" 
+              src={BRAND.assets.logo} 
               alt="" 
               width={600} 
               height={600}
@@ -175,8 +176,8 @@ export default function HomePage() {
             {/* Logo GENIA central */}
             <div className="mb-8 flex justify-center">
               <Image 
-                src="/logo/GENIA Logo.png" 
-                alt="GENIA Logo" 
+                src={BRAND.assets.logo} 
+                alt={`${BRAND_NAME} Logo`} 
                 width={120} 
                 height={120}
                 className="w-30 h-30 object-contain animate-pulse"
@@ -258,7 +259,7 @@ export default function HomePage() {
         {/* Logo en filigrane */}
         <div className="absolute inset-0 flex items-center justify-center opacity-5">
           <Image 
-            src="/logo/GENIA Logo.png" 
+            src={BRAND.assets.logo} 
             alt="" 
             width={400} 
             height={400}
@@ -480,13 +481,13 @@ export default function HomePage() {
           <div className="text-center mb-8">
             <div className="flex items-center justify-center gap-3 mb-4">
               <Image 
-                src="/logo/GENIA Logo.png" 
-                alt="GENIA Logo" 
+                src={BRAND.assets.logo} 
+                alt={`${BRAND_NAME} Logo`} 
                 width={32} 
                 height={32}
                 className="w-8 h-8 object-contain"
               />
-              <span className="text-xl font-bold">GENIA Web Training</span>
+              <span className="text-xl font-bold">{BRAND_FULL_NAME}</span>
             </div>
             <p className="text-muted-foreground max-w-md mx-auto">
               {t('footer.description')}

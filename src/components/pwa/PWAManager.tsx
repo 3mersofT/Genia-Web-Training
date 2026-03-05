@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Download, X, RefreshCw, Smartphone } from 'lucide-react';
+import { BRAND } from '@/config/branding';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface BeforeInstallPromptEvent extends Event {
@@ -132,7 +133,7 @@ export default function PWAManager() {
   const showSuccessNotification = () => {
     // Afficher une notification de succès
     if ('Notification' in window && Notification.permission === 'granted') {
-      new Notification('GENIA Training installé !', {
+      new Notification(`${BRAND.seo.applicationName} installé !`, {
         body: 'L\'application est maintenant disponible hors ligne',
         icon: '/icons/192.png',
         badge: '/icons/72.png'

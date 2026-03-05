@@ -3,6 +3,7 @@
 import React from 'react';
 import { useTranslations } from 'next-intl';
 import { Share2, Linkedin } from 'lucide-react';
+import { BRAND } from '@/config/branding';
 
 interface LinkedInShareButtonProps {
   certificateId: string;
@@ -61,14 +62,14 @@ export default function LinkedInShareButton({
 
     // Format certificate name based on type
     const certificateName = certificateType === 'master'
-      ? 'GENIA Master Certificate - AI-Powered Prompt Engineering'
-      : `GENIA Certificate - ${moduleTitle}`;
+      ? `${BRAND.name} Master Certificate - AI-Powered Prompt Engineering`
+      : `${BRAND.name} Certificate - ${moduleTitle}`;
 
     // LinkedIn certification URL format
     const params = new URLSearchParams({
       startTask: 'CERTIFICATION_NAME',
       name: certificateName,
-      organizationId: 'GENIA',
+      organizationId: BRAND.name,
       issueYear: year.toString(),
       issueMonth: month.toString(),
       certUrl: verificationUrl,
