@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { X, Sparkles, BookOpen, Brain, Zap, Download, FileText, RotateCcw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -23,6 +23,18 @@ export default function GENIAChat({ context: propContext, embedded = false }: GE
   const [inputMessage, setInputMessage] = useState('');
   const [showMethodIndicator] = useState(true);
   const [showExportMenu, setShowExportMenu] = useState(false);
+
+  // Écoute 'genia:setMessage' pour pré-remplir l'input depuis PromptPlayground
+  useEffect(() => {
+    const handleSetMessage = (event: CustomEvent) => {
+      const { message } = event.detail || {};
+      if (message && typeof message === 'string') {
+        setInputMessage(message);
+      }
+    };
+    window.addEventListener('genia:setMessage', handleSetMessage as EventListener);
+    return () => window.removeEventListener('genia:setMessage', handleSetMessage as EventListener);
+  }, []);
 
   const {
     messages, isLoading, quota, currentModel, suggestions,

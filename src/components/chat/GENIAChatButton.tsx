@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MessageCircle, X, Bot } from 'lucide-react';
 import GENIAChat from './GENIAChat';
 import { AI_ASSISTANT_NAME } from '@/config/branding';
@@ -26,6 +26,23 @@ export default function GENIAChatButton({
   context 
 }: GENIAChatButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
+
+  // Écoute l'événement 'genia:openChat' dispatché par PromptPlayground
+  useEffect(() => {
+    const handleOpenChat = (event: CustomEvent) => {
+      const { initialMessage, context: eventContext } = event.detail || {};
+      setIsOpen(true);
+      if (initialMessage) {
+        setTimeout(() => {
+          window.dispatchEvent(new CustomEvent('genia:setMessage', {
+            detail: { message: initialMessage, context: eventContext }
+          }));
+        }, 500);
+      }
+    };
+    window.addEventListener('genia:openChat', handleOpenChat as EventListener);
+    return () => window.removeEventListener('genia:openChat', handleOpenChat as EventListener);
+  }, []);
 
   // Classes CSS pour positionner le bouton
   const positionClasses = {
