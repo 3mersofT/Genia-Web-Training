@@ -52,6 +52,7 @@ describe('RichContentRenderer - Basic Tests', () => {
         id: 'test-1',
         type: 'video',
         url: 'https://youtube.com/test',
+        provider: 'youtube',
       },
     ];
 
@@ -66,6 +67,7 @@ describe('RichContentRenderer - Basic Tests', () => {
         id: 'test-1',
         type: 'video',
         url: 'https://youtube.com/test',
+        provider: 'youtube',
       },
     ];
 
@@ -83,6 +85,7 @@ describe('RichContentRenderer - Basic Tests', () => {
         id: 'video-1',
         type: 'video',
         url: 'https://youtube.com/watch?v=test',
+        provider: 'youtube',
         title: 'Test Video',
       },
     ];
@@ -145,6 +148,7 @@ describe('RichContentRenderer - Basic Tests', () => {
         type: 'attachment',
         url: 'https://example.com/document.pdf',
         filename: 'document.pdf',
+        fileType: 'pdf',
       },
     ];
 
