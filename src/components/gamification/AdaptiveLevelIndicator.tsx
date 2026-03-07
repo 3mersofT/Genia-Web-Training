@@ -166,7 +166,7 @@ export default function AdaptiveLevelIndicator({ userId, compact = false }: Adap
           <Progress value={progressPercent} className="h-2" />
         </div>
 
-        <div className="grid grid-cols-3 gap-3 text-center text-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center text-sm">
           <div>
             <p className="font-semibold text-foreground">{profile.exercisesCompleted}</p>
             <p className="text-xs text-muted-foreground">{t('exercises')}</p>

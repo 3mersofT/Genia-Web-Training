@@ -138,7 +138,8 @@ export default function GENIAChat({ context: propContext, embedded = false }: GE
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full p-4 shadow-2xl hover:shadow-3xl transition-all"
+            aria-expanded={isOpen}
+            className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full p-4 shadow-2xl hover:shadow-3xl transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             <Sparkles className="w-6 h-6 text-white" />
           </motion.button>
@@ -168,12 +169,12 @@ export default function GENIAChat({ context: propContext, embedded = false }: GE
                 <div className="flex items-center gap-1">
                   <button
                     onClick={resetConversation}
-                    className="p-1.5 hover:bg-white/20 rounded-lg transition-colors"
+                    className="p-1.5 hover:bg-white/20 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     title={t('newConversation')}
                   >
                     <RotateCcw className="w-4 h-4" />
                   </button>
-                  <button onClick={() => setIsOpen(false)} className="p-1 hover:bg-white/20 rounded-lg transition-colors">
+                  <button onClick={() => setIsOpen(false)} className="p-1 hover:bg-white/20 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                     <X className="w-5 h-5" />
                   </button>
                 </div>

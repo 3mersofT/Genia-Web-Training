@@ -249,7 +249,7 @@ export default function ScoreTrendChart({ scoreTrend, loading = false }: ScoreTr
         </div>
 
         {/* Loading Stats Skeleton */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-4 border-t border-border">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t border-border">
           {[1, 2, 3, 4].map((i) => (
             <div key={i} className="flex items-start gap-3 animate-pulse">
               <div className="p-2 bg-muted rounded-lg w-9 h-9" />
@@ -285,7 +285,7 @@ export default function ScoreTrendChart({ scoreTrend, loading = false }: ScoreTr
 
       {/* Score Statistics */}
       {scoreTrend && scoreTrend.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-4 border-t border-border">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t border-border">
           {/* Average Score */}
           <div className="flex items-start gap-3">
             <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">

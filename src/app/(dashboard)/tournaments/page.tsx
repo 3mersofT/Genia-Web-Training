@@ -6,6 +6,7 @@ import TournamentCard from '@/components/gamification/TournamentCard'
 import { TournamentBracketView, TournamentRound, Tournament } from '@/types/tournaments.types'
 import { Trophy, ChevronLeft } from 'lucide-react'
 import Link from 'next/link'
+import { toast } from '@/hooks/use-toast'
 
 export default function TournamentsPage() {
   const [mounted, setMounted] = useState(false)
@@ -83,10 +84,10 @@ export default function TournamentsPage() {
                     tournament={tournament}
                     isRegistered={false}
                     onRegister={(id) => {
-                      alert(`Inscription au tournoi ${id}`)
+                      toast({ title: 'Inscription', description: `Inscription au tournoi ${id}` })
                     }}
                     onWithdraw={(id) => {
-                      alert(`Désinscription du tournoi ${id}`)
+                      toast({ title: 'Désinscription', description: `Désinscription du tournoi ${id}` })
                     }}
                     onViewDetails={(id) => {
                       setSelectedTournament(id)

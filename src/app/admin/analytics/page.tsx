@@ -303,19 +303,19 @@ export default function AIUsagePage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation Header */}
-      <div className="bg-card shadow-sm border-b">
-        <div className="px-6 py-4">
-          <div className="flex items-center gap-4 mb-2">
-            <a href="/admin" className="text-primary hover:text-primary/80 font-medium">← Dashboard Admin</a>
+      <div className="bg-card shadow-sm border-b overflow-hidden">
+        <div className="px-4 sm:px-6 py-4">
+          <div className="flex items-center gap-2 sm:gap-4 mb-2 min-w-0">
+            <a href="/admin" className="text-primary hover:text-primary/80 font-medium whitespace-nowrap text-sm sm:text-base">← Dashboard Admin</a>
             <span className="text-muted-foreground">|</span>
-            <h1 className="text-xl font-bold text-foreground">Utilisation de l'IA</h1>
+            <h1 className="text-lg sm:text-xl font-bold text-foreground truncate">Utilisation de l'IA</h1>
           </div>
-          <p className="text-muted-foreground">Monitoring et analyse de la consommation des modèles Mistral</p>
+          <p className="text-muted-foreground text-sm">Monitoring et analyse de la consommation des modèles Mistral</p>
         </div>
-        
+
         {/* Quick Navigation */}
-        <div className="px-6 pb-2">
-          <nav className="flex gap-4 text-sm">
+        <div className="px-4 sm:px-6 pb-2 overflow-x-auto">
+          <nav className="flex gap-4 text-sm min-w-max">
             <a href="/admin" className="text-muted-foreground hover:text-foreground">Dashboard</a>
             <a href="/admin/users" className="text-muted-foreground hover:text-foreground">Utilisateurs</a>
             <a href="/admin/analytics" className="text-primary font-medium">Analytics</a>
@@ -325,10 +325,10 @@ export default function AIUsagePage() {
         </div>
       </div>
       
-      <div className="p-6">
+      <div className="p-4 sm:p-6">
 
       {/* Statistiques principales */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <div className="bg-card rounded-lg shadow p-4">
           <div className="flex items-center justify-between">
             <div>
@@ -381,7 +381,7 @@ export default function AIUsagePage() {
       </div>
 
       {/* Feedback & Provider Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
         <div className="bg-card rounded-lg shadow p-4">
           <div className="flex items-center justify-between">
             <div>

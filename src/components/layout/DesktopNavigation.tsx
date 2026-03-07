@@ -9,7 +9,7 @@ import NotificationCenter from '@/components/notifications/NotificationCenter';
 import {
   Home, BookOpen, MessageSquare, User, Trophy,
   Settings, LogOut, ChevronDown, Bell, Sun, Moon, Monitor,
-  Swords, Users, Network
+  Swords, Users, Network, Menu, X
 } from 'lucide-react';
 import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
 
@@ -29,6 +29,7 @@ export default function DesktopNavigation() {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showThemeMenu, setShowThemeMenu] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems: NavItem[] = [
     { icon: Home, label: t('dashboard'), href: '/dashboard' },
@@ -54,8 +55,18 @@ export default function DesktopNavigation() {
   }
 
   return (
-    <nav className="bg-card border-b border-border px-6 py-4">
+    <nav className="bg-card border-b border-border px-4 md:px-6 py-4">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
+        {/* Mobile hamburger button */}
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="md:hidden p-2 text-foreground hover:bg-accent rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          aria-expanded={mobileMenuOpen}
+          aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+        >
+          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
+
         {/* Logo */}
         <div className="flex items-center">
           <h1 className="text-xl font-bold text-foreground">GENIA Web Training</h1>
@@ -72,7 +83,7 @@ export default function DesktopNavigation() {
                 key={item.href}
                 onClick={() => router.push(item.href)}
                 {...(item.label === t('chat') ? { 'data-onboarding': 'chat-link' } : {})}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors relative ${
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
                   isActive
                     ? 'text-primary bg-primary/10'
                     : 'text-foreground hover:text-foreground hover:bg-accent'
@@ -95,7 +106,7 @@ export default function DesktopNavigation() {
           {/* Quick Profile button */}
           <button
             onClick={() => router.push('/profile')}
-            className="hidden md:inline-flex items-center gap-2 px-3 py-2 text-sm text-foreground hover:text-foreground hover:bg-accent rounded-lg"
+            className="hidden md:inline-flex items-center gap-2 px-3 py-2 text-sm text-foreground hover:text-foreground hover:bg-accent rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             title="Mon profil"
           >
             <User className="w-4 h-4" />
@@ -105,7 +116,8 @@ export default function DesktopNavigation() {
           <div className="relative">
             <button
               onClick={() => setShowThemeMenu(!showThemeMenu)}
-              className="p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-accent"
+              aria-expanded={showThemeMenu}
+              className="p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               {resolvedTheme === 'dark' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
             </button>
@@ -153,7 +165,8 @@ export default function DesktopNavigation() {
           <div className="relative">
             <button
               onClick={() => setShowUserMenu(!showUserMenu)}
-              className="flex items-center gap-3 p-2 rounded-lg hover:bg-accent"
+              aria-expanded={showUserMenu}
+              className="flex items-center gap-3 p-2 rounded-lg hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-sm font-semibold">
                 {user?.email?.charAt(0)?.toUpperCase() || 'U'}
@@ -203,6 +216,55 @@ export default function DesktopNavigation() {
           </div>
         </div>
       </div>
+
+      {/* Mobile menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden border-t border-border bg-card px-4 py-4 space-y-1">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = pathname.startsWith(item.href);
+
+            return (
+              <button
+                key={item.href}
+                onClick={() => {
+                  router.push(item.href);
+                  setMobileMenuOpen(false);
+                }}
+                className={`flex items-center gap-3 w-full px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  isActive
+                    ? 'text-primary bg-primary/10'
+                    : 'text-foreground hover:bg-accent'
+                }`}
+              >
+                <Icon className="w-4 h-4" />
+                {item.label}
+              </button>
+            );
+          })}
+          <div className="border-t border-border my-2" />
+          <button
+            onClick={() => {
+              router.push('/profile');
+              setMobileMenuOpen(false);
+            }}
+            className="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-sm font-medium text-foreground hover:bg-accent"
+          >
+            <User className="w-4 h-4" />
+            {t('profile')}
+          </button>
+          <button
+            onClick={() => {
+              handleSignOut();
+              setMobileMenuOpen(false);
+            }}
+            className="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-sm font-medium text-destructive hover:bg-destructive/10"
+          >
+            <LogOut className="w-4 h-4" />
+            {t('signOut')}
+          </button>
+        </div>
+      )}
     </nav>
   );
 }

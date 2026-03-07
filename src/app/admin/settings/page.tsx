@@ -165,19 +165,19 @@ export default function SettingsPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation Header */}
-      <div className="bg-card shadow-sm border-b">
-        <div className="px-6 py-4">
-          <div className="flex items-center gap-4 mb-2">
-            <a href="/admin" className="text-primary hover:text-primary/80 font-medium">← Dashboard Admin</a>
+      <div className="bg-card shadow-sm border-b overflow-hidden">
+        <div className="px-4 sm:px-6 py-4">
+          <div className="flex items-center gap-2 sm:gap-4 mb-2 min-w-0">
+            <a href="/admin" className="text-primary hover:text-primary/80 font-medium whitespace-nowrap text-sm sm:text-base">← Dashboard Admin</a>
             <span className="text-muted-foreground">|</span>
-            <h1 className="text-xl font-bold text-foreground">Paramètres Système</h1>
+            <h1 className="text-lg sm:text-xl font-bold text-foreground truncate">Paramètres Système</h1>
           </div>
-          <p className="text-muted-foreground">Configuration générale de la plateforme GENIA Web Training</p>
+          <p className="text-muted-foreground text-sm">Configuration générale de la plateforme GENIA Web Training</p>
         </div>
-        
+
         {/* Quick Navigation */}
-        <div className="px-6 pb-2">
-          <nav className="flex gap-4 text-sm">
+        <div className="px-4 sm:px-6 pb-2 overflow-x-auto">
+          <nav className="flex gap-4 text-sm min-w-max">
             <a href="/admin" className="text-muted-foreground hover:text-foreground">Dashboard</a>
             <a href="/admin/users" className="text-muted-foreground hover:text-foreground">Utilisateurs</a>
             <a href="/admin/analytics" className="text-muted-foreground hover:text-foreground">Analytics</a>
@@ -187,7 +187,7 @@ export default function SettingsPage() {
         </div>
       </div>
       
-      <div className="p-6">
+      <div className="p-4 sm:p-6">
 
       {/* Message de notification */}
       {message && (
@@ -200,7 +200,7 @@ export default function SettingsPage() {
       )}
 
       {/* Actions bar */}
-      <div className="mb-6 flex justify-between items-center bg-card rounded-lg shadow p-4">
+      <div className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-card rounded-lg shadow p-4">
         <div className="flex items-center gap-2">
           {hasChanges && (
             <span className="text-sm text-orange-600 flex items-center gap-1">
@@ -396,8 +396,8 @@ export default function SettingsPage() {
             </div>
 
             {/* Estimation */}
-            <div className="bg-blue-50 p-3 rounded-lg">
-              <p className="text-sm text-blue-800">
+            <div className="bg-blue-50 dark:bg-blue-950/30 p-3 rounded-lg">
+              <p className="text-sm text-blue-800 dark:text-blue-300">
                 <strong>Estimation :</strong> Avec ces quotas, environ {Math.floor(settings.monthly_budget_limit / 0.5)} utilisateurs
                 actifs peuvent être supportés avec le budget de {settings.monthly_budget_limit}€/mois.
               </p>
@@ -561,7 +561,7 @@ export default function SettingsPage() {
             </h2>
           </div>
           <div className="p-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {/* Backup automatique */}
               <div className="flex items-center justify-between">
                 <div>
@@ -611,17 +611,17 @@ export default function SettingsPage() {
 
             {/* Dernière sauvegarde */}
             <div className="mt-6 p-4 bg-muted rounded-lg">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
                   <p className="text-sm font-medium text-foreground">Dernière sauvegarde</p>
                   <p className="text-sm text-muted-foreground">
-                    {settings.last_backup_date 
+                    {settings.last_backup_date
                       ? new Date(settings.last_backup_date).toLocaleString('fr-FR')
                       : 'Aucune sauvegarde'
                     }
                   </p>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   <button
                     onClick={handleBackupNow}
                     className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
@@ -640,11 +640,11 @@ export default function SettingsPage() {
             </div>
 
             {/* Note d'information */}
-            <div className="mt-4 bg-yellow-50 border-l-4 border-yellow-400 p-4">
+            <div className="mt-4 bg-yellow-50 dark:bg-yellow-950/30 border-l-4 border-yellow-400 p-4">
               <div className="flex">
                 <AlertCircle className="w-5 h-5 text-yellow-400 mr-2" />
                 <div>
-                  <p className="text-sm text-yellow-800">
+                  <p className="text-sm text-yellow-800 dark:text-yellow-300">
                     <strong>Note :</strong> Les sauvegardes automatiques sont gérées par Supabase. 
                     Pour un plan gratuit, les sauvegardes quotidiennes sont conservées pendant 7 jours.
                     Pour plus d'options, passez à un plan Pro.

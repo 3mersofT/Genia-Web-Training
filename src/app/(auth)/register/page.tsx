@@ -307,9 +307,9 @@ export default function RegisterPage() {
                 />
                 <label htmlFor="terms" className="ml-2 text-sm text-muted-foreground">
                   J'accepte les{' '}
-                  <Link href="#" className="text-primary hover:underline">conditions d'utilisation</Link>{' '}
+                  <Link href="/terms" className="text-primary hover:underline">conditions d'utilisation</Link>{' '}
                   et la{' '}
-                  <Link href="#" className="text-primary hover:underline">politique de confidentialité</Link>
+                  <Link href="/privacy" className="text-primary hover:underline">politique de confidentialité</Link>
                 </label>
               </div>
               {errors.terms && (

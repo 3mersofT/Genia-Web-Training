@@ -107,6 +107,7 @@ export default function NotificationCenter({ userId, className = '' }: Notificat
       {/* Bouton cloche */}
       <button
         onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
         className="relative p-2 text-muted-foreground hover:text-foreground transition-colors"
       >
         <Bell className="w-6 h-6" />

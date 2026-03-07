@@ -7,6 +7,7 @@ import {
   Mail, Calendar, Activity, Shield, MoreVertical,
   ChevronLeft, ChevronRight, Eye, Lock, Trash2
 } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 
 interface User {
   id: string;
@@ -148,19 +149,19 @@ export default function UsersManagementPage() {
     try {
       const user = users.find(u => u.id === userId);
       if (!user) {
-        alert('Utilisateur non trouvé');
+        toast({ title: 'Erreur', description: 'Utilisateur non trouvé', variant: 'destructive' });
         return;
       }
 
-      if (!user.email) return alert('Email utilisateur manquant');       
-      if (confirm(`Réinitialiser le mot de passe de ${user.email} ?\nUn email sera envoyé à l'utilisateur.`)) {                                          
-        const { error } = await supabase.auth.resetPasswordForEmail(user.email);                                                                         
+      if (!user.email) { toast({ title: 'Erreur', description: 'Email utilisateur manquant', variant: 'destructive' }); return; }
+      if (confirm(`Réinitialiser le mot de passe de ${user.email} ?\nUn email sera envoyé à l'utilisateur.`)) {
+        const { error } = await supabase.auth.resetPasswordForEmail(user.email);
         if (error) throw error;
-        alert(`Email de réinitialisation envoyé à ${user.email}!`);      
+        toast({ title: 'Succès', description: `Email de réinitialisation envoyé à ${user.email}!` });
       }
     } catch (error) {
-      console.error('Erreur lors de la réinitialisation:', error);       
-      alert('Erreur lors de l\'envoi de l\'email de réinitialisation');  
+      console.error('Erreur lors de la réinitialisation:', error);
+      toast({ title: 'Erreur', description: 'Erreur lors de l\'envoi de l\'email de réinitialisation', variant: 'destructive' });  
     }
   };
 
@@ -168,20 +169,20 @@ export default function UsersManagementPage() {
     try {
       const user = users.find(u => u.id === userId);
       if (!user) {
-        alert('Utilisateur non trouvé');
+        toast({ title: 'Erreur', description: 'Utilisateur non trouvé', variant: 'destructive' });
         return;
       }
-      alert("Pour des raisons de sécurité, seul l'envoi d'email de réinitialisation est permis côté admin. Utilisez 'Réinitialiser mot de passe'.");
+      toast({ title: 'Information', description: "Pour des raisons de sécurité, seul l'envoi d'email de réinitialisation est permis côté admin. Utilisez 'Réinitialiser mot de passe'." });
     } catch (error) {
       console.error('Erreur lors du changement de mot de passe:', error);
-      alert('Erreur lors du changement de mot de passe');
+      toast({ title: 'Erreur', description: 'Erreur lors du changement de mot de passe', variant: 'destructive' });
     }
   };
 
   const handleSuspendUser = async (userId: string) => {
     const user = users.find(u => u.id === userId);
     if (!user) {
-      alert('Utilisateur non trouvé');
+      toast({ title: 'Erreur', description: 'Utilisateur non trouvé', variant: 'destructive' });
       return;
     }
 
@@ -222,10 +223,10 @@ export default function UsersManagementPage() {
           )
         );
         
-        alert(`✅ Utilisateur ${user.email} ${isSuspended ? 'réactivé' : 'suspendu'} !`);
+        toast({ title: 'Succès', description: `Utilisateur ${user.email} ${isSuspended ? 'réactivé' : 'suspendu'} !` });
       } catch (error) {
         console.error(`Erreur lors de la ${action}:`, error);
-        alert(`Erreur lors de la ${action} de l'utilisateur: ${error instanceof Error ? error.message : 'Erreur inconnue'}`);
+        toast({ title: 'Erreur', description: `Erreur lors de la ${action} de l'utilisateur: ${error instanceof Error ? error.message : 'Erreur inconnue'}`, variant: 'destructive' });
       }
     }
   };
@@ -233,7 +234,7 @@ export default function UsersManagementPage() {
   const handleResetPassword = async (userId: string) => {
     const user = users.find(u => u.id === userId);
     if (!user) {
-      alert('Utilisateur non trouvé');
+      toast({ title: 'Erreur', description: 'Utilisateur non trouvé', variant: 'destructive' });
       return;
     }
 
@@ -241,7 +242,7 @@ export default function UsersManagementPage() {
     if (!newPassword) return;
 
     if (newPassword.length < 8) {
-      alert('Le mot de passe doit contenir au moins 8 caractères');
+      toast({ title: 'Attention', description: 'Le mot de passe doit contenir au moins 8 caractères', variant: 'destructive' });
       return;
     }
 
@@ -263,10 +264,10 @@ export default function UsersManagementPage() {
           throw new Error(errorData.error || 'Erreur reset mot de passe');
         }
 
-        alert(`✅ Mot de passe changé avec succès pour ${user.email} !`);
+        toast({ title: 'Succès', description: `Mot de passe changé avec succès pour ${user.email} !` });
       } catch (error) {
         console.error('Erreur reset mot de passe:', error);
-        alert(`Erreur lors du changement de mot de passe: ${error instanceof Error ? error.message : 'Erreur inconnue'}`);
+        toast({ title: 'Erreur', description: `Erreur lors du changement de mot de passe: ${error instanceof Error ? error.message : 'Erreur inconnue'}`, variant: 'destructive' });
       }
     }
   };
@@ -274,7 +275,7 @@ export default function UsersManagementPage() {
   const handleSendPasswordReset = async (userId: string) => {
     const user = users.find(u => u.id === userId);
     if (!user) {
-      alert('Utilisateur non trouvé');
+      toast({ title: 'Erreur', description: 'Utilisateur non trouvé', variant: 'destructive' });
       return;
     }
 
@@ -295,10 +296,10 @@ export default function UsersManagementPage() {
           throw new Error(errorData.error || 'Erreur envoi email');
         }
 
-        alert(`✅ Email de reset envoyé à ${user.email} !`);
+        toast({ title: 'Succès', description: `Email de reset envoyé à ${user.email} !` });
       } catch (error) {
         console.error('Erreur envoi email reset:', error);
-        alert(`Erreur lors de l'envoi de l'email: ${error instanceof Error ? error.message : 'Erreur inconnue'}`);
+        toast({ title: 'Erreur', description: `Erreur lors de l'envoi de l'email: ${error instanceof Error ? error.message : 'Erreur inconnue'}`, variant: 'destructive' });
       }
     }
   };
@@ -317,10 +318,10 @@ export default function UsersManagementPage() {
           throw new Error(errorData.error || 'Erreur API');
         }
         
-        alert(`✅ Email de vérification renvoyé à ${userEmail} !`);
+        toast({ title: 'Succès', description: `Email de vérification renvoyé à ${userEmail} !` });
       } catch (error: any) {
         console.error('Erreur envoi email vérification:', error);
-        alert(`Erreur lors de l'envoi de l'email: ${error.message}`);
+        toast({ title: 'Erreur', description: `Erreur lors de l'envoi de l'email: ${error.message}`, variant: 'destructive' });
       }
     }
   };
@@ -328,7 +329,7 @@ export default function UsersManagementPage() {
   const handleDeleteUser = async (userId: string, closeModal = false) => {
     const user = users.find(u => u.id === userId);
     if (!user) {
-      alert('Utilisateur non trouvé');
+      toast({ title: 'Erreur', description: 'Utilisateur non trouvé', variant: 'destructive' });
       return;
     }
 
@@ -354,10 +355,10 @@ export default function UsersManagementPage() {
           setShowUserModal(false);
         }
         
-        alert(`✅ Utilisateur ${user.email} supprimé définitivement !`);
+        toast({ title: 'Succès', description: `Utilisateur ${user.email} supprimé définitivement !` });
       } catch (error) {
         console.error('Erreur lors de la suppression:', error);
-        alert(`Erreur lors de la suppression de l'utilisateur: ${error instanceof Error ? error.message : 'Erreur inconnue'}`);
+        toast({ title: 'Erreur', description: `Erreur lors de la suppression de l'utilisateur: ${error instanceof Error ? error.message : 'Erreur inconnue'}`, variant: 'destructive' });
       }
     }
   };
@@ -370,7 +371,7 @@ export default function UsersManagementPage() {
     );
     
     if (testUsers.length === 0) {
-      alert('Aucun utilisateur de test trouvé à supprimer.');
+      toast({ title: 'Information', description: 'Aucun utilisateur de test trouvé à supprimer.' });
       return;
     }
 
@@ -385,10 +386,10 @@ export default function UsersManagementPage() {
         if (error) throw error;
         
         await fetchUsers(); // Recharger la liste
-        alert(`✅ ${testUsers.length} utilisateurs de test supprimés !`);
+        toast({ title: 'Succès', description: `${testUsers.length} utilisateurs de test supprimés !` });
       } catch (error) {
         console.error('Erreur lors du nettoyage:', error);
-        alert('Erreur lors du nettoyage des utilisateurs de test');
+        toast({ title: 'Erreur', description: 'Erreur lors du nettoyage des utilisateurs de test', variant: 'destructive' });
       } finally {
         setLoading(false);
       }
@@ -397,7 +398,7 @@ export default function UsersManagementPage() {
 
   const handleBulkDelete = async () => {
     if (selectedUserIds.size === 0) {
-      alert('Veuillez sélectionner au moins un utilisateur à supprimer');
+      toast({ title: 'Attention', description: 'Veuillez sélectionner au moins un utilisateur à supprimer', variant: 'destructive' });
       return;
     }
 
@@ -408,7 +409,7 @@ export default function UsersManagementPage() {
     const usersToDelete = selectedUsers.filter(u => u.email !== 'admin@geniawebtraining.com');
     
     if (usersToDelete.length === 0) {
-      alert('Aucun utilisateur supprimable sélectionné (admin exclu)');
+      toast({ title: 'Attention', description: 'Aucun utilisateur supprimable sélectionné (admin exclu)', variant: 'destructive' });
       return;
     }
 
@@ -422,10 +423,10 @@ export default function UsersManagementPage() {
         // Clear les sélections
         setSelectedUserIds(new Set());
         
-        alert(`✅ ${usersToDelete.length} utilisateur${usersToDelete.length > 1 ? 's' : ''} supprimé${usersToDelete.length > 1 ? 's' : ''} !`);
+        toast({ title: 'Succès', description: `${usersToDelete.length} utilisateur${usersToDelete.length > 1 ? 's' : ''} supprimé${usersToDelete.length > 1 ? 's' : ''} !` });
       } catch (error) {
         console.error('Erreur lors de la suppression en lot:', error);
-        alert('Erreur lors de la suppression en lot');
+        toast({ title: 'Erreur', description: 'Erreur lors de la suppression en lot', variant: 'destructive' });
       }
     }
   };
@@ -486,14 +487,14 @@ export default function UsersManagementPage() {
   const handleCreateUser = async () => {
     try {
       if (!newUserForm.email.trim() || !newUserForm.display_name.trim()) {
-        alert('Veuillez remplir l\'email et le nom d\'affichage');
+        toast({ title: 'Attention', description: 'Veuillez remplir l\'email et le nom d\'affichage', variant: 'destructive' });
         return;
       }
 
       // Vérifier si l'email existe déjà
       const existingUser = users.find(u => u.email.toLowerCase() === newUserForm.email.toLowerCase());
       if (existingUser) {
-        alert('Un utilisateur avec cet email existe déjà');
+        toast({ title: 'Erreur', description: 'Un utilisateur avec cet email existe déjà', variant: 'destructive' });
         return;
       }
 
@@ -541,10 +542,10 @@ export default function UsersManagementPage() {
       });
       
       setShowCreateUserModal(false);
-      alert(`✅ Utilisateur ${newUserForm.email} créé avec succès !\n\nUn email d'invitation sera envoyé à l'utilisateur.`);
+      toast({ title: 'Succès', description: `Utilisateur ${newUserForm.email} créé avec succès ! Un email d'invitation sera envoyé à l'utilisateur.` });
     } catch (error) {
       console.error('Erreur lors de la création de l\'utilisateur:', error);
-      alert('Erreur lors de la création de l\'utilisateur');
+      toast({ title: 'Erreur', description: 'Erreur lors de la création de l\'utilisateur', variant: 'destructive' });
     }
   };
 
@@ -557,20 +558,20 @@ export default function UsersManagementPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation Header */}
-      <div className="bg-card shadow-sm border-b">
-        <div className="px-6 py-4">
-          <div className="flex items-center gap-4 mb-2">
-            <a href="/admin" className="text-primary hover:text-primary/80 font-medium">← Dashboard Admin</a>
+      <div className="bg-card shadow-sm border-b overflow-hidden">
+        <div className="px-4 sm:px-6 py-4">
+          <div className="flex items-center gap-2 sm:gap-4 mb-2 min-w-0">
+            <a href="/admin" className="text-primary hover:text-primary/80 font-medium whitespace-nowrap text-sm sm:text-base">← Dashboard Admin</a>
             <span className="text-muted-foreground">|</span>
-            <h1 className="text-xl font-bold text-foreground">Gestion des Utilisateurs</h1>
+            <h1 className="text-lg sm:text-xl font-bold text-foreground truncate">Gestion des Utilisateurs</h1>
           </div>
-          <p className="text-muted-foreground">Gérez les comptes et permissions des utilisateurs</p>
+          <p className="text-muted-foreground text-sm">Gérez les comptes et permissions des utilisateurs</p>
         </div>
-        
-        
+
+
         {/* Quick Navigation */}
-        <div className="px-6 pb-2">
-          <nav className="flex gap-4 text-sm">
+        <div className="px-4 sm:px-6 pb-2 overflow-x-auto">
+          <nav className="flex gap-4 text-sm min-w-max">
             <a href="/admin" className="text-muted-foreground hover:text-foreground">Dashboard</a>
             <a href="/admin/users" className="text-primary font-medium">Utilisateurs</a>
             <a href="/admin/analytics" className="text-muted-foreground hover:text-foreground">Analytics</a>
@@ -580,10 +581,10 @@ export default function UsersManagementPage() {
         </div>
       </div>
       
-      <div className="p-6">
+      <div className="p-4 sm:p-6">
 
       {/* Statistiques */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <div className="bg-card rounded-lg shadow p-4">
           <div className="flex items-center justify-between">
             <div>
@@ -638,8 +639,8 @@ export default function UsersManagementPage() {
       {/* Filtres et recherche */}
       <div className="bg-card rounded-lg shadow mb-6">
         <div className="p-4 border-b">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex-1 relative">
+          <div className="flex flex-col md:flex-row flex-wrap gap-4">
+            <div className="flex-1 relative min-w-0">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
               <input
                 type="text"
@@ -710,9 +711,9 @@ export default function UsersManagementPage() {
 
         {/* Indicateur de sélection */}
         {selectedUserIds.size > 0 && (
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+          <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-4">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-blue-800">
+              <div className="flex items-center gap-2 text-blue-800 dark:text-blue-300">
                 <span className="font-medium">
                   {selectedUserIds.size} utilisateur{selectedUserIds.size > 1 ? 's' : ''} sélectionné{selectedUserIds.size > 1 ? 's' : ''}
                 </span>

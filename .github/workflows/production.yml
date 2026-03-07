@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     # Deploy on direct push to main, or after CI passes via workflow_run
     if: |
-      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')) ||
       (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
     steps:
       - name: Checkout code
