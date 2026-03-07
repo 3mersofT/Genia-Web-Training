@@ -12,19 +12,18 @@ import * as path from 'path';
 dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
 
 // Integration test - uses real Supabase connection
-describe('Middleware - Admin Access Integration', () => {
+const hasSupabaseEnv = !!(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
+const describeIfSupabase = hasSupabaseEnv ? describe : describe.skip;
+
+describeIfSupabase('Middleware - Admin Access Integration', () => {
   let supabaseAdmin: ReturnType<typeof createSupabaseClient<Database>>;
   let testAdminUser: { id: string; email: string } | null = null;
   let testStudentUser: { id: string; email: string } | null = null;
 
   beforeAll(async () => {
     // Create admin client for test setup
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-    if (!supabaseUrl || !supabaseServiceKey) {
-      throw new Error('Supabase environment variables not set. Please ensure .env.local exists with NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY');
-    }
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
     supabaseAdmin = createSupabaseClient<Database>(supabaseUrl, supabaseServiceKey, {
       auth: {
