@@ -23,6 +23,24 @@ jest.mock('next/link', () =>
   },
 );
 
+jest.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => {
+    const translations: Record<string, string> = {
+      'modulePlan': 'Plan du module',
+      'backToDashboard': 'Dashboard',
+      'start': 'Commencer',
+      'continue': 'Continuer',
+      'completed': 'Terminé',
+      'locked': 'Verrouillé',
+    };
+    return translations[key] || key;
+  },
+}));
+
+jest.mock('@/components/ui/skeleton', () => ({
+  Skeleton: ({ className }: any) => <div data-testid="skeleton" className={className} />,
+}));
+
 const mockUseAuth = jest.fn();
 jest.mock('@/hooks/useAuth', () => ({
   useAuth: (...args: any[]) => mockUseAuth(...args),
@@ -166,10 +184,11 @@ describe('ModulePage', () => {
     mockData.getModuleBySlug.mockReturnValueOnce(new Promise(() => {}));
     mockUseAuth.mockReturnValue({ user: null });
 
-    const { container } = render(<ModulePage />);
+    render(<ModulePage />);
 
-    const spinner = container.querySelector('.animate-spin');
-    expect(spinner).toBeInTheDocument();
+    // The loading state renders Skeleton placeholders
+    const skeletons = screen.getAllByTestId('skeleton');
+    expect(skeletons.length).toBeGreaterThan(0);
   });
 
   it('renders module content', async () => {

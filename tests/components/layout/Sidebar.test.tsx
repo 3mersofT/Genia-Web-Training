@@ -15,6 +15,10 @@ jest.mock('next/navigation', () => ({
   useRouter: jest.fn(() => ({ push: mockPush })),
 }));
 
+jest.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => key,
+}));
+
 jest.mock('@/hooks/useAuth', () => ({
   useAuth: jest.fn(() => ({
     user: {
@@ -62,6 +66,8 @@ jest.mock('lucide-react', () => ({
   Swords: (props: any) => <span {...props} />,
   Users: (props: any) => <span {...props} />,
   Network: (props: any) => <span {...props} />,
+  Menu: (props: any) => <span {...props} />,
+  X: (props: any) => <span {...props} />,
 }));
 
 // Get references to mocked modules for per-test overrides
@@ -76,19 +82,20 @@ describe('DesktopNavigation (Sidebar)', () => {
   it('renders navigation links', () => {
     render(<DesktopNavigation />);
 
-    expect(screen.getByText('Accueil')).toBeInTheDocument();
-    expect(screen.getByText('Modules')).toBeInTheDocument();
-    expect(screen.getByText('GENIA')).toBeInTheDocument();
-    expect(screen.getByText('Tournois')).toBeInTheDocument();
+    // Navigation labels come from t('key') mock which returns the key
+    expect(screen.getByText('dashboard')).toBeInTheDocument();
+    expect(screen.getByText('modules')).toBeInTheDocument();
+    expect(screen.getByText('chat')).toBeInTheDocument();
+    expect(screen.getByText('tournaments')).toBeInTheDocument();
   });
 
   it('highlights active link based on current pathname', () => {
     render(<DesktopNavigation />);
 
-    // The Accueil button should be active since pathname is /dashboard
-    const accueilButton = screen.getByText('Accueil').closest('button')!;
-    expect(accueilButton).toHaveClass('text-primary');
-    expect(accueilButton).toHaveClass('bg-primary/10');
+    // The dashboard button should be active since pathname is /dashboard
+    const dashboardButton = screen.getByText('dashboard').closest('button')!;
+    expect(dashboardButton).toHaveClass('text-primary');
+    expect(dashboardButton).toHaveClass('bg-primary/10');
   });
 
   it('shows user menu with profile info', () => {
