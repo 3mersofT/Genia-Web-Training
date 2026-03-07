@@ -57,9 +57,10 @@ export default function GENIAChatButton({
       {/* Bouton flottant GENIA */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed ${positionClasses[position]} z-50 group transition-all duration-300 ease-in-out transform hover:scale-110 ${
+        className={`fixed ${positionClasses[position]} z-50 group transition-all duration-300 ease-in-out transform hover:scale-110 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
           isOpen ? 'rotate-180' : ''
         }`}
+        aria-expanded={isOpen}
         aria-label={`Ouvrir l'assistant ${AI_ASSISTANT_NAME}`}
       >
         <div className="relative">
@@ -122,7 +123,7 @@ export default function GENIAChatButton({
                 </div>
                 <button 
                   onClick={() => setIsOpen(false)}
-                  className="p-2 hover:bg-white hover:bg-opacity-20 rounded-full transition-colors"
+                  className="p-2 hover:bg-white hover:bg-opacity-20 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   <X className="w-5 h-5" />
                 </button>

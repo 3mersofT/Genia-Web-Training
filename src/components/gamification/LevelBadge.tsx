@@ -133,7 +133,7 @@ export default function LevelBadge({
 
       {/* XP Stats */}
       {showDetails && (
-        <div className="grid grid-cols-3 gap-4 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
           <div className="text-center p-3 bg-card bg-opacity-60 rounded-lg">
             <div className="flex items-center justify-center gap-1 mb-1">
               <Zap className="w-4 h-4 text-yellow-500" />

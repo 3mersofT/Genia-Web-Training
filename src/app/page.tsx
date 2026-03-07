@@ -133,26 +133,29 @@ export default function HomePage() {
             </div>
             
             {/* Zone de connexion */}
-            <div className="flex gap-3">
-              <Link 
-                href="/login" 
-                className="inline-flex items-center px-4 py-2 text-foreground bg-card border border-input rounded-lg hover:bg-accent transition-colors"
-              >
-                <LogIn className="w-4 h-4 mr-2" />
-                {t('hero.login')}
-              </Link>
-              <Link
-                href="/register"
-                className="inline-flex items-center px-4 py-2 text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg hover:shadow-lg transition-all"
-              >
-                <UserPlus className="w-4 h-4 mr-2" />
-                {t('hero.register')}
-              </Link>
-            </div>
+            <nav aria-label="Main navigation">
+              <div className="flex gap-3">
+                <Link
+                  href="/login"
+                  className="inline-flex items-center px-4 py-2 text-foreground bg-card border border-input rounded-lg hover:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                >
+                  <LogIn className="w-4 h-4 mr-2" />
+                  {t('hero.login')}
+                </Link>
+                <Link
+                  href="/register"
+                  className="inline-flex items-center px-4 py-2 text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg hover:shadow-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                >
+                  <UserPlus className="w-4 h-4 mr-2" />
+                  {t('hero.register')}
+                </Link>
+              </div>
+            </nav>
           </div>
         </div>
       </header>
 
+      <main>
       {/* Hero Section avec Logo GENIA en arrière-plan */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--gradient-start))] via-[hsl(var(--gradient-end))] to-pink-50 dark:to-pink-950/30 opacity-70" />
@@ -195,12 +198,12 @@ export default function HomePage() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Link href="/register" className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
+              <Link href="/register" className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                 <Play className="w-5 h-5 mr-2" />
                 {t('hero.cta')}
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
-              <a href="#method" className="inline-flex items-center px-8 py-4 bg-card text-foreground font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 border border-border">
+              <a href="#method" className="inline-flex items-center px-8 py-4 bg-card text-foreground font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 border border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                 <MessageCircle className="w-5 h-5 mr-2" />
                 {t('hero.ctaSecondary')}
               </a>
@@ -283,7 +286,7 @@ export default function HomePage() {
               <button
                 key={index}
                 onClick={() => setActiveGENIATab(index)}
-                className={`group transition-all duration-300 ${activeGENIATab === index ? 'scale-110' : 'hover:scale-105'}`}
+                className={`group transition-all duration-300 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${activeGENIATab === index ? 'scale-110' : 'hover:scale-105'}`}
               >
                 <div className={`w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-r ${item.color} flex items-center justify-center text-white text-2xl md:text-3xl font-bold shadow-lg ${activeGENIATab === index ? 'ring-4 ring-white ring-offset-2' : ''}`}>
                   {item.letter}
@@ -349,7 +352,7 @@ export default function HomePage() {
                 ))}
               </ul>
               
-              <Link href="/register" className="block w-full text-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
+              <Link href="/register" className="block w-full text-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                 {t('waitlist')}
               </Link>
 
@@ -373,7 +376,7 @@ export default function HomePage() {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
               <div key={index} className="bg-card rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
                 <div className="flex mb-4">
@@ -409,7 +412,8 @@ export default function HomePage() {
               <div key={index} className="bg-muted rounded-xl shadow-md overflow-hidden">
                 <button
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-accent transition-colors"
+                  aria-expanded={openFaq === index}
+                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   <span className="font-semibold text-foreground">{faq.question}</span>
                   <ChevronDown className={`w-5 h-5 text-muted-foreground transition-transform ${openFaq === index ? 'rotate-180' : ''}`} />
@@ -436,14 +440,14 @@ export default function HomePage() {
               href="https://www.linkedin.com/in/hemersonkoffi" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
+              className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               <Linkedin className="w-5 h-5 mr-2" />
               LinkedIn
             </a>
             <a 
               href="mailto:contact@geniawebtraining.com" 
-              className="inline-flex items-center px-6 py-3 bg-card text-foreground font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 border border-border"
+              className="inline-flex items-center px-6 py-3 bg-card text-foreground font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 border border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               <Mail className="w-5 h-5 mr-2" />
               Email
@@ -462,18 +466,19 @@ export default function HomePage() {
             {t('cta.subtitle')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/register" className="inline-flex items-center px-8 py-4 bg-card text-primary font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
+            <Link href="/register" className="inline-flex items-center px-8 py-4 bg-card text-primary font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
               <Zap className="w-5 h-5 mr-2" />
               {t('cta.register')}
               <ArrowRight className="w-5 h-5 ml-2" />
             </Link>
-            <a href="#method" className="inline-flex items-center px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl border-2 border-white/30 hover:bg-white/20 transition-all duration-200">
+            <a href="#method" className="inline-flex items-center px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl border-2 border-white/30 hover:bg-white/20 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
               <BookOpen className="w-5 h-5 mr-2" />
               {t('cta.method')}
             </a>
           </div>
         </div>
       </section>
+      </main>
 
       {/* Footer avec logo */}
       <footer className="bg-background text-white py-12">
@@ -510,22 +515,22 @@ export default function HomePage() {
               <div>
                 <h4 className="font-semibold mb-4">{t('footer.resources')}</h4>
                 <div className="flex justify-center gap-4 text-muted-foreground text-sm">
-                  <a href="#" className="hover:text-white transition-colors">{t('footer.blog')}</a>
+                  <Link href="/blog" className="hover:text-white transition-colors">{t('footer.blog')}</Link>
                   <span className="text-muted-foreground">|</span>
-                  <a href="#" className="hover:text-white transition-colors">{t('footer.documentation')}</a>
+                  <Link href="/docs" className="hover:text-white transition-colors">{t('footer.documentation')}</Link>
                   <span className="text-muted-foreground">|</span>
-                  <a href="#" className="hover:text-white transition-colors">{t('footer.support')}</a>
+                  <Link href="/support" className="hover:text-white transition-colors">{t('footer.support')}</Link>
                 </div>
               </div>
 
               <div>
                 <h4 className="font-semibold mb-4">{t('footer.info')}</h4>
                 <div className="flex justify-center gap-4 text-muted-foreground text-sm">
-                  <a href="#" className="hover:text-white transition-colors">{t('footer.terms')}</a>
+                  <Link href="/terms" className="hover:text-white transition-colors">{t('footer.terms')}</Link>
                   <span className="text-muted-foreground">|</span>
-                  <a href="#" className="hover:text-white transition-colors">{t('footer.contact')}</a>
+                  <Link href="/contact" className="hover:text-white transition-colors">{t('footer.contact')}</Link>
                   <span className="text-muted-foreground">|</span>
-                  <a href="#" className="hover:text-white transition-colors">{t('footer.about')}</a>
+                  <Link href="/about" className="hover:text-white transition-colors">{t('footer.about')}</Link>
                 </div>
               </div>
             </div>

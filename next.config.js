@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 
+const { withSentryConfig } = require("@sentry/nextjs");
 const createNextIntlPlugin = require('next-intl/plugin');
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
@@ -150,4 +151,8 @@ const nextConfig = {
   },
 }
 
-module.exports = withNextIntl(withBundleAnalyzer(withPWA(nextConfig)))
+module.exports = withSentryConfig(withNextIntl(withBundleAnalyzer(withPWA(nextConfig))), {
+  silent: true,
+  hideSourceMaps: true,
+  disableLogger: true,
+})

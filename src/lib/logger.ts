@@ -154,6 +154,11 @@ export const logger: {
    */
   error: (message: string, metadata?: LogMetadata): void => {
     log('error', message, metadata)
+    try {
+      const Sentry = require("@sentry/nextjs");
+      Sentry.captureException(metadata?.error || new Error(message));
+      if (metadata) Sentry.setContext("metadata", sanitizeMetadata(metadata));
+    } catch {}
   },
 
   /**
@@ -161,6 +166,11 @@ export const logger: {
    */
   warn: (message: string, metadata?: LogMetadata): void => {
     log('warn', message, metadata)
+    try {
+      const Sentry = require("@sentry/nextjs");
+      Sentry.captureMessage(message, "warning");
+      if (metadata) Sentry.setContext("metadata", sanitizeMetadata(metadata));
+    } catch {}
   },
 
   /**

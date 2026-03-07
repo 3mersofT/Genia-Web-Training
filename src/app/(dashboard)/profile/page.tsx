@@ -14,6 +14,8 @@ import { useTranslations } from 'next-intl';
 import NotificationPreferences from '@/components/notifications/NotificationPreferences';
 import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
 import { useOnboarding } from '@/hooks/useOnboarding';
+import { toast } from '@/hooks/use-toast';
+import { Skeleton } from '@/components/ui/skeleton';
 
 
 export default function ProfilePage() {
@@ -94,13 +96,13 @@ export default function ProfilePage() {
       if (success) {
         setProfile(prev => prev ? { ...prev, ...formData } : null);
         setEditing(false);
-        alert('Profil mis à jour avec succès !');
+        toast({ title: 'Succès', description: 'Profil mis à jour avec succès !' });
       } else {
-        alert('Erreur lors de la sauvegarde du profil');
+        toast({ title: 'Erreur', description: 'Erreur lors de la sauvegarde du profil', variant: 'destructive' });
       }
     } catch (error) {
       console.error('Erreur lors de la sauvegarde:', error);
-      alert('Erreur lors de la sauvegarde du profil');
+      toast({ title: 'Erreur', description: 'Erreur lors de la sauvegarde du profil', variant: 'destructive' });
     } finally {
       setSaving(false);
     }
@@ -130,11 +132,11 @@ export default function ProfilePage() {
   };
 
   const handleEnable2FA = () => {
-    alert('Fonctionnalité 2FA en cours de développement');
+    toast({ title: 'Information', description: 'Fonctionnalité 2FA en cours de développement' });
   };
 
   const handleViewSessions = () => {
-    alert('Gestion des sessions en cours de développement');
+    toast({ title: 'Information', description: 'Gestion des sessions en cours de développement' });
   };
 
   const { resetOnboarding } = useOnboarding(user?.id);
@@ -158,14 +160,63 @@ export default function ProfilePage() {
       }
     } catch (error) {
       console.error('Erreur lors de l\'upload de l\'avatar:', error);
-      alert('Erreur lors de l\'upload de l\'avatar');
+      toast({ title: 'Erreur', description: 'Erreur lors de l\'upload de l\'avatar', variant: 'destructive' });
     }
   };
 
   if (authLoading || loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+      <div className="min-h-screen bg-background">
+        <div className="bg-card shadow-sm border-b">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <Skeleton className="h-8 w-40 mb-2" />
+                <Skeleton className="h-5 w-64" />
+              </div>
+              <Skeleton className="h-10 w-28" />
+            </div>
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto p-4 md:p-8">
+          <div className="mb-8">
+            <Skeleton className="h-5 w-40 mb-4" />
+            <Skeleton className="h-9 w-48 mb-2" />
+            <Skeleton className="h-5 w-72" />
+          </div>
+          <div className="flex flex-col md:flex-row gap-8">
+            {/* Sidebar skeleton */}
+            <div className="w-full md:w-72 lg:w-80 shrink-0">
+              <div className="bg-card rounded-xl shadow-sm p-6">
+                <div className="text-center">
+                  <Skeleton className="w-24 h-24 rounded-full mx-auto" />
+                  <Skeleton className="h-6 w-32 mx-auto mt-4" />
+                  <Skeleton className="h-4 w-48 mx-auto mt-2" />
+                  <Skeleton className="h-6 w-20 mx-auto mt-4 rounded-full" />
+                </div>
+                <div className="mt-8 space-y-2">
+                  {Array.from({ length: 3 }).map((_, i) => (
+                    <Skeleton key={i} className="h-12 w-full rounded-lg" />
+                  ))}
+                </div>
+              </div>
+            </div>
+            {/* Content skeleton */}
+            <div className="flex-1 min-w-0">
+              <div className="bg-card rounded-xl shadow-sm p-6">
+                <Skeleton className="h-7 w-56 mb-6" />
+                <div className="space-y-6">
+                  {Array.from({ length: 4 }).map((_, i) => (
+                    <div key={i}>
+                      <Skeleton className="h-4 w-32 mb-2" />
+                      <Skeleton className="h-12 w-full rounded-lg" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -205,7 +256,7 @@ export default function ProfilePage() {
                     <button
                       onClick={handleSave}
                       disabled={saving}
-                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center gap-2 disabled:opacity-50"
+                      className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 flex items-center gap-2 disabled:opacity-50"
                     >
                       <Save className="w-4 h-4" />
                       {saving ? 'Sauvegarde...' : 'Sauvegarder'}
@@ -214,7 +265,7 @@ export default function ProfilePage() {
                 ) : (
                   <button
                     onClick={() => setEditing(true)}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center gap-2"
+                    className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 flex items-center gap-2"
                   >
                     <Edit3 className="w-4 h-4" />
                     Modifier
@@ -226,7 +277,7 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto p-4 md:p-8">
         {/* Header avec bouton retour */}
         <div className="mb-8">
           <div className="flex items-center gap-4 mb-4">
@@ -242,17 +293,17 @@ export default function ProfilePage() {
           <p className="text-muted-foreground">Personnalisez votre profil et vos préférences</p>
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="flex flex-col md:flex-row gap-8">
           {/* Sidebar */}
-          <div className="lg:col-span-1">
+          <div className="w-full md:w-72 lg:w-80 shrink-0">
             <div className="bg-card rounded-xl shadow-sm p-6">
               <div className="text-center">
                 <div className="relative inline-block">
-                  <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-2xl font-bold">
+                  <div className="w-24 h-24 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-2xl font-bold">
                     {profile.display_name?.charAt(0)?.toUpperCase() || profile.email?.charAt(0)?.toUpperCase() || 'U'}
                   </div>
                   {editing && (
-                    <label className="absolute bottom-0 right-0 bg-blue-600 text-white rounded-full p-2 cursor-pointer hover:bg-blue-700">
+                    <label className="absolute bottom-0 right-0 bg-primary text-primary-foreground rounded-full p-2 cursor-pointer hover:bg-primary/90">
                       <Camera className="w-4 h-4" />
                       <input
                         type="file"
@@ -269,9 +320,9 @@ export default function ProfilePage() {
                 <p className="text-muted-foreground text-sm">{profile.email}</p>
                 <div className="mt-4">
                   <span className={`px-3 py-1 text-xs rounded-full ${
-                    profile.role === 'admin' 
-                      ? 'bg-purple-100 text-purple-800' 
-                      : 'bg-blue-100 dark:bg-blue-900/30 text-blue-800'
+                    profile.role === 'admin'
+                      ? 'bg-primary/10 text-primary'
+                      : 'bg-accent text-accent-foreground'
                   }`}>
                     {profile.role === 'admin' ? 'Administrateur' : 'Étudiant'}
                   </span>
@@ -284,7 +335,7 @@ export default function ProfilePage() {
                   onClick={() => setActiveTab('profile')}
                   className={`w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 transition-colors ${
                     activeTab === 'profile'
-                      ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                      ? 'bg-primary/10 text-primary border border-primary/20'
                       : 'text-foreground hover:bg-accent'
                   }`}
                 >
@@ -295,7 +346,7 @@ export default function ProfilePage() {
                   onClick={() => setActiveTab('preferences')}
                   className={`w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 transition-colors ${
                     activeTab === 'preferences'
-                      ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                      ? 'bg-primary/10 text-primary border border-primary/20'
                       : 'text-foreground hover:bg-accent'
                   }`}
                 >
@@ -306,7 +357,7 @@ export default function ProfilePage() {
                   onClick={() => setActiveTab('security')}
                   className={`w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 transition-colors ${
                     activeTab === 'security'
-                      ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                      ? 'bg-primary/10 text-primary border border-primary/20'
                       : 'text-foreground hover:bg-accent'
                   }`}
                 >
@@ -318,7 +369,7 @@ export default function ProfilePage() {
           </div>
 
           {/* Main Content */}
-          <div className="lg:col-span-3">
+          <div className="flex-1 min-w-0">
             {activeTab === 'profile' && (
               <div className="bg-card rounded-xl shadow-sm p-6">
                 <h2 className="text-xl font-semibold text-foreground mb-6">Informations personnelles</h2>
@@ -392,7 +443,7 @@ export default function ProfilePage() {
                       <label className="block text-sm font-medium text-foreground mb-3">
                         Thème
                       </label>
-                      <div className="grid grid-cols-3 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         {[
                           { value: 'light', label: 'Clair', icon: '☀️' },
                           { value: 'dark', label: 'Sombre', icon: '🌙' },
@@ -407,7 +458,7 @@ export default function ProfilePage() {
                             disabled={!editing}
                             className={`p-4 rounded-lg border-2 text-center transition-colors ${
                               formData.preferences.theme === theme.value
-                                ? 'border-blue-500 bg-blue-50'
+                                ? 'border-primary bg-primary/10'
                                 : 'border-border hover:border-input'
                             } ${!editing ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
                           >
@@ -445,7 +496,7 @@ export default function ProfilePage() {
                       </div>
                       <button 
                         onClick={handleChangePassword}
-                        className="px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50"
+                        className="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary/10"
                       >
                         Modifier
                       </button>

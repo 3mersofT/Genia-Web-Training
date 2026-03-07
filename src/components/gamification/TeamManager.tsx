@@ -303,7 +303,7 @@ export default function TeamManager({
                         </div>
 
                         {/* Team Stats */}
-                        <div className="grid grid-cols-3 gap-3 mb-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
                           <div className="text-center p-2 bg-muted rounded">
                             <Trophy className="w-4 h-4 text-yellow-500 mx-auto mb-1" />
                             <p className="text-lg font-bold text-foreground">{team.total_score}</p>
@@ -483,7 +483,7 @@ export default function TeamManager({
                         </div>
 
                         {/* Team Stats */}
-                        <div className="grid grid-cols-3 gap-2 mb-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-3">
                           <div className="text-center p-2 bg-yellow-50 rounded">
                             <Trophy className="w-4 h-4 text-yellow-600 mx-auto mb-1" />
                             <p className="text-sm font-bold text-foreground">{team.total_score}</p>
@@ -605,7 +605,7 @@ export default function TeamManager({
 
                         {/* Team Info */}
                         {invitation.team && (
-                          <div className="grid grid-cols-3 gap-2 mb-3">
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-3">
                             <div className="text-center p-2 bg-card rounded border border-border">
                               <Trophy className="w-4 h-4 text-yellow-500 mx-auto mb-1" />
                               <p className="text-sm font-bold text-foreground">{invitation.team.total_score}</p>

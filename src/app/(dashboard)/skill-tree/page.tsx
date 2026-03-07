@@ -56,7 +56,7 @@ export default function SkillTreePage() {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
             <div className="bg-gradient-to-br from-indigo-50 dark:from-indigo-950/30 to-indigo-100 dark:to-indigo-950/20 rounded-lg p-4">
               <div className="text-sm text-indigo-600 font-medium mb-1">{t('total')}</div>
               <div className="text-3xl font-bold text-indigo-900">{stats.total}</div>

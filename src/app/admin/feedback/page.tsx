@@ -155,10 +155,10 @@ export default function FeedbackManagementPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2 truncate">
             Gestion des Feedbacks
           </h1>
           <p className="text-muted-foreground">
@@ -167,7 +167,7 @@ export default function FeedbackManagementPage() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <div className="bg-card rounded-lg p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>

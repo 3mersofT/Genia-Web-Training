@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Download, X, RefreshCw, Smartphone } from 'lucide-react';
 import { BRAND } from '@/config/branding';
 import { motion, AnimatePresence } from 'framer-motion';
+import { toast } from '@/hooks/use-toast';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -143,13 +144,10 @@ export default function PWAManager() {
 
   const showIOSInstructions = () => {
     // Créer un modal avec instructions iOS
-    alert(`Pour installer GENIA Training sur iOS :
-    
-1. Tapez sur le bouton Partager en bas de Safari
-2. Faites défiler et tapez sur "Sur l'écran d'accueil"
-3. Tapez sur "Ajouter" en haut à droite
-    
-L'app sera disponible sur votre écran d'accueil !`);
+    toast({
+      title: 'Installation sur iOS',
+      description: '1. Tapez sur le bouton Partager en bas de Safari\n2. Faites défiler et tapez sur "Sur l\'écran d\'accueil"\n3. Tapez sur "Ajouter" en haut à droite',
+    });
   };
 
   // Ne rien afficher si l'app est standalone ou déjà installée

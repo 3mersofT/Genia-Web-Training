@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/hooks/useAuth'
-import { Trophy, Flame, Target, Clock, ChevronRight, BarChart3, Award, Brain } from 'lucide-react'
+import { Trophy, Flame, Target, Clock, ChevronRight, BarChart3, Award, Brain, BookOpen } from 'lucide-react'
 import Link from 'next/link'
 import { getAllModulesWithProgress, type Module } from '@/lib/data'
 import { createClient } from '@/lib/supabase/client'
@@ -14,6 +14,7 @@ import { logger } from '@/lib/logger'
 import { useTranslations } from 'next-intl'
 import FeedbackButton from '@/components/feedback/FeedbackButton'
 import { BRAND_FULL_NAME } from '@/config/branding'
+import { Skeleton } from '@/components/ui/skeleton'
 import GENIAOnboarding from '@/components/onboarding/GENIAOnboarding'
 import FeatureDiscoveryButton from '@/components/onboarding/FeatureDiscoveryButton'
 import { useOnboarding } from '@/hooks/useOnboarding'
@@ -93,8 +94,36 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <div className="min-h-screen bg-background">
+        <div className="bg-card border-b border-border">
+          <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+            <Skeleton className="h-8 w-48" />
+            <Skeleton className="h-10 w-24" />
+          </div>
+        </div>
+        <div className="container mx-auto p-4 md:p-8 space-y-6">
+          <div>
+            <Skeleton className="h-10 w-72 mb-2" />
+            <Skeleton className="h-5 w-96" />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="bg-card rounded-xl p-6 border border-border">
+                <Skeleton className="h-4 w-24 mb-3" />
+                <Skeleton className="h-8 w-16" />
+              </div>
+            ))}
+          </div>
+          <div className="space-y-4">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="bg-card rounded-xl p-6 border border-border">
+                <Skeleton className="h-6 w-48 mb-3" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-3/4 mt-2" />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     )
   }
@@ -125,7 +154,7 @@ export default function DashboardPage() {
           </h1>
           <button
             onClick={signOut}
-            className="px-4 py-2 text-muted-foreground hover:text-foreground transition-colors"
+            className="px-4 py-2 text-muted-foreground hover:text-foreground transition-colors rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             {t('signOut')}
           </button>
@@ -133,8 +162,8 @@ export default function DashboardPage() {
       </header>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-8">
-        <div className="mb-8">
+      <div className="container mx-auto p-4 md:p-8">
+        <div className="mb-4 md:mb-8">
           <div className="flex items-start justify-between">
             <div>
               <h2 className="text-3xl font-bold text-foreground mb-2">
@@ -157,12 +186,12 @@ export default function DashboardPage() {
         </div>
 
         {/* Adaptive Level Indicator */}
-        <div className="mb-8" data-onboarding="adaptive-level">
+        <div className="mb-4 md:mb-8" data-onboarding="adaptive-level">
           <AdaptiveLevelIndicator userId={user.id} />
         </div>
 
         {/* Spaced Repetition Widget */}
-        <div className="mb-8" data-onboarding="spaced-repetition">
+        <div className="mb-4 md:mb-8" data-onboarding="spaced-repetition">
           <Link href="/review" className="block bg-gradient-to-r from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] rounded-xl p-6 shadow-sm border border-border hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
@@ -180,7 +209,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Tournament Widget - empty state until real tournaments are fetched */}
-        <div className="mb-8">
+        <div className="mb-4 md:mb-8">
           <h3 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
             <Trophy className="w-6 h-6 text-yellow-500" />
             {t('tournaments.title')}
@@ -193,7 +222,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Skill Progress Widget - empty state until real skill data is fetched */}
-        <div className="mb-8">
+        <div className="mb-4 md:mb-8">
           <SkillTreeVisualization
             nodes={[]}
             userProgress={{}}
@@ -202,7 +231,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Team Widget - Coming Soon */}
-        <div className="mb-8">
+        <div className="mb-4 md:mb-8">
           <div className="bg-gradient-to-r from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] rounded-xl p-6 shadow-sm border border-border">
             <div className="flex items-center gap-4 mb-4">
               <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg">
@@ -222,7 +251,7 @@ export default function DashboardPage() {
               </p>
               <button
                 onClick={() => router.push('/teams')}
-                className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all font-semibold"
+                className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 {t('teams.discover')}
               </button>
@@ -231,7 +260,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Stats Grid - Progress Section */}
-        <div id="progress" className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div id="progress" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 mb-4 md:mb-8">
           <div className="bg-card rounded-xl p-6 shadow-sm">
             <div className="flex items-center justify-between mb-2">
               <Trophy className="w-8 h-8 text-yellow-500" />
@@ -266,7 +295,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Défis Quotidiens */}
-        <div className="bg-gradient-to-r from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] rounded-xl p-6 shadow-sm mb-8">
+        <div className="bg-gradient-to-r from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] rounded-xl p-6 shadow-sm mb-4 md:mb-8">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               <div className="p-3 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg">
@@ -279,7 +308,7 @@ export default function DashboardPage() {
             </div>
             <Link
               href="/challenges"
-              className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-pink-700 transition-all"
+              className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-4 py-2 rounded-lg hover:from-purple-600 hover:to-pink-700 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               {t('challenges.viewChallenges')}
             </Link>
@@ -295,7 +324,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Analytics */}
-        <div className="bg-gradient-to-r from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] rounded-xl p-6 shadow-sm mb-8">
+        <div className="bg-gradient-to-r from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] rounded-xl p-6 shadow-sm mb-4 md:mb-8">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg">
@@ -308,7 +337,7 @@ export default function DashboardPage() {
             </div>
             <Link
               href="/analytics"
-              className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-2 rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-all"
+              className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-2 rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               {t('analytics.viewAnalytics')}
             </Link>
@@ -329,7 +358,7 @@ export default function DashboardPage() {
           if (allModulesCompleted) {
             // Show master certificate button
             return (
-              <div className="bg-gradient-to-r from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] rounded-xl p-6 shadow-sm mb-8 border-2 border-border">
+              <div className="bg-gradient-to-r from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] rounded-xl p-6 shadow-sm mb-4 md:mb-8 border-2 border-border">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
                     <div className="p-3 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg">
@@ -359,7 +388,7 @@ export default function DashboardPage() {
             const totalModules = modules.length;
 
             return (
-              <div className="bg-gradient-to-r from-muted to-[hsl(var(--gradient-end))] rounded-xl p-6 shadow-sm mb-8 border border-border">
+              <div className="bg-gradient-to-r from-muted to-[hsl(var(--gradient-end))] rounded-xl p-6 shadow-sm mb-4 md:mb-8 border border-border">
                 <div className="flex items-center gap-4">
                   <div className="p-3 bg-gradient-to-r from-gray-400 to-indigo-400 rounded-lg">
                     <Award className="w-8 h-8 text-white" />
@@ -394,25 +423,33 @@ export default function DashboardPage() {
         {/* Modules */}
         <div id="modules" data-onboarding="modules" className="bg-card rounded-xl p-6 shadow-sm">
           <h3 className="text-xl font-bold text-foreground mb-4">{t('modules.title')}</h3>
-          <div className="space-y-4">
-            {modules.map((m) => (
-              <Link key={m.id} href={`/modules/${m.slug}`}>
-                <div className="border border-border rounded-lg p-4 hover:shadow-md hover:border-primary/30 transition-all cursor-pointer">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-foreground">{m.title}</h4>
-                    <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-blue-500" />
+          {modules.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-12 text-center">
+              <BookOpen className="w-12 h-12 text-muted-foreground/50 mb-4" />
+              <p className="text-muted-foreground font-medium">Aucun module disponible</p>
+              <p className="text-sm text-muted-foreground/70 mt-1">Les modules apparaitront ici une fois disponibles</p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {modules.map((m) => (
+                <Link key={m.id} href={`/modules/${m.slug}`}>
+                  <div className="border border-border rounded-lg p-4 hover:shadow-md hover:border-primary/30 transition-all cursor-pointer">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="font-semibold text-foreground">{m.title}</h4>
+                      <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-blue-500" />
+                    </div>
+                    <div className="w-full bg-muted rounded-full h-2">
+                      <div
+                        className={`h-full bg-gradient-to-r ${m.color} rounded-full`}
+                        style={{ width: `${m.progress}%` }}
+                      />
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-2">{m.progress}% {t('modules.completed')}</p>
                   </div>
-                  <div className="w-full bg-muted rounded-full h-2">
-                    <div
-                      className={`h-full bg-gradient-to-r ${m.color} rounded-full`}
-                      style={{ width: `${m.progress}%` }}
-                    />
-                  </div>
-                  <p className="text-sm text-muted-foreground mt-2">{m.progress}% {t('modules.completed')}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

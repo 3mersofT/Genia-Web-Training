@@ -10,6 +10,7 @@ import {
   RefreshCw, Database, HardDrive, AlertTriangle, CheckCircle,
   RefreshCcw, Settings, Download, Upload
 } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 
 interface Module {
   id: string;
@@ -205,14 +206,14 @@ export default function ContentManagementPage() {
       const result = await contentSyncService.syncJsonToSupabase(adminId);
       
       if (result.success) {
-        alert(result.message);
+        toast({ title: 'Succès', description: result.message });
         await checkSyncStatus(); // Recharger le statut
       } else {
-        alert(result.message);
+        toast({ title: 'Erreur', description: result.message, variant: 'destructive' });
       }
     } catch (error) {
       console.error('Erreur sync:', error);
-      alert('❌ Erreur lors de la synchronisation');
+      toast({ title: 'Erreur', description: 'Erreur lors de la synchronisation', variant: 'destructive' });
     } finally {
       setSyncLoading(false);
     }
@@ -232,9 +233,9 @@ export default function ContentManagementPage() {
       if (success) {
         // Recharger les modules
         await fetchContent();
-        alert(`Module ${!isPublished ? 'publié' : 'dépublié'} avec succès`);
+        toast({ title: 'Succès', description: `Module ${!isPublished ? 'publié' : 'dépublié'} avec succès` });
       } else {
-        alert('❌ Erreur lors de la mise à jour');
+        toast({ title: 'Erreur', description: 'Erreur lors de la mise à jour', variant: 'destructive' });
       }
     } catch (error) {
       console.error('Erreur toggle publication:', error);
@@ -243,7 +244,7 @@ export default function ContentManagementPage() {
 
   const handleBulkOperation = async (operation: 'publish' | 'unpublish' | 'delete') => {
     if (selectedModules.size === 0) {
-      alert('Veuillez sélectionner au moins un module');
+      toast({ title: 'Attention', description: 'Veuillez sélectionner au moins un module', variant: 'destructive' });
       return;
     }
 
@@ -276,10 +277,10 @@ export default function ContentManagementPage() {
 
       setSelectedModules(new Set());
       await fetchContent();
-      alert(`✅ ${selectedModules.size} module(s) ${action}(s) avec succès`);
+      toast({ title: 'Succès', description: `${selectedModules.size} module(s) ${action}(s) avec succès` });
     } catch (error) {
       console.error(`Erreur ${operation}:`, error);
-      alert(`❌ Erreur lors de l'opération ${action}`);
+      toast({ title: 'Erreur', description: `Erreur lors de l'opération ${action}`, variant: 'destructive' });
     }
   };
 
@@ -312,7 +313,7 @@ export default function ContentManagementPage() {
       fetchContent();
     } catch (error) {
       console.error('Erreur lors de la mise à jour du module:', error);
-      alert('Erreur lors de la sauvegarde');
+      toast({ title: 'Erreur', description: 'Erreur lors de la sauvegarde du module', variant: 'destructive' });
     }
   };
 
@@ -333,7 +334,7 @@ export default function ContentManagementPage() {
       fetchContent();
     } catch (error) {
       console.error('Erreur lors de la mise à jour de la capsule:', error);
-      alert('Erreur lors de la sauvegarde');
+      toast({ title: 'Erreur', description: 'Erreur lors de la sauvegarde de la capsule', variant: 'destructive' });
     }
   };
 
@@ -360,17 +361,17 @@ export default function ContentManagementPage() {
         })
       );
       
-      alert(`Statut de publication mis à jour pour ${type} ${id}`);
+      toast({ title: 'Succès', description: `Statut de publication mis à jour pour ${type} ${id}` });
     } catch (error) {
       console.error(`Erreur lors de la modification du statut de publication:`, error);
-      alert('Erreur lors de la sauvegarde');
+      toast({ title: 'Erreur', description: 'Erreur lors de la sauvegarde', variant: 'destructive' });
     }
   };
 
   const handleCreateModule = async () => {
     try {
       if (!newModuleForm.title.trim() || !newModuleForm.short_title.trim()) {
-        alert('Veuillez remplir au moins le titre et le titre court');
+        toast({ title: 'Attention', description: 'Veuillez remplir au moins le titre et le titre court', variant: 'destructive' });
         return;
       }
 
@@ -406,10 +407,10 @@ export default function ContentManagementPage() {
       });
       
       setShowAddModule(false);
-      alert('Nouveau module créé avec succès !');
+      toast({ title: 'Succès', description: 'Nouveau module créé avec succès !' });
     } catch (error) {
       console.error('Erreur lors de la création du module:', error);
-      alert('Erreur lors de la création du module');
+      toast({ title: 'Erreur', description: 'Erreur lors de la création du module', variant: 'destructive' });
     }
   };
 
@@ -448,10 +449,10 @@ export default function ContentManagementPage() {
       );
 
       setShowAddCapsule(null);
-      alert('Nouvelle capsule créée avec succès !');
+      toast({ title: 'Succès', description: 'Nouvelle capsule créée avec succès !' });
     } catch (error) {
       console.error('Erreur lors de la création de la capsule:', error);
-      alert('Erreur lors de la création de la capsule');
+      toast({ title: 'Erreur', description: 'Erreur lors de la création de la capsule', variant: 'destructive' });
     }
   };
 
@@ -476,19 +477,19 @@ export default function ContentManagementPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation Header */}
-      <div className="bg-card shadow-sm border-b">
-        <div className="px-6 py-4">
-          <div className="flex items-center gap-4 mb-2">
-            <a href="/admin" className="text-primary hover:text-primary/80 font-medium">← Dashboard Admin</a>
+      <div className="bg-card shadow-sm border-b overflow-hidden">
+        <div className="px-4 sm:px-6 py-4">
+          <div className="flex items-center gap-2 sm:gap-4 mb-2 min-w-0">
+            <a href="/admin" className="text-primary hover:text-primary/80 font-medium whitespace-nowrap text-sm sm:text-base">← Dashboard Admin</a>
             <span className="text-muted-foreground">|</span>
-            <h1 className="text-xl font-bold text-foreground">Gestion du Contenu</h1>
+            <h1 className="text-lg sm:text-xl font-bold text-foreground truncate">Gestion du Contenu</h1>
           </div>
-          <p className="text-muted-foreground">Gérez les modules, capsules et contenus pédagogiques</p>
+          <p className="text-muted-foreground text-sm">Gérez les modules, capsules et contenus pédagogiques</p>
         </div>
-        
+
         {/* Quick Navigation */}
-        <div className="px-6 pb-2">
-          <nav className="flex gap-4 text-sm">
+        <div className="px-4 sm:px-6 pb-2 overflow-x-auto">
+          <nav className="flex gap-4 text-sm min-w-max">
             <a href="/admin" className="text-muted-foreground hover:text-foreground">Dashboard</a>
             <a href="/admin/users" className="text-muted-foreground hover:text-foreground">Utilisateurs</a>
             <a href="/admin/analytics" className="text-muted-foreground hover:text-foreground">Analytics</a>
@@ -498,7 +499,7 @@ export default function ContentManagementPage() {
         </div>
       </div>
       
-      <div className="p-6">
+      <div className="p-4 sm:p-6">
 
       {/* Panneau de synchronisation */}
       {showSyncPanel && (
@@ -518,7 +519,7 @@ export default function ContentManagementPage() {
           
           {syncStatus && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-              <div className="flex items-center p-3 bg-blue-50 rounded-lg">
+              <div className="flex items-center p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg">
                 <HardDrive className="w-5 h-5 text-blue-600 mr-2" />
                 <div>
                   <p className="text-sm text-muted-foreground">Modules JSON</p>
@@ -532,7 +533,7 @@ export default function ContentManagementPage() {
                   <p className="font-semibold">{syncStatus.supabaseModules}</p>
                 </div>
               </div>
-              <div className="flex items-center p-3 bg-yellow-50 rounded-lg">
+              <div className="flex items-center p-3 bg-yellow-50 dark:bg-yellow-950/30 rounded-lg">
                 <Clock className="w-5 h-5 text-yellow-600 mr-2" />
                 <div>
                   <p className="text-sm text-muted-foreground">Dernière sync</p>
@@ -582,8 +583,8 @@ export default function ContentManagementPage() {
       )}
 
       {/* Barre d'outils */}
-      <div className="flex justify-between items-center mb-6">
-        <div className="flex gap-3">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+        <div className="flex flex-wrap gap-3">
           <button
             onClick={() => setShowSyncPanel(!showSyncPanel)}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
@@ -634,7 +635,7 @@ export default function ContentManagementPage() {
       </div>
 
       {/* Statistiques globales */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <div className="bg-card rounded-lg shadow p-4">
           <div className="flex items-center justify-between">
             <div>
@@ -841,7 +842,7 @@ export default function ContentManagementPage() {
                       <>
                         <button
                           onClick={() => setEditingModule(module.id)}
-                          className="p-2 text-blue-600 hover:bg-blue-50 rounded"
+                          className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 rounded"
                         >
                           <Edit className="w-4 h-4" />
                         </button>
@@ -971,7 +972,7 @@ export default function ContentManagementPage() {
                           <div className="flex gap-1">
                             <button
                               onClick={() => setEditingCapsule(capsule.id)}
-                              className="p-1 text-blue-600 hover:bg-blue-50 rounded"
+                              className="p-1 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/30 rounded"
                             >
                               <Edit className="w-3 h-3" />
                             </button>
@@ -998,10 +999,10 @@ export default function ContentManagementPage() {
       </div>
 
       {/* Note d'information */}
-      <div className="mt-6 bg-blue-50 border-l-4 border-blue-400 p-4">
+      <div className="mt-6 bg-blue-50 dark:bg-blue-950/30 border-l-4 border-blue-400 p-4">
         <div className="flex">
           <div className="ml-3">
-            <p className="text-sm text-blue-700">
+            <p className="text-sm text-blue-700 dark:text-blue-300">
               <strong>Note :</strong> Les modifications de contenu des capsules (texte, exercices) doivent être effectuées
               directement dans les fichiers JSON correspondants dans le dossier <code>src/data/modules/</code>.
               Cette interface permet uniquement de gérer la visibilité et l'ordre des contenus.

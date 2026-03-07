@@ -173,6 +173,7 @@ export default function FeatureDiscoveryButton({
         animate={{ scale: 1 }}
         transition={{ type: 'spring', stiffness: 260, damping: 20, delay: 1 }}
         onClick={() => setIsOpen((o) => !o)}
+        aria-expanded={isOpen}
         className="relative w-14 h-14 rounded-full bg-gradient-to-br from-violet-500 to-blue-500 shadow-lg flex items-center justify-center hover:shadow-xl transition-shadow"
       >
         {/* Pulse ring */}

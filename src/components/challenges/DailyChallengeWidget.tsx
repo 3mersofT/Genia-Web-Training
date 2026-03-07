@@ -90,7 +90,7 @@ export default function DailyChallengeWidget() {
       {/* Stats et actions */}
       <div className="p-6">
         {/* Mini stats */}
-        <div className="grid grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
           <div className="text-center">
             <div className="flex items-center justify-center gap-1 text-orange-500 mb-1">
               <Flame className="w-4 h-4" />

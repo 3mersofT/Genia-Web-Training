@@ -166,14 +166,14 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-card shadow-sm border-b">
-        <div className="px-6 py-4">
-          <div className="flex justify-between items-center">
-            <div>
-              <h1 className="text-2xl font-bold text-foreground">{t('title')}</h1>
-              <p className="text-sm text-muted-foreground">{t('subtitle')}</p>
+      <header className="bg-card shadow-sm border-b overflow-hidden">
+        <div className="px-4 sm:px-6 py-4">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+            <div className="min-w-0">
+              <h1 className="text-xl sm:text-2xl font-bold text-foreground truncate">{t('title')}</h1>
+              <p className="text-sm text-muted-foreground truncate">{t('subtitle')}</p>
             </div>
-            <div className="flex gap-3 items-center">
+            <div className="flex flex-wrap gap-3 items-center">
               {/* Barre de recherche globale */}
               <div className="relative">
                 <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
@@ -182,7 +182,7 @@ export default function AdminDashboard() {
                   placeholder={t('searchPlaceholder')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 pr-4 py-2 border rounded-lg text-sm w-64 focus:outline-none focus:ring-2 focus-visible:ring-ring"
+                  className="pl-10 pr-4 py-2 border rounded-lg text-sm w-full md:w-64 focus:outline-none focus:ring-2 focus-visible:ring-ring"
                 />
                 {searchQuery && (
                   <div className="absolute top-full left-0 right-0 bg-card border border-border rounded-lg shadow-lg mt-1 z-50">
@@ -232,7 +232,7 @@ export default function AdminDashboard() {
       </header>
 
       {/* Breadcrumbs */}
-      <div className="bg-muted border-b px-6 py-2">
+      <div className="bg-muted border-b px-4 sm:px-6 py-2">
         <nav className="flex items-center space-x-2 text-sm">
           <a href="/" className="text-primary hover:text-primary/80">GENIA</a>
           <span className="text-muted-foreground">/</span>
@@ -243,8 +243,8 @@ export default function AdminDashboard() {
       </div>
 
       {/* Navigation */}
-      <div className="bg-card border-b px-6">
-        <nav className="flex gap-6">
+      <div className="bg-card border-b px-4 sm:px-6 overflow-x-auto">
+        <nav className="flex gap-4 sm:gap-6 min-w-max">
           <button
             onClick={() => setActiveTab('overview')}
             className={`py-3 px-1 border-b-2 font-medium text-sm transition-colors ${
@@ -307,16 +307,16 @@ export default function AdminDashboard() {
       </div>
 
       {/* Contenu principal */}
-      <div className="p-6">
+      <div className="p-4 sm:p-6">
         {activeTab === 'overview' && (
           <>
             {/* Alertes système */}
             <div className="mb-6">
               {stats.totalUsers > 0 && stats.completionRate < 50 && (
-                <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4">
+                <div className="bg-yellow-50 dark:bg-yellow-950/30 border-l-4 border-yellow-400 p-4 mb-4">
                   <div className="flex items-center">
                     <AlertCircle className="w-5 h-5 text-yellow-400 mr-2" />
-                    <p className="text-yellow-700 text-sm">
+                    <p className="text-yellow-700 dark:text-yellow-300 text-sm">
                       {t('alerts.lowCompletion', { rate: stats.completionRate })}
                     </p>
                   </div>
@@ -355,8 +355,8 @@ export default function AdminDashboard() {
                   {stats.activeUsers} {t('stats.activeThisWeek')}
                 </p>
                 {stats.totalUsers > 0 && (
-                  <div className="mt-3 h-8 bg-blue-50 rounded flex items-center justify-center">
-                    <span className="text-xs text-blue-600">Données réelles</span>
+                  <div className="mt-3 h-8 bg-blue-50 dark:bg-blue-950/30 rounded flex items-center justify-center">
+                    <span className="text-xs text-blue-600 dark:text-blue-400">Données réelles</span>
                   </div>
                 )}
               </div>
@@ -381,7 +381,7 @@ export default function AdminDashboard() {
               {/* Carte Complétion avec barre de progression */}
               <div className="bg-card rounded-xl shadow-sm p-6">
                 <div className="flex justify-between items-start mb-4">
-                  <div className="p-3 rounded-lg bg-purple-100 text-purple-600">
+                  <div className="p-3 rounded-lg bg-purple-100 dark:bg-purple-900/30 text-purple-600">
                     <TrendingUp className="w-6 h-6" />
                   </div>
                   <CheckCircle className="w-4 h-4 text-purple-600" />
@@ -389,7 +389,7 @@ export default function AdminDashboard() {
                 <p className="text-2xl font-bold">{stats.completionRate}%</p>
                 <p className="text-sm text-muted-foreground mt-1">{t('stats.completionRate')}</p>
                 <div className="mt-3">
-                  <div className="bg-purple-100 rounded-full h-2">
+                  <div className="bg-purple-100 dark:bg-purple-900/30 rounded-full h-2">
                     <div
                       className="bg-purple-600 h-2 rounded-full transition-all"
                       style={{ width: `${stats.completionRate}%` }}
@@ -401,7 +401,7 @@ export default function AdminDashboard() {
               {/* Carte Messages avec indicateur de charge */}
               <div className="bg-card rounded-xl shadow-sm p-6">
                 <div className="flex justify-between items-start mb-4">
-                  <div className="p-3 rounded-lg bg-orange-100 text-orange-600">
+                  <div className="p-3 rounded-lg bg-orange-100 dark:bg-orange-900/30 text-orange-600">
                     <MessageCircle className="w-6 h-6" />
                   </div>
                   <div className="flex items-center text-xs">
@@ -460,7 +460,7 @@ export default function AdminDashboard() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <a
                   href="/admin/users"
-                  className="flex flex-col items-center p-4 rounded-lg border-2 border-dashed border-border hover:border-blue-300 hover:bg-blue-50 transition-colors"
+                  className="flex flex-col items-center p-4 rounded-lg border-2 border-dashed border-border hover:border-blue-300 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-colors"
                 >
                   <Users className="w-8 h-8 text-blue-600 mb-2" />
                   <span className="text-sm font-medium text-foreground">{t('quickActions.manageUsers')}</span>
@@ -474,14 +474,14 @@ export default function AdminDashboard() {
                 </a>
                 <a
                   href="/admin/analytics"
-                  className="flex flex-col items-center p-4 rounded-lg border-2 border-dashed border-border hover:border-purple-300 hover:bg-purple-50 transition-colors"
+                  className="flex flex-col items-center p-4 rounded-lg border-2 border-dashed border-border hover:border-purple-300 hover:bg-purple-50 dark:hover:bg-purple-950/30 transition-colors"
                 >
                   <BarChart3 className="w-8 h-8 text-purple-600 mb-2" />
                   <span className="text-sm font-medium text-foreground">{t('quickActions.aiAnalytics')}</span>
                 </a>
                 <a
                   href="/admin/settings"
-                  className="flex flex-col items-center p-4 rounded-lg border-2 border-dashed border-border hover:border-orange-300 hover:bg-orange-50 transition-colors"
+                  className="flex flex-col items-center p-4 rounded-lg border-2 border-dashed border-border hover:border-orange-300 hover:bg-orange-50 dark:hover:bg-orange-950/30 transition-colors"
                 >
                   <Settings className="w-8 h-8 text-orange-600 mb-2" />
                   <span className="text-sm font-medium text-foreground">{t('quickActions.settings')}</span>

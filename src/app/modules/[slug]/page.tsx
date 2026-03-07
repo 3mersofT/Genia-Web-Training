@@ -10,6 +10,7 @@ import { useAuth } from '@/hooks/useAuth';
 import FeedbackButton from '@/components/feedback/FeedbackButton';
 import FeedbackStats from '@/components/feedback/FeedbackStats';
 import CertificateButton from '@/components/certificates/CertificateButton';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function ModulePage() {
   const params = useParams();
@@ -47,11 +48,47 @@ export default function ModulePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-muted-foreground">{t('loading')}</p>
-        </div>
+      <div className="min-h-screen bg-background">
+        {/* Header skeleton */}
+        <header className="bg-card shadow-sm">
+          <div className="max-w-4xl mx-auto px-4 md:px-8 py-4">
+            <div className="flex items-center gap-4">
+              <Skeleton className="h-5 w-24" />
+              <div className="h-6 w-px bg-border" />
+              <Skeleton className="h-7 w-48" />
+            </div>
+          </div>
+        </header>
+        <main className="max-w-4xl mx-auto px-4 md:px-8 py-8">
+          {/* Module header skeleton */}
+          <div className="bg-card rounded-xl shadow-sm p-6 mb-8">
+            <Skeleton className="w-full h-32 rounded-lg mb-6" />
+            <Skeleton className="h-8 w-64 mb-2" />
+            <Skeleton className="h-5 w-full mb-4" />
+            <div className="flex items-center gap-4">
+              <Skeleton className="flex-1 h-2 rounded-full" />
+              <Skeleton className="h-4 w-20" />
+            </div>
+          </div>
+          {/* Capsule list skeleton */}
+          <div className="bg-card rounded-xl shadow-sm">
+            <div className="p-6 border-b border-border">
+              <Skeleton className="h-6 w-40" />
+            </div>
+            <div className="divide-y divide-border">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="p-4 md:p-6 flex items-center gap-4">
+                  <Skeleton className="w-10 h-10 rounded-full flex-shrink-0" />
+                  <div className="flex-1">
+                    <Skeleton className="h-5 w-48 mb-2" />
+                    <Skeleton className="h-4 w-32" />
+                  </div>
+                  <Skeleton className="h-8 w-20 rounded-lg flex-shrink-0" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </main>
       </div>
     );
   }
@@ -73,8 +110,8 @@ export default function ModulePage() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="bg-card shadow-sm">
-        <div className="max-w-4xl mx-auto px-6 py-4">
-          <div className="flex items-center gap-4">
+        <div className="max-w-4xl mx-auto px-4 md:px-8 py-4">
+          <div className="flex items-center gap-4 flex-wrap">
             <Link 
               href="/dashboard"
               className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
@@ -89,21 +126,21 @@ export default function ModulePage() {
       </header>
 
       {/* Contenu principal */}
-      <main className="max-w-4xl mx-auto px-6 py-8">
+      <main className="max-w-4xl mx-auto px-4 md:px-8 py-8">
         {/* En-tête du module */}
         <div className="bg-card rounded-xl shadow-sm p-6 mb-8">
           <div className={`w-full h-32 bg-gradient-to-r ${moduleData.color} rounded-lg mb-6 flex items-center justify-center`}>
             <BookOpen className="w-12 h-12 text-white" />
           </div>
           
-          <div className="flex items-start justify-between mb-4">
+          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
             <div className="flex-1">
               <h2 className="text-2xl font-bold text-foreground mb-2">{moduleData.title}</h2>
               <p className="text-muted-foreground">{moduleData.description}</p>
             </div>
-            
+
             {/* Feedback section */}
-            <div className="flex items-center gap-4 ml-6">
+            <div className="flex items-center gap-4 flex-shrink-0">
               <FeedbackStats 
                 targetType="module" 
                 targetId={moduleData.slug} 
@@ -134,7 +171,7 @@ export default function ModulePage() {
           {/* Certificate section - only shown when module is completed */}
           {moduleData.progress === 100 && user && (
             <div className="mt-6 pt-6 border-t border-border">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full flex items-center justify-center">
                     <CheckCircle className="w-5 h-5" />
@@ -164,8 +201,8 @@ export default function ModulePage() {
           
           <div className="divide-y divide-border">
             {moduleData.capsules.map((capsule: Capsule, index: number) => (
-              <div key={capsule.id} className="p-6 hover:bg-accent transition-colors">
-                <div className="flex items-center gap-4">
+              <div key={capsule.id} className="p-4 md:p-6 hover:bg-accent transition-colors">
+                <div className="flex items-start md:items-center gap-4 flex-wrap md:flex-nowrap">
                   <div className="flex-shrink-0">
                     {capsule.completed ? (
                       <div className="w-10 h-10 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full flex items-center justify-center">

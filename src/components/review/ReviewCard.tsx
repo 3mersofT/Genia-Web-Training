@@ -120,7 +120,7 @@ export default function ReviewCard({
               <p className="text-sm text-muted-foreground mb-3 text-center">
                 {t('rateRecall')}
               </p>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                 {([0, 1, 2, 3, 4, 5] as SM2Quality[]).map((q) => (
                   <button
                     key={q}
