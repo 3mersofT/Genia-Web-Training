@@ -104,7 +104,7 @@
     "chrome-launcher": "^1.2.1",
     "cross-env": "^10.1.0",
     "dotenv-cli": "^10.0.0",
-    "eslint": "^8.57.1",
+    "eslint": "^10.0.3",
     "eslint-config-next": "14.0.4",
     "glob": "^11.0.3",
     "jest": "^30.2.0",
