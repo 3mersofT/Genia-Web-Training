@@ -120,8 +120,8 @@ describe('LevelBadge (LevelProgressBar)', () => {
       expect(screen.getByText('XP Total')).toBeInTheDocument();
       // XP Actuel label
       expect(screen.getByText('XP Actuel')).toBeInTheDocument();
-      // XP to next level message (use regex to handle locale-specific number formatting)
-      expect(screen.getByText(/2\s?500 XP restants pour le prochain niveau/)).toBeInTheDocument();
+      // XP to next level message (use regex to handle locale-specific number formatting: 2,500 or 2 500)
+      expect(screen.getByText(/2[,.\s]?500 XP restants pour le prochain niveau/)).toBeInTheDocument();
     });
 
     it('shows progression label toward next level', () => {
@@ -139,8 +139,8 @@ describe('LevelBadge (LevelProgressBar)', () => {
 
       // In compact mode, the level name is shown
       expect(screen.getByText('Apprenti')).toBeInTheDocument();
-      // In compact mode, total XP is shown as text (use regex for locale-specific formatting)
-      expect(screen.getByText(/2\s?500 XP/)).toBeInTheDocument();
+      // In compact mode, total XP is shown as text (use regex for locale-specific formatting: 2,500 or 2 500)
+      expect(screen.getByText(/2[,.\s]?500 XP/)).toBeInTheDocument();
       // Progress bar details should NOT be present in compact mode
       expect(screen.queryByText('Progression vers Expert')).not.toBeInTheDocument();
       expect(screen.queryByText('XP Total')).not.toBeInTheDocument();

@@ -27,7 +27,7 @@ jest.mock('@/hooks/useAuth', () => ({
   useAuth: () => ({ user: { id: 'user-1' } }),
 }));
 
-jest.mock('@/components/ui/Toast', () => ({
+jest.mock('@/components/ui/toast', () => ({
   useToast: () => ({
     showSuccess: jest.fn(),
     showError: jest.fn(),
