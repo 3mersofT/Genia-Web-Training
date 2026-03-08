@@ -1,5 +1,7 @@
 # GENIA Web Training
 
+> **License:** Business Source License 1.1 — voir [LICENSE](LICENSE)
+
 Plateforme e-learning de Prompt Engineering avec IA (Mistral, OpenAI, Anthropic, DeepSeek).
 Methode pedagogique GENIA en 8 modules, 30+ capsules, gamification, certificats.
 
