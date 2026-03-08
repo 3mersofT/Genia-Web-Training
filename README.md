@@ -247,4 +247,5 @@ npm run test:e2e            # Playwright E2E
 
 ## License
 
-MIT &mdash; see [LICENSE](LICENSE)
+Business Source License 1.1 &mdash; see [LICENSE](LICENSE)
+Converts to Apache License 2.0 on 2030-01-01.

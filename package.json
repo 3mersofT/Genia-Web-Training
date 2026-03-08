@@ -2,6 +2,7 @@
   "name": "genia-web-training",
   "version": "3.1.1",
   "private": true,
+  "license": "BUSL-1.1",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
