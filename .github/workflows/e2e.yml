@@ -1,5 +1,8 @@
 name: E2E Tests
 
+# E2E tests require a real Supabase instance to run.
+# They are skipped in CI until a dedicated test project is configured.
+# To enable: set SUPABASE_E2E_URL and SUPABASE_E2E_ANON_KEY as repository secrets.
 on:
   pull_request:
     branches:
@@ -42,6 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     needs: install
+    if: ${{ vars.ENABLE_E2E_TESTS == 'true' }}
     strategy:
       fail-fast: false
       matrix:

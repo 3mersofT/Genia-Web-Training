@@ -1,54 +1,11 @@
 import { test, expect, type Page } from '@playwright/test';
+import { setupConsoleErrorTracking, waitForPageLoad } from './helpers';
 
 /**
  * End-to-End Test: Complete Gamification Flow
- *
- * This test suite verifies the full gamification journey from user registration
- * through tournament participation, team collaboration, skill progression,
- * and social sharing.
- *
- * Flow Coverage:
- * 1. New user registers
- * 2. Complete first challenge → awards XP
- * 3. Create a team
- * 4. Register for tournament
- * 5. Submit tournament challenge
- * 6. Unlock skill node
- * 7. Level up to Apprenti
- * 8. Share achievement on social
- * 9. View seasonal leaderboard
  */
 
 test.describe('Complete Gamification Flow', () => {
-  // Helper function to wait for navigation and page load
-  async function waitForPageLoad(page: Page) {
-    await page.waitForLoadState('networkidle');
-    await page.waitForLoadState('domcontentloaded');
-  }
-
-  // Helper function to check for console errors
-  function setupConsoleErrorTracking(page: Page): string[] {
-    const consoleErrors: string[] = [];
-
-    page.on('console', (message) => {
-      if (message.type() === 'error') {
-        const text = message.text();
-        // Filter out expected errors in test environment
-        const isExpectedTestError =
-          text.includes('Failed to load resource: the server responded with a status of 400') ||
-          text.includes('Failed to load resource: the server responded with a status of 404') ||
-          text.includes('test.supabase.co') ||
-          text.includes('chunk-') || // Chunk loading errors in dev
-          text.includes('Hydration'); // React hydration mismatches in dev
-
-        if (!isExpectedTestError) {
-          consoleErrors.push(text);
-        }
-      }
-    });
-
-    return consoleErrors;
-  }
 
   test('Step 1: New user registration and onboarding', async ({ page }) => {
     const consoleErrors = setupConsoleErrorTracking(page);

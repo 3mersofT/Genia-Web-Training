@@ -1,67 +1,14 @@
 import { test, expect, type Page } from '@playwright/test';
+import { setupConsoleErrorTracking, waitForPageLoad } from './helpers';
 
 /**
  * End-to-End Test: Admin Access Control
  *
  * This test suite verifies that admin routes are properly protected by middleware
  * and that non-admin users are redirected with appropriate error messages.
- *
- * Test Coverage:
- * 1. Unauthenticated access to /admin redirects to /login
- * 2. Non-admin redirect includes error parameter
- * 3. Cookie security flags are properly set
- * 4. Admin routes are protected consistently
- * 5. No console errors during navigation
  */
 
 test.describe('Admin Access Control', () => {
-  // Helper function to wait for page load
-  async function waitForPageLoad(page: Page) {
-    await page.waitForLoadState('networkidle');
-    await page.waitForLoadState('domcontentloaded');
-  }
-
-  // Helper function to setup console error tracking
-  function setupConsoleErrorTracking(page: Page): string[] {
-    const consoleErrors: string[] = [];
-
-    page.on('console', (message) => {
-      if (message.type() === 'error') {
-        const text = message.text();
-        // Filter out expected errors in test environment
-        const isExpectedTestError =
-          text.includes('Failed to load resource: the server responded with a status of 400') ||
-          text.includes('Failed to load resource: the server responded with a status of 404') ||
-          text.includes('test.supabase.co') ||
-          text.includes('chunk-') || // Chunk loading errors in dev
-          text.includes('Hydration') || // React hydration mismatches in dev
-          text.includes('Failed to fetch RSC payload') || // Next.js hot reload errors
-          text.includes('Falling back to browser navigation') || // Next.js navigation fallback
-          text.startsWith('Warning:') || // React warnings emitted as errors
-          text.includes('Encountered two children with the same key') || // React duplicate key warning
-          text.includes('Keys should be unique'); // React key warning
-
-        if (!isExpectedTestError) {
-          consoleErrors.push(text);
-        }
-      }
-
-      // Also filter React warnings
-      if (message.type() === 'warning') {
-        const text = message.text();
-        const isExpectedWarning =
-          text.includes('Encountered two children with the same key') || // React duplicate key warning
-          text.includes('Keys should be unique'); // React key warning
-
-        // Don't add expected warnings to errors
-        if (!isExpectedWarning) {
-          // Could optionally track warnings separately if needed
-        }
-      }
-    });
-
-    return consoleErrors;
-  }
 
   test('Unauthenticated user accessing /admin is redirected to /login', async ({ page }) => {
     const consoleErrors = setupConsoleErrorTracking(page);
