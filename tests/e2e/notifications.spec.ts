@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { setupConsoleErrorTracking } from './helpers';
 
 /**
  * E2E test suite for Student Notification System
@@ -42,23 +43,7 @@ test.describe('Student Notification System', () => {
 
   test.describe('Component Rendering', () => {
     test('should not crash when loading dashboard without auth', async ({ page }) => {
-      const consoleErrors: string[] = [];
-
-      page.on('console', (message) => {
-        if (message.type() === 'error') {
-          const text = message.text();
-          // Filter out expected errors
-          const isExpectedError =
-            text.includes('Failed to load resource') ||
-            text.includes('401') ||
-            text.includes('Unauthorized') ||
-            text.includes('test.supabase.co');
-
-          if (!isExpectedError) {
-            consoleErrors.push(text);
-          }
-        }
-      });
+      const consoleErrors = setupConsoleErrorTracking(page);
 
       await page.goto('/dashboard');
       await waitForNetwork(page);
@@ -71,24 +56,7 @@ test.describe('Student Notification System', () => {
     });
 
     test('should not crash when loading profile without auth', async ({ page }) => {
-      const consoleErrors: string[] = [];
-
-      page.on('console', (message) => {
-        if (message.type() === 'error') {
-          const text = message.text();
-          const isExpectedError =
-            text.includes('Failed to load resource') ||
-            text.includes('401') ||
-            text.includes('Unauthorized') ||
-            text.includes('test.supabase.co') ||
-            text.includes('Encountered two children with the same key') || // Existing navigation issue
-            text.includes('Warning:'); // React warnings are not critical errors
-
-          if (!isExpectedError) {
-            consoleErrors.push(text);
-          }
-        }
-      });
+      const consoleErrors = setupConsoleErrorTracking(page);
 
       await page.goto('/profile');
       await waitForNetwork(page);
