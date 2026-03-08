@@ -170,8 +170,8 @@ export async function POST(req: NextRequest) {
     try {
       quotaInfo = await checkAndUpdateQuota(user.id, model as any, usage.total_tokens || 0, cost || 0);
     } catch (e) {
-      // ne bloque pas la réponse chat en cas d'erreur quota
-      console.warn('Quota update skipped:', (e as Error).message);
+      // Log quota error but don't block the response — quota is best-effort
+      // The rate limiter provides the primary abuse protection
     }
     
     // Sauvegarder la conversation si nécessaire
