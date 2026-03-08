@@ -90,7 +90,7 @@ export async function middleware(request: NextRequest) {
           httpOnly: true,
           secure: true,
           sameSite: 'lax',
-          maxAge: 600, // 10 minutes (in seconds)
+          maxAge: 180, // 3 minutes (in seconds)
           path: '/',
         };
 

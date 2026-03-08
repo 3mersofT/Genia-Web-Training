@@ -49,3 +49,48 @@ export const DeleteUserSchema = z.object({
 });
 
 export type DeleteUser = z.infer<typeof DeleteUserSchema>;
+
+/**
+ * Schema for resetting a user password (admin only)
+ * Validates POST /api/admin/users/reset-password
+ */
+export const ResetPasswordSchema = z.object({
+  userId: z
+    .string()
+    .uuid('User ID must be a valid UUID'),
+  newPassword: z
+    .string()
+    .min(12, 'Password must be at least 12 characters')
+    .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
+    .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
+    .regex(/[0-9]/, 'Password must contain at least one number')
+    .regex(/[^A-Za-z0-9]/, 'Password must contain at least one special character'),
+});
+
+export type ResetPassword = z.infer<typeof ResetPasswordSchema>;
+
+/**
+ * Schema for sending a password reset email (admin only)
+ * Validates PUT /api/admin/users/reset-password
+ */
+export const ResetPasswordEmailSchema = z.object({
+  email: z
+    .string()
+    .email('Email must be a valid email address'),
+});
+
+export type ResetPasswordEmail = z.infer<typeof ResetPasswordEmailSchema>;
+
+/**
+ * Schema for suspending/activating a user (admin only)
+ * Validates POST /api/admin/users/suspend
+ */
+export const SuspendUserSchema = z.object({
+  userId: z
+    .string()
+    .uuid('User ID must be a valid UUID'),
+  suspended: z
+    .boolean({ required_error: 'Suspended status is required' }),
+});
+
+export type SuspendUser = z.infer<typeof SuspendUserSchema>;

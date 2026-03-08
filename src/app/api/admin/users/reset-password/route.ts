@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { ResetPasswordSchema, ResetPasswordEmailSchema } from '@/lib/validations/admin.schema';
+import { logger } from '@/lib/logger';
 
 // Reset du mot de passe d'un utilisateur (admin seulement)
 export async function POST(request: NextRequest) {
   try {
     const supabase = await createClient();
-    
+
     // Vérifier que l'utilisateur est admin
     const { data: { user }, error: authError } = await supabase.auth.getUser();
     if (authError || !user) {
@@ -18,16 +20,19 @@ export async function POST(request: NextRequest) {
       .eq('user_id', user.id)
       .single();
 
-    if (profile?.role !== 'admin') {
+    if (!profile || profile.role !== 'admin') {
       return NextResponse.json({ error: 'Accès refusé' }, { status: 403 });
     }
 
     const body = await request.json();
-    const { userId, newPassword } = body;
+    const validation = ResetPasswordSchema.safeParse(body);
 
-    if (!userId || !newPassword) {
-      return NextResponse.json({ error: 'ID utilisateur et nouveau mot de passe requis' }, { status: 400 });
+    if (!validation.success) {
+      const errors = validation.error.errors.map(err => `${err.path.join('.')}: ${err.message}`);
+      return NextResponse.json({ error: errors.join(', ') }, { status: 400 });
     }
+
+    const { userId, newPassword } = validation.data;
 
     // Mettre à jour le mot de passe
     const { error: updateError } = await supabase.auth.admin.updateUserById(userId, {
@@ -35,14 +40,14 @@ export async function POST(request: NextRequest) {
     });
 
     if (updateError) {
-      console.error('Erreur reset mot de passe:', updateError);
+      logger.error('Erreur reset mot de passe');
       return NextResponse.json({ error: 'Erreur reset mot de passe' }, { status: 500 });
     }
 
     return NextResponse.json({ success: true });
 
   } catch (error) {
-    console.error('Erreur API reset mot de passe:', error);
+    logger.error('Erreur API reset mot de passe');
     return NextResponse.json({ error: 'Erreur interne' }, { status: 500 });
   }
 }
@@ -51,7 +56,7 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     const supabase = await createClient();
-    
+
     // Vérifier que l'utilisateur est admin
     const { data: { user }, error: authError } = await supabase.auth.getUser();
     if (authError || !user) {
@@ -64,16 +69,19 @@ export async function PUT(request: NextRequest) {
       .eq('user_id', user.id)
       .single();
 
-    if (profile?.role !== 'admin') {
+    if (!profile || profile.role !== 'admin') {
       return NextResponse.json({ error: 'Accès refusé' }, { status: 403 });
     }
 
     const body = await request.json();
-    const { email } = body;
+    const validation = ResetPasswordEmailSchema.safeParse(body);
 
-    if (!email) {
-      return NextResponse.json({ error: 'Email requis' }, { status: 400 });
+    if (!validation.success) {
+      const errors = validation.error.errors.map(err => `${err.path.join('.')}: ${err.message}`);
+      return NextResponse.json({ error: errors.join(', ') }, { status: 400 });
     }
+
+    const { email } = validation.data;
 
     // Envoyer l'email de reset
     const { error: resetError } = await supabase.auth.admin.generateLink({
@@ -85,14 +93,14 @@ export async function PUT(request: NextRequest) {
     });
 
     if (resetError) {
-      console.error('Erreur envoi email reset:', resetError);
+      logger.error('Erreur envoi email reset');
       return NextResponse.json({ error: 'Erreur envoi email reset' }, { status: 500 });
     }
 
     return NextResponse.json({ success: true });
 
   } catch (error) {
-    console.error('Erreur API envoi reset:', error);
+    logger.error('Erreur API envoi reset');
     return NextResponse.json({ error: 'Erreur interne' }, { status: 500 });
   }
 }

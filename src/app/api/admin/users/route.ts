@@ -18,7 +18,7 @@ export async function GET() {
       .eq('user_id', user.id)
       .single();
 
-    if (profile?.role !== 'admin') {
+    if (!profile || profile.role !== 'admin') {
       return new NextResponse(JSON.stringify({ error: 'Accès interdit' }), { status: 403 });
     }
 
@@ -68,7 +68,7 @@ export async function POST(request: Request) {
       .eq('user_id', user.id)
       .single();
 
-    if (profile?.role !== 'admin') {
+    if (!profile || profile.role !== 'admin') {
       return NextResponse.json({ error: 'Accès refusé' }, { status: 403 });
     }
 
@@ -149,7 +149,7 @@ export async function DELETE(request: Request) {
       .eq('user_id', user.id)
       .single();
 
-    if (profile?.role !== 'admin') {
+    if (!profile || profile.role !== 'admin') {
       return NextResponse.json({ error: 'Accès refusé' }, { status: 403 });
     }
 
