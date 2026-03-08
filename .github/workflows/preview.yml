@@ -8,11 +8,17 @@ on:
     types:
       - completed
 
+permissions:
+  contents: read
+  pull-requests: write
+  deployments: write
+
 jobs:
   # Only deploy if CI passed
   check-ci:
     name: Check CI Status
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     if: github.event_name == 'workflow_run' && github.event.workflow_run.event == 'pull_request'
     outputs:
       ci-passed: ${{ steps.check.outputs.ci-passed }}
@@ -54,6 +60,7 @@ jobs:
   deploy:
     name: Deploy Preview
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     # Deploy on PR events or after CI passes via workflow_run
     if: |
       github.event_name == 'pull_request' ||
@@ -75,7 +82,7 @@ jobs:
         run: npm ci
 
       - name: Install Vercel CLI
-        run: npm install --global vercel@latest
+        run: npm install --global vercel@39
 
       - name: Pull Vercel environment information
         run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}

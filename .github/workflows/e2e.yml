@@ -6,11 +6,15 @@ on:
       - master
       - main
 
+permissions:
+  contents: read
+
 jobs:
   # Install dependencies and cache them
   install:
     name: Install Dependencies
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -36,6 +40,7 @@ jobs:
   e2e-tests:
     name: E2E Tests (${{ matrix.browser }})
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     needs: install
     strategy:
       fail-fast: false
