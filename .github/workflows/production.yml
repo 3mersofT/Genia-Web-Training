@@ -1,10 +1,6 @@
 name: Production Deployment
 
 on:
-  push:
-    branches:
-      - master
-      - main
   workflow_run:
     workflows: ["CI"]
     types:
@@ -14,39 +10,16 @@ on:
       - main
 
 jobs:
-  # Only deploy if CI passed
-  check-ci:
-    name: Check CI Status
-    runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_run'
-    outputs:
-      ci-passed: ${{ steps.check.outputs.ci-passed }}
-    steps:
-      - name: Check CI workflow result
-        id: check
-        run: |
-          if [ "${{ github.event.workflow_run.conclusion }}" == "success" ]; then
-            echo "ci-passed=true" >> $GITHUB_OUTPUT
-          else
-            echo "ci-passed=false" >> $GITHUB_OUTPUT
-            echo "CI workflow failed or was cancelled. Skipping deployment."
-            exit 1
-          fi
-
-  # Deploy to Vercel production
+  # Deploy to Vercel production (only if CI passed)
   deploy:
     name: Deploy to Production
     runs-on: ubuntu-latest
-    # Deploy on direct push to main, or after CI passes via workflow_run
-    if: |
-      (github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')) ||
-      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
+    if: github.event.workflow_run.conclusion == 'success'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          # For workflow_run events, checkout the correct commit
-          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
+          ref: ${{ github.event.workflow_run.head_sha }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
