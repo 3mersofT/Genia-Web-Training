@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { SuspendUserSchema } from '@/lib/validations/admin.schema';
+import { logger } from '@/lib/logger';
 
 // Suspendre/Activer un utilisateur (admin seulement)
 export async function POST(request: NextRequest) {
   try {
     const supabase = await createClient();
-    
+
     // Vérifier que l'utilisateur est admin
     const { data: { user }, error: authError } = await supabase.auth.getUser();
     if (authError || !user) {
@@ -18,16 +20,19 @@ export async function POST(request: NextRequest) {
       .eq('user_id', user.id)
       .single();
 
-    if (profile?.role !== 'admin') {
+    if (!profile || profile.role !== 'admin') {
       return NextResponse.json({ error: 'Accès refusé' }, { status: 403 });
     }
 
     const body = await request.json();
-    const { userId, suspended } = body;
+    const validation = SuspendUserSchema.safeParse(body);
 
-    if (!userId || typeof suspended !== 'boolean') {
-      return NextResponse.json({ error: 'ID utilisateur et statut requis' }, { status: 400 });
+    if (!validation.success) {
+      const errors = validation.error.errors.map(err => `${err.path.join('.')}: ${err.message}`);
+      return NextResponse.json({ error: errors.join(', ') }, { status: 400 });
     }
+
+    const { userId, suspended } = validation.data;
 
     // Mettre à jour le statut de suspension
     const { error: updateError } = await supabase
@@ -40,38 +45,36 @@ export async function POST(request: NextRequest) {
       .eq('user_id', userId);
 
     if (updateError) {
-      console.error('Erreur suspension utilisateur:', updateError);
+      logger.error('Erreur suspension utilisateur');
       return NextResponse.json({ error: 'Erreur suspension utilisateur' }, { status: 500 });
     }
 
-    // Optionnel : Suspendre aussi dans auth.users
+    // Suspendre aussi dans auth.users
     if (suspended) {
-      const { error: authError } = await supabase.auth.admin.updateUserById(userId, {
+      const { error: banError } = await supabase.auth.admin.updateUserById(userId, {
         ban_duration: '876000h' // 100 ans (suspension permanente)
       });
-      
-      if (authError) {
-        console.error('Erreur suspension auth:', authError);
-        // Ne pas échouer si la suspension auth échoue
+
+      if (banError) {
+        logger.error('Erreur suspension auth');
       }
     } else {
-      const { error: authError } = await supabase.auth.admin.updateUserById(userId, {
+      const { error: unbanError } = await supabase.auth.admin.updateUserById(userId, {
         ban_duration: 'none'
       });
-      
-      if (authError) {
-        console.error('Erreur activation auth:', authError);
-        // Ne pas échouer si l'activation auth échoue
+
+      if (unbanError) {
+        logger.error('Erreur activation auth');
       }
     }
 
-    return NextResponse.json({ 
-      success: true, 
-      suspended: suspended 
+    return NextResponse.json({
+      success: true,
+      suspended: suspended
     });
 
   } catch (error) {
-    console.error('Erreur API suspension utilisateur:', error);
+    logger.error('Erreur API suspension utilisateur');
     return NextResponse.json({ error: 'Erreur interne' }, { status: 500 });
   }
 }
