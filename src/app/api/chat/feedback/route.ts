@@ -4,6 +4,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { z } from 'zod';
+import { logger } from '@/lib/logger';
 
 const FeedbackSchema = z.object({
   messageId: z.string().min(1),
@@ -47,7 +48,7 @@ export async function POST(req: NextRequest) {
       );
 
     if (error) {
-      console.error('Error saving feedback:', error);
+      logger.error('Error saving feedback', { component: 'ChatFeedbackAPI', action: 'POST', error: error instanceof Error ? error.message : String(error) });
       return NextResponse.json(
         { error: 'Erreur lors de la sauvegarde du feedback' },
         { status: 500 }
@@ -56,7 +57,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Feedback API error:', error);
+    logger.error('Feedback API error', { component: 'ChatFeedbackAPI', action: 'POST', error: error instanceof Error ? error.message : String(error) });
     return NextResponse.json(
       { error: 'Erreur serveur' },
       { status: 500 }

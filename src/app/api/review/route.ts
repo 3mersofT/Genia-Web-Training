@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { createRateLimiter } from '@/lib/rate-limiter';
+import { logger } from '@/lib/logger';
 import { submitReviewSchema, createCardSchema } from '@/lib/validations/review.schema';
 import { calculateSM2 } from '@/lib/services/spacedRepetitionService';
 
@@ -68,7 +69,7 @@ export async function GET(req: NextRequest) {
     if (error) throw error;
     return NextResponse.json({ cards: data || [] });
   } catch (error) {
-    console.error('GET /api/review error:', error);
+    logger.error('GET /api/review error', { component: 'ReviewAPI', action: 'GET', error: error instanceof Error ? error.message : String(error) });
     return NextResponse.json(
       { error: 'Erreur serveur' },
       { status: 500 }
@@ -210,7 +211,7 @@ export async function POST(req: NextRequest) {
       }
     });
   } catch (error) {
-    console.error('POST /api/review error:', error);
+    logger.error('POST /api/review error', { component: 'ReviewAPI', action: 'POST', error: error instanceof Error ? error.message : String(error) });
     return NextResponse.json(
       { error: 'Erreur serveur' },
       { status: 500 }

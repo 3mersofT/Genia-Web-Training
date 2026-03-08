@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { AdaptiveDifficultyService } from '@/lib/services/adaptiveDifficultyService';
+import { logger } from '@/lib/logger';
 
 export async function GET() {
   try {
@@ -15,7 +16,7 @@ export async function GET() {
 
     return NextResponse.json({ profile });
   } catch (error) {
-    console.error('[API /user/difficulty] Error:', error);
+    logger.error('Error computing adaptive difficulty', { component: 'UserDifficultyAPI', action: 'GET', error: error instanceof Error ? error.message : String(error) });
     return NextResponse.json(
       { error: 'Erreur lors du calcul du niveau adaptatif' },
       { status: 500 }

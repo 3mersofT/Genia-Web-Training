@@ -68,6 +68,8 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    logger.info(`Admin ${suspended ? 'suspended' : 'activated'} user`, { component: 'AdminSuspendAPI', action: suspended ? 'suspendUser' : 'activateUser', userId: user.id, targetUserId: userId });
+
     return NextResponse.json({
       success: true,
       suspended: suspended

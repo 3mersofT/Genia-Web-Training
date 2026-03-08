@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { createRateLimiter } from '@/lib/rate-limiter';
+import { logger } from '@/lib/logger';
 
 const rateLimiter = createRateLimiter({
   interval: 60000,
@@ -209,7 +210,7 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({ error: 'Type invalide' }, { status: 400 });
     }
   } catch (error) {
-    console.error('GET /api/admin/analytics/cohort error:', error);
+    logger.error('GET /api/admin/analytics/cohort error', { component: 'AdminAnalyticsCohortAPI', action: 'GET', error: error instanceof Error ? error.message : String(error) });
     return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 });
   }
 }

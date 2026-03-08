@@ -6,6 +6,7 @@ import { LevelProgressionService } from '@/services/levelProgressionService';
 import type { AwardXPResult } from '@/types/levels.types';
 import { studentNotificationService } from '@/lib/services/studentNotificationService';
 import { createRateLimiter } from '@/lib/rate-limiter';
+import { logger } from '@/lib/logger';
 
 // Rate limiter: 30 requests per minute
 const rateLimiter = createRateLimiter({
@@ -124,7 +125,7 @@ export async function POST(req: NextRequest) {
         });
       } catch (xpError) {
         // Ne pas bloquer la completion si l'attribution d'XP échoue
-        console.error('Erreur attribution XP:', xpError);
+        logger.warn('Erreur attribution XP', { component: 'ProgressCompleteAPI', error: xpError instanceof Error ? xpError.message : String(xpError) });
       }
     }
 
@@ -136,7 +137,7 @@ export async function POST(req: NextRequest) {
       xpResult: xpResult || undefined
     }));
   } catch (error) {
-    console.error('Erreur completion capsule:', error);
+    logger.error('Erreur completion capsule', { component: 'ProgressCompleteAPI', action: 'POST', error: error instanceof Error ? error.message : String(error) });
     return addHeaders(NextResponse.json({ error: 'Erreur serveur' }, { status: 500 }));
   }
 }
@@ -166,7 +167,7 @@ async function checkAndNotifyBadges(userId: string, supabase: any) {
       .order('earned_at', { ascending: false });
 
     if (badgesError) {
-      console.error('Erreur récupération badges récents:', badgesError);
+      logger.warn('Erreur récupération badges récents', { component: 'ProgressCompleteAPI', error: badgesError instanceof Error ? badgesError.message : String(badgesError) });
       return;
     }
 
@@ -199,7 +200,7 @@ async function checkAndNotifyBadges(userId: string, supabase: any) {
     }
   } catch (error) {
     // Ne pas faire échouer la requête si la notification échoue
-    console.error('Erreur vérification badges:', error);
+    logger.warn('Erreur vérification badges', { component: 'ProgressCompleteAPI', error: error instanceof Error ? error.message : String(error) });
   }
 }
 

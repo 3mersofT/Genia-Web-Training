@@ -5,6 +5,7 @@ import { createClient, createAdminClient } from '@/lib/supabase/server';
 import { createRateLimiter } from '@/lib/rate-limiter';
 import { MODELS_CONFIG } from '@/lib/ai-models.config';
 import { GetQuotasSchema } from '@/lib/validations/quotas.schema';
+import { logger } from '@/lib/logger';
 
 // Rate limiter: 30 requests per minute
 const rateLimiter = createRateLimiter({
@@ -59,7 +60,7 @@ export async function GET(req: NextRequest) {
       .rpc('get_user_quota_status', { p_user_id: validatedUserId });
 
     if (error) {
-      console.error('Erreur récupération quotas:', error);
+      logger.error('Erreur récupération quotas', { component: 'QuotasAPI', action: 'GET', error: error instanceof Error ? error.message : String(error) });
       return NextResponse.json(
         { error: 'Erreur récupération quotas' },
         { status: 500 }
