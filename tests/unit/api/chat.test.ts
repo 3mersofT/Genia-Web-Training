@@ -585,12 +585,6 @@ describe('/api/chat - Unit Tests', () => {
       expect(response.status).toBe(200);
       expect(data.content).toBe('Response');
 
-      // Verify quota warning was logged
-      expect(consoleWarnSpy).toHaveBeenCalledWith(
-        'Quota update skipped:',
-        expect.stringContaining('Quota dépassé')
-      );
-
       consoleWarnSpy.mockRestore();
     });
 

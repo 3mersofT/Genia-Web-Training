@@ -92,7 +92,7 @@ export async function GET(request: NextRequest) {
     
     const targetType = searchParams.get('targetType');
     const targetId = searchParams.get('targetId');
-    const limit = parseInt(searchParams.get('limit') || '10');
+    const limit = Math.min(Math.max(parseInt(searchParams.get('limit') || '10') || 10, 1), 100);
 
     // Vérifier l'authentification pour les admins
     const { data: { user }, error: authError } = await supabase.auth.getUser();
