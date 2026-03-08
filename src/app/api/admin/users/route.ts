@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/supabase/server';
 import { CreateUserSchema, DeleteUserSchema } from '@/lib/validations/admin.schema';
+import { logger } from '@/lib/logger';
 
 export async function GET() {
   const supabase = await createAdminClient();
@@ -117,8 +118,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Erreur création profil' }, { status: 500 });
     }
 
-    return NextResponse.json({ 
-      success: true, 
+    logger.info('Admin created user', { component: 'AdminUsersAPI', action: 'createUser', userId: user.id, targetUserId: authData.user.id, role });
+
+    return NextResponse.json({
+      success: true,
       user: {
         id: authData.user.id,
         email,
@@ -183,6 +186,8 @@ export async function DELETE(request: Request) {
     if (deleteAuthError) {
       return NextResponse.json({ error: 'Erreur suppression authentification' }, { status: 500 });
     }
+
+    logger.info('Admin deleted user', { component: 'AdminUsersAPI', action: 'deleteUser', userId: user.id, targetUserId: userId });
 
     return NextResponse.json({ success: true });
 

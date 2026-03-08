@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase/server';
 import { createRateLimiter } from '@/lib/rate-limiter';
 import { EvaluateExerciseSchema } from '@/lib/validations/exercise.schema';
 import { AdaptiveDifficultyService } from '@/lib/services/adaptiveDifficultyService';
+import { logger } from '@/lib/logger';
 
 // Rate limiter: 10 requests per minute (strict - calls Mistral AI)
 const rateLimiter = createRateLimiter({
@@ -167,7 +168,7 @@ Format :
         await AdaptiveDifficultyService.updateUserLevel(userId, profile.currentLevel);
       }
     } catch (err) {
-      console.error('[evaluate] Level check error:', err);
+      logger.warn('Level check error after evaluation', { component: 'ExerciseEvaluateAPI', error: err instanceof Error ? err.message : String(err) });
     }
 
     return NextResponse.json({
@@ -178,7 +179,7 @@ Format :
     });
 
   } catch (error) {
-    console.error('Erreur évaluation:', error);
+    logger.error('Erreur évaluation', { component: 'ExerciseEvaluateAPI', action: 'POST', error: error instanceof Error ? error.message : String(error) });
     return NextResponse.json(
       { error: 'Erreur lors de l\'évaluation' },
       { status: 500 }

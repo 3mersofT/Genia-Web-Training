@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/supabase/server';
 import { emailService } from '@/lib/services/emailService';
+import { logger } from '@/lib/logger';
 
 /**
  * Cron job: Send SM-2 review reminders to users with due cards.
@@ -42,7 +43,7 @@ export async function GET(request: NextRequest) {
       .lte('next_review_date', new Date().toISOString().split('T')[0]);
 
     if (dueError) {
-      console.error('Failed to fetch due cards:', dueError);
+      logger.error('Failed to fetch due cards', { component: 'CronReviewReminders', action: 'fetchDueCards', error: dueError instanceof Error ? dueError.message : String(dueError) });
       return NextResponse.json({ error: 'Failed to fetch due cards' }, { status: 500 });
     }
 
@@ -65,7 +66,7 @@ export async function GET(request: NextRequest) {
       .in('user_id', userIds);
 
     if (profileError) {
-      console.error('Failed to fetch profiles:', profileError);
+      logger.error('Failed to fetch profiles', { component: 'CronReviewReminders', action: 'fetchProfiles', error: profileError instanceof Error ? profileError.message : String(profileError) });
       return NextResponse.json({ error: 'Failed to fetch profiles' }, { status: 500 });
     }
 
@@ -117,7 +118,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ sent, skipped, errors });
   } catch (error) {
-    console.error('Cron review-reminders error:', error);
+    logger.error('Cron review-reminders error', { component: 'CronReviewReminders', error: error instanceof Error ? error.message : String(error) });
     return NextResponse.json(
       { error: 'Internal server error', sent, skipped, errors },
       { status: 500 }

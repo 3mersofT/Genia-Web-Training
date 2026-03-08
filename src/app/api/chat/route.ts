@@ -12,6 +12,7 @@ const rateLimiter = createRateLimiter({
 });
 import { ChatRequestSchema } from '@/lib/validations/chat.schema';
 import { z } from 'zod';
+import { logger } from '@/lib/logger';
 
 // Vérifier et mettre à jour les quotas
 async function checkAndUpdateQuota(
@@ -251,7 +252,7 @@ export async function POST(req: NextRequest) {
     return addHeaders(successResponse);
     
   } catch (error) {
-    console.error('Erreur API chat:', error);
+    logger.error('Erreur API chat', { component: 'ChatAPI', action: 'POST', error: error instanceof Error ? error.message : String(error) });
     const errorResponse = NextResponse.json(
       { error: error instanceof Error ? error.message : 'Erreur serveur' },
       { status: 500 }

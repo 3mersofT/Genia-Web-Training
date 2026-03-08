@@ -8,6 +8,7 @@ import { MODELS_CONFIG, type ModelKey } from '@/lib/ai-models.config';
 import { ChatRequestSchema } from '@/lib/validations/chat.schema';
 import { streamWithFallback } from '@/lib/ai-provider.service';
 import { AdaptiveDifficultyService } from '@/lib/services/adaptiveDifficultyService';
+import { logger } from '@/lib/logger';
 
 const rateLimiter = createRateLimiter({
   interval: 60000,
@@ -111,7 +112,7 @@ export async function POST(req: NextRequest) {
       });
     } catch (err) {
       // Non-blocking: continue without adaptive modifiers
-      console.error('[chat/stream] Adaptive profile error:', err);
+      logger.warn('Adaptive profile error', { component: 'ChatStreamAPI', error: err instanceof Error ? err.message : String(err) });
     }
 
     if (!config) {
@@ -244,7 +245,7 @@ export async function POST(req: NextRequest) {
             })}\n\n`)
           );
         } catch (err) {
-          console.error('Error saving stream metadata:', err);
+          logger.error('Error saving stream metadata', { component: 'ChatStreamAPI', error: err instanceof Error ? err.message : String(err) });
         }
       },
     });
@@ -259,7 +260,7 @@ export async function POST(req: NextRequest) {
       },
     });
   } catch (error) {
-    console.error('Erreur API chat stream:', error);
+    logger.error('Erreur API chat stream', { component: 'ChatStreamAPI', action: 'POST', error: error instanceof Error ? error.message : String(error) });
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Erreur serveur' },
       { status: 500 }

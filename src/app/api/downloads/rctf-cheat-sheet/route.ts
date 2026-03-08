@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { generateRCTFCheatSheet } from '@/lib/generateCheatSheet';
 import { createClient } from '@/lib/supabase/server';
 import { createRateLimiter } from '@/lib/rate-limiter';
+import { logger } from '@/lib/logger';
 
 const rateLimiter = createRateLimiter({
   interval: 60000,
@@ -35,7 +36,7 @@ export async function GET() {
       },
     });
   } catch (error) {
-    console.error('Error generating RCTF cheat sheet:', error);
+    logger.error('Error generating RCTF cheat sheet', { component: 'DownloadsAPI', action: 'generateRCTF', error: error instanceof Error ? error.message : String(error) });
     return NextResponse.json({ error: 'Failed to generate PDF' }, { status: 500 });
   }
 }

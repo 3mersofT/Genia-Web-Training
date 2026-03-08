@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { logger } from '@/lib/logger';
 
 export async function GET(request: Request) {
   try {
@@ -25,7 +26,7 @@ export async function GET(request: Request) {
       .maybeSingle();
 
     if (error) {
-      console.error('Erreur récupération stats:', error);
+      logger.error('Erreur récupération stats', { component: 'FeedbackStatsAPI', action: 'GET', error: error instanceof Error ? error.message : String(error) });
       // Retourner des valeurs par défaut au lieu d'erreur
       return NextResponse.json({
         total_feedbacks: 0,
@@ -53,7 +54,7 @@ export async function GET(request: Request) {
     });
 
   } catch (error) {
-    console.error('Erreur API feedback stats:', error);
+    logger.error('Erreur API feedback stats', { component: 'FeedbackStatsAPI', action: 'GET', error: error instanceof Error ? error.message : String(error) });
     return NextResponse.json(
       { error: 'Erreur interne du serveur' },
       { status: 500 }

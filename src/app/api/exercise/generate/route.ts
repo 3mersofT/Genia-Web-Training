@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase/server';
 import { createRateLimiter } from '@/lib/rate-limiter';
 import { GenerateExerciseSchema } from '@/lib/validations/exercise.schema';
 import { AdaptiveDifficultyService } from '@/lib/services/adaptiveDifficultyService';
+import { logger } from '@/lib/logger';
 
 // Rate limiter: 10 requests per minute (strict - calls Mistral AI)
 const rateLimiter = createRateLimiter({
@@ -70,7 +71,7 @@ export async function POST(req: NextRequest) {
       adaptiveLevel = profile.currentLevel;
       exerciseParams = AdaptiveDifficultyService.getExerciseParameters(profile.currentLevel, profile);
     } catch (err) {
-      console.error('[generate] Adaptive level error, using body level:', err);
+      logger.warn('Adaptive level error, using body level', { component: 'ExerciseGenerateAPI', error: err instanceof Error ? err.message : String(err) });
     }
 
     // Prompts selon le niveau
@@ -149,7 +150,7 @@ Format de réponse :
     });
     
   } catch (error) {
-    console.error('Erreur génération exercice:', error);
+    logger.error('Erreur génération exercice', { component: 'ExerciseGenerateAPI', action: 'POST', error: error instanceof Error ? error.message : String(error) });
     return NextResponse.json(
       { error: 'Erreur lors de la génération' },
       { status: 500 }

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { createRateLimiter } from '@/lib/rate-limiter';
 import { CreateFeedbackSchema } from '@/lib/validations/feedback.schema';
+import { logger } from '@/lib/logger';
 
 // Rate limiter: 30 requests per minute
 const rateLimiter = createRateLimiter({
@@ -55,7 +56,7 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (error) {
-      console.error('Erreur insertion feedback:', error);
+      logger.error('Erreur insertion feedback', { component: 'FeedbackAPI', action: 'POST', error: error instanceof Error ? error.message : String(error) });
       return NextResponse.json(
         { error: 'Erreur lors de l\'enregistrement du feedback' },
         { status: 500 }
@@ -71,7 +72,7 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Erreur API feedback:', error);
+    logger.error('Erreur API feedback', { component: 'FeedbackAPI', action: 'POST', error: error instanceof Error ? error.message : String(error) });
     return NextResponse.json(
       { error: 'Erreur interne du serveur' },
       { status: 500 }
@@ -131,7 +132,7 @@ export async function GET(request: NextRequest) {
     const { data: feedbacks, error } = await query;
 
     if (error) {
-      console.error('Erreur récupération feedbacks:', error);
+      logger.error('Erreur récupération feedbacks', { component: 'FeedbackAPI', action: 'GET', error: error instanceof Error ? error.message : String(error) });
       return NextResponse.json(
         { error: 'Erreur lors de la récupération des feedbacks' },
         { status: 500 }
@@ -141,7 +142,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ feedbacks });
 
   } catch (error) {
-    console.error('Erreur API feedback GET:', error);
+    logger.error('Erreur API feedback GET', { component: 'FeedbackAPI', action: 'GET', error: error instanceof Error ? error.message : String(error) });
     return NextResponse.json(
       { error: 'Erreur interne du serveur' },
       { status: 500 }

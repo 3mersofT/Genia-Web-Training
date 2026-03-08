@@ -44,6 +44,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Erreur reset mot de passe' }, { status: 500 });
     }
 
+    logger.info('Admin reset user password', { component: 'AdminResetPasswordAPI', action: 'resetPassword', userId: user.id, targetUserId: userId });
+
     return NextResponse.json({ success: true });
 
   } catch (error) {
@@ -96,6 +98,8 @@ export async function PUT(request: NextRequest) {
       logger.error('Erreur envoi email reset');
       return NextResponse.json({ error: 'Erreur envoi email reset' }, { status: 500 });
     }
+
+    logger.info('Admin sent password reset email', { component: 'AdminResetPasswordAPI', action: 'sendResetEmail', userId: user.id });
 
     return NextResponse.json({ success: true });
 

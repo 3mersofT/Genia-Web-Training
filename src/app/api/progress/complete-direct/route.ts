@@ -7,6 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { createAdminClient } from '@/lib/supabase/server';
 import { CompleteProgressDirectSchema } from '@/lib/validations/progress.schema';
+import { logger } from '@/lib/logger';
 
 export async function POST(req: NextRequest) {
   try {
@@ -72,7 +73,7 @@ export async function POST(req: NextRequest) {
       }, { onConflict: 'user_id,capsule_id' });
 
     if (error) {
-      console.error('Erreur completion capsule (direct):', error);
+      logger.error('Erreur completion capsule (direct)', { component: 'ProgressDirectAPI', action: 'POST', error: error instanceof Error ? error.message : String(error) });
       return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 });
     }
 

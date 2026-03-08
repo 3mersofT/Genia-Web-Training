@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/supabase/server';
+import { logger } from '@/lib/logger';
 
 export async function POST(request: Request) {
   const supabase = await createAdminClient();
@@ -30,6 +31,8 @@ export async function POST(request: Request) {
     });
 
     if (resendError) throw resendError;
+
+    logger.info('Admin resent verification email', { component: 'AdminResendVerificationAPI', action: 'resendVerification', userId: user.id });
 
     return NextResponse.json({ message: 'Email de vérification renvoyé avec succès' });
 
