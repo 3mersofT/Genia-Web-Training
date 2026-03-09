@@ -849,6 +849,171 @@
     "signOut": "Sign out",
     "headerTitle": "Prompt Engineering Academy"
   },
+  "terms": {
+    "title": "Terms of Service",
+    "lastUpdated": "Last updated: March 2026",
+    "backToHome": "Back to home",
+    "contactInfo": "For any questions: {email}",
+    "sections": {
+      "purpose": {
+        "title": "Purpose of the Service",
+        "content": "GENIA Web Training is an online training platform dedicated to Prompt Engineering. It offers training modules, a pedagogical AI assistant, and a certification system. These terms govern the use of the platform."
+      },
+      "access": {
+        "title": "Access Conditions",
+        "content": "Access to the platform requires creating a free personal account. Each user is responsible for keeping their login credentials confidential. The account is strictly personal and cannot be transferred or shared."
+      },
+      "intellectualProperty": {
+        "title": "Intellectual Property",
+        "content": "All platform content (courses, exercises, GENIA pedagogical method, source code) is protected by intellectual property law. The source code is distributed under the BSL 1.1 license. Any unauthorized reproduction or reuse is prohibited."
+      },
+      "personalData": {
+        "title": "Personal Data",
+        "content": "The collection and processing of personal data is detailed in our Privacy Policy accessible at /privacy. By using the platform, you agree to the processing of your data in accordance with this policy."
+      },
+      "liability": {
+        "title": "Limitation of Liability",
+        "content": "GENIA Web Training strives to ensure the availability and quality of the platform. However, the platform is provided 'as is' without warranty of any kind. GENIA Web Training shall not be held liable for any direct or indirect damages related to the use of the platform."
+      },
+      "modifications": {
+        "title": "Modifications to the Terms",
+        "content": "GENIA Web Training reserves the right to modify these terms at any time. Users will be informed of changes by email or through the platform. Continued use of the platform after modification constitutes acceptance of the new terms."
+      },
+      "contact": {
+        "title": "Contact",
+        "content": "For any questions regarding these terms, you can contact us at support@geniawebtraining.com or through our contact page."
+      },
+      "applicableLaw": {
+        "title": "Applicable Law",
+        "content": "These terms are governed by French law. Any dispute related to the interpretation or execution of these terms shall be submitted to the competent courts of Paris, France."
+      }
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: March 2026",
+    "backToHome": "Back to home",
+    "contactInfo": "DPO Contact: {email}",
+    "sections": {
+      "dataCollected": {
+        "title": "Data Collected",
+        "content": "We collect the following data: email address, full name, username, module progress, exercise scores and assessments, language and theme preferences. This data is necessary for the platform to function and to personalize your learning experience."
+      },
+      "dataUsage": {
+        "title": "Data Usage",
+        "content": "Your data is used to: personalize your learning path and adapt difficulty levels, track your progress and generate your certificates, improve the platform through usage analytics, and send you training-related notifications (review reminders, new content)."
+      },
+      "storage": {
+        "title": "Data Storage",
+        "content": "Your data is securely stored on Supabase servers hosted in the European Union. Communications are encrypted in transit (TLS) and sensitive data is encrypted at rest. Access to data is strictly limited to authorized personnel."
+      },
+      "cookies": {
+        "title": "Cookies",
+        "content": "The platform uses only functional cookies necessary for its operation (authentication session, language and theme preferences). We do not use third-party tracking cookies or advertising cookies."
+      },
+      "userRights": {
+        "title": "Your Rights (GDPR)",
+        "content": "Under the General Data Protection Regulation (GDPR), you have the following rights: right of access to your data, right of rectification, right to erasure ('right to be forgotten'), right to data portability, right to object to processing. To exercise these rights, contact us at support@geniawebtraining.com."
+      },
+      "retention": {
+        "title": "Data Retention",
+        "content": "Your personal data is retained for the duration of your registration on the platform. If you delete your account, your data will be deleted within 30 days, except for data required to comply with our legal obligations."
+      },
+      "thirdParty": {
+        "title": "Third-Party Services",
+        "content": "We use the following third-party services: Supabase for database and authentication, Vercel for platform hosting, Sentry for error monitoring, and Resend for transactional emails. Each of these providers is committed to respecting the confidentiality of your data."
+      },
+      "dpo": {
+        "title": "DPO Contact",
+        "content": "For any questions regarding the protection of your personal data, you can contact our Data Protection Officer at support@geniawebtraining.com."
+      }
+    }
+  },
+  "about": {
+    "title": "About GENIA Web Training",
+    "backToHome": "Back to home",
+    "presentation": {
+      "title": "Our Mission",
+      "content": "GENIA Web Training is a Prompt Engineering training platform with an adaptive AI assistant. Our mission is to train students and professionals in Prompt Engineering through an innovative AI-assisted pedagogical method. The platform offers structured training modules, a personal AI assistant, and a gamification system to make learning engaging and effective."
+    },
+    "method": {
+      "title": "The GENIA Method",
+      "subtitle": "A unique pedagogical approach with 5 pillars",
+      "pillars": {
+        "G": "Structured, step-by-step progressive learning for optimal concept understanding.",
+        "E": "Concrete examples drawn from real professional situations for immediate application.",
+        "N": "The system automatically adapts to your level and learning speed.",
+        "I": "Immediate hands-on practice with interactive exercises and stimulating challenges.",
+        "A": "Real-time progress tracking with constructive and encouraging assessments."
+      }
+    },
+    "technologies": {
+      "title": "Technologies Used",
+      "content": "GENIA Web Training is built with cutting-edge technologies: Next.js 14 for the frontend, Supabase for database and authentication, and multi-provider AI integration (Mistral, OpenAI, Anthropic) for the pedagogical assistant. The platform is deployed on Vercel and available as a Progressive Web App (PWA)."
+    },
+    "creator": {
+      "title": "The Creator",
+      "content": "GENIA Web Training was designed and developed by Hemerson KOFFI, an AI pedagogy expert passionate about democratizing artificial intelligence. His goal: making Prompt Engineering accessible to everyone through an innovative pedagogical method and personalized AI guidance."
+    },
+    "contactCta": "Contact Us"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "backToHome": "Back to home",
+    "form": {
+      "title": "Send Us a Message",
+      "description": "Fill in the form below and we'll get back to you as soon as possible.",
+      "name": "Name",
+      "email": "Email",
+      "subject": "Subject",
+      "subjectPlaceholder": "Select a subject",
+      "subjects": {
+        "question": "General question",
+        "bug": "Report a bug",
+        "partnership": "Partnership",
+        "other": "Other"
+      },
+      "message": "Message",
+      "submit": "Send",
+      "successTitle": "Message sent!",
+      "successMessage": "Thank you for your message. We'll get back to you as soon as possible."
+    },
+    "info": {
+      "title": "Contact Information",
+      "responseTime": "We typically respond within 48 hours."
+    }
+  },
+  "support": {
+    "title": "Help Center",
+    "subtitle": "Quickly find answers to your questions.",
+    "backToHome": "Back to home",
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "items": {
+        "resetPassword": {
+          "question": "How do I reset my password?",
+          "answer": "On the login page, click 'Forgot password?'. Enter your email address and you'll receive a reset link by email. Check your spam folder if you don't receive the email."
+        },
+        "howAiWorks": {
+          "question": "How does the GENIA AI work?",
+          "answer": "GENIA is a pedagogical assistant that uses artificial intelligence to adapt to your level. It applies the GENIA Method with 5 pillars (Guide, Examples, Adaptive Level, Interaction, Assessment) to personalize your learning path."
+        },
+        "dataSecurity": {
+          "question": "Is my data secure?",
+          "answer": "Yes, data security is our top priority. We use Supabase with encryption in transit (TLS) and at rest. We are GDPR compliant and we don't use third-party tracking cookies. Check our privacy policy for more details."
+        },
+        "contactSupport": {
+          "question": "How do I contact support?",
+          "answer": "You can contact us through the Contact page on our website, or directly by email at support@geniawebtraining.com. We typically respond within 48 hours."
+        }
+      }
+    },
+    "needHelp": {
+      "title": "Need More Help?",
+      "description": "If you haven't found the answer to your question, don't hesitate to contact us directly.",
+      "contactButton": "Contact Us"
+    }
+  },
   "onboarding": {
     "step1": {
       "title": "Welcome!",
