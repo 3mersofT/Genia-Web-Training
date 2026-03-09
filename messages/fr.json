@@ -849,6 +849,171 @@
     "signOut": "Déconnexion",
     "headerTitle": "Prompt Engineering Academy"
   },
+  "terms": {
+    "title": "Conditions Generales d'Utilisation",
+    "lastUpdated": "Derniere mise a jour : mars 2026",
+    "backToHome": "Retour a l'accueil",
+    "contactInfo": "Pour toute question : {email}",
+    "sections": {
+      "purpose": {
+        "title": "Objet du service",
+        "content": "GENIA Web Training est une plateforme de formation en ligne dediee au Prompt Engineering. Elle propose des modules de formation, un assistant IA pedagogique et un systeme de certification. Les presentes conditions regissent l'utilisation de la plateforme."
+      },
+      "access": {
+        "title": "Conditions d'acces",
+        "content": "L'acces a la plateforme necessite la creation d'un compte personnel gratuit. Chaque utilisateur est responsable de la confidentialite de ses identifiants de connexion. Le compte est strictement personnel et ne peut etre cede ou partage."
+      },
+      "intellectualProperty": {
+        "title": "Propriete intellectuelle",
+        "content": "L'ensemble des contenus de la plateforme (cours, exercices, methode pedagogique GENIA, code source) est protege par le droit de la propriete intellectuelle. Le code source est distribue sous licence BSL 1.1. Toute reproduction ou reutilisation non autorisee est interdite."
+      },
+      "personalData": {
+        "title": "Donnees personnelles",
+        "content": "La collecte et le traitement des donnees personnelles sont detailles dans notre Politique de Confidentialite accessible a la page /privacy. En utilisant la plateforme, vous acceptez le traitement de vos donnees conformement a cette politique."
+      },
+      "liability": {
+        "title": "Limitation de responsabilite",
+        "content": "GENIA Web Training s'efforce d'assurer la disponibilite et la qualite de la plateforme. Toutefois, la plateforme est fournie 'en l'etat' sans garantie d'aucune sorte. GENIA Web Training ne saurait etre tenue responsable des dommages directs ou indirects lies a l'utilisation de la plateforme."
+      },
+      "modifications": {
+        "title": "Modification des CGU",
+        "content": "GENIA Web Training se reserve le droit de modifier les presentes conditions a tout moment. Les utilisateurs seront informes des modifications par email ou via la plateforme. La poursuite de l'utilisation de la plateforme apres modification vaut acceptation des nouvelles conditions."
+      },
+      "contact": {
+        "title": "Contact",
+        "content": "Pour toute question relative aux presentes conditions, vous pouvez nous contacter a l'adresse support@geniawebtraining.com ou via notre page de contact."
+      },
+      "applicableLaw": {
+        "title": "Droit applicable",
+        "content": "Les presentes conditions sont regies par le droit francais. Tout litige relatif a l'interpretation ou a l'execution des presentes conditions sera soumis aux tribunaux competents de Paris, France."
+      }
+    }
+  },
+  "privacy": {
+    "title": "Politique de Confidentialite",
+    "lastUpdated": "Derniere mise a jour : mars 2026",
+    "backToHome": "Retour a l'accueil",
+    "contactInfo": "Contact DPO : {email}",
+    "sections": {
+      "dataCollected": {
+        "title": "Donnees collectees",
+        "content": "Nous collectons les donnees suivantes : adresse email, nom complet, nom d'utilisateur, progression dans les modules, scores aux exercices et evaluations, preferences de langue et de theme. Ces donnees sont necessaires au fonctionnement de la plateforme et a la personnalisation de votre experience d'apprentissage."
+      },
+      "dataUsage": {
+        "title": "Utilisation des donnees",
+        "content": "Vos donnees sont utilisees pour : personnaliser votre parcours d'apprentissage et adapter le niveau de difficulte, suivre votre progression et generer vos certificats, ameliorer la plateforme grace aux analytics d'usage, et vous envoyer des notifications liees a votre formation (rappels de revision, nouveaux contenus)."
+      },
+      "storage": {
+        "title": "Stockage des donnees",
+        "content": "Vos donnees sont stockees de maniere securisee sur les serveurs de Supabase, heberges dans l'Union Europeenne. Les communications sont chiffrees en transit (TLS) et les donnees sensibles sont chiffrees au repos. L'acces aux donnees est strictement limite au personnel autorise."
+      },
+      "cookies": {
+        "title": "Cookies",
+        "content": "La plateforme utilise uniquement des cookies fonctionnels necessaires a son bon fonctionnement (session d'authentification, preferences de langue et de theme). Nous n'utilisons pas de cookies de tracking tiers ni de cookies publicitaires."
+      },
+      "userRights": {
+        "title": "Vos droits (RGPD)",
+        "content": "Conformement au Reglement General sur la Protection des Donnees (RGPD), vous disposez des droits suivants : droit d'acces a vos donnees, droit de rectification, droit a l'effacement ('droit a l'oubli'), droit a la portabilite, droit d'opposition au traitement. Pour exercer ces droits, contactez-nous a support@geniawebtraining.com."
+      },
+      "retention": {
+        "title": "Duree de conservation",
+        "content": "Vos donnees personnelles sont conservees pendant toute la duree de votre inscription sur la plateforme. En cas de suppression de votre compte, vos donnees sont supprimees dans un delai de 30 jours, a l'exception des donnees necessaires au respect de nos obligations legales."
+      },
+      "thirdParty": {
+        "title": "Services tiers",
+        "content": "Nous faisons appel aux services tiers suivants : Supabase pour la base de donnees et l'authentification, Vercel pour l'hebergement de la plateforme, Sentry pour le monitoring des erreurs, et Resend pour l'envoi d'emails transactionnels. Chacun de ces prestataires s'engage a respecter la confidentialite de vos donnees."
+      },
+      "dpo": {
+        "title": "Contact DPO",
+        "content": "Pour toute question relative a la protection de vos donnees personnelles, vous pouvez contacter notre Delegue a la Protection des Donnees a l'adresse support@geniawebtraining.com."
+      }
+    }
+  },
+  "about": {
+    "title": "A propos de GENIA Web Training",
+    "backToHome": "Retour a l'accueil",
+    "presentation": {
+      "title": "Notre mission",
+      "content": "GENIA Web Training est une plateforme de formation au Prompt Engineering avec assistant IA adaptatif. Notre mission est de former les etudiants et professionnels au Prompt Engineering via une methode pedagogique innovante assistee par intelligence artificielle. La plateforme propose des modules de formation structures, un assistant IA personnel et un systeme de gamification pour rendre l'apprentissage engageant et efficace."
+    },
+    "method": {
+      "title": "La Methode GENIA",
+      "subtitle": "Une approche pedagogique unique en 5 piliers",
+      "pillars": {
+        "G": "Un apprentissage structure et progressif, etape par etape, pour une comprehension optimale des concepts.",
+        "E": "Des exemples concrets tires de situations professionnelles reelles pour une application immediate.",
+        "N": "Le systeme s'adapte automatiquement a votre niveau et votre vitesse d'apprentissage.",
+        "I": "Mise en pratique immediate avec des exercices interactifs et des defis stimulants.",
+        "A": "Suivi de vos progres en temps reel avec des evaluations constructives et encourageantes."
+      }
+    },
+    "technologies": {
+      "title": "Technologies utilisees",
+      "content": "GENIA Web Training est construit avec les technologies les plus modernes : Next.js 14 pour le frontend, Supabase pour la base de donnees et l'authentification, et une integration IA multi-provider (Mistral, OpenAI, Anthropic) pour l'assistant pedagogique. La plateforme est deployee sur Vercel et disponible en tant que Progressive Web App (PWA)."
+    },
+    "creator": {
+      "title": "Le createur",
+      "content": "GENIA Web Training a ete concu et developpe par Hemerson KOFFI, expert en pedagogie IA et passione par la democratisation de l'intelligence artificielle. Son objectif : rendre le Prompt Engineering accessible a tous grace a une methode pedagogique innovante et un accompagnement personnalise par IA."
+    },
+    "contactCta": "Nous contacter"
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "backToHome": "Retour a l'accueil",
+    "form": {
+      "title": "Envoyez-nous un message",
+      "description": "Remplissez le formulaire ci-dessous et nous vous repondrons dans les plus brefs delais.",
+      "name": "Nom",
+      "email": "Email",
+      "subject": "Sujet",
+      "subjectPlaceholder": "Selectionnez un sujet",
+      "subjects": {
+        "question": "Question generale",
+        "bug": "Signaler un bug",
+        "partnership": "Partenariat",
+        "other": "Autre"
+      },
+      "message": "Message",
+      "submit": "Envoyer",
+      "successTitle": "Message envoye !",
+      "successMessage": "Merci pour votre message. Nous vous repondrons dans les plus brefs delais."
+    },
+    "info": {
+      "title": "Informations de contact",
+      "responseTime": "Nous repondons generalement sous 48 heures."
+    }
+  },
+  "support": {
+    "title": "Centre d'aide",
+    "subtitle": "Trouvez rapidement des reponses a vos questions.",
+    "backToHome": "Retour a l'accueil",
+    "faq": {
+      "title": "Questions frequentes",
+      "items": {
+        "resetPassword": {
+          "question": "Comment reinitialiser mon mot de passe ?",
+          "answer": "Sur la page de connexion, cliquez sur 'Mot de passe oublie ?'. Entrez votre adresse email et vous recevrez un lien de reinitialisation par email. Verifiez votre dossier spam si vous ne recevez pas l'email."
+        },
+        "howAiWorks": {
+          "question": "Comment fonctionne l'IA GENIA ?",
+          "answer": "GENIA est un assistant pedagogique qui utilise l'intelligence artificielle pour s'adapter a votre niveau. Il applique la Methode GENIA en 5 piliers (Guide, Exemples, Niveau adaptatif, Interaction, Assessment) pour personnaliser votre parcours d'apprentissage."
+        },
+        "dataSecurity": {
+          "question": "Mes donnees sont-elles en securite ?",
+          "answer": "Oui, la securite de vos donnees est notre priorite. Nous utilisons Supabase avec chiffrement en transit (TLS) et au repos. Nous sommes conformes au RGPD et nous n'utilisons pas de cookies de tracking tiers. Consultez notre politique de confidentialite pour plus de details."
+        },
+        "contactSupport": {
+          "question": "Comment contacter le support ?",
+          "answer": "Vous pouvez nous contacter via la page Contact de notre site, ou directement par email a support@geniawebtraining.com. Nous repondons generalement sous 48 heures."
+        }
+      }
+    },
+    "needHelp": {
+      "title": "Besoin d'aide supplementaire ?",
+      "description": "Si vous n'avez pas trouve la reponse a votre question, n'hesitez pas a nous contacter directement.",
+      "contactButton": "Nous contacter"
+    }
+  },
   "onboarding": {
     "step1": {
       "title": "Bienvenue !",
