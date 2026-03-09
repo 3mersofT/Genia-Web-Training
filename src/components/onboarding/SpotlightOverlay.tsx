@@ -48,15 +48,24 @@ export default function SpotlightOverlay({
       // Delay measurement to allow scroll to settle
       setTimeout(() => {
         const r = el.getBoundingClientRect();
+        // Use viewport-relative coordinates (no scrollY/scrollX)
+        // because the parent container is position:fixed
         setRect({
-          top: r.top + window.scrollY - padding,
-          left: r.left + window.scrollX - padding,
+          top: r.top - padding,
+          left: r.left - padding,
           width: r.width + padding * 2,
           height: r.height + padding * 2,
         });
       }, 350);
     }
   }, [targetSelector]);
+
+  // Lock body scroll while overlay is active to prevent desync
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = prev; };
+  }, []);
 
   useEffect(() => {
     updateRect();
@@ -65,10 +74,13 @@ export default function SpotlightOverlay({
   }, [updateRect]);
 
   // Tooltip position: below the spotlight, or above if near bottom
+  const estimatedTooltipHeight = 200;
   const tooltipStyle: React.CSSProperties = rect
     ? {
-        position: 'absolute',
-        top: rect.top + rect.height + 16,
+        position: 'fixed',
+        top: rect.top + rect.height + 16 + estimatedTooltipHeight > window.innerHeight
+          ? Math.max(16, rect.top - estimatedTooltipHeight - 16)
+          : rect.top + rect.height + 16,
         left: Math.max(16, Math.min(rect.left, window.innerWidth - 400)),
         maxWidth: 380,
         zIndex: 10002,
@@ -79,8 +91,7 @@ export default function SpotlightOverlay({
     <div className="fixed inset-0 z-[10000]" style={{ pointerEvents: 'auto' }}>
       {/* Dark overlay with cutout */}
       <svg
-        className="absolute inset-0 w-full h-full"
-        style={{ height: document.documentElement.scrollHeight, minHeight: '100vh' }}
+        className="fixed inset-0 w-full h-full"
       >
         <defs>
           <mask id={`spotlight-mask-${step}`}>
