@@ -96,18 +96,18 @@ export const BRAND = {
 
   // === Logo & Assets ===
   assets: {
-    logo: '/logo/GENIA Logo.png',
+    logo: '/logo/genia-logo.png',
     favicon: '/favicon.ico',
     ogImage: '/og-image.png',
     icons: {
-      '72': '/icons/icon-72x72.png',
-      '96': '/icons/icon-96x96.png',
-      '128': '/icons/icon-128x128.png',
-      '144': '/icons/icon-144x144.png',
-      '152': '/icons/icon-152x152.png',
-      '192': '/icons/icon-192x192.png',
-      '384': '/icons/icon-384x384.png',
-      '512': '/icons/icon-512x512.png',
+      '72': '/icons/72.png',
+      '96': '/icons/96.png',
+      '128': '/icons/128.png',
+      '144': '/icons/144.png',
+      '152': '/icons/152.png',
+      '192': '/icons/192.png',
+      '384': '/icons/384.png',
+      '512': '/icons/512.png',
     },
   },
 
