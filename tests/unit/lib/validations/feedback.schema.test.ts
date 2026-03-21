@@ -225,7 +225,7 @@ describe('CreateFeedbackSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Feedback type must be module, capsule, or platform');
+        expect(result.error.issues[0].message).toBe('Feedback type must be module, capsule, or platform');
       }
     });
 
@@ -261,7 +261,7 @@ describe('CreateFeedbackSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Target ID is required');
+        expect(result.error.issues[0].message).toBe('Target ID is required');
       }
     });
 
@@ -297,7 +297,7 @@ describe('CreateFeedbackSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Rating must be between 1 and 5');
+        expect(result.error.issues[0].message).toBe('Rating must be between 1 and 5');
       }
     });
 
@@ -316,7 +316,7 @@ describe('CreateFeedbackSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Rating must be between 1 and 5');
+        expect(result.error.issues[0].message).toBe('Rating must be between 1 and 5');
       }
     });
 
@@ -335,7 +335,7 @@ describe('CreateFeedbackSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Rating must be an integer');
+        expect(result.error.issues[0].message).toBe('Rating must be an integer');
       }
     });
 
@@ -387,7 +387,7 @@ describe('CreateFeedbackSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('At least one category is required');
+        expect(result.error.issues[0].message).toBe('At least one category is required');
       }
     });
 
@@ -440,7 +440,7 @@ describe('CreateFeedbackSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('User name cannot be empty');
+        expect(result.error.issues[0].message).toBe('User name cannot be empty');
       }
     });
 
@@ -481,7 +481,7 @@ describe('CreateFeedbackSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Invalid email address');
+        expect(result.error.issues[0].message).toBe('Invalid email address');
       }
     });
 
@@ -734,7 +734,7 @@ describe('GetFeedbackQuerySchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Target type must be module, capsule, or platform');
+        expect(result.error.issues[0].message).toBe('Target type must be module, capsule, or platform');
       }
     });
   });
@@ -752,7 +752,7 @@ describe('GetFeedbackQuerySchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Target ID cannot be empty');
+        expect(result.error.issues[0].message).toBe('Target ID cannot be empty');
       }
     });
   });
@@ -770,7 +770,7 @@ describe('GetFeedbackQuerySchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Limit must be an integer');
+        expect(result.error.issues[0].message).toBe('Limit must be an integer');
       }
     });
 
@@ -786,7 +786,7 @@ describe('GetFeedbackQuerySchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Limit must be positive');
+        expect(result.error.issues[0].message).toBe('Limit must be positive');
       }
     });
 
@@ -802,7 +802,7 @@ describe('GetFeedbackQuerySchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Limit must be positive');
+        expect(result.error.issues[0].message).toBe('Limit must be positive');
       }
     });
 

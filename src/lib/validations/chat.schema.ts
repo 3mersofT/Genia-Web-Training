@@ -8,7 +8,7 @@ import { z } from 'zod';
  */
 export const ChatMessageSchema = z.object({
   role: z.enum(['user', 'assistant', 'system'], {
-    errorMap: () => ({ message: 'Role must be user, assistant, or system' })
+    error: 'Role must be user, assistant, or system'
   }),
   content: z.string().min(1, 'Message content is required'),
 });
@@ -29,9 +29,7 @@ export const ChatRequestSchema = z.object({
     ),
   model: z
     .enum(['magistral-medium', 'mistral-medium-3', 'mistral-small'], {
-      errorMap: () => ({
-        message: 'Model must be one of: magistral-medium, mistral-medium-3, mistral-small'
-      })
+      error: 'Model must be one of: magistral-medium, mistral-medium-3, mistral-small'
     })
     .optional()
     .default('mistral-medium-3'),
@@ -55,9 +53,7 @@ export const ChatRequestSchema = z.object({
     .optional(),
   reasoning: z
     .enum(['implicit', 'explicit'], {
-      errorMap: () => ({
-        message: 'Reasoning must be either implicit or explicit'
-      })
+      error: 'Reasoning must be either implicit or explicit'
     })
     .optional()
     .default('implicit'),

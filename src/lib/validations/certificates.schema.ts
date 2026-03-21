@@ -7,9 +7,7 @@ import { z } from 'zod';
  */
 export const GenerateCertificateSchema = z.object({
   certificateType: z.enum(['module', 'master'], {
-    errorMap: () => ({
-      message: 'Certificate type must be either "module" or "master"'
-    })
+    error: 'Certificate type must be either "module" or "master"'
   }),
   moduleId: z
     .string()

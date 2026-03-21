@@ -8,7 +8,7 @@ import { z } from 'zod';
  */
 export const CreateFeedbackSchema = z.object({
   feedbackType: z.enum(['module', 'capsule', 'platform'], {
-    errorMap: () => ({ message: 'Feedback type must be module, capsule, or platform' })
+    error: 'Feedback type must be module, capsule, or platform'
   }),
   targetId: z
     .string()
@@ -47,7 +47,7 @@ export type CreateFeedback = z.infer<typeof CreateFeedbackSchema>;
 export const GetFeedbackQuerySchema = z.object({
   targetType: z
     .enum(['module', 'capsule', 'platform'], {
-      errorMap: () => ({ message: 'Target type must be module, capsule, or platform' })
+      error: 'Target type must be module, capsule, or platform'
     })
     .optional(),
   targetId: z

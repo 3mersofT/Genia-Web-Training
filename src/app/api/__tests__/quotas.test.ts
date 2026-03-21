@@ -115,8 +115,8 @@ describe('/api/quotas - Authentication Tests', () => {
   describe('Authorization Verification (userId Mismatch)', () => {
     it('should return 403 when userId does not match authenticated user', async () => {
       // Mock: Authenticated user
-      const authenticatedUserId = '11111111-1111-1111-1111-111111111111';
-      const requestedUserId = '22222222-2222-2222-2222-222222222222'; // Different user!
+      const authenticatedUserId = '11111111-1111-4111-a111-111111111111';
+      const requestedUserId = '22222222-2222-4222-a222-222222222222'; // Different user!
 
       mockAuth.getUser.mockResolvedValue({
         data: {
@@ -144,8 +144,8 @@ describe('/api/quotas - Authentication Tests', () => {
     });
 
     it('should prevent IDOR attack - user cannot access another user quotas', async () => {
-      const attackerUserId = '33333333-3333-3333-3333-333333333333';
-      const victimUserId = '44444444-4444-4444-4444-444444444444';
+      const attackerUserId = '33333333-3333-4333-a333-333333333333';
+      const victimUserId = '44444444-4444-4444-a444-444444444444';
 
       // Mock: Attacker is authenticated
       mockAuth.getUser.mockResolvedValue({
