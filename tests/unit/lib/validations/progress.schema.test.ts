@@ -140,7 +140,7 @@ describe('CompleteProgressSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Capsule ID is required');
+        expect(result.error.issues[0].message).toBe('Capsule ID is required');
       }
     });
 
@@ -200,7 +200,7 @@ describe('CompleteProgressSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Score must be between 0 and 100');
+        expect(result.error.issues[0].message).toBe('Score must be between 0 and 100');
       }
     });
 
@@ -217,7 +217,7 @@ describe('CompleteProgressSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Score must be between 0 and 100');
+        expect(result.error.issues[0].message).toBe('Score must be between 0 and 100');
       }
     });
 
@@ -234,7 +234,7 @@ describe('CompleteProgressSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Score must be between 0 and 100');
+        expect(result.error.issues[0].message).toBe('Score must be between 0 and 100');
       }
     });
 
@@ -251,7 +251,7 @@ describe('CompleteProgressSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Score must be between 0 and 100');
+        expect(result.error.issues[0].message).toBe('Score must be between 0 and 100');
       }
     });
 

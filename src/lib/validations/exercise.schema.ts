@@ -40,9 +40,7 @@ export const GenerateExerciseSchema = z.object({
     .array(z.string().min(1, 'Concept cannot be empty'))
     .min(1, 'At least one concept is required'),
   userLevel: z.enum(['beginner', 'intermediate', 'advanced'], {
-    errorMap: () => ({
-      message: 'User level must be one of: beginner, intermediate, advanced'
-    })
+    error: 'User level must be one of: beginner, intermediate, advanced'
   }),
   userId: z
     .string()

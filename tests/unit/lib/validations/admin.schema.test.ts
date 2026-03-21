@@ -331,7 +331,7 @@ describe('CreateUserSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Email must be a valid email address');
+        expect(result.error.issues[0].message).toBe('Email must be a valid email address');
       }
     });
 
@@ -363,7 +363,7 @@ describe('CreateUserSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Email must be a valid email address');
+        expect(result.error.issues[0].message).toBe('Email must be a valid email address');
       }
     });
 
@@ -381,7 +381,7 @@ describe('CreateUserSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Email must be a valid email address');
+        expect(result.error.issues[0].message).toBe('Email must be a valid email address');
       }
     });
 
@@ -399,7 +399,7 @@ describe('CreateUserSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Email must be a valid email address');
+        expect(result.error.issues[0].message).toBe('Email must be a valid email address');
       }
     });
   });
@@ -419,7 +419,7 @@ describe('CreateUserSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Password must be at least 6 characters');
+        expect(result.error.issues[0].message).toBe('Password must be at least 6 characters');
       }
     });
 
@@ -451,7 +451,7 @@ describe('CreateUserSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Password must be at least 6 characters');
+        expect(result.error.issues[0].message).toBe('Password must be at least 6 characters');
       }
     });
 
@@ -469,7 +469,7 @@ describe('CreateUserSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Password must be at least 6 characters');
+        expect(result.error.issues[0].message).toBe('Password must be at least 6 characters');
       }
     });
   });
@@ -489,7 +489,7 @@ describe('CreateUserSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Display name is required');
+        expect(result.error.issues[0].message).toBe('Display name is required');
       }
     });
 
@@ -522,7 +522,7 @@ describe('CreateUserSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Display name must not exceed 100 characters');
+        expect(result.error.issues[0].message).toBe('Display name must not exceed 100 characters');
       }
     });
   });
@@ -543,7 +543,7 @@ describe('CreateUserSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Role must be one of: admin, teacher, student');
+        expect(result.error.issues[0].message).toBe('Role must be one of: admin, teacher, student');
       }
     });
 
@@ -596,7 +596,7 @@ describe('CreateUserSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Username must be at least 3 characters');
+        expect(result.error.issues[0].message).toBe('Username must be at least 3 characters');
       }
     });
 
@@ -616,7 +616,7 @@ describe('CreateUserSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Username must not exceed 50 characters');
+        expect(result.error.issues[0].message).toBe('Username must not exceed 50 characters');
       }
     });
 
@@ -635,7 +635,7 @@ describe('CreateUserSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe(
+        expect(result.error.issues[0].message).toBe(
           'Username can only contain letters, numbers, underscores, and hyphens'
         );
       }
@@ -656,7 +656,7 @@ describe('CreateUserSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe(
+        expect(result.error.issues[0].message).toBe(
           'Username can only contain letters, numbers, underscores, and hyphens'
         );
       }
@@ -677,7 +677,7 @@ describe('CreateUserSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe(
+        expect(result.error.issues[0].message).toBe(
           'Username can only contain letters, numbers, underscores, and hyphens'
         );
       }
@@ -853,7 +853,7 @@ describe('DeleteUserSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('User ID must be a valid UUID');
+        expect(result.error.issues[0].message).toBe('User ID must be a valid UUID');
       }
     });
 
@@ -880,7 +880,7 @@ describe('DeleteUserSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('User ID must be a valid UUID');
+        expect(result.error.issues[0].message).toBe('User ID must be a valid UUID');
       }
     });
 
@@ -896,7 +896,7 @@ describe('DeleteUserSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('User ID must be a valid UUID');
+        expect(result.error.issues[0].message).toBe('User ID must be a valid UUID');
       }
     });
 
@@ -912,7 +912,7 @@ describe('DeleteUserSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('User ID must be a valid UUID');
+        expect(result.error.issues[0].message).toBe('User ID must be a valid UUID');
       }
     });
 
@@ -954,7 +954,7 @@ describe('DeleteUserSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('User ID must be a valid UUID');
+        expect(result.error.issues[0].message).toBe('User ID must be a valid UUID');
       }
     });
   });

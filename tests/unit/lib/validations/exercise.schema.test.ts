@@ -142,7 +142,7 @@ describe('EvaluateExerciseSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Exercise ID cannot be empty');
+        expect(result.error.issues[0].message).toBe('Exercise ID cannot be empty');
       }
     });
   });
@@ -162,7 +162,7 @@ describe('EvaluateExerciseSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('User response is required');
+        expect(result.error.issues[0].message).toBe('User response is required');
       }
     });
 
@@ -196,7 +196,7 @@ describe('EvaluateExerciseSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('At least one criterion is required');
+        expect(result.error.issues[0].message).toBe('At least one criterion is required');
       }
     });
 
@@ -228,7 +228,7 @@ describe('EvaluateExerciseSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Criterion cannot be empty');
+        expect(result.error.issues[0].message).toBe('Criterion cannot be empty');
       }
     });
 
@@ -263,7 +263,7 @@ describe('EvaluateExerciseSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('User ID is required');
+        expect(result.error.issues[0].message).toBe('User ID is required');
       }
     });
 
@@ -298,7 +298,7 @@ describe('EvaluateExerciseSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Capsule ID cannot be empty');
+        expect(result.error.issues[0].message).toBe('Capsule ID cannot be empty');
       }
     });
   });
@@ -538,7 +538,7 @@ describe('GenerateExerciseSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Capsule title is required');
+        expect(result.error.issues[0].message).toBe('Capsule title is required');
       }
     });
 
@@ -574,7 +574,7 @@ describe('GenerateExerciseSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('At least one concept is required');
+        expect(result.error.issues[0].message).toBe('At least one concept is required');
       }
     });
 
@@ -608,7 +608,7 @@ describe('GenerateExerciseSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Concept cannot be empty');
+        expect(result.error.issues[0].message).toBe('Concept cannot be empty');
       }
     });
 
@@ -645,7 +645,7 @@ describe('GenerateExerciseSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('User level must be one of: beginner, intermediate, advanced');
+        expect(result.error.issues[0].message).toBe('User level must be one of: beginner, intermediate, advanced');
       }
     });
 
@@ -713,7 +713,7 @@ describe('GenerateExerciseSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('User ID is required');
+        expect(result.error.issues[0].message).toBe('User ID is required');
       }
     });
 
@@ -750,7 +750,7 @@ describe('GenerateExerciseSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Capsule ID cannot be empty');
+        expect(result.error.issues[0].message).toBe('Capsule ID cannot be empty');
       }
     });
   });

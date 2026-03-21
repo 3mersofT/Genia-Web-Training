@@ -72,7 +72,7 @@ describe('ChatMessageSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Role must be user, assistant, or system');
+        expect(result.error.issues[0].message).toBe('Role must be user, assistant, or system');
       }
     });
 
@@ -89,7 +89,7 @@ describe('ChatMessageSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Message content is required');
+        expect(result.error.issues[0].message).toBe('Message content is required');
       }
     });
 
@@ -307,7 +307,7 @@ describe('ChatRequestSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('At least one message is required');
+        expect(result.error.issues[0].message).toBe('At least one message is required');
       }
     });
 
@@ -366,7 +366,7 @@ describe('ChatRequestSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe(
+        expect(result.error.issues[0].message).toBe(
           'Model must be one of: magistral-medium, mistral-medium-3, mistral-small'
         );
       }
@@ -387,7 +387,7 @@ describe('ChatRequestSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Temperature must be between 0 and 2');
+        expect(result.error.issues[0].message).toBe('Temperature must be between 0 and 2');
       }
     });
 
@@ -404,7 +404,7 @@ describe('ChatRequestSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Temperature must be between 0 and 2');
+        expect(result.error.issues[0].message).toBe('Temperature must be between 0 and 2');
       }
     });
 
@@ -437,7 +437,7 @@ describe('ChatRequestSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Max tokens must be an integer');
+        expect(result.error.issues[0].message).toBe('Max tokens must be an integer');
       }
     });
 
@@ -454,7 +454,7 @@ describe('ChatRequestSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Max tokens must be positive');
+        expect(result.error.issues[0].message).toBe('Max tokens must be positive');
       }
     });
 
@@ -471,7 +471,7 @@ describe('ChatRequestSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Max tokens must be positive');
+        expect(result.error.issues[0].message).toBe('Max tokens must be positive');
       }
     });
 
@@ -504,7 +504,7 @@ describe('ChatRequestSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Conversation ID cannot be empty');
+        expect(result.error.issues[0].message).toBe('Conversation ID cannot be empty');
       }
     });
 
@@ -539,7 +539,7 @@ describe('ChatRequestSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Capsule ID cannot be empty');
+        expect(result.error.issues[0].message).toBe('Capsule ID cannot be empty');
       }
     });
 
@@ -574,7 +574,7 @@ describe('ChatRequestSchema', () => {
       // Assert
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.errors[0].message).toBe('Reasoning must be either implicit or explicit');
+        expect(result.error.issues[0].message).toBe('Reasoning must be either implicit or explicit');
       }
     });
 

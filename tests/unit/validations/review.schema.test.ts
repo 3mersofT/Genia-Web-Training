@@ -35,7 +35,7 @@ describe('submitReviewSchema', () => {
 
     expect(result.success).toBe(false);
     if (!result.success) {
-      const qualityError = result.error.errors.find(e => e.path.includes('quality'));
+      const qualityError = result.error.issues.find(e => e.path.includes('quality'));
       expect(qualityError).toBeDefined();
     }
   });
@@ -51,7 +51,7 @@ describe('submitReviewSchema', () => {
 
     expect(result.success).toBe(false);
     if (!result.success) {
-      const cardIdError = result.error.errors.find(e => e.path.includes('cardId'));
+      const cardIdError = result.error.issues.find(e => e.path.includes('cardId'));
       expect(cardIdError).toBeDefined();
     }
   });
@@ -80,7 +80,7 @@ describe('createCardSchema', () => {
 
     expect(result.success).toBe(false);
     if (!result.success) {
-      const capsuleIdError = result.error.errors.find(e => e.path.includes('capsuleId'));
+      const capsuleIdError = result.error.issues.find(e => e.path.includes('capsuleId'));
       expect(capsuleIdError).toBeDefined();
     }
   });

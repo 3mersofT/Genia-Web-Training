@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
     const validation = SuspendUserSchema.safeParse(body);
 
     if (!validation.success) {
-      const errors = validation.error.errors.map(err => `${err.path.join('.')}: ${err.message}`);
+      const errors = validation.error.issues.map(err => `${err.path.join('.')}: ${err.message}`);
       return NextResponse.json({ error: errors.join(', ') }, { status: 400 });
     }
 

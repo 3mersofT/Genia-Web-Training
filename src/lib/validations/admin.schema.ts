@@ -21,9 +21,7 @@ export const CreateUserSchema = z.object({
     .max(100, 'Display name must not exceed 100 characters'),
   role: z
     .enum(['admin', 'teacher', 'student'], {
-      errorMap: () => ({
-        message: 'Role must be one of: admin, teacher, student'
-      })
+      error: 'Role must be one of: admin, teacher, student'
     })
     .optional()
     .default('student'),
@@ -90,7 +88,7 @@ export const SuspendUserSchema = z.object({
     .string()
     .uuid('User ID must be a valid UUID'),
   suspended: z
-    .boolean({ required_error: 'Suspended status is required' }),
+    .boolean({ error: 'Suspended status is required' }),
 });
 
 export type SuspendUser = z.infer<typeof SuspendUserSchema>;

@@ -19,9 +19,7 @@ const NotificationTypes = [
  */
 export const CreateNotificationSchema = z.object({
   type: z.enum(NotificationTypes, {
-    errorMap: () => ({
-      message: `Type must be one of: ${NotificationTypes.join(', ')}`
-    })
+    error: `Type must be one of: ${NotificationTypes.join(', ')}`
   }),
   title: z
     .string()
@@ -32,7 +30,7 @@ export const CreateNotificationSchema = z.object({
     .min(1, 'Message is required')
     .max(1000, 'Message cannot exceed 1000 characters'),
   data: z
-    .record(z.any())
+    .record(z.string(), z.unknown())
     .optional()
     .default({}),
 });
