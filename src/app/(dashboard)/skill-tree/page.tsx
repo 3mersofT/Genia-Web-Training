@@ -4,7 +4,8 @@ import React, { useState, useEffect } from 'react';
 import SkillTreeVisualization from '@/components/gamification/SkillTreeVisualization';
 import { SkillNode, UserSkillProgress } from '@/types/skillTree.types';
 import { useTranslations } from 'next-intl';
-import { Trophy, Target } from 'lucide-react';
+import { Trophy, Target, GitBranch } from 'lucide-react';
+import { EmptyState } from '@/components/ui/empty-state';
 
 export default function SkillTreePage() {
   const [nodes, setNodes] = useState<SkillNode[]>([]);
@@ -39,7 +40,7 @@ export default function SkillTreePage() {
         <div className="bg-card rounded-xl shadow-sm border border-border p-6">
           <div className="flex items-start justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-foreground flex items-center gap-3">
+              <h1 className="text-3xl font-bold font-display text-foreground flex items-center gap-3">
                 <Target className="w-8 h-8 text-indigo-600" />
                 {t('title')}
               </h1>
@@ -82,10 +83,12 @@ export default function SkillTreePage() {
 
         {/* Skill Tree Visualization */}
         {nodes.length === 0 ? (
-          <div className="bg-card rounded-xl shadow-sm border border-border p-12 text-center">
-            <Target className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-foreground mb-2">{t('noSkills')}</h3>
-            <p className="text-muted-foreground">{t('noSkillsDesc')}</p>
+          <div className="bg-card rounded-xl shadow-sm border border-border">
+            <EmptyState
+              icon={GitBranch}
+              title={t('noSkills')}
+              description={t('noSkillsDesc')}
+            />
           </div>
         ) : (
           <SkillTreeVisualization

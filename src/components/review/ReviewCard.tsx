@@ -1,8 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { Clock, Brain, RotateCcw, ChevronDown, ChevronUp } from 'lucide-react';
+import { scaleIn, duration } from '@/lib/animation-presets';
 import { getQualityColor, type SM2Quality } from '@/lib/services/spacedRepetitionService';
 
 interface ReviewCardProps {
@@ -45,9 +47,14 @@ export default function ReviewCard({
   const concept = sections?.concept?.content;
 
   return (
-    <div className="bg-card rounded-xl shadow-lg overflow-hidden max-w-2xl mx-auto">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: duration.normal }}
+      className="bg-card rounded-xl shadow-lg overflow-hidden max-w-2xl mx-auto"
+    >
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4">
+      <div className="bg-gradient-to-r from-[hsl(228,80%,66%)] to-[hsl(271,37%,46%)] px-6 py-4">
         <div className="flex items-center justify-between text-white">
           <div>
             <p className="text-blue-100 text-sm">{moduleTitle}</p>
@@ -60,35 +67,47 @@ export default function ReviewCard({
         </div>
       </div>
 
-      {/* Question */}
-      <div className="p-6">
-        <div className="mb-6">
-          <div className="flex items-center gap-2 mb-3">
-            <Brain className="w-5 h-5 text-purple-600" />
-            <h3 className="font-semibold text-foreground">{t('questionPrompt')}</h3>
+      {/* Question / Answer flip area */}
+      <div className="p-6" style={{ perspective: '1000px' }}>
+        <motion.div
+          animate={{ rotateY: showAnswer ? 180 : 0 }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
+          style={{ transformStyle: 'preserve-3d', position: 'relative' }}
+        >
+          {/* Front face — Question */}
+          <div style={{ backfaceVisibility: 'hidden' }} className={showAnswer ? 'invisible h-0 overflow-hidden' : ''}>
+            <div className="mb-6">
+              <div className="flex items-center gap-2 mb-3">
+                <Brain className="w-5 h-5 text-primary" />
+                <h3 className="font-semibold text-foreground">{t('questionPrompt')}</h3>
+              </div>
+
+              {hook?.text && (
+                <div className="bg-primary/5 dark:bg-primary/10 p-4 rounded-lg text-foreground text-sm">
+                  <p className="font-medium text-primary mb-1">{t('hint')}</p>
+                  <p>{hook.text}</p>
+                </div>
+              )}
+            </div>
+
+            <button
+              onClick={() => setShowAnswer(true)}
+              className="w-full py-3 bg-muted hover:bg-accent text-foreground font-medium rounded-lg flex items-center justify-center gap-2 transition-colors"
+            >
+              <RotateCcw className="w-4 h-4" />
+              {t('revealAnswer')}
+            </button>
           </div>
 
-          {hook?.text && (
-            <div className="bg-blue-50 dark:bg-blue-950/30 p-4 rounded-lg text-foreground text-sm">
-              <p className="font-medium text-blue-800 mb-1">{t('hint')}</p>
-              <p>{hook.text}</p>
-            </div>
-          )}
-        </div>
-
-        {/* Bouton révéler */}
-        {!showAnswer ? (
-          <button
-            onClick={() => setShowAnswer(true)}
-            className="w-full py-3 bg-muted hover:bg-accent text-foreground font-medium rounded-lg flex items-center justify-center gap-2 transition-colors"
-          >
-            <RotateCcw className="w-4 h-4" />
-            {t('revealAnswer')}
-          </button>
-        ) : (
-          <>
-            {/* Réponse */}
-            <div className="mb-6 space-y-3">
+          {/* Back face — Answer */}
+          {showAnswer && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
+              style={{ backfaceVisibility: 'hidden' }}
+            >
+              <div className="mb-6 space-y-3">
               {keyPoint && (
                 <div className="bg-green-50 dark:bg-green-950/30 p-4 rounded-lg border border-green-200">
                   <p className="font-medium text-green-800 dark:text-green-200 mb-1">{t('keyPoint')}</p>
@@ -134,9 +153,10 @@ export default function ReviewCard({
                 ))}
               </div>
             </div>
-          </>
-        )}
+            </motion.div>
+          )}
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }

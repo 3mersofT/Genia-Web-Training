@@ -9,7 +9,7 @@ import { useTheme } from '@/contexts/ThemeContext';
 import NotificationCenter from '@/components/notifications/NotificationCenter';
 import { scaleIn, staggerContainer, staggerItem, duration } from '@/lib/animation-presets';
 import {
-  Home, BookOpen, MessageSquare, User, Trophy,
+  Home, BookOpen, MessageSquare, User, Trophy, Flame,
   Settings, LogOut, ChevronDown, Bell, Sun, Moon, Monitor,
   Swords, Users, Network, Menu, X
 } from 'lucide-react';
@@ -179,6 +179,19 @@ export default function DesktopNavigation() {
           {/* Notifications */}
           {user?.id && <NotificationCenter userId={user.id} />}
 
+          {/* Streak indicator */}
+          {/* TODO: connect to actual streak data */}
+          <div className="hidden md:flex items-center gap-1 text-sm">
+            <motion.div
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+              className="text-orange-500"
+            >
+              <Flame className="w-4 h-4" />
+            </motion.div>
+            <span className="font-semibold text-foreground">0</span>
+          </div>
+
           {/* Menu utilisateur */}
           <div className="relative">
             <button
@@ -186,7 +199,7 @@ export default function DesktopNavigation() {
               aria-expanded={showUserMenu}
               className="flex items-center gap-3 p-2 rounded-lg hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-sm font-semibold">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[hsl(228,80%,66%)] to-[hsl(271,37%,46%)] flex items-center justify-center text-white text-sm font-semibold">
                 {user?.email?.charAt(0)?.toUpperCase() || 'U'}
               </div>
               <div className="hidden md:block text-left">

@@ -68,6 +68,20 @@ jest.mock('lucide-react', () => ({
   Network: (props: any) => <span {...props} />,
   Menu: (props: any) => <span {...props} />,
   X: (props: any) => <span {...props} />,
+  Flame: (props: any) => <span {...props} />,
+}));
+
+jest.mock('framer-motion', () => ({
+  motion: new Proxy({}, {
+    get: (_target: any, prop: string) => {
+      return React.forwardRef((props: any, ref: any) => {
+        const { initial, animate, exit, variants, whileHover, whileTap, transition, layout, layoutId, ...rest } = props;
+        return React.createElement(prop, { ...rest, ref });
+      });
+    }
+  }),
+  AnimatePresence: ({ children }: any) => children,
+  useInView: () => true,
 }));
 
 // Get references to mocked modules for per-test overrides
