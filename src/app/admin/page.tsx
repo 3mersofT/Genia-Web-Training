@@ -13,6 +13,8 @@ import {
   Download, RefreshCw, Search, Eye, Shield,
   LogOut
 } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { staggerContainer, staggerItem, hoverScale } from '@/lib/animation-presets';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 
@@ -170,7 +172,7 @@ export default function AdminDashboard() {
         <div className="px-4 sm:px-6 py-4">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
             <div className="min-w-0">
-              <h1 className="text-xl sm:text-2xl font-bold text-foreground truncate">{t('title')}</h1>
+              <h1 className="text-xl sm:text-2xl font-bold font-display text-foreground truncate">{t('title')}</h1>
               <p className="text-sm text-muted-foreground truncate">{t('subtitle')}</p>
             </div>
             <div className="flex flex-wrap gap-3 items-center">
@@ -336,9 +338,9 @@ export default function AdminDashboard() {
             </div>
 
             {/* Cartes de statistiques enrichies */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+            <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
               {/* Carte Utilisateurs avec mini-graphique */}
-              <div className="bg-card rounded-xl shadow-sm p-6">
+              <motion.div variants={staggerItem} {...hoverScale} className="bg-card rounded-xl shadow-sm p-6">
                 <div className="flex justify-between items-start mb-4">
                   <div className="p-3 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600">
                     <Users className="w-6 h-6" />
@@ -359,10 +361,10 @@ export default function AdminDashboard() {
                     <span className="text-xs text-blue-600 dark:text-blue-400">Données réelles</span>
                   </div>
                 )}
-              </div>
+              </motion.div>
 
               {/* Carte Revenus avec tendance */}
-              <div className="bg-card rounded-xl shadow-sm p-6">
+              <motion.div variants={staggerItem} {...hoverScale} className="bg-card rounded-xl shadow-sm p-6">
                 <div className="flex justify-between items-start mb-4">
                   <div className="p-3 rounded-lg bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400">
                     <DollarSign className="w-6 h-6" />
@@ -376,10 +378,10 @@ export default function AdminDashboard() {
                     Revenus calculés
                   </p>
                 )}
-              </div>
+              </motion.div>
 
               {/* Carte Complétion avec barre de progression */}
-              <div className="bg-card rounded-xl shadow-sm p-6">
+              <motion.div variants={staggerItem} {...hoverScale} className="bg-card rounded-xl shadow-sm p-6">
                 <div className="flex justify-between items-start mb-4">
                   <div className="p-3 rounded-lg bg-purple-100 dark:bg-purple-900/30 text-purple-600">
                     <TrendingUp className="w-6 h-6" />
@@ -396,10 +398,10 @@ export default function AdminDashboard() {
                     />
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Carte Messages avec indicateur de charge */}
-              <div className="bg-card rounded-xl shadow-sm p-6">
+              <motion.div variants={staggerItem} {...hoverScale} className="bg-card rounded-xl shadow-sm p-6">
                 <div className="flex justify-between items-start mb-4">
                   <div className="p-3 rounded-lg bg-orange-100 dark:bg-orange-900/30 text-orange-600">
                     <MessageCircle className="w-6 h-6" />
@@ -414,8 +416,8 @@ export default function AdminDashboard() {
                 <p className="text-xs text-orange-600 mt-2">
                   {Math.round(stats.tokensUsed / 1000)}k tokens utilisés
                 </p>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
             {/* Section Graphiques et Activité */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

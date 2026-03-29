@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useGENIA } from '@/components/providers/GENIAProvider';
 import { useChat } from '@/hooks/useChat';
 import { GENIA_METHOD } from '@/constants/geniaMethod';
+import { staggerContainer, staggerItem } from '@/lib/animation-presets';
 import ChatMessageList from './ChatMessageList';
 import ChatInput from './ChatInput';
 
@@ -65,18 +66,19 @@ export default function GENIAChat({ context: propContext, embedded = false }: GE
 
   const SuggestionsBar = () => (
     <div className="px-4 py-2 bg-muted border-t">
-      <div className="flex gap-2 overflow-x-auto">
+      <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="flex gap-2 overflow-x-auto">
         {displaySuggestions.map((s, i) => (
-          <button
+          <motion.button
             key={i}
+            variants={staggerItem}
             onClick={() => setInputMessage(s.text)}
-            className="px-3 py-1 bg-card border border-border rounded-full text-xs text-muted-foreground hover:bg-blue-50 hover:border-blue-300 hover:text-blue-600 transition-colors whitespace-nowrap flex items-center gap-1"
+            className="px-3 py-1 bg-card border border-border rounded-full text-xs text-muted-foreground hover:bg-primary/10 hover:border-primary/30 hover:text-primary transition-colors whitespace-nowrap flex items-center gap-1"
           >
             <span>{s.icon}</span>
             <span>{s.text}</span>
-          </button>
+          </motion.button>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 
@@ -139,7 +141,7 @@ export default function GENIAChat({ context: propContext, embedded = false }: GE
             exit={{ scale: 0 }}
             onClick={() => setIsOpen(true)}
             aria-expanded={isOpen}
-            className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full p-4 shadow-2xl hover:shadow-3xl transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-[hsl(228,80%,66%)] to-[hsl(271,37%,46%)] rounded-full p-4 shadow-2xl hover:shadow-3xl transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             <Sparkles className="w-6 h-6 text-white" />
           </motion.button>
@@ -155,7 +157,7 @@ export default function GENIAChat({ context: propContext, embedded = false }: GE
             className="fixed bottom-6 right-6 z-50 w-[450px] h-[700px] bg-card rounded-2xl shadow-2xl flex flex-col overflow-hidden"
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-4 text-white">
+            <div className="bg-gradient-to-r from-[hsl(228,80%,66%)] to-[hsl(271,37%,46%)] p-4 text-white">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">

@@ -1,7 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Bot } from 'lucide-react';
+import { scaleIn, duration } from '@/lib/animation-presets';
 import GENIAChat from './GENIAChat';
 import { AI_ASSISTANT_NAME } from '@/config/branding';
 
@@ -65,18 +67,18 @@ export default function GENIAChatButton({
       >
         <div className="relative">
           {/* Bouton principal avec gradient GENIA */}
-          <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full shadow-lg hover:shadow-xl flex items-center justify-center transition-all duration-300">
+          <div className="w-16 h-16 bg-gradient-to-r from-[hsl(228,80%,66%)] to-[hsl(271,37%,46%)] rounded-full shadow-lg hover:shadow-xl flex items-center justify-center transition-all duration-300">
             {isOpen ? (
               <X className="w-8 h-8 text-white" />
             ) : (
               <Bot className="w-8 h-8 text-white" />
             )}
           </div>
-          
-          {/* Indicateur de notification (optionnel) */}
-          
-          {/* Effet de pulsation */}
-          <div className="absolute inset-0 w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full animate-ping opacity-20"></div>
+
+          {/* Pulse subtil pour attirer l'attention */}
+          {!isOpen && (
+            <div className="absolute inset-0 w-16 h-16 bg-gradient-to-r from-[hsl(228,80%,66%)] to-[hsl(271,37%,46%)] rounded-full animate-ping opacity-20"></div>
+          )}
         </div>
 
         {/* Tooltip au hover */}
@@ -96,28 +98,38 @@ export default function GENIAChatButton({
       </button>
 
       {/* Interface de chat (modal overlay) */}
+      <AnimatePresence>
       {isOpen && (
         <>
           {/* Overlay sombre */}
-          <div 
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: duration.fast }}
             className="fixed inset-0 z-40 bg-black bg-opacity-20 backdrop-blur-sm"
             onClick={() => setIsOpen(false)}
-          ></div>
-          
+          />
+
           {/* Conteneur du chat */}
-          <div 
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            transition={{ duration: duration.normal, ease: [0, 0, 0.58, 1] }}
+            style={{ transformOrigin: 'bottom right' }}
             onClick={(e) => e.stopPropagation()}
-            className="fixed z-50 bottom-20 right-4 left-4 sm:left-auto sm:w-full sm:max-w-lg h-[700px] bg-card rounded-2xl shadow-2xl border border-border flex flex-col overflow-hidden transform transition-all duration-300 ease-out"
+            className="fixed z-50 bottom-20 right-4 left-4 sm:left-auto sm:w-full sm:max-w-lg h-[700px] bg-card rounded-2xl shadow-2xl border border-border flex flex-col overflow-hidden"
           >
             {/* Header du chat modal */}
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-4 text-white flex-shrink-0">
+            <div className="bg-gradient-to-r from-[hsl(228,80%,66%)] to-[hsl(271,37%,46%)] p-4 text-white flex-shrink-0">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
                     <Bot className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg">{AI_ASSISTANT_NAME}</h3>
+                    <h3 className="font-semibold font-display text-lg">{AI_ASSISTANT_NAME}</h3>
                     <p className="text-sm text-blue-100">Votre assistant formateur</p>
                   </div>
                 </div>
@@ -141,9 +153,10 @@ export default function GENIAChatButton({
             <div className="flex-1 h-full overflow-y-auto">
               <GENIAChat context={context} embedded={true} />
             </div>
-          </div>
+          </motion.div>
         </>
       )}
+      </AnimatePresence>
     </>
   );
 }

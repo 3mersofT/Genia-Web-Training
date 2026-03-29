@@ -13,6 +13,8 @@ import {
 import { useTranslations } from 'next-intl';
 import NotificationPreferences from '@/components/notifications/NotificationPreferences';
 import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
+import { motion } from 'framer-motion';
+import { fadeIn, staggerContainer, staggerItem } from '@/lib/animation-presets';
 import { useOnboarding } from '@/hooks/useOnboarding';
 import { toast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -289,13 +291,13 @@ export default function ProfilePage() {
               <span>Retour au dashboard</span>
             </button>
           </div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">Mon Profil</h1>
+          <h1 className="text-3xl font-bold font-display text-foreground mb-2">Mon Profil</h1>
           <p className="text-muted-foreground">Personnalisez votre profil et vos préférences</p>
         </div>
         
         <div className="flex flex-col md:flex-row gap-8">
           {/* Sidebar */}
-          <div className="w-full md:w-72 lg:w-80 shrink-0">
+          <motion.div initial="hidden" animate="visible" variants={fadeIn} className="w-full md:w-72 lg:w-80 shrink-0">
             <div className="bg-card rounded-xl shadow-sm p-6">
               <div className="text-center">
                 <div className="relative inline-block">
@@ -366,7 +368,7 @@ export default function ProfilePage() {
                 </button>
               </nav>
             </div>
-          </div>
+          </motion.div>
 
           {/* Main Content */}
           <div className="flex-1 min-w-0">

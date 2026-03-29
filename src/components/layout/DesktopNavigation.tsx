@@ -3,9 +3,11 @@
 import React, { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '@/hooks/useAuth';
 import { useTheme } from '@/contexts/ThemeContext';
 import NotificationCenter from '@/components/notifications/NotificationCenter';
+import { scaleIn, staggerContainer, staggerItem, duration } from '@/lib/animation-presets';
 import {
   Home, BookOpen, MessageSquare, User, Trophy,
   Settings, LogOut, ChevronDown, Bell, Sun, Moon, Monitor,
@@ -64,12 +66,14 @@ export default function DesktopNavigation() {
           aria-expanded={mobileMenuOpen}
           aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
         >
-          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          <motion.div animate={{ rotate: mobileMenuOpen ? 90 : 0 }} transition={{ duration: duration.fast }}>
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </motion.div>
         </button>
 
         {/* Logo */}
         <div className="flex items-center">
-          <h1 className="text-xl font-bold text-foreground">GENIA Web Training</h1>
+          <h1 className="text-xl font-bold font-display text-gradient">GENIA Web Training</h1>
         </div>
 
         {/* Navigation principale */}
@@ -83,14 +87,21 @@ export default function DesktopNavigation() {
                 key={item.href}
                 onClick={() => router.push(item.href)}
                 {...(item.label === t('chat') ? { 'data-onboarding': 'chat-link' } : {})}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
                   isActive
                     ? 'text-primary bg-primary/10'
-                    : 'text-foreground hover:text-foreground hover:bg-accent'
+                    : 'text-foreground hover:text-foreground hover:bg-accent hover:scale-[1.02]'
                 }`}
               >
                 <Icon className="w-4 h-4" />
                 {item.label}
+                {isActive && (
+                  <motion.div
+                    layoutId="nav-active-indicator"
+                    className="absolute bottom-0 left-2 right-2 h-0.5 bg-primary rounded-full"
+                    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                  />
+                )}
                 {item.badge && (
                   <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
                     {item.badge}
@@ -122,8 +133,14 @@ export default function DesktopNavigation() {
               {resolvedTheme === 'dark' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
             </button>
 
+            <AnimatePresence>
             {showThemeMenu && (
-              <div className="absolute right-0 mt-2 w-48 bg-popover text-popover-foreground rounded-lg shadow-lg border py-2 z-50">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: -4 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: -4 }}
+                transition={{ duration: duration.fast }}
+                className="absolute right-0 mt-2 w-48 bg-popover text-popover-foreground rounded-lg shadow-lg border py-2 z-50">
                 <button
                   onClick={() => { setTheme('light'); setShowThemeMenu(false); }}
                   className={`w-full text-left px-4 py-2 text-sm flex items-center gap-3 hover:bg-accent ${
@@ -151,8 +168,9 @@ export default function DesktopNavigation() {
                   <Monitor className="w-4 h-4" />
                   {tp('theme.system')}
                 </button>
-              </div>
+              </motion.div>
             )}
+            </AnimatePresence>
           </div>
 
           {/* Language Switcher */}
@@ -181,8 +199,14 @@ export default function DesktopNavigation() {
             </button>
 
             {/* Dropdown menu */}
+            <AnimatePresence>
             {showUserMenu && (
-              <div className="absolute right-0 mt-2 w-56 bg-popover text-popover-foreground rounded-lg shadow-lg border py-2 z-50">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: -4 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: -4 }}
+                transition={{ duration: duration.fast }}
+                className="absolute right-0 mt-2 w-56 bg-popover text-popover-foreground rounded-lg shadow-lg border py-2 z-50">
                 <button
                   onClick={() => {
                     router.push('/profile');
@@ -211,15 +235,22 @@ export default function DesktopNavigation() {
                   <LogOut className="w-4 h-4" />
                   {t('signOut')}
                 </button>
-              </div>
+              </motion.div>
             )}
+            </AnimatePresence>
           </div>
         </div>
       </div>
 
       {/* Mobile menu */}
+      <AnimatePresence>
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-border bg-card px-4 py-4 space-y-1">
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          exit={{ opacity: 0, height: 0 }}
+          transition={{ duration: duration.normal }}
+          className="md:hidden border-t border-border bg-card px-4 py-4 space-y-1 overflow-hidden">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = pathname.startsWith(item.href);
@@ -263,8 +294,9 @@ export default function DesktopNavigation() {
             <LogOut className="w-4 h-4" />
             {t('signOut')}
           </button>
-        </div>
+        </motion.div>
       )}
+      </AnimatePresence>
     </nav>
   );
 }

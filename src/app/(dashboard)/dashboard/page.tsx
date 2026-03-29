@@ -6,6 +6,8 @@ export const dynamic = 'force-dynamic'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/hooks/useAuth'
+import { motion } from 'framer-motion'
+import { staggerContainer, staggerItem, hoverLift, fadeInUp } from '@/lib/animation-presets'
 import { Trophy, Flame, Target, Clock, ChevronRight, BarChart3, Award, Brain, BookOpen } from 'lucide-react'
 import Link from 'next/link'
 import { getAllModulesWithProgress, type Module } from '@/lib/data'
@@ -166,7 +168,7 @@ export default function DashboardPage() {
         <div className="mb-4 md:mb-8">
           <div className="flex items-start justify-between">
             <div>
-              <h2 className="text-3xl font-bold text-foreground mb-2">
+              <h2 className="text-3xl font-bold font-display text-foreground mb-2">
                 {t('welcomeBack')}{displayName ? `, ${displayName}` : ''} ! 👋
               </h2>
               <p className="text-muted-foreground">
@@ -260,39 +262,38 @@ export default function DashboardPage() {
         </div>
 
         {/* Stats Grid - Progress Section */}
-        <div id="progress" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 mb-4 md:mb-8">
-          <div className="bg-card rounded-xl p-6 shadow-sm">
-            <div className="flex items-center justify-between mb-2">
-              <Trophy className="w-8 h-8 text-yellow-500" />
-              <span className="text-2xl font-bold">{stats.totalPoints}</span>
-            </div>
-            <p className="text-muted-foreground">{t('stats.totalPoints')}</p>
-          </div>
-
-          <div className="bg-card rounded-xl p-6 shadow-sm">
-            <div className="flex items-center justify-between mb-2">
-              <Flame className="w-8 h-8 text-orange-500" />
-              <span className="text-2xl font-bold">{stats.streakDays}j</span>
-            </div>
-            <p className="text-muted-foreground">Streak</p>
-          </div>
-
-          <div className="bg-card rounded-xl p-6 shadow-sm">
-            <div className="flex items-center justify-between mb-2">
-              <Target className="w-8 h-8 text-green-500" />
-              <span className="text-2xl font-bold">{stats.completedCapsules}</span>
-            </div>
-            <p className="text-muted-foreground">{t('stats.capsulesDone')}</p>
-          </div>
-
-          <div className="bg-card rounded-xl p-6 shadow-sm">
-            <div className="flex items-center justify-between mb-2">
-              <Clock className="w-8 h-8 text-blue-500" />
-              <span className="text-2xl font-bold">{stats.progress}%</span>
-            </div>
-            <p className="text-muted-foreground">{t('stats.progress')}</p>
-          </div>
-        </div>
+        <motion.div
+          id="progress"
+          initial="hidden"
+          animate="visible"
+          variants={staggerContainer}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 mb-4 md:mb-8"
+        >
+          {[
+            { icon: Trophy, color: 'text-yellow-500', value: stats.totalPoints, label: t('stats.totalPoints'), suffix: '' },
+            { icon: Flame, color: 'text-orange-500', value: stats.streakDays, label: 'Streak', suffix: 'j' },
+            { icon: Target, color: 'text-green-500', value: stats.completedCapsules, label: t('stats.capsulesDone'), suffix: '' },
+            { icon: Clock, color: 'text-blue-500', value: stats.progress, label: t('stats.progress'), suffix: '%' },
+          ].map((stat, i) => {
+            const Icon = stat.icon;
+            return (
+              <motion.div key={i} variants={staggerItem} {...hoverLift} className="bg-card rounded-xl p-6 shadow-sm">
+                <div className="flex items-center justify-between mb-2">
+                  <Icon className={`w-8 h-8 ${stat.color}`} />
+                  <motion.span
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.2 + i * 0.1, duration: 0.3 }}
+                    className="text-2xl font-bold"
+                  >
+                    {stat.value}{stat.suffix}
+                  </motion.span>
+                </div>
+                <p className="text-muted-foreground">{stat.label}</p>
+              </motion.div>
+            );
+          })}
+        </motion.div>
 
         {/* Défis Quotidiens */}
         <div className="bg-gradient-to-r from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] rounded-xl p-6 shadow-sm mb-4 md:mb-8">
@@ -421,8 +422,15 @@ export default function DashboardPage() {
         })()}
 
         {/* Modules */}
-        <div id="modules" data-onboarding="modules" className="bg-card rounded-xl p-6 shadow-sm">
-          <h3 className="text-xl font-bold text-foreground mb-4">{t('modules.title')}</h3>
+        <motion.div
+          id="modules"
+          data-onboarding="modules"
+          initial="hidden"
+          animate="visible"
+          variants={fadeInUp}
+          className="bg-card rounded-xl p-6 shadow-sm"
+        >
+          <h3 className="text-xl font-bold font-display text-foreground mb-4">{t('modules.title')}</h3>
           {modules.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12 text-center">
               <BookOpen className="w-12 h-12 text-muted-foreground/50 mb-4" />
@@ -430,10 +438,11 @@ export default function DashboardPage() {
               <p className="text-sm text-muted-foreground/70 mt-1">Les modules apparaitront ici une fois disponibles</p>
             </div>
           ) : (
-            <div className="space-y-4">
+            <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="space-y-4">
               {modules.map((m) => (
-                <Link key={m.id} href={`/modules/${m.slug}`}>
-                  <div className="border border-border rounded-lg p-4 hover:shadow-md hover:border-primary/30 transition-all cursor-pointer">
+                <motion.div key={m.id} variants={staggerItem}>
+                <Link href={`/modules/${m.slug}`}>
+                  <div className="border border-border rounded-lg p-4 hover:shadow-md hover:border-primary/30 hover:-translate-y-0.5 transition-all cursor-pointer">
                     <div className="flex items-center justify-between mb-2">
                       <h4 className="font-semibold text-foreground">{m.title}</h4>
                       <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-blue-500" />
@@ -447,10 +456,11 @@ export default function DashboardPage() {
                     <p className="text-sm text-muted-foreground mt-2">{m.progress}% {t('modules.completed')}</p>
                   </div>
                 </Link>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           )}
-        </div>
+        </motion.div>
       </div>
     </div>
   )

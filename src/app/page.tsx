@@ -3,8 +3,13 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { BRAND, BRAND_FULL_NAME, BRAND_NAME } from '@/config/branding';
+import {
+  fadeInUp, staggerContainer, staggerItem, hoverLift, scaleIn, duration
+} from '@/lib/animation-presets';
+import { Button } from '@/components/ui/button';
 import {
   ArrowRight, Brain, Trophy, Users,
   CheckCircle, Star, Zap, BookOpen, MessageCircle,
@@ -127,7 +132,7 @@ export default function HomePage() {
                 height={48}
                 className="w-12 h-12 object-contain"
               />
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <span className="text-xl font-bold font-display text-gradient">
                 {BRAND_FULL_NAME}
               </span>
             </div>
@@ -142,13 +147,12 @@ export default function HomePage() {
                   <LogIn className="w-4 h-4 mr-2" />
                   {t('hero.login')}
                 </Link>
-                <Link
-                  href="/register"
-                  className="inline-flex items-center px-4 py-2 text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg hover:shadow-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                >
-                  <UserPlus className="w-4 h-4 mr-2" />
-                  {t('hero.register')}
-                </Link>
+                <Button variant="brand" asChild>
+                  <Link href="/register">
+                    <UserPlus className="w-4 h-4 mr-2" />
+                    {t('hero.register')}
+                  </Link>
+                </Button>
               </div>
             </nav>
           </div>
@@ -187,27 +191,46 @@ export default function HomePage() {
               />
             </div>
             
-            <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-5xl md:text-6xl font-bold font-display text-foreground mb-6"
+            >
               {t('hero.title')}
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> Prompt Engineering</span>
+              <span className="text-gradient"> Prompt Engineering</span>
               <br />{t('hero.titleHighlight')}
-            </h1>
+            </motion.h1>
 
-            <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+              className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto"
+            >
               {t('hero.subtitle')}
-            </p>
+            </motion.p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Link href="/register" className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                <Play className="w-5 h-5 mr-2" />
-                {t('hero.cta')}
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Link>
-              <a href="#method" className="inline-flex items-center px-8 py-4 bg-card text-foreground font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 border border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                <MessageCircle className="w-5 h-5 mr-2" />
-                {t('hero.ctaSecondary')}
-              </a>
-            </div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
+            >
+              <Button variant="brand" size="lg" asChild className="px-8 py-4 h-auto text-base font-semibold rounded-xl">
+                <Link href="/register">
+                  <Play className="w-5 h-5 mr-2" />
+                  {t('hero.cta')}
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Link>
+              </Button>
+              <Button variant="outline" size="lg" asChild className="px-8 py-4 h-auto text-base font-semibold rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all">
+                <a href="#method">
+                  <MessageCircle className="w-5 h-5 mr-2" />
+                  {t('hero.ctaSecondary')}
+                </a>
+              </Button>
+            </motion.div>
             
             {/* Stats corrigées */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
@@ -229,31 +252,43 @@ export default function HomePage() {
       {/* Features Section */}
       <section className="py-20 bg-card">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-100px' }}
+            variants={fadeInUp}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground mb-4">
               {t('features.title')}
             </h2>
             <p className="text-xl text-muted-foreground">
               {t('features.subtitle')}
             </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-50px' }}
+            variants={staggerContainer}
+            className="grid md:grid-cols-2 lg:grid-cols-4 gap-8"
+          >
             {features.map((feature, index) => {
               const Icon = feature.icon;
               return (
-                <div key={index} className="group hover:scale-105 transition-transform duration-200">
+                <motion.div key={index} variants={staggerItem} {...hoverLift}>
                   <div className="bg-gradient-to-br from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] rounded-xl p-6 h-full">
-                    <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-[hsl(228,80%,66%)] to-[hsl(271,37%,46%)] rounded-lg flex items-center justify-center mb-4">
                       <Icon className="w-6 h-6 text-white" />
                     </div>
                     <h3 className="text-xl font-semibold text-foreground mb-2">{feature.title}</h3>
                     <p className="text-muted-foreground">{feature.description}</p>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -271,14 +306,14 @@ export default function HomePage() {
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground mb-4">
               {t('methodology.title')}
             </h2>
             <p className="text-xl text-muted-foreground">
               {t('methodology.subtitle')}
             </p>
-          </div>
+          </motion.div>
           
           {/* Lettres GENIA horizontales */}
           <div className="flex justify-center gap-4 mb-8">
@@ -322,14 +357,14 @@ export default function HomePage() {
       {/* Pricing Section - Prix caché */}
       <section id="pricing" className="py-20 bg-card">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground mb-4">
               {t('pricing.title')}
             </h2>
             <p className="text-xl text-muted-foreground">
               {t('pricing.subtitle')}
             </p>
-          </div>
+          </motion.div>
           
           <div className="max-w-md mx-auto">
             <div className="bg-gradient-to-br from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] rounded-2xl shadow-2xl overflow-hidden p-8">
@@ -352,9 +387,11 @@ export default function HomePage() {
                 ))}
               </ul>
               
-              <Link href="/register" className="block w-full text-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                {t('waitlist')}
-              </Link>
+              <Button variant="brand" size="lg" asChild className="w-full h-auto px-8 py-4 text-base font-semibold rounded-xl">
+                <Link href="/register">
+                  {t('waitlist')}
+                </Link>
+              </Button>
 
               <p className="text-center text-sm text-muted-foreground mt-4">
                 {t('pricing.earlyInfo')}
@@ -367,18 +404,18 @@ export default function HomePage() {
       {/* Testimonials */}
       <section className="py-20 bg-muted">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground mb-4">
               {t('testimonials.title')}
             </h2>
             <p className="text-xl text-muted-foreground">
               {t('testimonials.subtitle')}
             </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          </motion.div>
+
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <div key={index} className="bg-card rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+              <motion.div key={index} variants={staggerItem} {...hoverLift} className="bg-card rounded-xl p-6 shadow-lg">
                 <div className="flex mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
                     <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
@@ -392,21 +429,21 @@ export default function HomePage() {
                     <div className="text-sm text-muted-foreground">{testimonial.role}</div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* FAQ Section */}
       <section className="py-20 bg-card">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold font-display text-foreground mb-4">
               {t('faq.title')}
             </h2>
-          </div>
-          
+          </motion.div>
+
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <div key={index} className="bg-muted rounded-xl shadow-md overflow-hidden">
@@ -416,13 +453,25 @@ export default function HomePage() {
                   className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   <span className="font-semibold text-foreground">{faq.question}</span>
-                  <ChevronDown className={`w-5 h-5 text-muted-foreground transition-transform ${openFaq === index ? 'rotate-180' : ''}`} />
+                  <motion.div animate={{ rotate: openFaq === index ? 180 : 0 }} transition={{ duration: duration.fast }}>
+                    <ChevronDown className="w-5 h-5 text-muted-foreground" />
+                  </motion.div>
                 </button>
-                {openFaq === index && (
-                  <div className="px-6 py-4 border-t border-border bg-card">
-                    <p className="text-foreground">{faq.answer}</p>
-                  </div>
-                )}
+                <AnimatePresence initial={false}>
+                  {openFaq === index && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: duration.normal }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-6 py-4 border-t border-border bg-card">
+                        <p className="text-foreground">{faq.answer}</p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             ))}
           </div>
@@ -457,9 +506,9 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
+      <section className="py-20 bg-gradient-to-r from-[hsl(228,80%,66%)] to-[hsl(271,37%,46%)]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold font-display text-white mb-4">
             {t('cta.title')}
           </h2>
           <p className="text-xl text-white/90 mb-8">
