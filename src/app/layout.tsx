@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 import GENIAProvider from '@/components/providers/GENIAProvider'
 import PWAProvider from '@/components/providers/PWAProvider'
@@ -12,7 +12,12 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
 import { BRAND } from '@/config/branding'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'], variable: '--font-body' })
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-display',
+  weight: ['500', '600', '700', '800'],
+})
 
 export const metadata: Metadata = {
   title: BRAND.title,
@@ -147,7 +152,7 @@ export default async function RootLayout({
           media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)"
         />
       </head>
-      <body className={`${inter.className} antialiased`}>
+      <body className={`${inter.variable} ${plusJakarta.variable} font-sans antialiased`}>
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider>
             <GENIAProvider>

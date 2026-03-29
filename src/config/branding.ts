@@ -49,11 +49,11 @@ export const BRAND = {
   colors: {
     primary: {
       hex: '#667eea',
-      hsl: '222.2 47.4% 11.2%',
+      hsl: '228 80% 66%',
     },
     secondary: {
       hex: '#764ba2',
-      hsl: '210 40% 96.1%',
+      hsl: '271 37% 46%',
     },
     gradient: {
       start: '#667eea',
@@ -61,8 +61,8 @@ export const BRAND = {
       css: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
     },
     theme: {
-      light: '#3B82F6',
-      dark: '#1E40AF',
+      light: '#667eea',
+      dark: '#764ba2',
     },
     email: {
       primary: '#667eea',
@@ -115,7 +115,7 @@ export const BRAND = {
   pwa: {
     name: 'GENIA Web Training - Prompt Engineering Academy',
     shortName: 'GENIA Training',
-    themeColor: '#3B82F6',
+    themeColor: '#667eea',
     backgroundColor: '#ffffff',
   },
 

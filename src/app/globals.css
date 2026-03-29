@@ -28,16 +28,16 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 228 80% 66%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 271 37% 46%;
+    --secondary-foreground: 0 0% 100%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 210 40% 96.1%;
+    --accent: 228 80% 95%;
     --accent-foreground: 222.2 47.4% 11.2%;
 
     --destructive: 0 84.2% 60.2%;
@@ -45,9 +45,21 @@
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --ring: 228 80% 66%;
 
     --radius: 0.5rem;
+
+    /* GENIA Primary Scale */
+    --primary-50: 228 80% 97%;
+    --primary-100: 228 80% 93%;
+    --primary-200: 228 75% 85%;
+    --primary-300: 228 75% 75%;
+    --primary-400: 228 80% 70%;
+    --primary-500: 228 80% 66%;
+    --primary-600: 228 75% 58%;
+    --primary-700: 228 65% 50%;
+    --primary-800: 228 55% 40%;
+    --primary-900: 228 45% 30%;
 
     /* PWA Variables */
     --safe-area-top: env(safe-area-inset-top);
@@ -69,37 +81,52 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 235 25% 8%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 235 20% 12%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222.2 84% 4.9%;
+    --popover: 235 20% 12%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 228 80% 70%;
+    --primary-foreground: 228 80% 10%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 271 30% 35%;
+    --secondary-foreground: 271 30% 90%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 235 15% 18%;
+    --muted-foreground: 228 20% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
+    --accent: 228 60% 20%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 235 15% 20%;
+    --input: 235 15% 20%;
+    --ring: 228 80% 70%;
+
+    /* GENIA Primary Scale (dark) */
+    --primary-50: 228 40% 15%;
+    --primary-100: 228 45% 20%;
+    --primary-200: 228 50% 28%;
+    --primary-300: 228 55% 38%;
+    --primary-400: 228 65% 50%;
+    --primary-500: 228 75% 60%;
+    --primary-600: 228 80% 66%;
+    --primary-700: 228 80% 70%;
+    --primary-800: 228 75% 78%;
+    --primary-900: 228 70% 85%;
+
+    /* Glow */
+    --glow: 228 80% 66%;
 
     /* GENIA Gradient Variables */
-    --gradient-start: 222 47% 11%;
-    --gradient-end: 270 47% 15%;
+    --gradient-start: 235 25% 8%;
+    --gradient-end: 270 25% 12%;
 
     /* Semantic Colors */
     --success: 142 76% 36%;
@@ -340,7 +367,7 @@ html.reduce-motion * {
 
 /* Focus visible pour l'accessibilité */
 .focus-visible:focus {
-  outline: 2px solid #3B82F6;
+  outline: 2px solid hsl(228, 80%, 66%);
   outline-offset: 2px;
 }
 
@@ -366,4 +393,48 @@ html.reduce-motion * {
     max-height: 50vh;
     overflow-y: auto;
   }
+}
+
+/* ============================================ */
+/*           GENIA DESIGN SYSTEM               */
+/* ============================================ */
+
+/* Glow effect */
+.glow-primary {
+  box-shadow: 0 0 20px -5px hsl(var(--primary) / 0.3);
+}
+.dark .glow-primary {
+  box-shadow: 0 0 30px -5px hsl(var(--primary) / 0.2);
+}
+
+/* Glass morphism */
+.glass {
+  background: hsl(var(--background) / 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Gradient text */
+.text-gradient {
+  background: linear-gradient(135deg, hsl(228, 80%, 66%), hsl(271, 37%, 46%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Surface elevation */
+.surface-elevated {
+  box-shadow: 0 1px 3px 0 hsl(var(--foreground) / 0.04), 0 1px 2px -1px hsl(var(--foreground) / 0.04);
+}
+.surface-elevated-lg {
+  box-shadow: 0 4px 12px 0 hsl(var(--foreground) / 0.06), 0 2px 4px -2px hsl(var(--foreground) / 0.04);
+}
+
+/* Card interactive */
+.card-interactive {
+  @apply hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer;
+  hover-shadow-color: hsl(var(--primary) / 0.05);
+}
+.card-interactive:hover {
+  box-shadow: 0 10px 15px -3px hsl(var(--primary) / 0.05), 0 4px 6px -4px hsl(var(--primary) / 0.05);
 }
