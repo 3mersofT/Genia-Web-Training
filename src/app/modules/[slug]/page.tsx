@@ -3,6 +3,8 @@
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { staggerContainer, staggerItem, hoverLift, scaleIn, fadeInUp } from '@/lib/animation-presets';
 import { ArrowLeft, Play, Lock, CheckCircle, Clock, BookOpen } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { getModuleBySlug, getAllModulesWithProgress, Module, Capsule } from '@/lib/data';
@@ -135,7 +137,7 @@ export default function ModulePage() {
           
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
             <div className="flex-1">
-              <h2 className="text-2xl font-bold text-foreground mb-2">{moduleData.title}</h2>
+              <h2 className="text-2xl font-bold font-display text-foreground mb-2">{moduleData.title}</h2>
               <p className="text-muted-foreground">{moduleData.description}</p>
             </div>
 
@@ -158,9 +160,11 @@ export default function ModulePage() {
           
           <div className="flex items-center gap-4">
             <div className="flex-1 bg-muted rounded-full h-2">
-              <div
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: `${moduleData.progress}%` }}
+                transition={{ duration: 0.8, ease: [0, 0, 0.58, 1] }}
                 className={`bg-gradient-to-r ${moduleData.color} h-2 rounded-full`}
-                style={{ width: `${moduleData.progress}%` }}
               />
             </div>
             <span className="text-sm font-medium text-muted-foreground">
@@ -199,9 +203,9 @@ export default function ModulePage() {
             <h3 className="text-lg font-semibold text-foreground">{t('modulePlan')}</h3>
           </div>
           
-          <div className="divide-y divide-border">
+          <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="divide-y divide-border">
             {moduleData.capsules.map((capsule: Capsule, index: number) => (
-              <div key={capsule.id} className="p-4 md:p-6 hover:bg-accent transition-colors">
+              <motion.div key={capsule.id} variants={staggerItem} {...hoverLift} className="p-4 md:p-6 hover:bg-accent transition-colors">
                 <div className="flex items-start md:items-center gap-4 flex-wrap md:flex-nowrap">
                   <div className="flex-shrink-0">
                     {capsule.completed ? (
@@ -241,9 +245,14 @@ export default function ModulePage() {
                   
                   <div className="flex-shrink-0">
                     {capsule.completed ? (
-                      <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 text-sm rounded-full">
+                      <motion.span
+                        initial="hidden"
+                        animate="visible"
+                        variants={scaleIn}
+                        className="inline-block px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 text-sm rounded-full"
+                      >
                         {tc('completed')}
-                      </span>
+                      </motion.span>
                     ) : capsule.available ? (
                       <Link
                         href={`/capsules/${capsule.id}`}
@@ -258,9 +267,9 @@ export default function ModulePage() {
                     )}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </main>
     </div>
