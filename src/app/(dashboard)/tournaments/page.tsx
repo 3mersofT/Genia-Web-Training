@@ -7,6 +7,7 @@ import { TournamentBracketView, TournamentRound, Tournament } from '@/types/tour
 import { Trophy, ChevronLeft } from 'lucide-react'
 import Link from 'next/link'
 import { toast } from '@/hooks/use-toast'
+import { EmptyState } from '@/components/ui/empty-state'
 
 export default function TournamentsPage() {
   const [mounted, setMounted] = useState(false)
@@ -47,7 +48,7 @@ export default function TournamentsPage() {
                 <ChevronLeft className="w-5 h-5" />
               </Link>
               <div>
-                <h1 className="text-2xl font-bold text-foreground">Tournois</h1>
+                <h1 className="text-2xl font-bold font-display text-foreground">Tournois</h1>
                 <p className="text-muted-foreground">Participez aux tournois hebdomadaires et grimpez dans le classement !</p>
               </div>
             </div>
@@ -71,10 +72,12 @@ export default function TournamentsPage() {
           <div>
             <h2 className="text-2xl font-bold text-foreground mb-4">Tournois Disponibles</h2>
             {tournaments.length === 0 ? (
-              <div className="bg-card rounded-xl shadow-sm border border-border p-12 text-center">
-                <Trophy className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-foreground mb-2">Aucun tournoi disponible</h3>
-                <p className="text-muted-foreground">Les tournois seront affichés ici lorsqu&apos;ils seront disponibles.</p>
+              <div className="bg-card rounded-xl shadow-sm border border-border">
+                <EmptyState
+                  icon={Trophy}
+                  title="Aucun tournoi en cours"
+                  description="Les tournois seront bientot disponibles. Entraine-toi en attendant !"
+                />
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

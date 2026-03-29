@@ -275,9 +275,10 @@ export default function SeasonalLeaderboard({
             leaderboard.map((entry, index) => (
               <motion.div
                 key={entry.id}
+                layout
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
+                transition={{ type: "spring", stiffness: 300, damping: 30, delay: index * 0.05 }}
                 className={`p-4 hover:bg-accent transition-colors ${
                   entry.user_id === userSeasonStats?.user_id ? 'bg-purple-50' : ''
                 }`}
@@ -363,9 +364,12 @@ export default function SeasonalLeaderboard({
               </motion.div>
             ))
           ) : (
-            <div className="p-8 text-center text-muted-foreground">
-              <Trophy className="w-12 h-12 mx-auto mb-3 text-muted-foreground" />
-              <p>Aucun participant dans cette saison</p>
+            <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
+              <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                <Users className="w-10 h-10 text-primary/60" />
+              </div>
+              <p className="font-medium text-foreground mb-1">Pas encore de classement</p>
+              <p className="text-sm text-muted-foreground">Termine des capsules pour apparaitre au classement</p>
             </div>
           )}
         </div>

@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { staggerContainer, staggerItem, hoverScale } from '@/lib/animation-presets';
+import { AnimatedNumber } from '@/components/ui/animated-number';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 
@@ -351,7 +352,7 @@ export default function AdminDashboard() {
                     </div>
                   )}
                 </div>
-                <p className="text-2xl font-bold">{stats.totalUsers}</p>
+                <AnimatedNumber value={stats.totalUsers} className="text-2xl font-bold" />
                 <p className="text-sm text-muted-foreground mt-1">{t('stats.totalUsers')}</p>
                 <p className="text-xs text-green-600 dark:text-green-400 mt-2">
                   {stats.activeUsers} {t('stats.activeThisWeek')}
@@ -371,7 +372,7 @@ export default function AdminDashboard() {
                   </div>
                   <TrendingUp className="w-4 h-4 text-green-600 dark:text-green-400" />
                 </div>
-                <p className="text-2xl font-bold">{stats.revenue}€</p>
+                <AnimatedNumber value={stats.revenue} suffix="€" className="text-2xl font-bold" />
                 <p className="text-sm text-muted-foreground mt-1">{t('stats.estimatedRevenue')}</p>
                 {stats.revenue > 0 && (
                   <p className="text-xs text-green-600 dark:text-green-400 mt-2">
@@ -388,7 +389,7 @@ export default function AdminDashboard() {
                   </div>
                   <CheckCircle className="w-4 h-4 text-purple-600" />
                 </div>
-                <p className="text-2xl font-bold">{stats.completionRate}%</p>
+                <AnimatedNumber value={stats.completionRate} suffix="%" className="text-2xl font-bold" />
                 <p className="text-sm text-muted-foreground mt-1">{t('stats.completionRate')}</p>
                 <div className="mt-3">
                   <div className="bg-purple-100 dark:bg-purple-900/30 rounded-full h-2">
@@ -411,7 +412,7 @@ export default function AdminDashboard() {
                     <span className="text-orange-600">Actif</span>
                   </div>
                 </div>
-                <p className="text-2xl font-bold">{stats.totalMessages}</p>
+                <AnimatedNumber value={stats.totalMessages} className="text-2xl font-bold" />
                 <p className="text-sm text-muted-foreground mt-1">{t('stats.geniaMessages')}</p>
                 <p className="text-xs text-orange-600 mt-2">
                   {Math.round(stats.tokensUsed / 1000)}k tokens utilisés

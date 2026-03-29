@@ -6,9 +6,12 @@ export const dynamic = 'force-dynamic'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/hooks/useAuth'
-import { motion } from 'framer-motion'
-import { staggerContainer, staggerItem, hoverLift, fadeInUp } from '@/lib/animation-presets'
-import { Trophy, Flame, Target, Clock, ChevronRight, BarChart3, Award, Brain, BookOpen } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { staggerContainer, staggerItem, hoverLift, fadeInUp, duration } from '@/lib/animation-presets'
+import { AnimatedNumber } from '@/components/ui/animated-number'
+import { EmptyState } from '@/components/ui/empty-state'
+import { Button } from '@/components/ui/button'
+import { Trophy, Flame, Target, Clock, ChevronRight, BarChart3, Award, Brain, BookOpen, MessageSquare, Play, ChevronDown } from 'lucide-react'
 import Link from 'next/link'
 import { getAllModulesWithProgress, type Module } from '@/lib/data'
 import { createClient } from '@/lib/supabase/client'
@@ -33,6 +36,7 @@ export default function DashboardPage() {
   const { showFullOnboarding, showLiteOnboarding, completeOnboarding, dismissLiteOnboarding, startFullTourFromLite } = useOnboarding(user?.id)
   const [displayName, setDisplayName] = useState<string>('')
   const [modules, setModules] = useState<Module[]>([]) // État local pour les modules
+  const [collapsedSections, setCollapsedSections] = useState<Record<string, boolean>>({})
   
   const [stats, setStats] = useState({
     totalPoints: 0,
@@ -187,6 +191,39 @@ export default function DashboardPage() {
           </div>
         </div>
 
+        {/* Quick Actions */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={fadeInUp}
+          className="mb-4 md:mb-8"
+        >
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <Button variant="brand" className="h-auto py-3 flex-col gap-1" onClick={() => {
+              const firstModule = modules[0]
+              if (firstModule) router.push(`/modules/${firstModule.slug}`)
+              else router.push('/dashboard#modules')
+            }}>
+              <Play className="w-5 h-5" />
+              <span className="text-xs">{/* TODO: i18n */}Continuer</span>
+            </Button>
+            <Button variant="outline" className="h-auto py-3 flex-col gap-1" onClick={() => router.push('/review')}>
+              <Brain className="w-5 h-5" />
+              <span className="text-xs">{/* TODO: i18n */}Reviser</span>
+            </Button>
+            <Button variant="outline" className="h-auto py-3 flex-col gap-1" onClick={() => {
+              window.dispatchEvent(new CustomEvent('genia:openChat'))
+            }}>
+              <MessageSquare className="w-5 h-5" />
+              <span className="text-xs">{/* TODO: i18n */}Parler a GENIA</span>
+            </Button>
+            <Button variant="outline" className="h-auto py-3 flex-col gap-1" onClick={() => router.push('/skill-tree')}>
+              <Award className="w-5 h-5" />
+              <span className="text-xs">{/* TODO: i18n */}Mes badges</span>
+            </Button>
+          </div>
+        </motion.div>
+
         {/* Adaptive Level Indicator */}
         <div className="mb-4 md:mb-8" data-onboarding="adaptive-level">
           <AdaptiveLevelIndicator userId={user.id} />
@@ -210,55 +247,56 @@ export default function DashboardPage() {
           </Link>
         </div>
 
-        {/* Tournament Widget - empty state until real tournaments are fetched */}
+        {/* Secondary sections — collapsible */}
         <div className="mb-4 md:mb-8">
-          <h3 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
-            <Trophy className="w-6 h-6 text-yellow-500" />
-            {t('tournaments.title')}
-          </h3>
-          <div className="bg-gradient-to-br from-muted to-muted/80 border-2 border-border rounded-xl p-6 text-center">
-            <Trophy className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
-            <p className="text-muted-foreground font-medium">{t('tournaments.noTournaments')}</p>
-            <p className="text-sm text-muted-foreground mt-1">{t('tournaments.comingSoon')}</p>
-          </div>
-        </div>
-
-        {/* Skill Progress Widget - empty state until real skill data is fetched */}
-        <div className="mb-4 md:mb-8">
-          <SkillTreeVisualization
-            nodes={[]}
-            userProgress={{}}
-            loading={false}
-          />
-        </div>
-
-        {/* Team Widget - Coming Soon */}
-        <div className="mb-4 md:mb-8">
-          <div className="bg-gradient-to-r from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] rounded-xl p-6 shadow-sm border border-border">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg">
-                <Trophy className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-foreground">{t('teams.title')}</h3>
-                <p className="text-muted-foreground">{t('teams.description')}</p>
-              </div>
-            </div>
-            <div className="bg-card rounded-lg p-4 border">
-              <p className="text-foreground mb-2">
-                👥 <strong>{t('teams.teamwork')}</strong> : {t('teams.teamworkDescription')}
-              </p>
-              <p className="text-sm text-muted-foreground mb-4">
-                {t('teams.teamworkSubtitle')}
-              </p>
-              <button
-                onClick={() => router.push('/teams')}
-                className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          <button
+            onClick={() => setCollapsedSections(prev => ({ ...prev, extras: !prev.extras }))}
+            className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-4"
+          >
+            <motion.div animate={{ rotate: collapsedSections.extras ? -90 : 0 }} transition={{ duration: duration.fast }}>
+              <ChevronDown className="w-4 h-4" />
+            </motion.div>
+            <span className="text-sm font-medium">{/* TODO: i18n */}Tournois, Equipes & Competences</span>
+          </button>
+          <AnimatePresence initial={false}>
+            {!collapsedSections.extras && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: duration.normal }}
+                className="overflow-hidden space-y-4"
               >
-                {t('teams.discover')}
-              </button>
-            </div>
-          </div>
+                {/* Tournament Widget */}
+                <div className="bg-card rounded-xl shadow-sm border border-border">
+                  <EmptyState
+                    icon={Trophy}
+                    title={t('tournaments.noTournaments')}
+                    description={t('tournaments.comingSoon')}
+                    action={{ label: t('tournaments.title'), onClick: () => router.push('/tournaments') }}
+                  />
+                </div>
+
+                {/* Team Widget */}
+                <div className="bg-gradient-to-r from-[hsl(var(--gradient-start))] to-[hsl(var(--gradient-end))] rounded-xl p-6 shadow-sm border border-border">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="p-3 bg-gradient-to-r from-[hsl(228,80%,66%)] to-[hsl(271,37%,46%)] rounded-lg">
+                      <Trophy className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-foreground">{t('teams.title')}</h3>
+                      <p className="text-muted-foreground">{t('teams.description')}</p>
+                    </div>
+                  </div>
+                  <div className="bg-card rounded-lg p-4 border">
+                    <Button variant="brand" className="w-full" onClick={() => router.push('/teams')}>
+                      {t('teams.discover')}
+                    </Button>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Stats Grid - Progress Section */}
@@ -280,14 +318,7 @@ export default function DashboardPage() {
               <motion.div key={i} variants={staggerItem} {...hoverLift} className="bg-card rounded-xl p-6 shadow-sm">
                 <div className="flex items-center justify-between mb-2">
                   <Icon className={`w-8 h-8 ${stat.color}`} />
-                  <motion.span
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.2 + i * 0.1, duration: 0.3 }}
-                    className="text-2xl font-bold"
-                  >
-                    {stat.value}{stat.suffix}
-                  </motion.span>
+                  <AnimatedNumber value={stat.value} suffix={stat.suffix} className="text-2xl font-bold" />
                 </div>
                 <p className="text-muted-foreground">{stat.label}</p>
               </motion.div>
@@ -432,11 +463,12 @@ export default function DashboardPage() {
         >
           <h3 className="text-xl font-bold font-display text-foreground mb-4">{t('modules.title')}</h3>
           {modules.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-12 text-center">
-              <BookOpen className="w-12 h-12 text-muted-foreground/50 mb-4" />
-              <p className="text-muted-foreground font-medium">Aucun module disponible</p>
-              <p className="text-sm text-muted-foreground/70 mt-1">Les modules apparaitront ici une fois disponibles</p>
-            </div>
+            <EmptyState
+              icon={BookOpen}
+              title="Aucun module commence"
+              description="Commence ta formation au Prompt Engineering"
+              action={{ label: "Explorer les modules", onClick: () => router.push('/dashboard#modules') }}
+            />
           ) : (
             <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="space-y-4">
               {modules.map((m) => (

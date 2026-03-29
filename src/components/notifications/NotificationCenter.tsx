@@ -190,9 +190,12 @@ export default function NotificationCenter({ userId, className = '' }: Notificat
                 Chargement...
               </div>
             ) : filteredNotifications.length === 0 ? (
-              <div className="p-8 text-center text-muted-foreground">
-                <Bell className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
-                <p>Aucune notification</p>
+              <div className="flex flex-col items-center justify-center py-8 px-4 text-center">
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-3">
+                  <Bell className="w-8 h-8 text-primary/60" />
+                </div>
+                <p className="text-sm font-medium text-foreground mb-1">Aucune notification</p>
+                <p className="text-xs text-muted-foreground">Tu es a jour !</p>
               </div>
             ) : (
               <div className="divide-y divide-border">

@@ -16,8 +16,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { motion } from 'framer-motion';
+import { scaleIn } from '@/lib/animation-presets';
 import { toast } from '@/hooks/use-toast';
-import { ArrowLeft, Mail, Send } from 'lucide-react';
+import { ArrowLeft, Mail, Send, CheckCircle } from 'lucide-react';
 
 export default function ContactPage() {
   const t = useTranslations('contact');
@@ -25,6 +27,7 @@ export default function ContactPage() {
   const [email, setEmail] = useState('');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
+  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,6 +39,8 @@ export default function ContactPage() {
     setEmail('');
     setSubject('');
     setMessage('');
+    setSubmitted(true);
+    setTimeout(() => setSubmitted(false), 3000);
   };
 
   return (
@@ -49,7 +54,7 @@ export default function ContactPage() {
           {t('backToHome')}
         </Link>
 
-        <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-8">
+        <h1 className="text-3xl md:text-4xl font-bold font-display text-foreground mb-8">
           {t('title')}
         </h1>
 
@@ -109,9 +114,18 @@ export default function ContactPage() {
                     />
                   </div>
 
-                  <Button type="submit" className="w-full">
-                    <Send className="w-4 h-4 mr-2" />
-                    {t('form.submit')}
+                  <Button type="submit" variant={submitted ? "default" : "brand"} className="w-full">
+                    {submitted ? (
+                      <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4" />
+                        {/* TODO: i18n */}Envoye !
+                      </motion.span>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4 mr-2" />
+                        {t('form.submit')}
+                      </>
+                    )}
                   </Button>
                 </form>
               </CardContent>
