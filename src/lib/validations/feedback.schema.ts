@@ -18,9 +18,11 @@ export const CreateFeedbackSchema = z.object({
     .int('Rating must be an integer')
     .min(1, 'Rating must be between 1 and 5')
     .max(5, 'Rating must be between 1 and 5'),
+  // Les champs facultatifs acceptent null : le client envoie null quand le
+  // champ est vide ou que le feedback est anonyme.
   comment: z
     .string()
-    .optional(),
+    .nullish(),
   categories: z
     .array(z.string())
     .min(1, 'At least one category is required'),
@@ -31,11 +33,11 @@ export const CreateFeedbackSchema = z.object({
   userName: z
     .string()
     .min(1, 'User name cannot be empty')
-    .optional(),
+    .nullish(),
   userEmail: z
     .string()
     .email('Invalid email address')
-    .optional(),
+    .nullish(),
 });
 
 export type CreateFeedback = z.infer<typeof CreateFeedbackSchema>;
