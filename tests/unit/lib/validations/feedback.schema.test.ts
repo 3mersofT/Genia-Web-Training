@@ -552,6 +552,55 @@ describe('CreateFeedbackSchema', () => {
       }
     });
 
+    it('should accept the payload sent by FeedbackModal for an anonymous feedback', () => {
+      // Arrange - le modal envoie null (et non undefined) pour les champs vides
+      const feedback = {
+        feedbackType: 'platform' as const,
+        targetId: 'platform-general',
+        rating: 5,
+        comment: null,
+        categories: ['ux'],
+        isAnonymous: true,
+        userName: null,
+        userEmail: null,
+      };
+
+      // Act
+      const result = CreateFeedbackSchema.safeParse(feedback);
+
+      // Assert
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.comment).toBeNull();
+        expect(result.data.userName).toBeNull();
+        expect(result.data.userEmail).toBeNull();
+      }
+    });
+
+    it('should accept null for optional fields on an identified feedback', () => {
+      // Arrange
+      const feedback = {
+        feedbackType: 'module' as const,
+        targetId: 'test-id',
+        rating: 4,
+        comment: null,
+        categories: ['content'],
+        isAnonymous: false,
+        userName: 'John Doe',
+        userEmail: null,
+      };
+
+      // Act
+      const result = CreateFeedbackSchema.safeParse(feedback);
+
+      // Assert
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.userName).toBe('John Doe');
+        expect(result.data.userEmail).toBeNull();
+      }
+    });
+
     it('should handle feedback with single category', () => {
       // Arrange
       const feedback = {
